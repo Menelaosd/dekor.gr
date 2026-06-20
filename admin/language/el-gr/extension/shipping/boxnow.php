@@ -43,6 +43,15 @@ $_['text_voucher_notfound'] 			= 'Δε βρέθηκε καταχώρηση';
 $_['text_voucher_pending'] 				= 'Εκκρεμεί';
 $_['text_voucher_send'] 				= 'Δημιουργία Voucher';
 $_['text_voucher_status_success'] 		= 'Το Voucher έχει δημιουργηθεί επιτυχώς';
+$_['text_voucher_cancel'] 				= 'Ακύρωση Voucher';
+$_['text_voucher_cancel_confirm'] 		= 'Είστε σίγουροι ότι θέλετε να ακυρώσετε το BoxNow voucher αυτής της παραγγελίας;';
+$_['text_voucher_cancel_success'] 		= 'Το Voucher ακυρώθηκε επιτυχώς.';
+$_['text_voucher_cancelled'] 			= 'Ακυρώθηκε';
+
+// Error
+$_['error_cancel_nothing'] 				= 'Δεν υπάρχει ενεργό voucher προς ακύρωση για αυτή την παραγγελία.';
+$_['error_cancel_auth'] 				= 'Αποτυχία σύνδεσης με το BoxNow. Ελέγξτε τα στοιχεία (Client ID/Secret) του καταστήματος.';
+$_['error_cancel_failed'] 				= 'Η ακύρωση απέτυχε: %s';
 $_['status_message_error'] 				= 'Δεν έγινε δημιουργία Voucher (Κωδ. Σφάλματος: %s). Μπορείτε να ανατρέξετε τον σχετικό σύνδεσμο για <a href="https://boxnow.gr/docs/api/partner-api/troubleshooting/" target="_blank">βοήθεια</a> ή να επικοινωνήσετε μαζί μας στο <a href="mailto:info@boxnow.gr">info@boxnow.gr</a>';
 
 // Error

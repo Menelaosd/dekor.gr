@@ -244,6 +244,7 @@ class ControllerExtensionShippingBoxnow extends Controller {
 				'boxnow_status' 		=> $boxnow_status,
 				'$boxnow_status_message'=> $boxnow_status_message,
 				'boxnow_submit' 		=>  $this->url->link('extension/shipping/boxnow/deliveryRequests', 'user_token=' . $this->session->data['user_token'].'&order_id='.$result['order_id'], true),
+				'boxnow_cancel' 		=>  $this->url->link('extension/shipping/boxnow/cancelVoucher', 'user_token=' . $this->session->data['user_token'].'&order_id='.$result['order_id'], true),
 				'view'          		=> $this->url->link('sale/order/info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'].'&quantity=1'. $url, true)
 			);
 		}
@@ -601,5 +602,128 @@ class ControllerExtensionShippingBoxnow extends Controller {
 		}
 
 		return '';
+	}
+
+	// Request a BoxNow OAuth bearer token; returns the access token or '' on failure.
+	private function authenticate($api_url, $client_id, $client_secret) {
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => $api_url . '/api/v1/auth-sessions',
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => '',
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => 'POST',
+			CURLOPT_POSTFIELDS => '{
+				"grant_type": "client_credentials",
+				"client_id": "' . $client_id . '",
+				"client_secret": "' . $client_secret . '"
+			}',
+			CURLOPT_HTTPHEADER => array(
+				'Content-Type: application/json'
+			),
+		));
+
+		$response = curl_exec($curl);
+		curl_close($curl);
+
+		$json = json_decode($response, true);
+
+		return isset($json['access_token']) ? $json['access_token'] : '';
+	}
+
+	// Cancel the BoxNow voucher(s) for an order via POST /api/v1/parcels/{id}:cancel
+	public function cancelVoucher() {
+		$this->load->language('extension/shipping/boxnow');
+		$this->load->model('sale/order');
+		$this->load->model('extension/shipping/boxnow');
+
+		$report_url = $this->url->link('extension/shipping/boxnow/report', 'user_token=' . $this->session->data['user_token'], true);
+
+		if (!$this->user->hasPermission('modify', 'extension/shipping/boxnow')) {
+			$this->session->data['error'] = $this->language->get('error_permission');
+			$this->response->redirect($report_url);
+			return;
+		}
+
+		$order_id    = isset($this->request->get['order_id']) ? (int)$this->request->get['order_id'] : 0;
+		$order       = $order_id ? $this->model_sale_order->getOrder($order_id) : false;
+		$boxnow_info = $order_id ? $this->model_extension_shipping_boxnow->getBoxNowStatus($order_id) : false;
+
+		// Only cancel orders with a created voucher (status 1) that still has parcels
+		$parcels = ($boxnow_info && !empty($boxnow_info['parcels'])) ? json_decode($boxnow_info['parcels'], true) : array();
+
+		if (!$order || !$boxnow_info || (int)$boxnow_info['status'] !== 1 || empty($parcels)) {
+			$this->session->data['error'] = $this->language->get('error_cancel_nothing');
+			$this->response->redirect($report_url);
+			return;
+		}
+
+		// Multistore: credentials for the order's store
+		$store_id      = (int)$order['store_id'];
+		$client_id     = $this->getStoreSettingValue('shipping_boxnow_client_id', $store_id);
+		$client_secret = $this->getStoreSettingValue('shipping_boxnow_client_secret', $store_id);
+		$api_url       = $this->getStoreSettingValue('shipping_boxnow_api_url', $store_id);
+
+		$token = $this->authenticate($api_url, $client_id, $client_secret);
+
+		if (!$token) {
+			$this->session->data['error'] = $this->language->get('error_cancel_auth');
+			$this->response->redirect($report_url);
+			return;
+		}
+
+		$error_codes = array(
+			'P420' => 'Parcel not ready for cancel. You can only cancel new, undelivered parcels that are not returned or lost.',
+		);
+
+		$errors = array();
+
+		foreach ($parcels as $parcel) {
+			if (empty($parcel['id'])) {
+				continue;
+			}
+
+			$curl = curl_init();
+
+			curl_setopt_array($curl, array(
+				CURLOPT_URL => $api_url . '/api/v1/parcels/' . rawurlencode($parcel['id']) . ':cancel',
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => '',
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => 'POST',
+				CURLOPT_POSTFIELDS => '{}',
+				CURLOPT_HTTPHEADER => array(
+					'Authorization: Bearer ' . $token,
+					'Content-Type: application/json'
+				),
+			));
+
+			$response  = curl_exec($curl);
+			$http_code = (int)curl_getinfo($curl, CURLINFO_HTTP_CODE);
+			curl_close($curl);
+
+			if ($http_code < 200 || $http_code >= 300) {
+				$decoded = json_decode($response, true);
+				$code    = isset($decoded['code']) ? $decoded['code'] : ('HTTP ' . $http_code);
+				$detail  = isset($error_codes[$code]) ? (' - ' . $error_codes[$code]) : '';
+				$errors[] = $parcel['id'] . ': ' . $code . $detail;
+			}
+		}
+
+		if ($errors) {
+			$this->session->data['error'] = sprintf($this->language->get('error_cancel_failed'), implode(' | ', $errors));
+		} else {
+			$this->model_extension_shipping_boxnow->cancelRequest($order_id, $this->language->get('text_voucher_cancelled'));
+			$this->session->data['success'] = $this->language->get('text_voucher_cancel_success');
+		}
+
+		$this->response->redirect($report_url);
 	}
 }

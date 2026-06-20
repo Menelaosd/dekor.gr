@@ -95,6 +95,13 @@
 					<td class="text-center">
 						{% if order.boxnow_status == 1 %}
 							<span style="color:#398c39"><i class="fa fa-check-circle"></i> {{ text_voucher_success }}</span>
+							<div style="margin-top:8px;">
+								<a class="btn btn-danger btn-sm cancelVoucher" href="{{ order.boxnow_cancel }}" onclick="return confirm('{{ text_voucher_cancel_confirm }}');">
+									<i class="fa fa-times-circle"></i> {{ text_voucher_cancel }}
+								</a>
+							</div>
+						{% elseif order.boxnow_status == 3 %}
+							<span style="color:#999"><i class="fa fa-ban"></i> {{ text_voucher_cancelled }}</span>
 						{% elseif order.boxnow_status == 2 %}
 							<div style="min-width:250px;margin-bottom:5px;padding-bottom:5px;color:#1e91cf;"><i class="fa fa-minus-circle"></i> {{ text_voucher_pending }}</div>
 							<div>

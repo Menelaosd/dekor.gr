@@ -43,6 +43,15 @@ $_['text_voucher_notfound'] 			= 'No entry found';
 $_['text_voucher_pending'] 				= 'Pending';
 $_['text_voucher_send'] 				= 'Create Voucher';
 $_['text_voucher_status_success'] 		= 'The Voucher has been successfully created';
+$_['text_voucher_cancel'] 				= 'Cancel Voucher';
+$_['text_voucher_cancel_confirm'] 		= 'Are you sure you want to cancel the BoxNow voucher for this order?';
+$_['text_voucher_cancel_success'] 		= 'The Voucher was cancelled successfully.';
+$_['text_voucher_cancelled'] 			= 'Cancelled';
+
+// Cancel errors
+$_['error_cancel_nothing'] 				= 'There is no active voucher to cancel for this order.';
+$_['error_cancel_auth'] 				= 'Could not connect to BoxNow. Check the store Client ID / Secret.';
+$_['error_cancel_failed'] 				= 'Cancellation failed: %s';
 $_['status_message_error'] 				= 'Voucher was not created (Error Code: %s). You can refer to the relevant link for <a href="https://boxnow.gr/docs/api/partner-api/troubleshooting/" target="_blank">help</a> or contact us at <a href="mailto:info@boxnow.gr">info@boxnow.gr</a>';
 
 // Error

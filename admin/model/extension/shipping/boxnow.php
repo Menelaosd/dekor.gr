@@ -88,5 +88,10 @@ class ModelExtensionShippingBoxnow extends Model {
 			$this->db->query("UPDATE " . DB_PREFIX . "boxnow_requests SET request_id = '" . (int)$request['id'] . "', parcels = '" . $this->db->escape(json_encode($request['parcels'])) . "', status='".(int)$request['status_id'] ."', status_message='".$this->db->escape($request['status_message']) ."' WHERE order_id = '" . (int)$order['order_id'] . "' ");
 		};
 	}
+
+	// Mark a BoxNow request as cancelled (status 3) once its parcels have been cancelled via the API.
+	function cancelRequest($order_id, $message = '') {
+		$this->db->query("UPDATE " . DB_PREFIX . "boxnow_requests SET status = '3', parcels = '', status_message = '" . $this->db->escape($message) . "' WHERE order_id = '" . (int)$order_id . "' ");
+	}
 	
 }
