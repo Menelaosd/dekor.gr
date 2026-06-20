@@ -1,0 +1,147 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <a onclick="$('#action').val('save_stay');$('#form-slideshow').submit();" title="{{ button_save_continue }}" class="btn btn-success">
+          <i class="fa fa-save"></i> {{ button_save_continue }}
+        </a>
+        <a onclick="$('#form-slideshow').submit();" title="{{ button_save }}" class="btn btn-primary">
+          <i class="fa fa-save"></i> {{ button_save }}
+        </a>
+        <a href="{{ cancel }}" data-toggle="tooltip" title=" {{ button_cancel }}" class="btn btn-default">
+          <i class="fa fa-reply"></i> {{ button_cancel }}
+        </a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-slideshow" class="form-horizontal">
+          <input type="hidden" name="action" id="action" value="">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-subtitle">{{ entry_subtitle }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="subtitle" value="{{ subtitle }}" placeholder="{{ entry_subtitle }}" id="input-subtitle" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-text">{{ entry_text }}</label>
+            <div class="col-sm-10">
+              <textarea name="text" placeholder="{{ entry_text }}" id="input-text" class="form-control summernote">{{ text ? text }}</textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-text2">{{ entry_text2 }}</label>
+            <div class="col-sm-10">
+              <textarea name="text2" placeholder="{{ entry_text2 }}" id="input-text2" class="form-control summernote">{{ text2 ? text2 }}</textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-link">{{ entry_link }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="link" value="{{ link }}" placeholder="{{ entry_link }}" id="input-link" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-link2">{{ entry_link2 }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="link2" value="{{ link2 }}" placeholder="{{ entry_link2 }}" id="input-link2" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-btn_text">{{ entry_btn_text }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="btn_text" value="{{ btn_text }}" placeholder="{{ entry_btn_text }}" id="input-btn_text" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-btn_link">{{ entry_btn_link }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="btn_link" value="{{ btn_link }}" placeholder="{{ entry_btn_link }}" id="input-btn_link" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">{{ entry_btn_image }}</label>
+            <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ image_thumb }}" alt="" title="" /></a><input type="hidden" name="image" value="{{ image }}" id="input-image" /></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">{{ entry_btn_image2 }}</label>
+            <div class="col-sm-10"><a href="" id="thumb-image2" data-toggle="image" class="img-thumbnail"><img src="{{ image2_thumb }}" alt="" title="" /></a><input type="hidden" name="image2" value="{{ image2 }}" id="input-image2" /></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-enable_btn">{{ entry_enable_btn }}</label>
+            <div class="col-sm-10">
+              <select name="enable_btn" id="input-enable_btn" class="form-control">
+                {% if  (enable_btn)  %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+                 {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+               {% endif %}
+              </select>
+            </div>
+          </div>        
+           <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-active_template">{{ entry_active_template }}</label>
+            <div class="col-sm-10">
+              <select name="active_template" id="input-active_template" class="form-control">
+                {% for key, slideshow_template in slideshow_templates %}
+                  <optgroup label="Template: {{ key }}">
+                    {% for key2, tpl in slideshow_template %}
+                      {% if (active_template == tpl ) %}
+                        <option selected value="{{ tpl }}">{{ tpl }}</option>
+                      {% else %}
+                        <option value="{{ tpl }}">{{ tpl }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </optgroup>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="status" id="input-status" class="form-control">
+                {% if status %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+<link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
+{{ footer }}

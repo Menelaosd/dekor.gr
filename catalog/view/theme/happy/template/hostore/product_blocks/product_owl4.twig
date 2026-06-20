@@ -1,0 +1,99 @@
+
+    
+
+
+
+    <div class="product-media">
+        {% if product_igri_trof.percentage %}
+            <span class="sale-percentage">{{ product_igri_trof.percentage }}&#37;</span>
+        {% endif %}
+        <a href="{{ product_igri_trof.href }}">
+            <div class="product-thumbnail">
+                <img id="p_{{product_igri_trof.product_id}}" itemprop="image" alt="{{ product_igri_trof.name }}" src="{{ product_igri_trof.thumb }}" class="current">
+            </div>
+        </a>
+        <div class="product-actions product-actions-left">
+            <a onclick="cart.add('{{ product_igri_trof.product_id }}');" data-toggle="tooltip" title="{{ button_cart }}" class="awe-button product-quick-view"><i class="fa fa-shopping-bag"></i></a>
+        </div>
+        <div class="product-actions">
+            <a onclick="wishlist.add('{{ product_igri_trof.product_id }}');" data-toggle="tooltip" title="{{ button_wishlist }}" class="awe-button product-wishlist"><i class="fa fa-heart"></i></a>
+        </div>
+
+            <div class="product-body">
+
+
+        <div class="onomatimi">
+                      <div class="product-pnamesec col-md-12">
+                        <h2 class="product-name" itemprop="name">
+                            <a href="{{ product_igri_trof.href }}">{{ product_igri_trof.name }}{{ product_igri_trof.category_id }}</a>
+                        </h2>
+                    </div>
+
+                    <div class="product-price col-md-12" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                        <meta itemprop="priceCurrency" content="EUR">
+                        {% if product_igri_trof.price %}
+                            {% if not product_igri_trof.special %}
+                                <meta itemprop="price" content="{{ product_igri_trof.price|replace({',': '.', '€': ''}) }}">
+                                <span class="amount">{{ product_igri_trof.price }}</span>
+                            {% else %}
+                                <meta itemprop="price" content="{{ product_igri_trof.special|replace({',': '.', '€': ''}) }}">
+                                <span class="amount">{{ product_igri_trof.special }}</span>
+                                <del class="amount_before">{{ product_igri_trof.price }}</del>
+                            {% endif %}
+                        {% endif %}
+                       
+                    </div>
+       
+    </div>
+<!--             <div class="product-codee">
+    <p>{{ text_model }}  {{ product_igri_trof.model }}</p>
+</div> -->
+<div class="ifasmata">
+ {% if product_igri_trof.option %}
+          {% for option_value in product_igri_trof.option %}
+                {% if product_igri_trof.type_option == 'image' %}
+                <div id="input-option{{ option.product_option_id }}" class="colors-new-category ">
+                    <img src="{{ option_value.image }}" alt="{{ option_value.name }}" class="img-thumbnail" />
+                               
+                </div>
+           {% endif %} 
+           {% endfor %}
+{% endif %} 
+</div>   
+        <div class="product-description">
+            <p class="more-content" itemprop="description">{{ product_igri_trof.description }}</p>
+        </div>
+
+
+    </div>
+
+
+
+        <div class="product-list-actions">
+            <a target="_blank" class="btn btn-default" onclick="cart.add('{{ product_igri_trof.product_id }}', '{{ product_igri_trof.minimum }}');" ><i class="fa fa-shopping-cart"></i> ΑΓΟΡΑΣΕ ΤΟ</a>
+            <a target="_blank" class="btn btn-primary" href="{{ product_igri_trof.href }}"><i class="fa fa-eye"></i> ΔΕΣ ΤΟ</a>
+        </div>
+
+    </div>
+
+        <div class="product-deiteto">
+           <div class="favoritam col-md-2 col-sm-12">
+              <button type="button" data-toggle="tooltip" class="wishara btn btn-default" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
+           </div>
+            <div class="valtostokalathi col-md-8 col-sm-12">
+                 <a target="_blank" class="btn btn-default" onclick="cart.add('{{ product_igri_trof.product_id }}');" ><i class="fa fa-shopping-cart"></i>  {% if lang == 'el' %}   ΠΡΟΣΘΗΚΗ ΣΤΟ ΚΑΛΑΘΙ    {% else %} ADD TO CART {% endif %}</a>
+            </div>   
+            <div class="comparem col-md-2 col-sm-12">              
+                <button type="button" data-toggle="tooltip" class="compare btn btn-outline-inverse btn-variant" title="" onclick="compare.addcompare('{{ product_id }}');" data-original-title="Σύγκριση">
+                    <i class="fa fa-refresh"></i>
+                    
+                </button>
+    
+
+
+            </div>
+
+    </div>
+    
+
+

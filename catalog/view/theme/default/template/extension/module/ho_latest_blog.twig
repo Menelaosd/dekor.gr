@@ -1,0 +1,30 @@
+
+    <div class="eimaste">
+        <h3 class="silogititle">{{ heading_title }}</h3>
+        <div class="post_wrap">
+            {% for post in posts %}
+                <div class="post-layout col-lg-3 col-md-6 col-sm-6 col-xs-6">
+                    <div class="post-thumb">
+                        <div class="image">
+                            <a href="{{ post.href }}">
+                                <img src="{{ post.thumb }}" alt="{{ post.name }}" title="{{ post.name }}" class="img-responsive" />
+                            </a>
+                         <div class="post-caption">
+                            <h4><a href="{{ post.href }}">{{ post.name }}</a></h4> 
+                            <div class="post-date">
+                            {{ post.date_published }}
+                            </div>
+                            <div class="post-descr">
+                                {{ post.short_description }}
+                            </div>
+                        </div>    
+                        </div>
+
+                    </div>
+
+                       
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

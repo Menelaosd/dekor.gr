@@ -1,0 +1,130 @@
+<div id="banner{{ module }}" class="banner-container banner-container__banners module-wrapper {{ class }}">
+	<div class="container">
+		{% if module_title %}
+		<h3 class="module-title">
+			<span class="module-title-text">{{ module_title }}</span>
+		</h3>
+		{% endif %}
+		{% if subtitle %}
+		<h4 class="module-subtitle">
+			<span class="module-subtitle-text">{{ subtitle}}</span>
+		</h4>
+		{% endif %}				
+	</div>
+	<div class="container module-container {% if carousel %}category__has-carousel{% endif %}">
+		
+		{% if carousel %}
+		<div class="swiper-container" id="banner-carousel{{ module }}">
+		<div class="swiper-wrapper">
+		{% endif %}
+		
+		{% for banner_row in banners %}
+			<div class="banner-row {% if carousel %}swiper-slide{% endif %}">
+				{% for banner_col in banner_row %}
+					<div class="banner-col col-12 col-sm-{{banner_col.0.colw}}">
+						{% for banner_item in banner_col %}
+							{% if banner_item.link %}
+								<a class="banner-item {% if imgpos==2 %} banner-image-right {% elseif imgpos==1 %} banner-image-left {% else %} banner-image-center {% endif %} {% if style==2 %} banner-text-over-image {% elseif style==1 %} banner-text-above-image {% else %} banner-text-under-image {% endif %}" href="{{ banner_item.link }}">
+							{% else %}
+								<div class="banner-item {% if imgpos==2 %} banner-image-right {% elseif imgpos==1 %} banner-image-left {% else %} banner-image-center {% endif %} {% if style==2 %} banner-text-over-image {% elseif style==1 %} banner-text-above-image {% else %} banner-text-under-image {% endif %}">
+							{% endif %}
+									<div class="banner-image">
+										{% if banner_item.image %}
+										<img src="{{ banner_item.image }}" alt="{{ banner_item.title }}" class="img-fluid" />
+										{% endif %}
+										{% if banner_item.readmore %}
+											<div class="banner-readmore mob--banner_link">
+												<div class="generic-button">{{banner_item.readmore}}</div>
+											</div>
+										{% endif %}
+									</div>
+									{% if banner_item.hypertitle or banner_item.title or banner_item.subtitle or banner_item.readmore %}
+										<div class="banner-caption">
+											{% if banner_item.hypertitle %}
+												<h4 class="banner-hypertitle">
+													{{banner_item.hypertitle}}
+												</h4>
+											{% endif %}
+											{% if banner_item.title %}
+												<h2 class="banner-title">
+													{{banner_item.title}}
+												</h2>
+											{% endif %}
+											{% if banner_item.subtitle %}
+												<div class="banner-subtitle">
+													{{banner_item.subtitle}}
+												</div>
+											{% endif %}
+											{% if banner_item.readmore %}
+												<div class="banner-readmore">
+													<div class="generic-button">{{banner_item.readmore}}</div>
+												</div>
+											{% endif %}
+										</div>
+									{% endif %}
+							{% if banner_item.link %}
+								</a>
+							{% else %}
+								</div>
+							{% endif %}				
+						{% endfor %}
+					</div>
+				{% endfor %}
+			</div>
+		{% endfor %}
+		
+		{% if carousel %}
+		</div>
+		</div>
+		
+		<div class="pagination-static banner__pagination">
+			<div class="swiper-pagination banner-swipe-pagination-{{module}}"></div>
+		</div>
+		
+		{% endif %}
+		
+	</div>
+</div>
+
+{% if carousel %}
+	<script type="text/javascript">
+	
+		var swiperBanners{{ module }} = undefined;
+		var resizeBanners{{ module }};
+		
+		var swiperBanners{{ module }}_settings = {
+			slidesPerView: 1,
+			slidesPerGroup: 1,
+			loop:true,
+			spaceBetween: 0,
+			mode: 'horizontal',
+			observer: true,
+			observeParents: true,
+			pagination: {
+				el: '.banner-swipe-pagination-{{module}}',
+				type: 'bullets',
+				clickable: true
+			},
+		};
+		
+		$(window).on('resize load',function() {
+			
+			clearTimeout( resizeBanners{{ module }} );
+			resizeBanners{{ module }} = setTimeout(function() {
+
+			if( window.innerWidth <= 991 && typeof(swiperBanners{{ module }}) === "undefined") {
+				swiperBanners{{ module }} = new Swiper('#banner-carousel{{ module }}', swiperBanners{{ module }}_settings);	
+			};
+			
+			if( window.innerWidth > 991 ) {
+				if ( typeof(swiperBanners{{ module }}) !== "undefined" ) {
+					swiperBanners{{ module }}.destroy();
+					swiperBanners{{ module }} = undefined;
+				}
+			};
+					
+			}, 250);
+		})	
+	
+	</script>
+{% endif %}

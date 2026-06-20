@@ -1,0 +1,105 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<h4>{{ tab_action_related }}</h4>
+<hr/>
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_add_new }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle" style="display: block;">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<div class="row form-row">
+				<label class="col-sm-2 control-label"><i class="required"></i> {{ entry_related_products }}</label>
+				<div class="col-sm-8">
+					<button type="button" onclick="prepareRelatedForm(this);" data-target="action[related][insert][---0---][filter]" class="btn btn-primary btn-use-current-filter"><i class="fa fa-filter"></i> {{ button_use_current_filter }}</button>
+					<span class="current-filter clear-clone-html"></span><br>
+					<input type="hidden" class="form-control not-prepare" value="" id="action[related][insert][---0---][filter]" name="action[related][insert][---0---][filter]" />
+				</div>
+				<div class="col-sm-2 hide-filter">
+					<button type="button" onclick="relatedClone(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+					<button type="button" onclick="if (!$(this).closest('div.form-group').hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).closest('div.form-group').find('input').val(''); } $(this).closest('div.form-group').find('.current-filter').text(''); $(this).closest('div.form-group').find('select').trigger('change');" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+				</div>
+			</div>
+			<div class="row form-row" {% if product_related_tables|length < 2 %}style="display:none;"{% endif %}>
+				<label class="col-sm-2 control-label"><i class="required"></i> {{ entry_table_name }}</label>
+				<div class="col-sm-8">
+					<select name="action[related][insert][---0---][table]" class="form-control" onchange="relatedTableChange(this);">
+						<!-- different related tables if you use custom modules to show products on product page -->
+						{% for product_related_table in product_related_tables %}
+						<option value="{{ product_related_table.table }}" data-field_product_id="{{ product_related_table.field_product_id }}" data-field_related_id="{{ product_related_table.field_related_id }}" data-fill_product_id="{{ product_related_table.fill_product_id }}" data-fill_related_id="{{ product_related_table.fill_related_id }}">{{ product_related_table.table }}</option>
+						{% endfor %}
+					</select>
+					{% set product_related_table_first = product_related_tables|first %}
+					<input type="hidden" name="action[related][insert][---0---][field_product_id]" value="{{ product_related_table_first.field_product_id }}" />
+					<input type="hidden" name="action[related][insert][---0---][field_related_id]" value="{{ product_related_table_first.field_related_id }}" />
+					<input type="hidden" name="action[related][insert][---0---][fill_product_id]" value="{{ product_related_table_first.fill_product_id }}" />
+					<input type="hidden" name="action[related][insert][---0---][fill_related_id]" value="{{ product_related_table_first.fill_related_id }}" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_update_help }}</h4></div>
+</div>
+<div class="toggle">
+	{{ help_related }}
+</div>
+
+<script type="text/javascript" charset="utf-8">
+function relatedTableChange(obj) {
+	let field_product_id = $(obj).find('option:selected').data('field_product_id');
+	let field_related_id = $(obj).find('option:selected').data('field_related_id');
+	let fill_product_id = $(obj).find('option:selected').data('fill_product_id');
+	let fill_related_id = $(obj).find('option:selected').data('fill_related_id');
+	$(obj).parent().find('input[type="hidden"][name$="[field_product_id]"]').val(field_product_id);
+	$(obj).parent().find('input[type="hidden"][name$="[field_related_id]"]').val(field_related_id);
+	$(obj).parent().find('input[type="hidden"][name$="[fill_product_id]"]').val(fill_product_id);
+	$(obj).parent().find('input[type="hidden"][name$="[fill_related_id]"]').val(fill_related_id);
+}
+
+function prepareRelatedForm(btn) {
+	bpe.postForm($('.batch-wr .nav a[href="#tab_preview"]'), 'filter', {
+		async: true,
+		onBeforeSend: function() {
+			$(btn).attr('disabled', 'disabled');
+		},
+		onComplete: function() {
+			$(btn).removeAttr('disabled');
+		},
+		afterSuccess: function(data){
+			var form_batch = $(bpe.selector_filter + ', ' + bpe.selector_action).not('.not-prepare').not('#batch-actions *').serialize();
+
+			if ($('.batch-wr #batch-results #all-products:checked').length) {
+				var batch_results = $('.batch-wr #batch-results #all-products').serialize();
+			} else {
+				var batch_results = $('.batch-wr #batch-results [name]').serialize();
+			}
+
+			form_batch = form_batch + '&' + batch_results;
+
+			$('.batch-wr input[name="' + $(btn).attr('data-target') + '"]').val(form_batch);
+
+			var html = $('#batch-results-total').text() + ' ' + $('#batch-results-selected').text();
+
+			$('.batch-wr input[name="' + $(btn).attr('data-target') + '"]').closest('.form-group').find('.current-filter').text(html);
+
+			//console.log(String(form_batch).length, form_batch);
+
+			return data;
+		}
+	});
+}
+
+function relatedClone(obj) {
+	var current_filter_clone = bpe.cloneFilter(obj);
+	$('select[name="action[related][insert][---'+current_filter_clone+'---][table]"] option:first-child').attr('selected', 'selected').prop('selected', 'selected');
+	$('select[name="action[related][insert][---'+current_filter_clone+'---][table]"]').trigger('change');
+}
+</script>

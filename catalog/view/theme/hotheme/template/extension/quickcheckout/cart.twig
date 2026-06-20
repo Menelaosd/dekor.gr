@@ -1,0 +1,163 @@
+<div id="cartInfoTop" class="mobileClass">
+	<div class="cart_row_gen_left">
+		<h3 class="cart_row_gen_title">{{your_products}}</h3>
+		<div class="cart_row_gen_quantity">{{ tprice }} <span>{{ products_total_quantity }}</span></div>
+	</div>
+	<div class="cart_row_gen_right">
+		<i onclick="opencart()" class="fas fa-angle-down"></i>
+	</div>
+</div>
+
+
+<script>
+	$('#cartInfoTop').insertAfter('#mobile-header'); 
+	
+	$('.checkout-sidebar-right #cartInfoTop').remove();
+	
+	function opencart() {
+		$('.checkout-sidebar-right').toggleClass('slideLeft');
+		$('#cartInfoTop .cart_row_gen_right i').toggleClass('fa-angle-left').toggleClass('fa-angle-right');
+	}
+	
+	$('#coupon-remove').on('click', function() {
+		$('input[name="coupon"]').val('');
+		$('#button-coupon').trigger('click');
+	});
+
+	
+</script>
+
+<div class="cart-content cart-wrapper">
+
+	<h3 class="cart_row_gen_title">
+	
+		<span>{{your_products}}</span>
+		{#
+		<div class="navProducts">
+			<div class="amount">
+				{% for total in totals %}
+					{% if total.code == 'total' %}
+						{{ total.text }}
+					{% endif %}
+				{% endfor %}
+			</div>
+			<i class="far fa-angle-down"></i>
+		</div>
+		#}
+	</h3>
+	
+	<div class="cartInnerContent">
+	
+	{% if products or vouchers %}
+		<div class="cart_products">
+			{% for product in products %}
+				<div class="bundle-category-product-block">
+					<div class="bundle-category-product-image">
+						<a href="{{ product.href }}" title="{{ product.name }}">
+							<img src="{{ product.thumb }}" alt="{{ product.name }}">
+						</a>
+					</div>
+					<div class="bundle-category-product-info">
+
+						<div class="cart-product-page-caption">
+
+							<h3>
+								<a href="{{ product.href }}" title="{{ product.name }}">
+									{{ product.name }}
+								</a>
+							</h3>
+							{% if product.intro %}
+								<div class="bundle-product-intro">
+									{{ product.intro }}
+								</div>
+							{% endif %}
+							
+							
+							{% for option in product.option %} 
+								<div class="cart_row_size">
+									{{ option.value }}
+								</div>
+							{% endfor %}
+							
+							{% if product.has_gift %}
+								<div class="radio-flex">
+									<input type="checkbox" name="gift{{ product.key}}" id="gift{{ product.key}}" data-cartid="{{ product.key}}" class="trigger-gift" {% if product.gift %} checked="checked"{% endif %}>
+									
+									<label for="gift{{ product.key}}">{{ text_gift_wrap }}</label>
+									
+									<i class="far fa-gift"></i>
+								</div>	
+							{% endif %}
+						</div>
+						
+						<div class="bundle-product-block-price" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+						
+							<h4 class="quantity">
+								{% if product.quantity >= 1 %}
+									x{{ product.quantity }}
+								{% endif %}
+							</h4>
+							
+							<div class="cartPricesCheckout">
+								<meta itemprop="priceCurrency" content="EUR">
+								{% if product.price %}
+									{% if not product.special %}
+										<meta itemprop="price" content="{{ product.price|replace({',': '.', '€': ''}) }}">
+										<span class="amount">{{total_cart_q}}: {{ product.price }}</span>
+									{% else %}
+										<meta itemprop="price" content="{{ product.special|replace({',': '.', '€': ''}) }}">
+
+										<span class="amount_before" style="display:none">{{ product.price }}</span>
+										
+										<span class="amount">{{total_cart_q}}: {{ product.special }}</span>					
+									{% endif %}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+
+		
+		{% if reward_points %}
+		<div class="cart_points pointsContainer">
+			<span class="pointsTitle">{{ points_win_title }}:</span>
+			<div class="pointsValue"><span>{{ reward_points }}</span><span>{{ points_win }}</span></div>
+		</div>
+		{% endif %}
+	{% else %}
+		<div class="cart_empty">
+			<i class="fal fa-info-circle"></i>
+			{{ text_empty }}
+		</div>
+	{% endif %}
+
+		<div class="carttotals-block card card-default">
+
+			<div class="card-header">
+				<h3 class="cart-totals-heading card-title">
+					{{ text_sub_totals }}
+				</h3>
+			</div>
+
+			<div class="checkout-cart-container checkout-cart-totals">	
+				{% for total in totals %}
+					<div class="checkout-cart-row totals-{{ total.code }}" {% if total.hide and total.code == 'sub_total'%} style="display:none !important"{% endif %}>
+						<div class="checkout-cart-block">
+							{{ total.title }}
+						</div>
+						<div class="checkout-cart-block">
+							<div class="checkout-cart-price">
+								{{ total.text }}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+		</div>	
+
+	</div>
+
+</div>

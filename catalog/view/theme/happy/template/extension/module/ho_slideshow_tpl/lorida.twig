@@ -1,0 +1,19 @@
+<div class="banerafterslider  hidden-xs flat">      
+     <div class="container">
+                {% for banner in banners %}
+                      <div class="info_wrap col-xs-12 col-sm-3">
+                        <div class="info_icon">{% if(banner.image) %} <img src="{{ banner.image }}">  {% endif %}</div>
+                        <div class="info_text">
+                            {% if(banner.title) %}
+                          <h3>{{ banner.title}}</h3>
+                              {% endif %}
+                      {% if(banner.subtitle) %}
+                          <p class="sss">{{ banner.subtitle }}</p>
+                           {% endif %}
+                        </div>
+      
+                  </div>
+                
+                 {% endfor %}   
+                </div> 
+</div>

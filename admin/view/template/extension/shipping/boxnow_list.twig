@@ -1,0 +1,194 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<h1>{{ heading_title_report }}</h1>
+			<ul class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+  
+	<div class="container-fluid">
+		{% if error %}
+			<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error }}
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+		{% endif %}
+		
+		{% if success %}
+			<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+		{% endif %}
+		<div class="panel panel-default">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+					<td style="width:1%"></td>
+                    <td class="text-center" style="width:1%">
+						{{ column_order_id }}
+					</td>
+                    <td class="text-left">{{ column_customer }}</td>
+                    <td class="text-center" style="width:1%">{{ column_order_status }}</td>
+                    <td class="text-center" style="width:1%">{{ column_total }}</td>
+                    <td class="text-center" style="width:1%">{{ column_total_products }}</td>
+                    <td class="text-center" style="width:1%">{{ column_date_added }}</td>
+                    <td class="text-left">{{ column_vouchers }}</td>
+					<td class="text-center"  style="width:15%">{{ column_info }}</td>
+                    <td class="text-center"  style="width:1%">{{ column_locker_id }}</td>
+                    <td class="text-center" style="width:1%">{{ column_box_now_status }}</td>
+                  </tr>
+                </thead>
+                <tbody>
+                
+                {% if orders %}
+                {% for order in orders %}
+                <tr class="boxnow_row">
+					<td>
+						<a href="{{ order.view }}" data-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary">
+							<i class="fa fa-eye"></i>
+						</a>
+					</td>
+					<td class="text-center" data-order-id="{{ order.order_id }}">
+						{{ order.order_id }}
+					</td>
+					<td class="text-left">{{ order.customer }}</td>
+					<td class="text-center">{{ order.order_status }}</td>
+					<td class="text-center">{{ order.total }}</td>
+					<td class="text-center">{{ order.products }}</td>
+					<td class="text-center">{{ order.date_added }}</td>
+					<td class="text-left parcels-td">
+						{% if order.boxnow_parcels %}
+							{% for boxnow_parcel in order.boxnow_parcels %}
+								<a href="https://track.boxnow.gr/?track={{ boxnow_parcel.id }}" target="_blank">
+									<i class="fa fa-info-circle"></i> {{ boxnow_parcel.id }}
+								</a>
+							{% endfor %}
+						{% else %}
+						{% endif %}
+					</td>
+					<td class="text-center">
+						{{ order.boxnow_status_message }}
+						{% if order.boxnow_parcels %}
+							{% for boxnow_parcel in order.boxnow_parcels %}
+								<a href="index.php?route=extension/shipping/boxnow/getParcel&parcel_id={{ boxnow_parcel.id }}&user_token={{ user_token }}" target="_blank">
+									<i class="fa fa-file"></i> {{ boxnow_parcel.id }}
+								</a>
+							{% endfor %}
+						{% else %}
+						{% endif %}		
+					</td>
+					<td class="text-center">						
+						{% if order.boxnow_locker_id %}
+							<button title="Locker Id" type="button" class="btn btn-info locker_id_button" onclick="window['selectedOrderId'] = {{ order.order_id }}; document.getElementsByClassName('boxnow-map-widget-button')[0].click();">{{ order.boxnow_locker_id }}</button><input type="hidden" class="locker_id" value="{{ order.boxnow_locker_id }}" />
+						{% else %}
+							-
+						{% endif %}						
+					</td>
+					<td class="text-center">
+						{% if order.boxnow_status == 1 %}
+							<span style="color:#398c39"><i class="fa fa-check-circle"></i> {{ text_voucher_success }}</span>
+						{% elseif order.boxnow_status == 2 %}
+							<div style="min-width:250px;margin-bottom:5px;padding-bottom:5px;color:#1e91cf;"><i class="fa fa-minus-circle"></i> {{ text_voucher_pending }}</div>
+							<div>
+								<table class="table table-sm" style="margin-bottom: 0;">
+									<tbody>
+										<tr>
+											<td><label class="text-center">Type Total Vouchers</label></td>
+											<td><input class="quantity form-control input-sm" type="number" name="quantity" min="1" value="1" style="width:250px;"></td>
+										</tr>
+										<tr>
+											<td><label class="text-center">Select Warehouse</label></td>
+											<td><select class="warehouse_number form-control input-sm" name="warehouse_number" style="width:250px;">
+											{% for key, value in warehouse_number %}
+												<option value="{{ key }}">{{ value }}</option>
+											{% endfor %}
+											</select></td>
+										</tr>
+										<tr>
+											<td colspan="2" style="border: none; text-align: right;"><a class="btn btn-info submitVoucher" href="{{ order.boxnow_submit }}" style="min-width:190px;">
+												<i class="fa fa-paper-plane"></i> 
+												{{ text_voucher_send }}
+											<a/></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						{% else %}
+							<span style="color:#c72f1d">
+								<i class="fa fa-times-circle"></i> 
+								{{ text_voucher_notfound }}
+							</span>
+						{% endif %}
+						
+					</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                  <td class="text-center" colspan="11">{{ text_no_results }}</td>
+                </tr>
+                {% endif %}
+                  </tbody>
+                
+              </table>
+            </div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 text-left">{{ pagination }}</div>
+			<div class="col-sm-6 text-right">{{ results }}</div>
+		</div>
+	</div>
+</div>
+
+<div id="boxnowmap"></div>
+<a href="javascript:;" class="boxnow-map-widget-button" style="display: none;">Select BoxNow Locker</a>
+<script type="text/javascript">
+var _bn_map_widget_config = {
+	type: "popup",
+	partnerId: '{{ partner_id }}',
+	parentElement: "#boxnowmap",
+	afterSelect: function(selected){
+		if (selected.boxnowLockerId) {
+			document.querySelector("[data-order-id=\"" + window["selectedOrderId"] + "\"]").closest("tr").querySelector(".locker_id").value = selected.boxnowLockerId;
+			document.querySelector("[data-order-id=\"" + window["selectedOrderId"] + "\"]").closest("tr").querySelector(".locker_id_button").textContent = selected.boxnowLockerId;
+		}
+	}
+};
+(function(d){var e = d.createElement("script");e.src = "https://widget-cdn.boxnow.gr/map-widget/client/v1.js";e.async = true;e.defer = true;d.getElementsByTagName("head")[0].appendChild(e);})(document);
+</script>
+
+<script>
+
+$('.submitVoucher').on('click',function(e) {
+	e.preventDefault();
+	
+	let href = new URL($(this).attr('href'));
+
+	let quantity = $(this).closest(".boxnow_row").find('.quantity').val(); 
+	let warehouse_number = $(this).closest(".boxnow_row").find('.warehouse_number').val(); 
+	let locker_id = $(this).closest(".boxnow_row").find('.locker_id').val(); 
+	
+	href.searchParams.set('quantity', quantity);
+	href.searchParams.set('warehouse_number', warehouse_number);
+	href.searchParams.set('locker_id', locker_id);
+	
+	window.location.href = href;
+});
+
+$("[type='number']").keypress(function (evt) {
+    evt.preventDefault();
+});
+</script>
+
+<style type="text/css">
+	.parcels-td a+a:before {
+		content:","
+	}
+</style>
+
+{{ footer }} 

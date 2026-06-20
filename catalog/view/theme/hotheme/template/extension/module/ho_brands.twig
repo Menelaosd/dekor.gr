@@ -1,0 +1,53 @@
+<div class="brands-module arrow-nav-wrapper module-wrapper arrow-nav-offset row">
+	<div class="container brands-container">
+		<div class="brands-wrapper">
+			<div class="brands-carousel swiper-container" id="brands_carousel{{ module }}">
+				<div class="swiper-wrapper">
+					{% for brand in manufacturers %}
+					<div class="swiper-slide">
+						<div class="brand-block-wrap">
+							<div class="brand-block">
+								<a href="#" title="{{ brand.name }}">
+									<img src="{{ brand.image }}" alt="{{ brand.name }}" class="img-fluid">
+								</a>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+				{% if not mobile %}
+				<div class="swiper-navigation">
+					<div class="swiper-button-next brands_carousel-button-next-{{module}}"></div>
+					<div class="swiper-button-prev brands_carousel-button-prev-{{module}}"></div>
+				</div>
+				{% endif %}
+			</div>
+		</div>		
+	</div>
+</div>
+<script>
+	var swiperBrands{{ module }} = new Swiper('#brands_carousel{{ module }}', {
+		slidesPerView: 2,
+		spaceBetween: 0,
+		mode: 'horizontal',
+		spaceBetween: 0,
+		observer: true,
+		observeParents: true,
+		loop:true,
+		{% if not mobile %}
+		navigation: {
+			nextEl: '.brands_carousel-button-next-{{module}}',
+			prevEl: '.brands_carousel-button-prev-{{module}}',
+		},
+		{% endif %}
+		autoplay: 4000,
+		breakpoints: {
+			992: {
+			  slidesPerView: 4,
+			},
+			1200: {
+			  slidesPerView: {{ brands_per_view }},
+			}
+		}
+	});
+</script>

@@ -1,0 +1,32 @@
+{% if categories %}
+  <nav id="mmenu">
+      <ul class="navbar-nav">
+        {% for category in categories %}
+        {% if category.children %}
+        <li class="nav-item dropdown">
+		  <a href="{{ category.href }}" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ category.name }}</a>
+          <ul class="dropdown-menu">
+			{% for child in category.children %}
+				{% if child.children %}
+					<li class="dropdown-submenu">
+						<a  tabindex="-1" href="{{ child.href }}">{{ child.name }}</a>
+						<ul class="dropdowns">
+							{% for childer in child.children %}
+								<li>
+									<a href="{{ childer.href }}">{{ childer.name }}</a>
+								</li>
+							{% endfor %}
+						</ul>
+				{% else %}
+					<li><a href="{{ child.href }}">{{ child.name }}</a></li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+        </li>
+        {% else %}
+        <li class="nav-item"><a href="{{ category.href }}" class="nav-link">{{ category.name }}</a></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+  </nav>
+{% endif %}

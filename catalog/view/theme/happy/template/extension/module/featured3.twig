@@ -1,0 +1,72 @@
+<div id="trofodosia">
+<div class="home_product_block m_t_30  m_b_30 container">
+
+
+
+            {% if lang == 'el' %}  <h4>ΤΡΟΦΟΔΟΣΙΑ</h4>   {% else %} <h4>FEED</h4> {% endif %}
+
+
+     <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#tab16" aria-controls="tab16" role="tab" data-toggle="tab">ΣΤΕΡΕΑ ΤΡΟΦΗ</a></li>
+         <li role="presentation"><a href="#tab17"  aria-controls="tab19" role="tab" data-toggle="tab">ΥΓΡΗ ΤΡΟΦΗ</a></li>
+         <li role="presentation"><a href="#tab18"  aria-controls="tab19" role="tab" data-toggle="tab">ΠΡΩΤΕΣ ΥΛΕΣ</a></li>
+         <li role="presentation"><a href="#tab19"  aria-controls="tab19" role="tab" data-toggle="tab">ΣΥΜΠΛΗΡΩΜΑΤΑ ΔΙΑΤΡΟΦΗΣ</a></li>
+    </ul>
+    <div class="product_block-wrap">
+      
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="tab16">
+                    <div id="ilektrikoi" class="container">
+                       
+                                {% for product_ster in products_sterea_trofi %}
+                                    <div class="col-md-3">
+                                        {{ include('happy/template/hostore/product_blocks/product_owl3.twig') }}
+                                    </div>
+                                {% endfor %}
+                     
+                 </div>
+             </div>
+          
+             <div role="tabpanel" class="tab-pane" id="tab17">
+                    <div id="xeirokinitoi" class="container">
+                      
+                                {% for product_igri_trof in products_igri_trofi %}
+                                    <div class="col-md-3">
+                                        {{ include('happy/template/hostore/product_blocks/product_owl4.twig') }}
+                                    </div>
+                                {% endfor %}
+                      
+                 </div>
+             </div>
+             <div role="tabpanel" class="tab-pane" id="tab18">
+                    <div id="xeirokinitoi" class="container">
+                      
+                                {% for product_a in products_trofodosia_a_ili %}
+                                    <div class="col-md-3">
+                                        {{ include('happy/template/hostore/product_blocks/product_owl5.twig') }}
+                                    </div>
+                                {% endfor %}
+                      
+                 </div>
+             </div>
+             <div role="tabpanel" class="tab-pane" id="tab19">
+                    <div id="xeirokinitoi" class="container">
+                      
+                                {% for product_simpl in products_simpliromata_diatrofis %}
+                                    <div class="col-md-3">
+                                        {{ include('happy/template/hostore/product_blocks/product_owl6.twig') }}
+                                    </div>
+                                {% endfor %}
+                      
+                 </div>
+             </div>
+
+               </div>
+            </div>
+ 
+  
+
+</div>
+</div>
+
+

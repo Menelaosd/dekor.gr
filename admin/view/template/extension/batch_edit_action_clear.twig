@@ -1,0 +1,118 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<h4>{{ tab_action_clear }}</h4>
+<hr/>
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][products]" type="checkbox" value="1"> {{ entry_clear_products }}</label>
+		</div>
+	</div>
+</div>
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][specials]" type="checkbox" value="1"> {{ entry_clear_specials }}</label>
+		</div>
+	</div>
+</div>
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][discounts]" type="checkbox" value="1"> {{ entry_clear_discounts }}</label>
+		</div>
+	</div>
+</div>
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][options]" type="checkbox" value="1"> {{ entry_clear_options }}</label>
+		</div>
+	</div>
+</div>
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][attributes]" type="checkbox" value="1"> {{ entry_clear_attributes }}</label>
+		</div>
+	</div>
+</div>
+{% if oc_filters %}
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][filters]" type="checkbox" value="1"> {{ entry_clear_filters }}</label>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% if ext_labels %}
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][labels]" type="checkbox" value="1"> {{ entry_clear_labels }}</label>
+		</div>
+	</div>
+</div>
+{% endif %}
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][categories]" type="checkbox" value="1"> {{ entry_clear_categories }}</label>
+		</div>
+	</div>
+</div>
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][stores]" type="checkbox" value="1"> {{ entry_clear_stores }}</label>
+		</div>
+	</div>
+</div>
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][rewards]" type="checkbox" value="1"> {{ entry_clear_rewards }}</label>
+		</div>
+	</div>
+</div>
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][layouts]" type="checkbox" value="1"> {{ entry_clear_layouts }}</label>
+		</div>
+	</div>
+</div>
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][related]" type="checkbox" value="1"> {{ entry_clear_related }}</label>
+		</div>
+	</div>
+</div>
+<!-- different related tables if you use custom modules to show products on product page -->
+{% for product_related_table in product_related_tables %}
+{% if product_related_table.table != 'product_related' %}
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][related_custom][{{ product_related_table.table }}][clear]" type="checkbox" value="1"> {{ entry_clear_related }} [{{ product_related_table.table }}]</label>
+			<input type="hidden" name="action[clear][related_custom][{{ product_related_table.table }}][field_product_id]" value="{{ product_related_table.field_product_id }}" />
+			<input type="hidden" name="action[clear][related_custom][{{ product_related_table.table }}][field_related_id]" value="{{ product_related_table.field_related_id }}" />
+		</div>
+	</div>
+</div>
+{% endif %}
+{% endfor %}
+<div class="form-group action-group-default">
+	<div class="col-sm-12">
+		<div class="checkbox">
+			<label><input name="action[clear][seo_urls]" type="checkbox" value="1"> {{ entry_clear_seo_urls }}</label>
+		</div>
+	</div>
+</div>

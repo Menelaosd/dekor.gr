@@ -1,0 +1,143 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<h4>{{ tab_action_attribute }}</h4>
+<hr/>
+{% set col1 = '2' %}
+{% set col2 = '2' %}
+{% set col3 = '4' %}
+{% set col4 = '4' %}
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_replace_existing }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<div class="row form-row">
+				<label class="col-sm-2 control-label" for="action[attribute][replace][---0---][attribute_id]"><i class="required"></i> {{ entry_attribute }}</label>
+				<div class="col-sm-3">
+					<input type="text" value="" placeholder="{{ entry_attribute }}" id="action[attribute][replace][---0---][attribute_id]" data-target="action[attribute][replace][---0---][attribute_id]" class="form-control attribute-select" />
+					<input type="hidden" name="action[attribute][replace][---0---][attribute_id]" value="" />
+				</div>
+				<label class="col-sm-2 control-label" for="action[attribute][replace][---0---][attribute_replace_id]" style="text-align:center;"><i class="fa fa-arrow-right"></i></label>
+				<div class="col-sm-3">
+					<input type="text" value="" placeholder="{{ entry_attribute }}" id="action[attribute][replace][---0---][attribute_replace_id]" data-target="action[attribute][replace][---0---][attribute_replace_id]" class="form-control attribute-select" />
+					<input type="hidden" name="action[attribute][replace][---0---][attribute_replace_id]" value="" />
+				</div>
+				<div class="col-sm-2 hide-filter">
+					<button type="button" onclick="bpe.cloneFilter(this); $('select[name^=\'action[attribute][replace]\'').change();" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+					<button type="button" onclick="if (!$(this).parent().parent().parent().hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).parent().parent().parent().find('input, textarea').val(''); }" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_update_existing }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<div class="row form-row">
+				<label class="col-sm-2 control-label" for="action[attribute][update][---0---][attribute_id]"><i class="required"></i> {{ entry_attribute }}</label>
+				<div class="col-sm-8">
+					<input type="text" value="" placeholder="{{ entry_attribute }}" id="action[attribute][update][---0---][attribute_id]" data-target="action[attribute][update][---0---][attribute_id]" class="form-control attribute-select" />
+					<input type="hidden" name="action[attribute][update][---0---][attribute_id]" value="" />
+				</div>
+				<div class="col-sm-2 hide-filter">
+					<button type="button" onclick="bpe.cloneFilter(this); $('select[name^=\'action[attribute][update]\'').change();" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+					<button type="button" onclick="if (!$(this).parent().parent().parent().hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).parent().parent().parent().find('input, textarea').val(''); }" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+				</div>
+			</div>
+			<div class="row form-row">
+				<label class="col-sm-{{ col1 }} control-label" for="action[attribute][update][---0---][find]"><i class="required"></i> {{ entry_text }} <span data-toggle="tooltip" title="{{ help_language }}"></span></label>
+				<div class="col-sm-3">
+					<select name="action[attribute][update][---0---][action]" class="form-control" onchange="$(this).parent().parent().find('.text-action').hide(); $(this).parent().parent().find('.text-action.text-'+$(this).val()+'').show();">
+						<option value="">{{ text_replace }}</option>
+						<option value="set">{{ text_set }}</option>
+						<option value="prepend">{{ text_prepend }}</option>
+						<option value="append">{{ text_append }}</option>
+						<option value="clear">{{ tab_clear }}</option>
+					</select>
+				</div>
+				<div class="text-action text-">
+					<div class="col-sm-3">
+						<input type="text" value="" placeholder="{{ text_find }}" id="action[attribute][update][---0---][find]" name="action[attribute][update][---0---][find]" data-target="action[attribute][update][---0---][find]" data-attribute_id="action[attribute][update][---0---][attribute_id]" data-language_id="0" class="form-control attribute-value-select" />
+					</div>
+					<label class="col-sm-1 control-label" for="action[attribute][update][---0---][replace]" style="text-align:center;"><i class="fa fa-arrow-right"></i></label>
+					<div class="col-sm-3">
+						<input type="text" value="" placeholder="{{ text_replace }}" id="action[attribute][update][---0---][replace]" name="action[attribute][update][---0---][replace]" data-target="action[attribute][update][---0---][replace]" data-attribute_id="action[attribute][update][---0---][attribute_id]" data-language_id="0" class="form-control attribute-value-select" />
+					</div>
+				</div>
+				<div class="text-action text-set text-append text-prepend" style="display:none;">
+					<div class="col-sm-7">
+						<textarea id="action[attribute][update][---0---][set]" name="action[attribute][update][---0---][set]" data-target="action[attribute][update][---0---][set]" data-attribute_id="action[attribute][update][---0---][attribute_id]" data-language_id="0" rows="3" class="form-control attribute-value-select"></textarea>
+					</div>
+				</div>
+				<div class="text-action text-clear" style="display:none;">
+					<div class="col-sm-7"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_add_new }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<div class="row form-row">
+				<label class="col-sm-2 control-label" for="action[attribute][insert][---0---][attribute_id]"><i class="required"></i> {{ entry_attribute }}</label>
+				<div class="col-sm-8">
+					<input type="text" value="" placeholder="{{ entry_attribute }}" id="action[attribute][insert][---0---][attribute_id]" data-target="action[attribute][insert][---0---][attribute_id]" class="form-control attribute-select" />
+					<input type="hidden" name="action[attribute][insert][---0---][attribute_id]" value="" />
+				</div>
+				<div class="col-sm-2 hide-filter">
+					<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+					<button type="button" onclick="if (!$(this).parent().parent().parent().hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).parent().parent().parent().find('input, textarea').val(''); }" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+				</div>
+			</div>
+			<div class="row form-row">
+				<label class="col-sm-{{ col1 }} control-label" for="action[attribute][insert][---0---][set]"><i class="required"></i> {{ entry_text }}</label>
+				<div class="text-action text-set col-sm-10">
+				{% for language in languages %}
+					<div class="row" style="padding-bottom:5px;">
+						<div class="col-sm-11">
+							<textarea id="action[attribute][insert][---0---][set][{{ language.language_id }}]" name="action[attribute][insert][---0---][set][{{ language.language_id }}]" data-target="action[attribute][insert][---0---][set][{{ language.language_id }}]" data-attribute_id="action[attribute][insert][---0---][attribute_id]" data-language_id="{{ language.language_id }}" rows="2" class="form-control attribute-value-select" style="height:50px;" placeholder="{{ language.name }}"></textarea>
+						</div>
+						<div class="col-sm-1">
+							<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" />
+						</div>
+					</div>
+				{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_remove_existing }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<label class="col-sm-2 control-label" for="action[attribute][delete][---0---][attribute_id]"><i class="required"></i> {{ entry_attribute }}</label>
+			<div class="col-sm-8">
+				<input type="text" value="" placeholder="{{ entry_attribute }}" id="action[attribute][delete][---0---][attribute_id]" data-target="action[attribute][delete][---0---][attribute_id]" class="form-control attribute-select" />
+				<input type="hidden" name="action[attribute][delete][---0---][attribute_id]" value="" />
+			</div>
+			<div class="col-sm-2 hide-filter">
+				<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+				<button type="button" onclick="if (!$(this).parent().parent().hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).parent().parent().find('input').val(''); }" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+			</div>
+		</div>
+	</div>
+</div>

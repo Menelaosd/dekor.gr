@@ -1,0 +1,39 @@
+{{ header }}
+	<div id="common-home">
+		{{ column_left }}
+		{% if column_left and column_right %}
+		{% set class = 'col-sm-6' %}
+		{% elseif column_left or column_right %}
+		{% set class = 'col-sm-9' %}
+		{% else %}
+		{% set class = '' %}
+		{% endif %}
+		<div id="content" class="{{ class }}">{{ content_top }}{{ content_bottom }}</div>
+		{{ column_right }}
+	</div>
+	{#
+	<script type="text/javascript">
+
+		$(function() {
+
+			var tabs = $('.best_new ul.nav.nav-tabs > li');
+
+			setInterval(function() {
+				
+				var onTab = tabs.filter('.parent-active');
+
+				var nextTab = onTab.index() < tabs.length-1 ? onTab.next() : tabs.first();
+				nextTab.find('a').click();
+
+			}, 5000);
+		});
+
+	</script>
+	#}
+
+<div class="espa-banner" data-toggle="modal" data-target="#espa-modal">
+	<a href="/image/afisaelianikoel.pdf" title="Amea Banner" class="img-fluid" target="_blank" lang="el" role="link">
+		<img src="/image/espabanner.jpg" alt="Amea Banner" class="img-fluid">
+	</a>
+</div>
+{{ footer }}

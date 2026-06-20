@@ -1,0 +1,118 @@
+<?php
+
+$data['heading_title']				= $this->language->get('heading_title');
+$data['text_edit']				= $this->language->get('text_edit');
+$data['text_enabled']				= $this->language->get('text_enabled');
+$data['text_disabled']				= $this->language->get('text_disabled');
+$data['text_signup']				= $this->language->get('text_signup');
+$data['text_about']				= $this->language->get('text_about');
+$data['text_about_cookie']			= $this->language->get('text_about_cookie');
+$data['text_version']				= $this->language->get('text_version');
+$data['heading_container']			= $this->language->get('heading_container');
+$data['text_container']				= $this->language->get('text_container');
+$data['text_order']				= $this->language->get('text_order');
+
+$data['entry_code']				= $this->language->get('entry_code');
+$data['entry_gid']				= $this->language->get('entry_gid');
+$data['entry_mp']				= $this->language->get('entry_mp');
+$data['entry_status']				= $this->language->get('entry_status');
+$data['entry_ampcode']				= $this->language->get('entry_ampcode');
+$data['entry_ampstatus']			= $this->language->get('entry_ampstatus');
+$data['entry_admin']				= $this->language->get('entry_admin');
+$data['entry_conversion_id']			= $this->language->get('entry_conversion_id');
+$data['entry_conversion_label']			= $this->language->get('entry_conversion_label');
+$data['entry_eu_cookie']			= $this->language->get('entry_eu_cookie');
+$data['entry_eu_cookie_enforce']		= $this->language->get('entry_eu_cookie_enforce');
+$data['entry_cookie_position']			= $this->language->get('entry_cookie_position');
+$data['entry_cookie_title']			= $this->language->get('entry_cookie_title');
+$data['entry_cookie_text']			= $this->language->get('entry_cookie_text');
+$data['entry_cookie_text2']			= $this->language->get('entry_cookie_text2');
+$data['entry_cookie_link']			= $this->language->get('entry_cookie_link');
+$data['entry_cookie_button1']			= $this->language->get('entry_cookie_button1');
+$data['entry_cookie_button2']			= $this->language->get('entry_cookie_button2');
+$data['entry_cookie_button3']			= $this->language->get('entry_cookie_button3');
+$data['entry_remarketing']			= $this->language->get('entry_remarketing');
+$data['entry_userid_status']			= $this->language->get('entry_userid_status');
+$data['entry_pixel']				= $this->language->get('entry_pixel');
+$data['entry_pixelcode']			= $this->language->get('entry_pixelcode');
+$data['entry_product']				= $this->language->get('entry_product');
+$data['entry_ptitle']				= $this->language->get('entry_ptitle');
+$data['entry_adword']				= $this->language->get('entry_adword');
+$data['entry_cookie_bg_popup']			= $this->language->get('entry_cookie_bg_popup');
+$data['entry_cookie_text_popup']		= $this->language->get('entry_cookie_text_popup');
+$data['entry_cookie_bg_button']			= $this->language->get('entry_cookie_bg_button');
+$data['entry_cookie_text_button']		= $this->language->get('entry_cookie_text_button');
+$data['entry_cookie_heading_color']		= $this->language->get('entry_cookie_heading_color');
+$data['entry_cookie_badge']			= $this->language->get('entry_cookie_badge');
+$data['entry_cookie_badge_position']		= $this->language->get('entry_cookie_position');
+$data['entry_cookie_badge_color']		= $this->language->get('entry_cookie_badge_color');
+$data['entry_hotjar_status']			= $this->language->get('entry_hotjar_status');
+$data['entry_hotjar_siteid']			= $this->language->get('entry_hotjar_siteid');
+$data['entry_bing_status']			= $this->language->get('entry_bing_status');
+$data['entry_bing_uetid']			= $this->language->get('entry_bing_uetid');
+$data['entry_skroutz_status']			= $this->language->get('entry_skroutz_status');
+$data['entry_skroutz_siteid']			= $this->language->get('entry_skroutz_siteid');
+$data['entry_yandex_status']			= $this->language->get('entry_yandex_status');
+$data['entry_yandex_code']			= $this->language->get('entry_yandex_code');
+$data['entry_google_optimize']			= $this->language->get('entry_google_optimize');
+$data['entry_google_optimize_status']		= $this->language->get('entry_google_optimize_status');
+$data['entry_alt_currency']			= $this->language->get('entry_alt_currency');
+$data['entry_alt_currency_status']		= $this->language->get('entry_alt_currency_status');
+$data['entry_alt_currency_val']			= $this->language->get('entry_alt_currency_val');
+$data['entry_fb_catalog_id']			= $this->language->get('entry_fb_catalog_id');
+$data['entry_custom']				= $this->language->get('entry_custom');
+$data['entry_dynx_itemid']			= $this->language->get('entry_dynx_itemid');
+$data['entry_dynx_itemid2']			= $this->language->get('entry_dynx_itemid2');
+$data['entry_dynx_pagetype']			= $this->language->get('entry_dynx_pagetype');
+$data['entry_dynx_totalvalue']			= $this->language->get('entry_dynx_totalvalue');
+$data['entry_ecomm_pagetype']			= $this->language->get('entry_ecomm_pagetype');
+$data['entry_ecomm_prodid']			= $this->language->get('entry_ecomm_prodid');
+$data['entry_ecomm_totalvalue']			= $this->language->get('entry_ecomm_totalvalue');
+$data['entry_cache']				= $this->language->get('entry_cache');
+$data['entry_zopim_status']			= $this->language->get('entry_zopim_status');
+$data['entry_zopim_code']			= $this->language->get('entry_zopim_code');
+$data['entry_zenchat_status']			= $this->language->get('entry_zenchat_status');
+$data['entry_zenchat_code']			= $this->language->get('entry_zenchat_code');
+$data['entry_route_checkout']			= $this->language->get('entry_route_checkout');
+$data['entry_route_success']			= $this->language->get('entry_route_success');
+
+$data['column_oid']				= $this->language->get('column_oid');
+$data['column_status']				= $this->language->get('column_status');
+$data['column_action']				= $this->language->get('column_action');
+
+
+$data['help_gid']				= $this->language->get('help_gid');
+$data['help_admin']				= $this->language->get('help_admin');
+$data['help_conversion_id']			= $this->language->get('help_conversion_id');
+$data['help_userid']				= $this->language->get('help_userid');
+$data['help_conversion_label']			= $this->language->get('help_conversion_label');
+$data['help_remarketing']			= $this->language->get('help_remarketing');
+$data['help_product']				= $this->language->get('help_product');
+$data['help_ptitle']				= $this->language->get('help_ptitle');
+$data['help_mp']				= $this->language->get('help_mp');
+$data['help_cache']				= $this->language->get('help_cache');
+$data['help_ac']				= $this->language->get('help_ac');
+$data['help_ac_value']				= $this->language->get('help_ac_value');
+$data['help_custom']				= $this->language->get('help_custom');
+$data['help_route']				= $this->language->get('help_route');
+$data['help_route_checkout']			= $this->language->get('help_route_checkout');
+$data['help_route_success']			= $this->language->get('help_route_success');
+
+$data['tab_tab1']				= $this->language->get('tab_tab1');
+$data['tab_tab2']				= $this->language->get('tab_tab2');
+$data['tab_tab3']				= $this->language->get('tab_tab3');
+$data['tab_tab4']				= $this->language->get('tab_tab4');
+$data['tab_tab5']				= $this->language->get('tab_tab5');
+$data['tab_tab6']				= $this->language->get('tab_tab6');
+$data['tab_tab7']				= $this->language->get('tab_tab7');
+
+$data['button_save']				= $this->language->get('button_save');
+$data['button_cancel']				= $this->language->get('button_cancel');
+$data['button_send']				= $this->language->get('button_send');
+$data['button_refund']				= $this->language->get('button_refund');
+
+$data['error_permission']			= $this->language->get('error_permission');
+$data['error_code']				= $this->language->get('error_code');
+$data['error_analytics']			= $this->language->get('error_analytics');
+
+?>

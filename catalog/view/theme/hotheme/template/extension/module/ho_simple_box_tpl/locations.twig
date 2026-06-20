@@ -1,0 +1,139 @@
+<div id="locations" class="locations-wrapper">
+	<div class="container">
+	
+	
+		<div class="tagger-heading">
+			<h2>LIVE THE GINI EXPERIENCE!</h2>
+			<div class="module-subtitle">
+				<span class="module-subtitle-text">
+					Βρες το κοντινότερο σου κατάστημα και έλα να σε γνωρίσουμε !
+				</span>
+			</div>
+		</div>	
+	
+		<div class="locations-inner">
+			<div class="row">
+				<div class="col-12 col-sm-6 locations-left">
+					<ul class="locations-ul" id="locationFilter">
+						{% for banner in banners %}
+							{% if banner.image %}
+								<li>
+									<a href="#" class="locRefLink locRefLinkFilter" data-filter="loc{{ loop.index }}">
+										<span class="locp1">{{ banner.hypertitle }}</span>
+										<span class="locp2">{{ banner.title }}</span>
+									</a>
+								</li>		
+							{% else %}
+								<li>
+									<a href="{{ banner.link }}" class="locRefLink" data-fancybox="" data-type="iframe" >
+										<span class="locp1">{{ banner.hypertitle }}</span>
+										<span class="locp2">{{ banner.title }}</span>
+									</a>
+								</li>
+							{% endif %}
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="col-12 col-sm-6 locations-right">
+					<div class="locationsCarouselWrap">
+						<div class="locations-carousel-wrapper swiper-container" id="locations-swiper">
+							<div class="swiper-wrapper">								
+								{% for banner in banners %}
+									{% if banner.image %}
+									<div class="swiper-slide loc-slide loc{{ loop.index }}" data-filter="loc{{ loop.index }}">
+										<figure class="effect-roxy">
+											<a data-fancybox data-type="iframe" href="{{ banner.link }}">
+												<figcaption>
+													<i class="fas fa-map-marked-alt"></i>
+													<h2>{{ banner.hypertitle }}</h2>
+													<p>{{ banner.title }}</p>
+												</figcaption>
+												<img src="{{ banner.image }}" alt="{{ banner.title }}">
+											</a>
+										</figure>
+									</div>
+									{% endif %}
+								{% endfor %}													
+							</div>
+							<div class="pagination-locations hidden-desktop">
+								<div class="swiper-pagination locations-pagination"></div>
+							</div>
+							
+							{#
+							<a class="product-bundles-all hidden-desktop" href="#">
+								{{ readmore_all_stores }} <i class="far fa-chevron-right"></i>
+							</a>
+							#}
+						</div>
+						<div class="swiper-button-next locations-button locations-button-next"></div>
+						<div class="swiper-button-prev locations-button locations-button-prev"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>		
+		
+		
+$(document).ready(function(){
+  
+  var locationsSwiper = new Swiper ('#locations-swiper', {
+		slidesPerView: 1,
+		slidesPerGroup: 1,
+		spaceBetween: 30,
+		mode: 'horizontal',
+		 autoplay: {
+		   delay: 4000,
+		 },
+		observer: true,
+		observeParents: true,
+		loop:false,
+		navigation: {
+			nextEl: '.locations-button-next',
+			prevEl: '.locations-button-prev'
+		},
+		
+		pagination: {
+			el: '.locations-pagination',
+			type: 'bullets',
+			clickable: true
+		},
+		
+		breakpoints: {
+			992: {
+			  slidesPerView: 1,
+			  slidesPerGroup: 1,
+			  spaceBetween: 0,
+			  loop: true
+			}
+		}
+    });
+	
+  $('#body').on( 'click', '.locRefLinkFilter', function(e) {
+	
+	e.preventDefault();
+   
+   var filter = $(this).attr('data-filter');
+    
+    $('#locations-swiper .swiper-slide').css('display', 'none')
+    $('#locations-swiper .swiper-slide.' + filter).css('display', '')
+    $( '.swiper-filter a' ).removeClass( 'filter-active' );
+    $( this ).addClass( 'filter-active' );
+    
+    locationsSwiper.updateSize();
+    locationsSwiper.updateSlides();
+    locationsSwiper.updateProgress();
+    locationsSwiper.updateSlidesClasses();
+    locationsSwiper.slideTo(0);
+    locationsSwiper.scrollbar.updateSize();
+    
+    return false;
+  });	
+	
+  
+});
+	
+	
+</script>

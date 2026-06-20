@@ -1,0 +1,354 @@
+{% if layout == 1 %}
+
+	<div id="tagger{{ module }}" class="tagger-wrap">	
+		<div class="container product-tag_container">
+			<div class="product-tag_container-wrap">
+				{% if main_description %}
+					<div class="tagger-heading">
+						{% if main_description.heading %}
+							<h2>{{ main_description.heading }}</h2>
+						{% endif %}
+						{% if main_description.subtitle %}
+						<div class="module-subtitle">
+							<span class="module-subtitle-text">
+								{{ main_description.subtitle }}
+							</span>
+						</div>
+						{% endif %}
+					</div>
+				{% endif %}
+				
+				<div class="tagger-main-carousel swiper-container" id="tagger-main-carousel_{{ module }}">
+					<div class="swiper-wrapper main-tagger-swipper-wrapper">	
+						{% for product_tag in product_tags %}
+							<div class="swiper-slide main-tagger-swipper-slide">
+								<div class="tagger-row row">
+									<div class="tagger-left col-12 col-xl-3">
+										<div class="tagger-image-dum">
+											<div class="tagger-image-wrapper">
+												
+												{#
+												<a title="{{ product_tag.title }}" href="{{ product_tag.href }}" class="shop-thelook-all">
+													<span class="sp-label-desktop">
+														{{ text_show_tagger_bundle }}
+														<i class="fas fa-angle-right"></i>
+													</span>	
+													
+													<span class="sp-label-mobile">
+														<b class="far fa-plus"></b>
+													</span>
+												</a>
+												#}
+											
+												<img src="{{ product_tag.image }}" alt="Shop the Look {{ loop.index }}">
+												{% for product in product_tag.products %}
+													<div class="product-tag_point-wrap" style="left:{{ product.x }}%;top:{{ product.y }}%;">
+														<div class="product-tag_point" 
+														data-html="true" 
+														data-toggle="tooltip" 
+														data-trigger="hover"
+														data-productid = "product{{ product.product_id}}"
+														data-placement="right" 
+														title='{{ include('hotheme/template/product/product_template/product_tag.twig') }}' 
+														data-boundary 	= "scrollParent"
+														data-container 	= "#tagger_carousel{{ module }}_{{ loop.index }}"
+														data-template 	= '<div class="tooltip tagger-tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>
+														'></div>	
+													</div>
+												{% endfor %}
+
+											</div>
+										</div>
+									</div>
+									
+									<div class="tagger-right col-12 col-xl-9">												
+										<div class="tagger-products-list">
+											<div class="product-container-products">
+												<div id="tagger_carousel{{ module }}_{{ loop.index }}" class="swiper-container">
+													<div class="swiper-wrapper tagger-swipper-wrapper">	
+														{% for product in product_tag.products_full %}
+															<div class="swiper-slide tagger-swiper-slide" id="product{{ product.product_id}}">
+																<div class="product-layout product-grid">
+																	{{ include('hotheme/template/product/product_template/product_main.twig') }}
+																</div>
+															</div>
+														{% endfor %}
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tagger-right-bottom-wrap col-12">
+											<div class="tagger-right-bottom">
+												<a 
+													data-products = "{{ product_tag.product_tag_ids }}"
+													onclick="cart.multiple('{{ product_tag.product_tag_ids }}');"
+													href="javascript:void(0);" 
+													title="{{ text_add_all }}"
+												>
+												<i class="far fa-shopping-bag" ></i> {{ text_add_all }}
+												</a>
+												<div class="tagger-pagination-container">
+													<div class="swiper-pagination tagger-pagination-{{module}}"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+						
+							
+								<script>
+									const swiperTags{{ module }}_{{ loop.index }}= new Swiper('#tagger_carousel{{ module }}_{{ loop.index }}', {
+										slidesPerView: 3,
+										spaceBetween: 30,
+										slidesPerGroup: 3,
+										loop: false,
+										loopFillGroupWithBlank: true,
+										noSwiping: true,
+										hashNavigation: true,
+										noSwipingClass: 'swiper-no-swiping',
+										observer: true,
+										on: {
+											slideChangeTransitionStart: function () {
+												$('#tagger{{ module }} [data-toggle="tooltip"]').tooltip('hide');
+											}
+										},
+										observeParents: true,
+										breakpoints: {								
+											768: {
+											  slidesPerView: 3,
+											  slidesPerGroup: 3,
+											  spaceBetween: 5
+											},
+											992: {
+											  slidesPerView: 4,
+											  slidesPerGroup: 4,
+											  spaceBetween: 10
+											},
+											1200: {
+											  spaceBetween: 10
+											}
+										}
+										//simulateTouch: false
+									});							
+								</script>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+					
+				<div class="swiper-button-next tagger-button tagger-button-next-{{ module }}"></div>
+				<div class="swiper-button-prev tagger-button tagger-button-prev-{{ module }}"></div>
+					
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">	
+		var swiperTagsMain{{ module }} = new Swiper('#tagger-main-carousel_{{ module }}', {
+			slidesPerView: 1,
+			spaceBetween: 30,
+			slidesPerGroup: 1,
+			loop: false,
+			navigation: {
+				nextEl: '.tagger-button-next-{{ module }}',
+				prevEl: '.tagger-button-prev-{{ module }}',
+			},
+			pagination: {
+				el: '.tagger-pagination-{{ module }}',
+				type: 'bullets',
+				clickable: true
+			},
+			noSwiping: true,
+			noSwipingClass: 'swiper-no-swiping',
+			observer: true,
+			observeParents: true,
+			autoplay: {
+				delay: 7000,
+				disableOnInteraction: false
+			},
+			breakpoints: {								
+				768: {
+					spaceBetween: 0,
+					loop: true,
+					centeredSlides:true
+				},
+				992: {
+					spaceBetween: 0,
+					loop: true,
+					centeredSlides:true
+				}
+			}			
+		});	
+		
+		$('#tagger-main-carousel_{{ module }}').on('mouseover', function() {
+		  swiperTagsMain{{ module }}.autoplay.stop();
+		});
+
+		$('#tagger-main-carousel_{{ module }}').on('mouseout', function() {
+		  swiperTagsMain{{ module }}.autoplay.start();
+		});		
+		
+		$(document).on('click touchstart mouseenter','.product-tag_point',function(e){
+
+			e.preventDefault();
+			
+			var $productId 	= $(this).data('productid');
+			var $master 	= $(this).closest('.tagger-row').find('.tagger-right').find('.swiper-container');
+			var $eq			= $master.find('#'+$productId ).index();
+			
+			
+			var $thisSwiper = document.querySelector( '#'+$master.attr('id') ).swiper;
+			
+			$master.find('.swiper-slide').removeClass('activeSlide').addClass('triggered');
+			$master.find('.swiper-slide').eq($eq).addClass('activeSlide');
+			$thisSwiper.slideTo($eq);
+		
+		});
+	</script>
+	
+
+{% else %}
+
+	<div id="tagger{{ module }}" class="tagger-wrap">	
+		<div class="container product-tag_container">
+			<div class="product-tag_container-wrap">
+			
+				<div id="tagger_content_wrapper">
+				
+					{% for product_tag in product_tags %}
+					
+					{% if product_tag.title or product_tag.description %}
+						<div class="tagger-heading-landing">
+						
+							{% if product_tag.title %}
+								<h2>{{ product_tag.title }}</h2>
+							{% endif %}
+							
+							{% if product_tag.description %}
+								<div class="tagger-heading-landing-text">
+									{{ product_tag.description }}
+								</div>
+							{% endif %}
+							
+						</div>
+					{% endif %}
+					
+						<div class="tagger-block">
+							<div class="tagger-image-dum">
+								<div class="tagger-image-wrapper">
+									<img src="{{ product_tag.image }}">
+									{% for product in product_tag.products %}
+										<div class="product-tag_point-wrap" style="left:{{ product.x }}%;top:{{ product.y }}%;">
+											<div class="product-tag_point" 
+											data-html="true" 
+											data-toggle="tooltip" 
+											data-placement="right" 
+											title='{{ include('hotheme/template/product/product_template/product_tag.twig') }}' 
+											data-trigger 	= "hover focus"
+											data-boundary 	= "scrollParent"
+											data-container 	= "#tagger_carousel{{ module }}"
+											data-template 	= '<div class="tooltip tagger-tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+											></div>	
+										</div>
+										
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+						
+						{% if product_tag.products_full %}
+							<div id="product-container" class="product-container row">
+								{% for product in product_tag.products_full %}
+									<div class="product-layout product-grid col-12 col-sm-3">
+										{{ include('hotheme/template/product/product_template/product_main.twig') }}
+									</div>
+								{% endfor %}
+							</div>
+							
+							<div class="products-tagger-bottom">
+								<div class="product-stagger-b-left">
+									<div class="product-stagger-b-icon">
+										<span class="icon-discount"></span>
+									</div>
+									<div class="product-stagger-b-text">
+										{{ text_tagger_bundle_top }}
+										<span>
+											{{ text_tagger_bundle_bottom}}
+										</span>
+									</div>
+								</div>								
+								<div class="product-stagger-b-prices">
+									<div class="product-stagger-b-initPrice">
+										<span>{{ text_initial_price }}</span>
+										<span class="priceField">
+											{{ product_tag.initial_price }}
+										</span>
+									</div>
+									<div class="product-stagger-b-finPrice">
+										<span>{{ text_final_price }}</span>
+										<span class="priceField">
+											{{ product_tag.final_price }}
+										</span>
+									</div>
+								</div>
+								<div class="product-stagger-b-button">
+									
+									<button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary" data-ids="{{ product_tag.product_tag_ids }}"
+									
+									href="javascript:;"
+									onclick="cart.multiple('{{ product_tag.product_tag_ids }}');"
+									>
+									<i class="fal fa-shopping-bag"></i>
+									
+										<span class="button-cart-text">{{ button_cart }}</span>
+									
+									</button>
+								</div>	
+							</div>
+							
+						{% endif %}
+						
+					{% endfor %}
+					
+					{% if product_tags_rest %}
+						<div class="tagger-rest-heading">
+							<h3>{{ text_more_tagger_bundles }}</h3>
+							<span>
+								{{ more_tagger_bundles_text }}
+							</span>
+						</div>
+						<div class="tagblock-row row">
+						{% for product_tag in product_tags_rest %}
+							<div class="col-4 tag-block-wrap">
+								<div class="tag-list-block">
+									<a href="{{ product_tag.href }}" title="{{ product_tag.title }}">
+										<img src="{{ product_tag.thumb }}" alt="{{ product_tag.title }}">
+									</a>
+								</div>
+							</div>
+						{% endfor %}
+						</div>
+					{% endif %}
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>		
+		$('#tagger{{ module }} [data-toggle="tooltip"]').on('shown.bs.tooltip', function () {
+			/*
+			$(".tagger-tooltip h3").dotdotdot({
+				height: 42,
+				fallbackToLetter: true,
+				watch: true,
+			});
+			*/
+			
+			$(window).scroll();
+		});
+	</script>
+
+{% endif %}
+

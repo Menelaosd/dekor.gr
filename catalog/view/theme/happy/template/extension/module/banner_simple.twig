@@ -1,0 +1,20 @@
+<div class="banners-container-lh" style="min-height:1500px;">
+	<div class="container">
+		<div class="banners-lighthouse">
+		{% for banner in banners %}
+			<div class="banner-block-lh">
+				<div class="banner-block-inner-lh">
+					{% if banner.link %}
+					<a href="{{ banner.link }}" title="{{ banner.title }}"></a>
+					{% endif %}
+					{% if banner.title %}
+						<div class="banner-title-lh">{{ banner.title }}</div>
+					{% endif %}
+					<img src="{{ banner.raw_image }}" alt="{{ banner.title }}" rel="preload" fetchpriority="high"  decoding="async" loading="eager" width="900" height="700" />
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+

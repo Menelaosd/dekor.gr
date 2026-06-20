@@ -1,0 +1,232 @@
+{{ header }}
+<div id="checkout-cart" class="container-fluid">
+	
+	<div class="row">
+		<div class="cartpage-sidebar-left col-12 col-md-3 col-xl-3">
+			<h1 class="cart-page-title">{{ heading_title }}</h1>
+			<div class="cart-total-products">
+				{{ total_products }}
+			</div>
+		</div>
+		<div id="content" class="col-12 col-md-6 col-xl-6">
+		
+			{% if attention %}
+				<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ attention }}
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+			{% endif %}
+			
+			{% if success %}
+				<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+			{% endif %}
+			
+			{% if error_warning %}
+				<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+			{% endif %}		
+		
+			{{ content_top }}
+			<form action="{{ action }}" method="post" enctype="multipart/form-data">
+				<div class="checkout-cart-container">
+					{% for product in products %}
+					<div class="checkout-cart-row">
+					
+						<div class="cart-row-block-image cart-row-block">
+							{% if product.thumb %}
+							<a href="{{ product.href }}">
+							<img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid" />
+							</a>
+							{% endif %}						
+						</div>
+						
+						<div class="cart-row-block-text cart-row-block">
+						
+							<a href="{{ product.href }}" class="checkout-cart-title">
+								{{ product.name }}
+								{# product.model #} 
+								{% if not product.stock %} <span class="text-danger">***</span> {% endif %}
+							</a>
+							
+							
+							{% if product.option %}
+								<div class="cart-row-options">
+									{% for option in product.option %} 
+									<small>{{ option.name }}: {{ option.value }}</small><br />
+									{% endfor %}
+								</div> 
+							{% endif %}
+
+							{#
+							
+							<div class="radio-flex">
+								<input type="checkbox" name="gift{{ product.cart_id}}" id="gift{{ product.cart_id}}">
+								<label for="gift{{ product.cart_id}}">{{ text_gift_wrap }}</label>
+							</div>								
+							
+							#}
+
+						</div>					
+					
+						<div class="cart-row-block-quantity cart-row-block">
+							<div class="product-quantity">
+								<div class="number-spinner">
+									<span class="input-group-btn">
+										<button class="button-minus" data-dir="dwn">-</button>
+									</span>
+									<input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" />
+									<span class="input-group-btn">
+										<button class="button-plus" data-dir="up">+</button>
+									</span>
+								</div>
+							</div>
+							<div class="cart-row-total">
+								{{ text_total }}:								
+								{% if product.total_initial_price %}
+									<span class="amount_before">
+									{{ product.total_initial_price }}
+									</span>
+								{% endif %}
+								<b>{{ product.total }}</b>
+							</div>
+						</div>
+						
+						<button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn-round btn-remove" onclick="cart.remove('{{ product.cart_id }}');"><i class="far fa-trash-alt"></i></button>
+					</div>
+					{% endfor %}
+					{% for voucher in vouchers %}
+						{# <tr>
+						<td></td>
+						<td class="text-left">{{ voucher.description }}</td>
+						<td class="text-left"></td>
+						<td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
+						<input type="text" name="" value="1" size="1" disabled="disabled" class="form-control" />
+						<span class="input-group-btn">
+						<button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="voucher.remove('{{ voucher.key }}');"><i class="fa fa-times-circle"></i></button>
+						</span></div></td>
+						<td class="text-right">{{ voucher.amount }}</td>
+						<td class="text-right">{{ voucher.amount }}</td>
+						</tr> #}
+					{% endfor %}
+				</div>
+			</form>
+			{% if modules %}
+			<div id="accordion"> {% for module in modules %}
+				{{ module }}
+				{% endfor %}
+			</div>
+			{% endif %}
+
+			<div class="cart-bottom-buttons text-desktop">
+				<a href="{{ continue }}" class="btn btn-light border">
+					<i class="fal fa-chevron-left"></i>
+					<span>{{ button_shopping }}</span>
+				</a>
+				<a href="{{ checkout }}" class="btn btn-primary">
+					<span>{{ button_checkout }}</span>
+					<i class="fal fa-chevron-right"></i>
+				</a>
+			</div>
+			
+			{{ content_bottom }}
+		</div>
+		
+		<div class="cartpage-sidebar-right col-12 col-md-3 col-xl-3">
+			
+			<h4 class="shipping-module-title">{{ text_order_totals }}</h4>
+			
+			{#
+			{{ side_column_shipping }}
+			#}
+			
+			<div class="checkout-cart-container checkout-cart-totals">
+				{% for total in totals %}
+					{% if total.code == 'credit' or total.code == 'sub_total' %}
+					<div class="checkout-cart-row totals-{{ total.code }}">
+						<div class="checkout-cart-block">
+							{{ total.title }}
+						</div>
+						<div class="checkout-cart-block">
+							<div class="checkout-cart-price">
+								{{ total.text }}
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				{% endfor %}
+			</div>	
+			
+			<div class="cart-free-shipping" data-class="{{ free_shipping_class }}">
+				{% if free_shipping_remain_text %}
+					<div class="cart-free-shipping-text">
+						<i class="fas fa-truck"></i> {{ free_shipping_remain_text }}
+					</div>
+				{% endif %}
+			
+				<div class="cart-free-shipping-bar">
+					<div class="cart-free-shipping-bar-fill">
+						<div class="cart-step-1"></div>
+						<div class="cart-step-2"></div>
+						<div class="cart-step-3"></div>
+					</div>
+					<div class="cart-remain" data-percentage="{{ free_percentage }}">
+						<span class="free-indicator">
+							<i class="fas fa-check"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+			
+			<script type="text/javascript">
+				$(window).load(function(){
+					setTimeout(
+						function() {
+							$('.cart-free-shipping').each(function(){
+							$(this).addClass( $(this).data('class') );
+							});
+					}, 350);						
+					
+					$('.cart-remain').each(function(){
+						$(this).css('width', $(this).data('percentage') + '%')
+					});					
+					
+				});
+			</script>
+			
+		</div>
+
+			<div class="cart-bottom-buttons text-mobile">
+				<a href="{{ continue }}" class="btn btn-light border">
+					<i class="fal fa-chevron-left"></i>
+					<span>{{ button_shopping }}</span>
+				</a>
+				<a href="{{ checkout }}" class="btn btn-primary">
+					<span>{{ button_checkout }}</span>
+					<i class="fal fa-chevron-right"></i>
+				</a>
+			</div>
+
+	</div>
+</div>
+<script type="text/javascript"><!--
+$(document).on('click', '.number-spinner button', function () {    
+var btn = $(this),
+oldValue = btn.closest('.number-spinner').find('input').val().trim(),
+newVal = 1;
+
+if (btn.attr('data-dir') == 'up') {
+	newVal = parseInt(oldValue) + 1;
+	console.log(newVal);	
+	} else {
+	if (oldValue > 1) {
+		newVal = parseInt(oldValue) - 1;
+	} else {
+		newVal = 1;
+	}
+}
+btn.closest('.number-spinner').find('input').val(newVal);
+});
+//--></script>
+{{ footer }}

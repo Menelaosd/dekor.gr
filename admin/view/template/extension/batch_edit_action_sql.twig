@@ -1,0 +1,63 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<h4>{{ tab_action_sql }}</h4>
+<hr/>
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_single_query }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<label class="col-sm-2 control-label" for="action[sql][single][---0---][sql]"><i class="required"></i> {{ entry_sql }}</label>
+			<div class="col-sm-8">
+				<textarea class="form-control" id="action[sql][single][---0---][sql]" name="action[sql][single][---0---][sql]" rows="10" style="max-height:none;"></textarea>
+			</div>
+			<div class="col-sm-2 hide-filter">
+				<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+				<button type="button" onclick="if (!$(this).parent().parent().hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).parent().parent().find('input, textarea').val(''); }" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+			</div>
+		</div>
+	</div>
+	<div class="form-group1 row">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8">
+			{{ help_single_query }}
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+</div>
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_cycle_query }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<label class="col-sm-2 control-label" for="action[sql][cycle][---0---][sql]"><i class="required"></i> {{ entry_sql }}</label>
+			<div class="col-sm-8">
+				<textarea class="form-control" id="action[sql][cycle][---0---][sql]" name="action[sql][cycle][---0---][sql]" rows="10" style="max-height:none;"></textarea>
+			</div>
+			<div class="col-sm-2 hide-filter">
+				<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+				<button type="button" onclick="if (!$(this).parent().parent().hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).parent().parent().find('input, textarea').val(''); }" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+			</div>
+		</div>
+	</div>
+	<div class="form-group1 row">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8">
+			{{ help_cycle_query }}
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-12">
+		{{ help_single_query_warning }}
+	</div>
+</div>

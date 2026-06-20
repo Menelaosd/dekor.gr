@@ -1,0 +1,55 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<h4>{{ tab_action_filter }}</h4>
+<hr/>
+{% set col1 = '2' %}
+{% set col2 = '2' %}
+{% set col3 = '4' %}
+{% set col4 = '4' %}
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_add_new }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<label class="col-sm-2 control-label" for="action[filter][insert][---0---][filter_id]"><i class="required"></i> {{ entry_filter }}</label>
+			<div class="col-sm-8">
+				<input type="text" value="" placeholder="{{ entry_filter }}" id="action[filter][insert][---0---][filter_id]" data-target="action[filter][insert][---0---][filter_id]" class="form-control filter-select" />
+				<input type="hidden" name="action[filter][insert][---0---][filter_id]" value="" />
+				<div class="checkbox">
+					<label><input name="action[filter][insert][---0---][include_categories]" type="checkbox" checked="checked" value="1"> {{ entry_apply_categories }}</label>
+				</div>
+			</div>
+			<div class="col-sm-2 hide-filter">
+				<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+				<button type="button" onclick="if (!$(this).parent().parent().hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).parent().parent().find('input:not([type=\'checkbox\'])').val(''); }" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_remove_existing }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<label class="col-sm-2 control-label" for="action[filter][delete][---0---][filter_id]"><i class="required"></i> {{ entry_filter }}</label>
+			<div class="col-sm-8">
+				<input type="text" value="" placeholder="{{ entry_filter }}" id="action[filter][delete][---0---][filter_id]" data-target="action[filter][delete][---0---][filter_id]" class="form-control filter-select" />
+				<input type="hidden" name="action[filter][delete][---0---][filter_id]" value="" />
+				<div class="checkbox">
+					<label><input name="action[filter][delete][---0---][include_categories]" type="checkbox" value="1"> {{ entry_apply_categories }}</label>
+				</div>
+			</div>
+			<div class="col-sm-2 hide-filter">
+				<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+				<button type="button" onclick="if (!$(this).parent().parent().hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).parent().parent().find('input:not([type=\'checkbox\'])').val(''); }" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+			</div>
+		</div>
+	</div>
+</div>

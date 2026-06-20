@@ -1,0 +1,129 @@
+     <div id="notification"></div>
+<div class="product-info" itemscope itemtype="http://schema.org/Product">
+    <div class="primary_content">
+        <div id="content" class="{{ class }}">{{ content_top }}
+            <div class="row firstsec"> 
+                {% if column_left or column_right %}
+                    {% set class = 'col-sm-6' %}
+                {% else %}
+                    {% set class = 'col-sm-4' %}
+                {% endif %}
+               
+          
+
+            {% if column_left or column_right %}
+                {% set class = 'col-sm-6' %}
+            {% else %}
+                {% set class = 'col-sm-12' %}
+            {% endif %}
+
+<div class="{{ class }}">
+           {% if lang == 'el' %}  
+<span class="endiaferon">Συμπληρώστε τα στοιχεία σας για την εκδηλώση ενδιαφέροντος και θα επικοινωνήσουμε μαζί σας :</span>
+{% else %}
+<span class="endiaferon">Fill fields below and we will contact you soon :</span>
+
+{% endif %}
+<h1 class="product-title">{{ heading_title }}</h1>
+{{ nikos }}
+
+<div class="form-group required">
+<label for="email"><span>*</span> Όνομα:</label>
+        <input type="text" name="onoma" class="form-control" id="onoma" required="required">
+</div>
+<div class="form-group required">
+<label for="pwd"><span>*</span> Επίθετο:</label>
+        <input type="text" name="epitheto" id="epitheto" class="form-control" required="required">
+</div>
+<div class="form-group required">
+<label for="pwd"><span>*</span> Τηλέφωνο:</label>
+        <input type="text" name="tilefono" id="tilefono" class="form-control" required="required">
+</div>
+<div class="form-group required">
+<label for="pwd"><span>*</span> Email:</label>
+        <input type="text" name="email" id="email" class="form-control" required="required">
+</div>
+<!-- Hidden Fields -->
+        <input type="hidden" name="kodikos_proiontos" id="kodikos_proiontos" class="form-control" value="{{ text_model }}">
+        <input type="hidden" name="onoma_proiontos" id="onoma_proiontos" class="form-control" value="{{ heading_title }}">
+        <input type="hidden" name="id_product" id="id_product" class="form-control" value="{{ product }}">
+<!-- End of Hidden Fields -->
+<div class="form-group">
+
+  
+   {% if resultts_models %}
+    <div class="form-group{% if option.required %} required {% endif %} ">
+        <label class="control-label" for="input-option{{ option.product_option_id }}">{{ option.name }}</label>
+        <select name="montelo" id="montelo" class="form-control">
+            <option value="">{{ text_select }}</option>
+                {% for resultts_model in resultts_models %}
+                    <option value="{{ resultts_model.text }}">{{ resultts_model.text }}
+                       
+                    </option>
+                {% endfor %}
+        </select>
+    </div>
+ 	{% endif %}
+                        
+                </div>
+  <a id="reminder_send"><button class="btn btn-default">ΑΠΟΣΤΟΛΗ</button></a>
+</form>
+              
+                
+
+                
+                
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"><!--
+	$('#reminder_send').on('click', function() {
+		$.ajax({
+			url: 'index.php?route=product/endiaferon',
+			type: 'post',
+			data: $('#onoma, #epitheto, #tilefono, #email, #kodikos_proiontos, #onoma_proiontos, #id_product, #montelo'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#reminder_send').button('ΦΟΡΤΩΣΗ');
+			},
+			complete: function() {
+				$('#reminder_send').button('reset');
+			},
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+
+				if (json['error']) {
+
+					if (json['error']['onoma']) {
+						$('#onoma').parent().append('<div class="text-danger">' + json['error']['onoma'] + '</div>');
+					}
+					if (json['error']['epitheto']) {
+						$('#surname').parent().append('<div class="text-danger">' + json['error']['epitheto'] + '</div>');
+					}
+					if (json['error']['email']) {
+						$('#email').parent().append('<div class="text-danger">' + json['error']['email'] + '</div>');
+					}
+					if (json['error']['tilefono']) {
+						$('#tilefono').parent().append('<div class="text-danger">' + json['error']['tilefono'] + '</div>');
+					}
+
+					// Highlight any found errors
+					$('.text-danger').parent().addClass('has-error');
+				}
+				
+				if (json['success']) {
+					$('#notification').html('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				}
+			
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            
+	        }
+		});
+	});
+
+//--></script> 

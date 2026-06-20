@@ -1,0 +1,165 @@
+{% if error_warning %}
+<div class="extalert balert-danger"><i class="fa fa-exclamation-circle"></i> {{error_warning}}</div>
+{% endif %}
+{% if shipping_methods %}
+
+		<div class="radio">
+				{% if not code %}
+					<div class="hidden">
+					<input type="radio" name="shipping_method" value="" checked="checked"/>
+					</div>
+				{% endif %}
+		</div>
+
+		{% for shipping_method in shipping_methods %}
+		<p><strong>{{shipping_method['title']}}</strong></p>
+		{% if not shipping_method['error']  %}
+		{% for quote in shipping_method['quote'] %}
+		<div class="radio">
+			<label>
+				{% if quote.code == code %}
+				{% set code = quote.code %}
+				<input type="radio" name="shipping_method" value="{{quote['code']}}" checked="checked" />
+				 {% else %}
+				<input type="radio" name="shipping_method" value="{{quote['code']}}" />
+				{% endif %}
+			
+				{% set replace_value_var= '#NOWARRANTY' %}
+				{% set replace_with_value_var = '<span style="color:#111;font-weight:bold;">Ανασφάλιστο Δέμα</span>' %} 
+				
+				{{ quote['title']|replace({ (replace_value_var): replace_with_value_var }) }}{% if quote['text'] %} - {{quote['text']}}{% endif %}
+
+				{% if 'xshippingpro' in quote.code %}
+				    <div class="quote_desc" style="margin-top:.5rem;font-style:italic;font-size:12px;">Η παράδοση επι πεζοδρομίου αφορά μεγάλα αστικά κέντρα, οποιαδήποτε άλλη <b>περιοχή (πχ χωριά,απομακρυσμένες περιοχές)</b> υπάρχει περίπτωση να θεωρηθούν δυσπρόσιτες <b>περιοχές</b>.
+				    </div>
+				{% endif %}
+				{% if shipping_method.image  %}
+				<br/>
+				<img src="{{shipping_method['image']}}"/>
+				{% endif %}</label>
+		</div>
+		{% endfor %}
+		{% else %}
+		<div class="alert alert-danger">{{shipping_method['error']}}</div>
+		{% endif %}
+{% endfor %}
+{% endif %}
+<script type="text/javascript"><!--
+if($('.delivery-method-content input[name=\'shipping_method\']:checked').val()==undefined){
+	$('.delivery-method-content input[name=\'shipping_method\']:first').prop('checked',true);
+}
+
+$('.delivery-method-content input[name=\'shipping_method\'], .delivery-method-content input[name=\'shipping_method\']').on('change', function(){
+	$.ajax({
+		url: 'index.php?route=extension/onepagecheckout/shipping_method/saveshipping',
+		type:'post',
+		data:$('.delivery-method-content input[type="radio"]:checked'),
+		dataType: 'json',
+		success: function(json){
+			$('.alert, .text-danger').remove();
+			if(json['error']){
+				//$('.delivery-method-content').before('<div class="alert alert-danger">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			if(json['success']){
+				{% if loadcartonpayment==0 and loadpayments==1 %}
+				  LoadCartWithoutloader();
+				{% elseif loadcartonpayment==1 and loadpayments==0 %}
+					 LoadCartWithoutloader();
+				{% else %}
+					LoadCartWithoutloader();
+				{% endif %}
+				
+				
+				{% if loadpayments %}
+				{% if isLogged %}
+					LoadPaymentMethod(true);
+				{% else %}
+					LoadPaymentMethod(false);
+				{% endif %}
+				{% endif %}
+			}
+		}
+	})
+});
+
+$(document).ready(function(){
+ $('.delivery-method-content input[name=\'shipping_method\']:checked, .delivery-method-content select[name=\'shipping_method\']').trigger('change');
+});
+//--></script>
+
+
+
+{% for key,shipping_method in shipping_methods %}
+	{% if not shipping_method.error %} 
+		{% for quote in shipping_method.quote %} 
+		
+			{% if quote.code == 'boxnow.boxnow' %}
+		
+				<div class="boxnow-iframe-window" id="boxnow-iframe-window" style="min-height: 600px;display:none;width:100%;margin-top:15px;margin-bottom:15px;">
+					<div class="alert alert-info" style="margin-bottom:1rem;margin-top:1rem">
+						{{ text_select_lockerid }}
+					</div>
+					<div id="boxnowmap" style="width:100%; height:600px;"></div>
+					<script type="text/javascript">
+					var _bn_map_widget_config = {
+						partnerId: '{{ partner_id }}',
+						zip: '{{ shipping_address.postcode }}',
+						autoshow: true,
+						parentElement: "#boxnowmap",
+						afterSelect: function(selected){
+							if (selected.boxnowLockerId !== undefined) {
+								$.ajax({
+									type: "POST",
+									url: "index.php?route=extension/shipping/boxnow/setLockerSession",
+									data: {locker_id:selected.boxnowLockerId,locker_address:selected.boxnowLockerAddressLine1,locker_name:selected.boxnowLockerName},
+									success: function(data){
+										$('#bownow_messages').html('<div class="alert alert-success">{{ selected_boxnow }} '+selected.boxnowLockerAddressLine1+' ['+selected.boxnowLockerName+']</div>');
+									},
+									error: function(xhr, status, error){
+									}
+								});
+							}
+						}
+					};
+					if (window['boxnowLoaded'] == undefined) window['boxnowLoaded'] = false;
+					if (!window['boxnowLoaded']) {
+						(function(d){var e = d.createElement("script");e.src = "https://widget-cdn.boxnow.gr/map-widget/client/v3.js";e.async = true;e.defer = true;d.getElementsByTagName("head")[0].appendChild(e);})(document);
+						window['boxnowLoaded'] = true;
+					}
+					document.getElementsByTagName("head")[0].addEventListener("load", function(event) {
+						if (event.target.nodeName === "SCRIPT" && event.target.getAttribute("src") == 'https://widget-cdn.boxnow.gr/map-widget/client/v3.js') {
+							window['boxnowLoaded'] = false;
+						}
+					}, true);
+					</script>
+					<div id="bownow_messages" style="margin-top:1rem;">
+						{% if boxnow_address and boxnow_name %}
+							<div class="alert alert-success">
+								{{ selected_boxnow }} {{ boxnow_address }} [{{ boxnow_name }}]
+							</div>
+						{% endif %}
+					</div>
+				</div>
+				<input name="boxnow_locker_id" id="boxnow_locker_id" type="hidden" value="">
+				<script>
+						$(document).ready(function() {
+							$("input[type=radio][name=shipping_method]:checked").each(function() {
+								if (this.value == "boxnow.boxnow") {
+									$("#boxnow-iframe-window").fadeIn("200");
+								} else {
+									$("#boxnow-iframe-window").fadeOut("200");
+								};
+							});
+						});
+						$(document).on("change","input[type=radio][name=shipping_method]",function(e){
+							if (this.value == "boxnow.boxnow") {
+								$("#boxnow-iframe-window").fadeIn("200");
+							} else {
+								$("#boxnow-iframe-window").fadeOut("200");
+							};
+						});
+				</script>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+{% endfor %}

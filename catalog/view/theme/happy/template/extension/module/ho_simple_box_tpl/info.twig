@@ -1,0 +1,26 @@
+{% if infoboxes %}
+<div class="home-info-blocks">
+	<div class="container">
+		<div class="row">
+			{% for infobox in infoboxes %}
+				<div class="home-block-outter">
+					<div class="home-block">
+						<div class="home-block-logo">
+							<img src="{{ infobox.raw_image }}" alt="{{ infobox.title }}">
+						</div>
+						<div class="home-block-desc">
+							<div class="home-block-title">
+								{{ infobox.title }}
+							</div>
+							<div class="home-block-text">
+								{{ infobox.subtitle }}
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+{% endif %}

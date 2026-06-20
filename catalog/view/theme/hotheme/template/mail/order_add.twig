@@ -1,0 +1,918 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+    <head>
+        <!-- NAME: 1 COLUMN -->
+        <!--[if gte mso 15]>
+        <xml>
+            <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+        <![endif]-->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Gini</title>
+        
+    <style type="text/css">
+		p{
+			margin:10px 0;
+			padding:0;
+		}
+		table{
+			border-collapse:collapse;
+		}
+		h1,h2,h3,h4,h5,h6{
+			display:block;
+			margin:0;
+			padding:0;
+		}
+		img,a img{
+			border:0;
+			height:auto;
+			outline:none;
+			text-decoration:none;
+		}
+		body,#bodyTable,#bodyCell{
+			height:100%;
+			margin:0;
+			padding:0;
+			width:100%;
+		}
+		.mcnPreviewText{
+			display:none !important;
+		}
+		#outlook a{
+			padding:0;
+		}
+		img{
+			-ms-interpolation-mode:bicubic;
+		}
+		table{
+			mso-table-lspace:0pt;
+			mso-table-rspace:0pt;
+		}
+		.ReadMsgBody{
+			width:100%;
+		}
+		.ExternalClass{
+			width:100%;
+		}
+		p,a,li,td,blockquote{
+			mso-line-height-rule:exactly;
+		}
+		a[href^=tel],a[href^=sms]{
+			color:inherit;
+			cursor:default;
+			text-decoration:none;
+		}
+		p,a,li,td,body,table,blockquote{
+			-ms-text-size-adjust:100%;
+			-webkit-text-size-adjust:100%;
+		}
+		.ExternalClass,.ExternalClass p,.ExternalClass td,.ExternalClass div,.ExternalClass span,.ExternalClass font{
+			line-height:100%;
+		}
+		a[x-apple-data-detectors]{
+			color:inherit !important;
+			text-decoration:none !important;
+			font-size:inherit !important;
+			font-family:inherit !important;
+			font-weight:inherit !important;
+			line-height:inherit !important;
+		}
+		#bodyCell{
+			padding:10px;
+		}
+		.templateContainer{
+			max-width:800px !important;
+		}
+		a.mcnButton{
+			display:block;
+		}
+		.mcnImage,.mcnRetinaImage{
+			vertical-align:bottom;
+		}
+		.mcnTextContent{
+			word-break:break-word;
+		}
+		.mcnTextContent img{
+			height:auto !important;
+		}
+		.mcnDividerBlock{
+			table-layout:fixed !important;
+		}
+	/*
+	@tab Page
+	@section Background Style
+	@tip Set the background color and top border for your email. You may want to choose colors that match your company's branding.
+	*/
+		body,#bodyTable{
+			/*@editable*/background-color:#FAFAFA;
+		}
+	/*
+	@tab Page
+	@section Background Style
+	@tip Set the background color and top border for your email. You may want to choose colors that match your company's branding.
+	*/
+		#bodyCell{
+			/*@editable*/border-top:0;
+		}
+	/*
+	@tab Page
+	@section Email Border
+	@tip Set the border for your email.
+	*/
+		.templateContainer{
+			/*@editable*/border:0;
+		}
+	/*
+	@tab Page
+	@section Heading 1
+	@tip Set the styling for all first-level headings in your emails. These should be the largest of your headings.
+	@style heading 1
+	*/
+		h1{
+			/*@editable*/color:#202020;
+			/*@editable*/font-family:Century Gothic,CenturyGothic,AppleGothic,Helvetica,Arial,sans-serif; 
+			/*@editable*/font-size:26px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:bold;
+			/*@editable*/line-height:125%;
+			/*@editable*/letter-spacing:normal;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Page
+	@section Heading 2
+	@tip Set the styling for all second-level headings in your emails.
+	@style heading 2
+	*/
+		h2{
+			/*@editable*/color:#202020;
+			/*@editable*/font-family:Century Gothic,CenturyGothic,AppleGothic,Helvetica,Arial,sans-serif; 
+			/*@editable*/font-size:22px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:bold;
+			/*@editable*/line-height:125%;
+			/*@editable*/letter-spacing:normal;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Page
+	@section Heading 3
+	@tip Set the styling for all third-level headings in your emails.
+	@style heading 3
+	*/
+		h3{
+			/*@editable*/color:#202020;
+			/*@editable*/font-family:Century Gothic,CenturyGothic,AppleGothic,Helvetica,Arial,sans-serif; 
+			/*@editable*/font-size:18ox;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:bold;
+			/*@editable*/line-height:125%;
+			/*@editable*/letter-spacing:normal;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Page
+	@section Heading 4
+	@tip Set the styling for all fourth-level headings in your emails. These should be the smallest of your headings.
+	@style heading 4
+	*/
+		h4{
+			/*@editable*/color:#202020;
+			/*@editable*/font-family:Century Gothic,CenturyGothic,AppleGothic,Helvetica,Arial,sans-serif; 
+			/*@editable*/font-size:18px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:bold;
+			/*@editable*/line-height:125%;
+			/*@editable*/letter-spacing:normal;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Preheader
+	@section Preheader Style
+	@tip Set the background color and borders for your email's preheader area.
+	*/
+		#templatePreheader{
+			/*@editable*/background-color:#FAFAFA;
+			/*@editable*/background-image:none;
+			/*@editable*/background-repeat:no-repeat;
+			/*@editable*/background-position:center;
+			/*@editable*/background-size:cover;
+			/*@editable*/border-top:0;
+			/*@editable*/border-bottom:0;
+			/*@editable*/padding-top:9px;
+			/*@editable*/padding-bottom:9px;
+		}
+	/*
+	@tab Preheader
+	@section Preheader Text
+	@tip Set the styling for your email's preheader text. Choose a size and color that is easy to read.
+	*/
+		#templatePreheader .mcnTextContent,#templatePreheader .mcnTextContent p{
+			/*@editable*/color:#656565;
+			/*@editable*/font-family:Century Gothic,CenturyGothic,AppleGothic,Helvetica,Arial,sans-serif; 
+			/*@editable*/font-size:12px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Preheader
+	@section Preheader Link
+	@tip Set the styling for your email's preheader links. Choose a color that helps them stand out from your text.
+	*/
+		#templatePreheader .mcnTextContent a,#templatePreheader .mcnTextContent p a{
+			/*@editable*/color:#656565;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+	/*
+	@tab Header
+	@section Header Style
+	@tip Set the background color and borders for your email's header area.
+	*/
+		#templateHeader{
+			/*@editable*/background-color:#FFFFFF;
+			/*@editable*/background-image:none;
+			/*@editable*/background-repeat:no-repeat;
+			/*@editable*/background-position:center;
+			/*@editable*/background-size:cover;
+			/*@editable*/border-top:0;
+			/*@editable*/border-bottom:0;
+			/*@editable*/padding-top:9px;
+			/*@editable*/padding-bottom:0;
+		}
+	/*
+	@tab Header
+	@section Header Text
+	@tip Set the styling for your email's header text. Choose a size and color that is easy to read.
+	*/
+		#templateHeader .mcnTextContent,#templateHeader .mcnTextContent p{
+			/*@editable*/color:#202020;
+			/*@editable*/font-family:Century Gothic,CenturyGothic,AppleGothic,Helvetica,Arial,sans-serif; 
+			/*@editable*/font-size:16px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Header
+	@section Header Link
+	@tip Set the styling for your email's header links. Choose a color that helps them stand out from your text.
+	*/
+		#templateHeader .mcnTextContent a,#templateHeader .mcnTextContent p a{
+			/*@editable*/color:#007C89;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+	/*
+	@tab Body
+	@section Body Style
+	@tip Set the background color and borders for your email's body area.
+	*/
+		#templateBody{
+			/*@editable*/background-color:#ffffff;
+			/*@editable*/background-image:none;
+			/*@editable*/background-repeat:no-repeat;
+			/*@editable*/background-position:center;
+			/*@editable*/background-size:cover;
+			/*@editable*/border-top:0;
+			/*@editable*/border-bottom:2px solid #EAEAEA;
+			/*@editable*/padding-top:0;
+			/*@editable*/padding-bottom:9px;
+		}
+	/*
+	@tab Body
+	@section Body Text
+	@tip Set the styling for your email's body text. Choose a size and color that is easy to read.
+	*/
+		#templateBody .mcnTextContent,#templateBody .mcnTextContent p{
+			/*@editable*/color:#202020;
+			/*@editable*/font-family:Century Gothic,CenturyGothic,AppleGothic,Helvetica,Arial,sans-serif; 
+			/*@editable*/font-size:16px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Body
+	@section Body Link
+	@tip Set the styling for your email's body links. Choose a color that helps them stand out from your text.
+	*/
+		#templateBody .mcnTextContent a,#templateBody .mcnTextContent p a{
+			/*@editable*/color:#007C89;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+	/*
+	@tab Footer
+	@section Footer Style
+	@tip Set the background color and borders for your email's footer area.
+	*/
+		#templateFooter{
+			/*@editable*/background-color:#FAFAFA;
+			/*@editable*/background-image:none;
+			/*@editable*/background-repeat:no-repeat;
+			/*@editable*/background-position:center;
+			/*@editable*/background-size:cover;
+			/*@editable*/border-top:0;
+			/*@editable*/border-bottom:0;
+			/*@editable*/padding-top:9px;
+			/*@editable*/padding-bottom:9px;
+		}
+	/*
+	@tab Footer
+	@section Footer Text
+	@tip Set the styling for your email's footer text. Choose a size and color that is easy to read.
+	*/
+		#templateFooter .mcnTextContent,#templateFooter .mcnTextContent p{
+			/*@editable*/color:#656565;
+			/*@editable*/font-family:Century Gothic,CenturyGothic,AppleGothic,Helvetica,Arial,sans-serif; 
+			/*@editable*/font-size:12px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:center;
+		}
+	/*
+	@tab Footer
+	@section Footer Link
+	@tip Set the styling for your email's footer links. Choose a color that helps them stand out from your text.
+	*/
+		#templateFooter .mcnTextContent a,#templateFooter .mcnTextContent p a{
+			/*@editable*/color:#656565;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+	@media only screen and (min-width:768px){
+		.templateContainer{
+			width:800px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		body,table,td,p,a,li,blockquote{
+			-webkit-text-size-adjust:none !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		body{
+			width:100% !important;
+			min-width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnRetinaImage{
+			max-width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImage{
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnCartContainer,.mcnCaptionTopContent,.mcnRecContentContainer,.mcnCaptionBottomContent,.mcnTextContentContainer,.mcnBoxedTextContentContainer,.mcnImageGroupContentContainer,.mcnCaptionLeftTextContentContainer,.mcnCaptionRightTextContentContainer,.mcnCaptionLeftImageContentContainer,.mcnCaptionRightImageContentContainer,.mcnImageCardLeftTextContentContainer,.mcnImageCardRightTextContentContainer,.mcnImageCardLeftImageContentContainer,.mcnImageCardRightImageContentContainer{
+			max-width:100% !important;
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnBoxedTextContentContainer{
+			min-width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageGroupContent{
+			padding:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnCaptionLeftContentOuter .mcnTextContent,.mcnCaptionRightContentOuter .mcnTextContent{
+			padding-top:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageCardTopImageContent,.mcnCaptionBottomContent:last-child .mcnCaptionBottomImageContent,.mcnCaptionBlockInner .mcnCaptionTopContent:last-child .mcnTextContent{
+			padding-top:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageCardBottomImageContent{
+			padding-bottom:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageGroupBlockInner{
+			padding-top:0 !important;
+			padding-bottom:0 !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageGroupBlockOuter{
+			padding-top:9px !important;
+			padding-bottom:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnTextContent,.mcnBoxedTextContentColumn{
+			padding-right:18px !important;
+			padding-left:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageCardLeftImageContent,.mcnImageCardRightImageContent{
+			padding-right:18px !important;
+			padding-bottom:0 !important;
+			padding-left:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcpreview-image-uploader{
+			display:none !important;
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Heading 1
+	@tip Make the first-level headings larger in size for better readability on small screens.
+	*/
+		h1{
+			/*@editable*/font-size:22px !important;
+			/*@editable*/line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Heading 2
+	@tip Make the second-level headings larger in size for better readability on small screens.
+	*/
+		h2{
+			/*@editable*/font-size:20px !important;
+			/*@editable*/line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Heading 3
+	@tip Make the third-level headings larger in size for better readability on small screens.
+	*/
+		h3{
+			/*@editable*/font-size:18px !important;
+			/*@editable*/line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Heading 4
+	@tip Make the fourth-level headings larger in size for better readability on small screens.
+	*/
+		h4{
+			/*@editable*/font-size:16px !important;
+			/*@editable*/line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Boxed Text
+	@tip Make the boxed text larger in size for better readability on small screens. We recommend a font size of at least 16px.
+	*/
+		.mcnBoxedTextContentContainer .mcnTextContent,.mcnBoxedTextContentContainer .mcnTextContent p{
+			/*@editable*/font-size:14px !important;
+			/*@editable*/line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Preheader Visibility
+	@tip Set the visibility of the email's preheader on small screens. You can hide it to save space.
+	*/
+		#templatePreheader{
+			/*@editable*/display:block !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Preheader Text
+	@tip Make the preheader text larger in size for better readability on small screens.
+	*/
+		#templatePreheader .mcnTextContent,#templatePreheader .mcnTextContent p{
+			/*@editable*/font-size:14px !important;
+			/*@editable*/line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Header Text
+	@tip Make the header text larger in size for better readability on small screens.
+	*/
+		#templateHeader .mcnTextContent,#templateHeader .mcnTextContent p{
+			/*@editable*/font-size:16px !important;
+			/*@editable*/line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Body Text
+	@tip Make the body text larger in size for better readability on small screens. We recommend a font size of at least 16px.
+	*/
+		#templateBody .mcnTextContent,#templateBody .mcnTextContent p{
+			/*@editable*/font-size:16px !important;
+			/*@editable*/line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Footer Text
+	@tip Make the footer content text larger in size for better readability on small screens.
+	*/
+		#templateFooter .mcnTextContent,#templateFooter .mcnTextContent p{
+			/*@editable*/font-size:14px !important;
+			/*@editable*/line-height:150% !important;
+		}
+
+}</style>
+                    <script>var w=window;if(w.performance||w.mozPerformance||w.msPerformance||w.webkitPerformance){var d=document;AKSB=w.AKSB||{},AKSB.q=AKSB.q||[],AKSB.mark=AKSB.mark||function(e,_){AKSB.q.push(["mark",e,_||(new Date).getTime()])},AKSB.measure=AKSB.measure||function(e,_,t){AKSB.q.push(["measure",e,_,t||(new Date).getTime()])},AKSB.done=AKSB.done||function(e){AKSB.q.push(["done",e])},AKSB.mark("firstbyte",(new Date).getTime()),AKSB.prof={custid:"90617",ustr:"",originlat:"0",clientrtt:"16",ghostip:"2.19.51.151",ipv6:false,pct:"10",clientip:"84.254.44.13",requestid:"f45be1df",region:"27595",protocol:"h2",blver:14,akM:"x",akN:"ae",akTT:"O",akTX:"1",akTI:"f45be1df",ai:"199322",ra:"false",pmgn:"",pmgi:"",pmp:"",qc:""},function(e){var _=d.createElement("script");_.async="async",_.src=e;var t=d.getElementsByTagName("script"),t=t[t.length-1];t.parentNode.insertBefore(_,t)}(("https:"===d.location.protocol?"https:":"http:")+"//ds-aksb-a.akamaihd.net/aksb.min.js")}</script>
+                    </head>
+    <body>
+        <!--*|IF:MC_PREVIEW_TEXT|*-->
+        <!--[if !gte mso 9]><!----><span class="mcnPreviewText" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;"></span><!--<![endif]-->
+        <!--*|END:IF|*-->
+        <center>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+                <tr>
+                    <td align="center" valign="top" id="bodyCell">
+                        <!-- BEGIN TEMPLATE // -->
+                        <!--[if (gte mso 9)|(IE)]>
+                        <table align="center" border="0" cellspacing="0" cellpadding="0" width="800" style="width:800px;">
+                        <tr>
+                        <td align="center" valign="top" width="800" style="width:800px;">
+                        <![endif]-->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer">
+                            <tr>
+                                <td valign="top" id="templatePreheader"></td>
+                            </tr>
+                            <tr>
+                                <td valign="top" id="templateHeader"></td>
+                            </tr>
+                            <tr>
+                                <td valign="top" id="templateBody"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width:100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top:9px;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="800" style="width:800px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width:100%; min-width:100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
+						
+						<div style="text-align:center">
+							<a href="{{ store_url }}" title="{{ store_name }}">
+								<img src="{{ logo }}" alt="{{ store_name }}" style="padding-bottom: 30px; border: none;width:250px;margin-left:auto;margin-right:auto;" />
+							</a>
+						</div>
+                        
+						  <h1 style="margin:0px;padding-bottom: 0;font-size:40px">{{ text_greeting }}</h1>
+						  <p style="margin:0px;padding-bottom: 20px;font-size:26px;font-weight:bold">{{ text_greeting2 }}</p>
+						  <p style="margin:0px;padding-bottom:20px;text-align:justify;font-size: 20px;line-height: normal;">{{ text_greeting3 }}</p>
+						   <p style="margin:0px;padding-bottom:20px;text-align:justify;font-size: 18px;line-height: normal;">Gini Team</p>
+						  
+						  <div style="height:20px;"></div>
+						  <div style="height:2px;background:#DDD;"></div>
+						  <div style="height:60px;"></div>
+						  
+							<table style="border-collapse: collapse;width: 100%;margin-bottom: 20px;border: none;">
+							<thead>
+							  <tr>
+								<td style="vertical-align:middle;border:none;background:#e1e1e1;padding:7px 1rem;font-size:18ox;font-weight:bold;letter-spacing: 1px;width:50%;border-right:solid 1px #ddd;">
+									{{ text_order_info }}
+								</td>
+								<td style="width:50%"></td>
+							  </tr>
+							</thead>
+							<tbody>
+								<tr><td colspan="2"><div style="height:20px;"></div></td></tr>
+								
+								<tr>
+								<td style="vertical-align:top;font-size: 12px;border-bottom: none;text-align: left;padding: 7px;border-right:solid 1px #ddd">
+									
+									<div style="margin-bottom:30px"></div>
+								  
+									<b style="font-size:19.6px;font-weight:bold">{{ text_order_nr }}</b><br><span style="font-size:18.8px">{{ order_id }}</span><br><br>
+									<b style="font-size:19.6px;font-weight:bold">{{ text_date_added }}</b><br><span style="font-size:18.8px">{{ date_added }}</span><br><br>
+									
+									{% if customer_group_id == 3 %}
+										<b style="font-size:19.6px;font-weight:bold">{{ text_document_type }}</b><br><span style="font-size:18.8px">{{ text_invoice }}</span><br><br>
+									{% else %}
+										<b style="font-size:19.6px;font-weight:bold">{{ text_document_type }}</b><br><span style="font-size:18.8px">{{ text_receipt }}</span><br><br>
+									{% endif %}
+								  
+									<b style="font-size:19.6px;font-weight:bold">{{ text_payment_method }}</b><br><span style="font-size:18.8px">{{ payment_method }}</span><br><br>
+									<b style="font-size:19.6px;font-weight:bold">{{ text_shipping_method }}</b><br><span style="font-size:18.8px">{{ shipping_method }}</span>
+									<div style="margin-bottom:30px"></div>
+								  </td>
+								  
+									<td style="vertical-align:top;font-size: 12px;border-bottom: none;text-align: left;padding: 7px;padding-left:20px;">
+										<div style="margin-bottom:30px"></div>
+										<b style="font-size:19.6px;font-weight:bold">{{ text_name }}</b><br><span style="font-size:18.8px">{{ name }}</span><br><br>
+										<b style="font-size:19.6px;font-weight:bold">{{ text_email }}</b><br><span style="font-size:18.8px">{{ email }}</span><br><br>
+										<b style="font-size:19.6px;font-weight:bold">{{ text_telephone }}</b><br><span style="font-size:18.8px">{{ telephone }}</span><br><br>
+										<b style="font-size:19.6px;font-weight:bold">{{ text_order_status }}</b><br><span style="font-size:18.8px">{{ order_status }}</span>
+										<div style="margin-bottom:30px"></div>
+									</td>
+							  </tr>
+							</tbody>
+						  </table>
+						  
+						  
+						   <table style="border-collapse: collapse;width: 100%;margin-bottom: 20px;border: none;">
+							  <thead>
+								<tr>
+								  <td style="vertical-align:middle;border:none;background:#e1e1e1;padding:7px 1rem;font-size:18ox;font-weight:bold;letter-spacing: 1px;width:50%;border-right:solid 1px #ddd;"><b>{{ text_payment_details }}</b></td>
+								  <td style="vertical-align:middle;border:none;background:#e1e1e1;padding:7px 1rem;font-size: 18px;font-weight: bold;width:50%;letter-spacing: 1px;width:50%"><b>{{ text_shipping_address }}</b></td>
+								</tr>
+							  </thead>
+							  <tbody>
+								<tr><td colspan="2"><div style="height:20px;"></div></td></tr>
+								<tr>
+								
+								<td style="vertical-align:top;text-align: left; padding: 7px; color: #222222;border-right:solid 2px #ddd">
+									<div style="margin-bottom:30px"></div>
+									{% for label,payment_detail in payment_details_list %}
+										{% if payment_detail %}
+										<b style="font-size:19.6px;font-weight:bold">{{ label }}</b><br><span style="font-size:18.8px">{{ payment_detail }}</span><br><br>
+										{% endif %}
+									{% endfor %}
+								</td>
+
+								<td style="vertical-align:top;text-align: left; padding: 7px; color: #222222;padding-left:20px;">
+									<div style="margin-bottom:30px"></div>
+									{% for label,shipping_detail in shipping_details_list %}
+										{% if shipping_detail %}
+										<b style="font-size:19.6px;font-weight:bold">{{ label }}</b><br><span style="font-size:18.8px">{{ shipping_detail }}</span><br><br>
+										{% endif %}
+									{% endfor %}
+								</td>
+								
+								</tr>
+								
+							  </tbody>
+							</table>
+						  
+						{% if payment_code == 'bank_transfer' %}
+					
+						  <table style="border-collapse: collapse;width: 100%;margin-bottom: 20px;border: none;">
+							<thead>
+							  <tr>
+								<td style="vertical-align:middle;border:none;background:#e1e1e1;padding:7px 1rem;font-size:18ox;font-weight:bold;letter-spacing: 1px;width:50%">
+									{% if lang_id == 2 %}
+										ΟΔΗΓΙΕΣ ΤΡΑΠΕΖΙΚΗΣ ΚΑΤΑΘΕΣΗΣ
+									{% else %}
+										BANK TRANSFER INSTRUCTIONS
+									{% endif %}
+								</td>
+								<td style="width:50%"></td>
+							  </tr>
+							</thead>
+							<tbody>
+							  <tr>
+								<td colspan= "2">
+									
+									<div style="margin-bottom:30px"></div>
+									
+									{% if lang_id == 2 %}
+										<b style="font-size:20px">Τράπεζα:</b> <span style="font-size:17px">EUROBANK</span><br>
+										<br>
+										<b style="font-size:20px">ΙΒΑΝ:</b> <span style="font-size:17px">GR3502602220000890200775306</span><br>
+										<div style="text-align:justify;font-size:13px">
+
+											Στην αιτιολογία της κατάθεσης θα πρέπει να αναγράφετε το ονοματεπώνυμο σας και τον αριθμό παραγγελίας.
+											<br><br>
+											<u>Εάν η κατάθεση γίνεται από λογαριασμό που ανήκει σε τραπεζικό ίδρυμα του εξωτερικού ή σε υποκατάστημα ελληνικού τραπεζικού ιδρύματος στο εξωτερικό, τότε θα πρέπει να αναλαμβάνετε τα συνολικά τραπεζικά έξοδα που συνοδεύουν το έμβασμα. Αυτό σημαίνει ότι στο στάδιο της επιλογής χρέωσης τραπεζικών εξόδων, θα πρέπει να κάνετε την επιλογή “OUR”.</u> Εάν ο τραπεζικός λογαριασμός της Εταιρίας χρεωθεί με έξοδα τραπεζικού εμβάσματος τότε η παραγγελία δεν είναι εξοφλημένη και δεν μπορεί να αποσταλεί μέχρι να προχωρήσετε σε συμπληρωματική κατάθεση για την εξόφληση της.
+											<br><br>
+											Για την ταχύτερη εξυπηρέτηση σας συστήνεται να μας στέλνετε το αποδεικτικό της πληρωμής με email στο sales@ginigroup.com.
+											<br><br>
+											Η παραγγελία σας δε θα αποσταλεί μέχρι να λάβουμε την πληρωμή σας.
+											
+										</div>
+									{% else %}
+										<b style="font-size:20px">Bank:</b> <span style="font-size:17px">EUROBANK</span><br>
+										<br>
+										<b style="font-size:20px">ΙΒΑΝ:</b> <span style="font-size:17px">GR3502602220000890200775306</span><br>
+										<div style="text-align:justify;font-size:13px">
+
+											The reason for the deposit must include your name and order number.
+											<br><br>
+											If the deposit is made from an account belonging to a foreign banking institution or a branch of a Greek banking institution abroad, then you will have to bear the total bank charges that accompany the transfer. This means that at the stage of choosing to charge bank charges, you must select "OUR". If the Company's bank account is debited with bank transfer fees then the order is not paid and can not be shipped until you make an additional deposit to repay it.
+											<br><br>
+											For your fastest service it is recommended that you send us the proof of payment by email to sales@ginigroup.com.
+											<br><br>
+											Your order will not be shipped until we receive your payment.
+											
+										</div>
+
+									{% endif %}
+									
+									<div style="margin-bottom:30px"></div>
+								</td>
+							  </tr>
+							</tbody>
+						  </table>
+				  
+						{% endif %}
+							
+							{% if comment %}
+							  <table style="border-collapse: collapse;width: 100%;margin-bottom: 20px;border: none;">
+								<thead>
+								  <tr>
+									<td style="vertical-align:middle;border:none;background:#e1e1e1;padding:7px 1rem;font-size:18ox;font-weight:bold;letter-spacing: 1px;width:50%">
+									{{ text_customer_comments }}
+									</td>
+									<td style="width:50%"></td>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr>
+									<td style="font-size: 14.3px;text-align: justify; padding: 7px;" colspan="2">
+										<div style="min-height:50px;font-size:13.6px;padding:20px 0;border-bottom:2px solid #ddd;">
+											{{ comment }}
+										</div>
+									</td>
+								  </tr>
+								</tbody>
+							  </table>
+							{% endif %}
+						  
+						  
+						  
+						  
+						  <table style="border-collapse: collapse;width: 100%;margin-bottom: 20px;border: none;">
+							<thead>
+							  <tr>
+								<td style="vertical-align:middle;border:none;background:#e1e1e1;padding:7px 1rem;font-size:18ox;font-weight:bold;letter-spacing: 1px;width:50%">
+								{{ text_your_order_heading }}
+								</td>
+								<td style="width:50%"></td>
+							  </tr>
+							</thead>
+						  </table>
+						  
+						  <div style="height:30px;"></div>
+						  
+					<div style="overflow-x: auto;">
+				  <table style=" border-collapse: collapse; border:none;margin-bottom: 20px;width:100%;min-width:750px">
+				  
+					<thead style="font-size:15px">
+					<tr>
+						<td style="text-align:center;border-bottom: 2px solid #ddd;padding:5px;vertical-align: bottom;"></td>
+						<td style="text-align:center;border-bottom: 2px solid #ddd;border-right: 2px solid #ddd;padding:5px;vertical-align: bottom;white-space: nowrap;">
+							<div style="font-weight:bold;white-space:nowrap">
+							{{ text_your_order_des }}
+							</div>
+							{#
+							<br>
+							<span style="font-size:11px;line-height: normal;display: block;">
+								<span style="white-space:nowrap">(Χρώμα, Μέγεθος,</span><br> 
+								<span style="white-space:nowrap">Ποσότητα Συσκευασίας)</span>
+							</span>
+							#}
+						</td>
+						<td style="text-align:center;border-bottom: 2px solid #ddd;border-right: 2px solid #ddd;padding:5px;vertical-align: bottom;white-space: nowrap;">
+						<div style="font-weight:bold;white-space:nowrap">
+							{{ text_your_order_qua }}
+						</div>
+						</td>
+						<td style="text-align:center;border-bottom: 2px solid #ddd;border-right: 2px solid #ddd;padding:5px;vertical-align: bottom;white-space: nowrap;">
+							<div style="font-weight:bold;white-space:nowrap">
+							{{ text_your_order_price }}  
+							</div>
+							<div style="font-weight:bold;white-space:nowrap">
+							{{ text_your_order_package }}		
+							</div>
+						</td>
+						<td style="text-align:center;border-bottom: 2px solid #ddd;border-right: 2px solid #ddd;padding:5px;vertical-align: bottom;white-space: nowrap;">
+						<div style="font-weight:bold;white-space:nowrap">{{ text_your_order_discount }}</div></td>
+						<td style="text-align:center;border-bottom: 2px solid #ddd;padding:5px;vertical-align: bottom;white-space: nowrap;">
+						<div style="font-weight:bold;white-space:nowrap">{{ text_your_order_total_amount }}</div></td>
+					</tr>
+					</thead>
+					
+					  <tbody>
+						{% for product in products %}
+						<tr>
+						
+							<td style="text-align:center;padding:5px;border-bottom:solid 2px #ddd">
+								<img style="max-width:120px;height:auto" src="{{ product.thumb }}">
+							</td>
+							<td style="text-align:center;padding:5px;border-bottom:solid 2px #ddd">
+								<div style="margin-top:15px"></div>
+								<div style="font-size:13.6px;line-height:normal;">
+								SKU: {{ product.model }}<br><br>
+								{{ product.name }}<br>
+								<span style="color:#999;padding-top:10px;">{{ product.connected_color }}</span><br>
+								<span style="color:#999">{{ product.connected_size }}</span><br><br>
+									{% if lang_id == 2 %}Συσκευασία{% else %}Package{% endif %}<br>({{ product.package }} {{ product.unit }})
+								</div>
+								<div style="margin-top:15px"></div>
+							</td>
+						  
+							<td style="text-align:center;padding:5px;border-bottom:solid 2px #ddd"><span style="font-size:13.6px">{{ product.quantity }}</span></td>
+						  <td style="text-align:center;padding:5px;border-bottom:solid 2px #ddd"><span style="font-size:13.6px">{{ product.price }}</span></td>
+						  <td style="text-align:center;padding:5px;border-bottom:solid 2px #ddd"><span style="font-size:13.6px">{{ product.discount }}</span></td>
+						  <td style="text-align:center;padding:5px;font-size:17px;border-bottom:solid 2px #ddd">{{ product.total }}</td>
+						</tr>
+						{% endfor %}
+						
+						{#
+						{% for voucher in order.voucher %}
+						<tr>
+						  <td>{{ voucher.description }}</td>
+						  <td></td>
+						  <td class="text-right">1</td>
+						  <td class="text-right">{{ voucher.amount }}</td>
+						  <td class="text-right">{{ voucher.amount }}</td>
+						</tr>
+						{% endfor %}
+						#}
+						
+						<tr>
+							<td colspan="6">
+								<div style="min-height:60px;"></div>
+							</td>
+						</tr>
+					
+					  </tbody>    
+				  </table>
+				  
+				  </div>
+				  
+				<table style=" border-collapse: collapse; border:none;margin-bottom: 20px;width:100%;">
+				{% for total in totals %}				
+					{% if not total.hide %}
+					
+					<tr {% if total.code == 'total' %}style="font-size:30.2px;font-weight:bold"{% else %}style="font-size:20.7px;font-weight:normal"{% endif %}>
+					  <td style="width:40%"></td>
+					  <td style="text-align:right;padding:5px;{% if total.code == 'total' %}padding-top:15px;border-top:solid 2px #ddd;{% endif %}">	  
+							{{ total.title }}: 	  
+					  </td>
+					  <td style="text-align:right;padding:5px;width: 1%;white-space: nowrap;{% if total.code == 'total' %}border-top:solid 2px #ddd;padding-top:15px;{% endif %}">{% if total.code == 'xcod' or total.code == 'shipping' and total.attach %}+{% endif%}{{ total.text }}</td>
+					  
+					</tr>
+					
+					{% endif %}
+				{% endfor %}
+				</table>
+				  
+				  
+				  <p style="border-top: 2px solid #ddd; margin: 20px 0 20px 0;padding-top:20px;text-align:center;font-size:15.1px">{{ text_footer }}</p>
+				  
+						  
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table></td>
+                            </tr>
+                            <tr>
+                                <td valign="top" id="templateFooter"></td>
+                            </tr>
+                        </table>
+                        <!--[if (gte mso 9)|(IE)]>
+                        </td>
+                        </tr>
+                        </table>
+                        <![endif]-->
+                        <!-- // END TEMPLATE -->
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </body>
+</html>

@@ -1,0 +1,51 @@
+<div class="eimaste">
+
+
+	<div id="slideshow-categ" class="owl-carousel" style="opacity: 1;">
+		{% for banner in banners %}
+			<div class="item">
+				<div class="banner_image">
+					<a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="<?php echo $banner['title']; ?>" class="img-responsive" /></a>
+					<div class="banner_text">
+					<h3><a href="{{ banner.link }}">{{ banner.title }}</a></h3>
+					<p>{{ banner.subtitle }}</p>
+					
+				</div>
+				</div>
+				
+			</div>
+		{% endfor %}
+	</div>
+
+
+
+
+
+</div>
+ <script type="text/javascript"><!--
+$('#slideshow-categ').owlCarousel({
+    stagePadding: 50,
+    loop:true,
+    margin:0,
+    nav : true,
+    navText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:1
+        },
+        1025:{
+            items:1
+        },
+        1100:{
+        	items:2
+        },
+        1920:{
+        	items:2
+        }
+    }
+})
+</script>
+

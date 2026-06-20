@@ -1,0 +1,268 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<div id="batch_vars" style="display: none;">
+	<input type="hidden" name="path[]" value="" />
+</div>
+<div id="batch-editor" class="modal-dialog modal-lg">
+<div class="modal-content fog">
+	<div id="loading-message"><i class="fa fa-circle-o-notch fa-spin"></i>{{ text_loading_message }}</div>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-close" style="font-size:150%;"></i></button>
+		<h4 class="modal-title" style="display: inline-block; padding-top: 8px;">{{ heading_batch_edit }} - v.{{ version }}</h4>
+		<div class="pull-right" style="margin-right:30px;">
+			<button type="button" onclick="$('.batch-wr div.form-filter').toggle(); $('.batch-wr div.form-action').toggleClass('col-sm-7').toggleClass('col-sm-12');" data-toggle="tooltip" title="{{ text_toggle }} {{ text_filters }}" class="btn btn-primary"><i class="fa fa-filter"></i></button>
+			<button type="button" id="btn-batch-settings" onclick="bpe.toggleInfoPage('#batch-settings', this);" data-toggle="tooltip" title="{{ button_settings }}" class="btn btn-default"><i class="fa fa-cog"></i></button>
+			<button type="button" onclick="bpe.toggleInfoPage('#batch-help', this);" data-toggle="tooltip" title="{{ text_info }}" class="btn btn-default"><i class="fa fa-info" style="min-width:10px;"></i></button>
+		</div>
+	</div>
+	<div class="modal-body">
+		<div class="batch-wr">
+			<div class="row">
+			<form action="" method="post" enctype="multipart/form-data" id="form-batch" class="form-horizontal">
+				<div class="col-sm-5 form-filter" style="border-right: 4px solid #ededed">
+					{{ tpl_filter }}
+				</div>
+
+				<div class="col-sm-7 form-action">
+					{{ tpl_action }}
+				</div>
+
+			</form>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 text-center">&nbsp;</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+{{ tpl_css }}
+
+<script type="text/javascript" charset="utf-8">
+var bpe = null;
+
+function c_bpe(data) {
+	this.debug = false;
+	this.text_products_selected = '{{ text_products_selected }}';
+	this.text_confirm_execute = '{{ text_confirm_execute }}';
+	this.token_name = '{{ token_name }}';
+	this.token = '{{ token }}';
+	this.text_products_total = '{{ text_products_total }}';
+	this.text_none = '{{ text_none }}';
+	this.text_not_assigned = '{{ text_not_assigned }}';
+	this.text_any = '{{ text_any }}';
+	this.text_all = '{{ text_all }}';
+	this.text_clear = '{{ text_clear }}';
+	this.entry_editor_layout_name = '{{ entry_editor_layout_name }}';
+	this.text_confirm_delete_layout = '{{ text_confirm_delete_layout }}';
+	this.button_save = '{{ button_save }}';
+
+	this.customer_groups = {};
+	{% for customer_group in customer_groups %}
+	this.customer_groups['{{ customer_group.customer_group_id }}'] = {"customer_group_id":"{{ customer_group.customer_group_id }}", "name":{{ customer_group.name|json_encode() }}};
+	{% endfor %}
+
+	this.stores = {};
+	{% for store in stores %}
+	this.stores['{{ store.store_id }}'] = {"store_id":"{{ store.store_id }}", "name":{{ store.name|json_encode() }}};
+	{% endfor %}
+
+	this.entry_price = '{{ entry_price }}';
+	this.entry_priority = '{{ entry_priority }}';
+	this.entry_quantity = '{{ entry_quantity }}';
+	this.entry_date_start = '{{ entry_date_start }}';
+	this.entry_date_end = '{{ entry_date_end }}';
+	this.button_remove = '{{ button_remove }}';
+	this.button_delete = '{{ button_delete }}';
+	this.button_cancel = '{{ button_cancel }}';
+	this.button_proceed = '{{ button_proceed }}';
+	this.datepicker = {% if datepicker %} '{{ datepicker }}' {% else %} 'en-gb' {% endif %};
+	this.version = '{{ version }}';
+	this.oc = '{{ oc_version }}';
+	this.updates = 0;
+	this.selector_filter = '#form-batch .form-filter .form-group:visible [name]';
+	this.selector_action = '#form-batch .form-action .form-group [name]';
+
+	this.current_action = '';
+
+	this.layouts = {{ batch_edit_layouts }};
+	this.batch_edit_form = {{ batch_edit_form }};
+	this.settings = {{ settings }};
+
+	this.toggleFogTimeout = null;
+	this.field_names = {};
+	this.layoutData = {};
+
+	if (data) {
+		for(var prop in data) {
+			this[prop] = data[prop];
+		}
+	}
+
+	this.construct(data);
+}
+
+c_bpe.prototype.openActionTab=function(tab){
+	var tab_name = $(tab).attr('href');
+
+	$(tab).closest('.nav').find('li.active, li a.active').removeClass('active'); // fix for "more" button
+	$(tab).addClass('active').find('a').addClass('active');
+
+	bpe.current_action = String(tab_name).replace('#','');
+
+	$('.batch-wr .price-settings').show();
+	$('.batch-wr .row.execute-buttons').show();
+
+	switch (tab_name) {
+		case '#tab_action_preview':
+			$('.batch-wr .price-settings').hide();
+			$('.batch-wr .row.execute-buttons').hide();
+			bpe.postForm($('.batch-wr .nav a[href="#tab_preview"]'), 'filter');
+			break;
+		case '#tab_action_product':
+			break;
+		case '#tab_action_option':
+			break;
+		case '#tab_action_attribute':
+			$('.batch-wr .price-settings').hide();
+			break;
+		case '#tab_action_special':
+			break;
+		case '#tab_action_discount':
+			break;
+		case '#tab_action_filter':
+			$('.batch-wr .price-settings').hide();
+			break;
+		case '#tab_action_label':
+			$('.batch-wr .price-settings').hide();
+			break;
+		case '#tab_action_category':
+			$('.batch-wr .price-settings').hide();
+			break;
+		case '#tab_action_store':
+			$('.batch-wr .price-settings').hide();
+			break;
+		case '#tab_action_reward':
+			$('.batch-wr .price-settings').hide();
+			break;
+		case '#tab_action_layout':
+			$('.batch-wr .price-settings').hide();
+			break;
+		case '#tab_action_seo_url':
+			$('.batch-wr .price-settings').hide();
+			break;
+		case '#tab_action_related':
+			$('.batch-wr .price-settings').hide();
+			break;
+		case '#tab_action_clear':
+			$('.batch-wr .price-settings').hide();
+			break;
+		case '#tab_action_sql':
+			$('.batch-wr .price-settings').hide();
+			break;
+		default:
+			break;
+	}
+}
+
+c_bpe.prototype.toggleInfoPage=function(page, btn){
+	$('#batch-settings').hide();
+	$('#batch-help').hide();
+	if ($('#batch-actions').is(':visible')) {
+		$('#batch-actions').hide();
+		$(page).show();
+	} else {
+		$('#batch-actions').show();
+		$(page).hide();
+	}
+	$(btn).toggleClass('btn-primary').toggleClass('btn-warning');
+}
+
+c_bpe.prototype.assignDate=function(container){
+	var date_picker_version = 3;
+
+	//console.log($(container));
+	try {
+		$(container + ' .date').destroy();
+		$(container + ' .time').destroy();
+		$(container + ' .datetime').destroy();
+	} catch (err) {
+		console.log('Warning: datepicker.destroy() function not found');
+	}
+
+	try {
+		$(container + ' .date').datetimepicker({
+			language: bpe.datepicker,
+			pickTime: false
+		});
+
+		$(container + ' .time').datetimepicker({
+			language: bpe.datepicker,
+			pickDate: false
+		});
+
+		$(container + ' .datetime').datetimepicker({
+			language: bpe.datepicker,
+			pickDate: true,
+			pickTime: true
+		});
+	} catch (err) {
+		if (err.message && String(err.message).indexOf('is not recognized!') > -1) {
+			date_picker_version = 4;
+		}
+	}
+
+	if (date_picker_version == 4) { // TODO
+		try {
+			$(container + ' .date').datetimepicker({
+				locale: bpe.datepicker,
+				//pickTime: false
+			});
+
+			$(container + ' .time').datetimepicker({
+				locale: bpe.datepicker,
+				//pickDate: false
+			});
+
+			$(container + ' .datetime').datetimepicker({
+				locale: bpe.datepicker,
+				//pickDate: true,
+				//pickTime: true
+				enabledHours: true
+			});
+		} catch (err) {
+			console.warn(err);
+		}
+	}
+}
+/*
+// Calling postForm example
+bpe.postForm(
+button,
+bpe.current_action,
+{ / * optional * /
+	onBeforeSend = function() {},
+	onComplete = function() {},
+	beforeSuccess = function(data) { return data;},
+	afterSuccess = function(data) { },
+	onError = function(xhr, ajaxOptions, thrownError) {},
+	async = true|false,
+}
+);
+*/
+
+</script>
+
+{{ tpl_js }}
+
+<script type="text/javascript" charset="utf-8">
+//$(document).ready(function() {
+	bpe = new c_bpe({% if bpe_json %}{{ bpe_json }}{% else %}{}{% endif %});
+//});
+</script>

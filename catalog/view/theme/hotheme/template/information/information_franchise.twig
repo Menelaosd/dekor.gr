@@ -1,0 +1,145 @@
+{{ header }}
+<div id="information-information" class="container information-wrap">
+  <div class="row">{{ column_left }}
+    
+	{% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">
+	
+	{{ content_top }}
+
+	<h1>{{ heading_title }}</h1>
+	
+	<div class="formwrap">
+		
+		{% if success_msg %}
+		
+		<div class="success_msg">
+			<i class="far fa-check-circle"></i>
+			<p>{{ success_msg }}</p>
+			<a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a>
+		</div>		
+		
+		{% else %}
+			<form id="franchise_form" method="post">
+			  <div class="form-group row">
+				<div class="col-12 col-sm-6">
+					<input id="name" name="name" placeholder="Όνομα" type="text" required="required" class="form-control">
+				</div>			
+				
+				<div class="col-12 col-sm-6">
+					<input id="lastname" name="lastname" placeholder="Επώνυμο" type="text" required="required" class="form-control">
+				</div>
+			  </div>
+				  
+			  <div class="form-group row">
+				<div class="col-12">
+					<label for="dob" class="dob-label">Ημ/νία Γέννησης</label> 
+				  <div class="input-group">
+					<input id="dob" name="dob" type="date" required="required" class="form-control"> 
+					<div class="input-group-append">
+					  <div class="input-group-text">
+						<i class="fa fa-calendar"></i>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			  <div class="form-group row">
+				<div class="col-12 col-sm-6">
+				  <div class="input-group">
+					<input id="phone" name="phone" placeholder="Τηλέφωνο επικοινωνίας" type="text" required="required" class="form-control"> 
+					<div class="input-group-append">
+					  <div class="input-group-text">
+						<i class="fa fa-phone"></i>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="col-12 col-sm-6">
+				  <div class="input-group">
+					<input id="email" name="email" placeholder="E-mail" type="text" class="form-control"> 
+					<div class="input-group-append">
+					  <div class="input-group-text">
+						<i class="fa fa-envelope"></i>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+
+			  <div class="form-group row">
+				<div class="col-12 col-sm-6">
+					<input id="afm" name="afm" placeholder="ΑΦΜ" type="text" required="required" class="form-control">
+				</div>
+				<div class="col-12 col-sm-6">
+					<input id="doy" name="doy" placeholder="ΔΟΥ" type="text" required="required" class="form-control">
+				</div>
+			  </div>
+
+			  <div class="form-group row">
+				<label for="expertise_area" class="col-12 col-form-label">Ποιά είναι η περιοχή ενδιαφέροντος;</label> 
+				<div class="col-12">
+				  <textarea id="expertise_area" name="expertise_area" cols="40" rows="3" class="form-control" required="required"></textarea>
+				</div>
+			  </div>
+			  <div class="form-group row">
+				
+				<div class="col-12">
+					<label for="budget" class="col-12col-form-label">Ποιό είναι το διαθέσιμο ποσό προς επένδυση σε ένα κατάστημα Franchise Gini;</label> 
+				  <select id="budget" name="budget" class="custom-select" required="required">
+					<option value="">Επιλογή ποσού</option>
+					<option value="10.000€ – 25.000€">10.000€ – 25.000€</option>
+					<option value="25.000€ – 40.000€">25.000€ – 40.000€</option>
+					<option value="40.000€ – 60.000€">40.000€ – 60.000€</option>
+				  </select>
+				</div>
+			  </div>
+			  <div class="form-group row">
+				<div class="col-12">
+					<label for="experience" class="col-4 col-form-label">Έχετε ασχοληθεί ποτέ με την κατασκευή κοσμημάτων;</label> 
+					<textarea id="experience" name="experience" cols="40" rows="3" class="form-control" required="required"></textarea>
+				</div>
+			  </div>
+			  <div class="form-group row">
+				
+				<div class="col-12">
+					<label for="" class="col-4 col-form-label">Πώς μάθατε για εμάς;</label> 
+					<textarea id="found" name="found" cols="40" rows="3" class="form-control" required="required"></textarea>
+				</div>
+			  </div> 			  
+			  
+			  <div class="form-group row">
+				<div class="col-12">
+					<div class="checkbox-group">
+						<input id="agree" type="checkbox" name="agree" value="1" required="required">
+						<label for="agree">Συμφωνώ με τους <a data-fancybox="" data-type="ajax" href="/oroi-xrisis" data-filter="#terms-wrap" title="ΌΡΟΙ ΧΡΗΣΗΣ">Όρους Χρήσης</a></label>
+					</div>
+				</div>
+			  </div> 
+			  <div class="form-group row">
+				<div class="col-12">
+					<div class="franchise-buttons">
+						<button name="submit" type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> ΑΠΟΣΤΟΛΗ</button>
+					</div>
+				</div>
+			  </div>
+			</form>
+		{% endif %}
+		
+	</div>
+	
+	{{ content_bottom }}
+	
+	</div>
+
+</div>
+
+
+{{ footer }}

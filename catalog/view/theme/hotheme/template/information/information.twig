@@ -1,0 +1,177 @@
+{{ header }}
+<div id="information-information" class="container">
+  <div class="row">{{ column_left }}
+    
+	{% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      
+	{% if video_mode %}
+	
+	  <div class="category-heading">
+		   <nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+			  {% for breadcrumb in breadcrumbs %}
+			  <li class="breadcrumb-item"{% if loop.last %} aria-current="page"{% endif %}><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			  {% endfor %}
+			</ol>
+		  </nav>
+		  
+		  {% if not idea_view and not idea_module %}
+			  <div class="category-heading-caption">
+				<h1 class="main-content-title">{{ heading_title }}</h1>
+				{% if description %}
+					<div class="category-heading-text">
+						{% if description %}
+							<div class="ch-text-top">
+								{{ description }}
+							</div>
+						{% endif %}				
+					</div>
+				{% endif %}
+			  </div>
+		  {% endif %}
+	  </div>	
+
+	{% else %}
+	
+		  <div class="category-heading">
+			   <nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+				  {% for breadcrumb in breadcrumbs %}
+				  <li class="breadcrumb-item"{% if loop.last %} aria-current="page"{% endif %}><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				  {% endfor %}
+				</ol>
+			  </nav>
+		  </div>	
+
+		{% if not notitle %}
+			<h1>{{ heading_title }}</h1>
+		{% endif %}
+		
+		{% if tabs_mode and tabs %}
+			
+			<div id="terms-wrap">
+				<div class="row">
+					<div class="col-3">
+						<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+							{% for key, tab in tabs %}
+								<a class="nav-link {% if tab.active %}active{% endif %}" data-toggle="pill" href="#v-pills-{{ key }}" role="tab" aria-controls="v-pills-{{ key }}" aria-selected="true">{{ tab.title }}</a>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="col-9">
+						<div class="tab-content" id="v-pills-tabContent">
+							{% for key, tab in tabs %}
+								<div class="tab-pane fade show {% if tab.active %}active{% endif %}" id="v-pills-{{ key }}" role="tabpanel" aria-labelledby="v-pills-home-{{ key }}">
+									<h2>{{ tab.title }}</h2>
+									{{ tab.text }}
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+			
+
+		
+		{% else %}
+			{{ description }}
+		{% endif %}
+		
+		
+		{{ content_bottom }}
+	{% endif %}
+	
+	  
+	  {% if videos %}
+		<div class="videos-wrapper">
+			<div class="videos-landing-row row">
+				{% for video in videos %}
+					<div class="video-diy-wrap col-12 col-sm-3">
+						<div class="video-diy-block">
+							<div class="video-diy-block__image">
+								<a href="{{ video.href }}" title="{{ video.name }}">
+									<img src="{{ video.image }}" alt="{{ video.name }}">
+								</a>
+							</div>
+							<div class="video-diy-block__caption">
+								<h3 class="video-diy-block__title">
+									{{ video.name }}
+								</h3>
+								{% if video.description %}
+									<div class="video-diy-block__desc">
+										{{ video.description }}
+									</div>
+								{% endif %}
+							</div>
+							<div class="video-diy-block__readmore">
+								<a href="{{ video.href }}" title="{{ video.name }}">
+									{{ text_see_videos }}
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	  {% endif %}
+	  
+	  {% if videoslist %}
+		<div class="videos-wrapper">
+			<div class="videos-landing-row row">
+				{% for video in videoslist.videos %}
+					<div class="video-diy-wrap col-12 col-sm-3">
+						<div class="video-diy-block">
+							<div class="video-diy-block__image">
+								<img src="{{ video.image }}" alt="{{ video.name }}">
+								<a  class="video-block-link" href="#" title="{{ video.name }}">
+									
+									<span class="video-play">
+										<i class="fal fa-play"></i>
+									</span>
+								</a>
+							</div>
+							<div class="video-diy-block__caption">
+								<h3 class="video-diy-block__title">
+									{{ video.name }}
+								</h3>
+								{% if video.description %}
+									<div class="video-diy-block__desc">
+										{{ video.description }}
+									</div>
+								{% endif %}
+							</div>
+							<div class="video-diy-block__readmore">
+								<a data-fancybox="videoGallery" class="product-bundles-all" href="https://www.youtube.com/embed/{{ video.video_id }}?controls=0&rel=0" title="{{ video.name }}">
+									<span>{{ text_check_video }}</span> <i class="fas fa-chevron-right"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	  {% endif %}
+	  
+	  </div>
+	  
+    {{ column_right }}</div>
+</div>
+
+<script type="text/javascript">
+
+	$(document).on('click','a.video-block-link',function(e){
+		e.preventDefault();
+		var container = $(this).closest('.video-diy-block');
+		container.find('.video-diy-block__readmore > a').trigger('click');
+	});
+
+</script>
+
+{{ footer }}

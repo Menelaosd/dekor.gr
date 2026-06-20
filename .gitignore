@@ -1,20 +1,61 @@
-.htaccess
+# ============================================================
+# OpenCart 3 - files/folders NOT tracked by Git
+# Extract this .gitignore into the OpenCart project root.
+# ============================================================
+
+# Live server configuration and database credentials
 /config.php
-admin/config.php
+/admin/config.php
 
-!index.html
+# ALL images: product/category/manufacturer/theme/cache uploads
+/image/
 
-download/
-image/data/
-image/cache/
-system/cache/
-system/logs/
+# OpenCart runtime storage (ignore whether internal or moved outside root)
+/system/storage/
+/storage/
 
-system/storage/
+# Legacy / custom download locations
+/download/
 
-# vQmod log files
-vqmod/logs/*
-# vQmod cache files
-vqmod/vqcache/*
-vqmod/checked.cache
-vqmod/mods.cache
+# VQMod generated cache files (only if VQMod is installed)
+/vqmod/vqcache/
+/vqmod/checked.cache
+/vqmod/mods.cache
+
+# Runtime cache/log/session folders sometimes used by older/custom OC installs
+/system/cache/
+/system/logs/
+/system/download/
+/system/upload/
+/system/modification/
+/system/session/
+
+# Temporary files, logs, backups and database dumps
+*.log
+*.tmp
+*.temp
+*.cache
+*.pid
+*.lock
+*.sql
+*.sql.gz
+*.bak
+*.backup
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.gz
+
+# Composer / PHP dependency cache artifacts, not application code
+composer.phar
+
+# IDE / OS files
+/.vscode/
+/.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+desktop.ini

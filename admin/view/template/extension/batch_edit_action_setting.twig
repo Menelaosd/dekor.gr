@@ -1,0 +1,237 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<br>
+<h4>{{ button_settings }}</h4>
+<hr/>
+<ul class="nav nav-tabs navigation">
+		<li class="active"><a href="#tab_settings_general" data-toggle="tab">{{ text_general }}</a></li>
+		<li><a href="#tab_settings_round" data-toggle="tab">{{ text_round }}</a></li>
+		<li><a href="#tab_settings_preview" data-toggle="tab">{{ text_preview }}</a></li>
+		<li><a href="#tab_settings_license" data-toggle="tab">{{ text_license }}</a></li>
+</ul>
+<div class="tab-content">
+	<div class="tab-pane active" id="tab_settings_general">
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[ask_execute]">{{ entry_ask_execute }}</label>
+			<div class="col-sm-3">
+				<div class="checkbox">
+					<label><input name="settings[ask_execute]" id="settings[ask_execute]" type="checkbox" value="1"></label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[autosave_layout]">{{ entry_autosave_layout }}</label>
+			<div class="col-sm-3">
+				<div class="checkbox">
+					<label><input name="settings[autosave_layout]" id="settings[autosave_layout]" type="checkbox" value="1"></label>
+				</div>
+			</div>
+			<label class="col-sm-3 control-label" for="settings[autoload_layout]">{{ entry_autoload_layout }}</label>
+			<div class="col-sm-3">
+				<div class="checkbox">
+					<label><input name="settings[autoload_layout]" id="settings[autoload_layout]" type="checkbox" value="1"></label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[update_date_modified]">{{ entry_update_date_modified }}</label>
+			<div class="col-sm-3">
+				<div class="checkbox">
+					<label><input name="settings[update_date_modified]" id="settings[update_date_modified]" type="checkbox" value="1"></label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[time_limit]">{{ entry_time_limit }} <span data-toggle="tooltip" title="{{ help_time_limit }}"></span></label>
+			<div class="col-sm-3">
+				<input type="text" name="settings[time_limit]" value="0" placeholder="" id="settings[time_limit]" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[string_explode_symbol]">{{ entry_string_explode_symbol }} <span data-toggle="tooltip" title="{{ help_string_explode_symbol }}"></span></label>
+			<div class="col-sm-9">
+				<input type="text" name="settings[string_explode_symbol]" value="" placeholder="||" id="settings[string_explode_symbol]" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[custom_fields_product]">{{ entry_custom_fields }} [product] <span data-toggle="tooltip" title="{{ help_tag }}"></span></label>
+			<div class="col-sm-9">
+				<input type="text" name="settings[custom_fields_product]" value="" placeholder="base_price,provider_model" id="settings[custom_fields_product]" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[custom_fields_product_description]">{{ entry_custom_fields }} [product_description] <span data-toggle="tooltip" title="{{ help_tag }}"></span></label>
+			<div class="col-sm-9">
+				<input type="text" name="settings[custom_fields_product_description]" value="" placeholder="seo_h1,description_short" id="settings[custom_fields_product_description]" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[translit_array]">{{ entry_translit }} <span data-toggle="tooltip" title="{{ help_tag }}"></span></label>
+			<div class="col-sm-9">
+				{# <input type="text" name="settings[translit_array]" value="" placeholder="A=>Z,C=>Y,E=>X" id="settings[translit_array]" class="form-control" /> #}
+				<textarea id="settings[translit_array]" name="settings[translit_array]" placeholder="A=>Z,C=>Y,E=>X" rows="3" class="form-control"></textarea>
+			</div>
+		</div>
+	</div>
+
+	<div class="tab-pane" id="tab_settings_round">
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[default_price_tax_class_id]">{{ entry_default }} {{ entry_tax_class }}</label>
+			<div class="col-sm-9">
+				<select name="settings[default_price_tax_class_id]" class="form-control">
+					<option value="">--- {{ text_not_assigned }} ---</option>
+					<option value="p">--- {{ text_from_product }} ---</option>
+					{% for tax_class in tax_classes %}
+					<option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[default_price_currency_id]">{{ entry_default }} {{ entry_currency }}</label>
+			<div class="col-sm-9">
+				<select name="settings[default_price_currency_id]" class="form-control">
+					<option value="">--- {{ entry_default }} ---</option>
+					{% for currency in currencies %}
+					<option value="{{ currency.currency_id }}">{{ currency.code }} - {{ currency.title }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[default_price_round]">{{ entry_default }} {{ entry_round_price }}</label>
+			<div class="col-sm-3">
+				<select name="settings[default_price_round_math]" class="form-control">
+					{#<option value="">--- {{ text_none }} ---</option>#}
+					<option value="math">{{ text_round_math }}</option>
+					<option value="ceil">{{ text_round_ceil }}</option>
+					<option value="floor">{{ text_round_floor }}</option>
+				</select>
+			</div>
+			<div class="col-sm-2">
+				<input type="text" name="settings[default_price_round]" value="2" placeholder="{{ entry_round_price }}" id="settings[default_price_round]" class="form-control" />
+			</div>
+			<div class="col-sm-4" style="padding:4px 13px;">
+				{{ entry_decimal }}
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[default_price_markup]">{{ entry_default }} {{ entry_pretty_price }}</label>
+			<div class="col-sm-3">
+				<select name="settings[default_price_markup_sign]" class="form-control">
+					<option value=""></option>
+					<option value="-">-</option>
+					<option value="+">+</option>
+					<option value="r">{{ text_replace_ending }}</option>
+				</select>
+			</div>
+			<div class="col-sm-2">
+				<input type="text" name="settings[default_price_markup]" value="0.00" placeholder="{{ entry_pretty_price }}" id="settings[default_price_markup]" class="form-control" />
+			</div>
+			<div class="col-sm-4" style="padding:4px 13px;">
+				{{ info_pretty_price }}
+			</div>
+		</div>
+	</div>
+
+	<div class="tab-pane" id="tab_settings_preview">
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[open_filter_tab]">{{ entry_open_filter_tab }}</label>
+			<div class="col-sm-3">
+				<div class="checkbox">
+					<label><input name="settings[open_filter_tab]" id="settings[open_filter_tab]" type="checkbox" value="1"></label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[max_products]">{{ entry_max_products }}</label>
+			<div class="col-sm-9">
+				<input type="text" name="settings[max_products]" value="" placeholder="500" id="settings[max_products]" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[show_thumbnails]">{{ entry_show_thumbnails }}</label>
+			<div class="col-sm-3">
+				<div class="checkbox">
+					<label><input name="settings[show_thumbnails]" id="settings[show_thumbnails]" type="checkbox" value="1"></label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[preview_fields]">{{ entry_custom_fields }}</label>
+			<div class="col-sm-7">
+				<input type="text" name="settings[preview_fields]" value="" placeholder="pd.name, p.model, p.price, p.quantity, has_specials, has_discounts, has_options, has_attributes, has_filters" id="settings[preview_fields]" class="form-control" />
+			</div>
+				<div class="col-sm-2">
+					<div class="pull-right dropdown" style="">
+						<button type="button" data-toggle="dropdown" title="{{ entry_fields }}" class="btn btn-default dropdown-toggle" style="padding: 5px 13px;" aria-expanded="false">{{ entry_fields }}&nbsp;<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li role="presentation" class="dropdown-header">PRODUCT</li>
+							{% for field in table_fields_product %}
+								<li><a onclick="$('input[name=\'settings[preview_fields]\']').val($('input[name=\'settings[preview_fields]\']').val() + ', p.{{ field.COLUMN_NAME }}')">p.{{ field.COLUMN_NAME }}</a></li>
+							{% endfor %}
+
+							<li class="divider"></li>
+							<li role="presentation" class="dropdown-header">PRODUCT_DESCRIPTION</li>
+							{% for field in table_fields_product_description %}
+								<li><a onclick="$('input[name=\'settings[preview_fields]\']').val($('input[name=\'settings[preview_fields]\']').val() + ', pd.{{ field.COLUMN_NAME }}')">pd.{{ field.COLUMN_NAME }}</a></li>
+							{% endfor %}
+
+							<li class="divider"></li>
+							<li role="presentation" class="dropdown-header">COUNTERS</li>
+							<li><a onclick="$('input[name=\'settings[preview_fields]\']').val($('input[name=\'settings[preview_fields]\']').val() + ', has_specials')">has_specials</a></li>
+							<li><a onclick="$('input[name=\'settings[preview_fields]\']').val($('input[name=\'settings[preview_fields]\']').val() + ', has_discounts')">has_discounts</a></li>
+							<li><a onclick="$('input[name=\'settings[preview_fields]\']').val($('input[name=\'settings[preview_fields]\']').val() + ', has_options')">has_options</a></li>
+							<li><a onclick="$('input[name=\'settings[preview_fields]\']').val($('input[name=\'settings[preview_fields]\']').val() + ', has_arttributes')">has_arttributes</a></li>
+							<li><a onclick="$('input[name=\'settings[preview_fields]\']').val($('input[name=\'settings[preview_fields]\']').val() + ', has_filters')">has_filters</a></li>
+						</ul>
+					</div>
+				</div>
+		</div>
+	</div>
+
+	<div class="tab-pane" id="tab_settings_license">
+		<div class="form-group action-group-default">
+			<div class="text-right">
+				<button type="button" id="btn-batch-updates-check" onclick="bpe.checkUpdates(this);" data-toggle="tooltip" title="{{ text_check_updates }}" class="btn btn-warning"><i class="fa fa-refresh fas fa-sync-alt"></i> {{ text_check_updates }}</button>
+			</div>
+			<div id="batch-updates-check" class="mt-2"></div>
+		</div>
+
+		<div class="alert alert-info alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ help_license }}<button type="button" class="close" data-dismiss="alert">&times;</button></div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[webstore]">{{ entry_webstore }}</label>
+			<div class="col-sm-9">
+				<select name="settings[webstore]" class="form-control">
+					<option value="">--- {{ text_not_assigned }} ---</option>
+					<option value="1">OpenCart Marketplace (opencart.com)</option>
+					<option value="2">Cl!cker website (opencart.click)</option>
+				</select>
+				<small class="form-text text-muted">{{ help_webstore }}</small>
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-3 control-label" for="settings[order_id]">{{ entry_order_id }}</label>
+			<div class="col-sm-9">
+				<input type="text" name="settings[order_id]" value="" placeholder="" id="settings[order_id]" class="form-control" />
+				<small class="form-text text-muted">{{ help_order_id }}</small>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div class="clearfix"></div>
+<div class="row" style="border-top:1px solid #ededed;">
+	<div class="col-xs-12">&nbsp;</div>
+	<div class="col-xs-8"></div>
+	<div class="col-xs-4">
+		<div class="pull-right">
+			<button type="button" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary" onclick="bpe.postForm(this, 'save_settings');"><i class="fa fa-save"></i> {{ button_save }}</button>
+		</div>
+	</div>
+</div>

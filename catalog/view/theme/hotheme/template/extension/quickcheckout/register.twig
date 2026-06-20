@@ -1,0 +1,18 @@
+<div class="row row-fields">
+  <div class="col-sm-6 required">
+	<label class="control-label">{{ entry_password }}</label>
+	<input type="password" name="password" value="" class="form-control" />
+  </div>
+  <div class="col-sm-6 required">
+	<label class="control-label">{{ entry_confirm }}</label>
+	<input type="password" name="confirm" value="" class="form-control" />
+  </div>
+  <div class="col-lg-12">
+	{% if text_agree %}
+	<div class="checkbox-group d-none">
+		<input type="checkbox" name="agree" checked="checked" value="1" id="agree-reg" />
+		<label for="agree-reg">{{ text_agree }}</label>
+	</div>
+	{% endif %} 
+  </div>
+</div>

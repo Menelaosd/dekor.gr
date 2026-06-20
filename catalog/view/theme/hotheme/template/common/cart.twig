@@ -1,0 +1,71 @@
+<div id="cart-container" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-inner">
+			<div class="cart-content">
+				<div class="modal-header">
+					<button type="button" id="close-cart" class="close" title="{{ text_close_cart }}">
+						<i class="fal fa-times"></i>
+					</button>
+					<div class="modal-title">{{ text_cart }}</div>
+				</div>
+				<div class="modal-body">
+					{% if products or vouchers %}
+						<div class="cart_products">
+							{% for product in products %}
+								<div class="cart_row">
+									{% if product.thumb %}
+										<div class="cart_row_image">
+											<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid" /></a>
+										</div>
+										<div class="cart_row_info">
+											<h4>{{ product.name }}</h4>
+											<div class="cart_row_subtotal">{{ product.quantity }} x {{ product.price }}</div>
+											<div class="cart_row_total">
+												{% if product.total_initial_price %}
+													<span class="amount_before">
+													{{ product.total_initial_price }}
+													</span>
+												{% endif %}
+												{{ product.total }}
+											</div>
+										</div>
+										<div class="cart_row_remove">
+											<a href="#" onclick="cart.remove('{{ product.cart_id }}'); return false;" title="{{ button_remove }}">
+												<i class="far fa-times-circle"></i>
+											</a>
+										</div>
+									{% endif %}
+								</div>
+							{% endfor %}
+						</div>
+						<div class="cart_totals">
+							{% for total in totals %}
+								{% if total.code == 'credit' or total.code == 'sub_total' %}
+								<div class="cart_totals_row">
+									<span class="col">{{ total.title }}:</span>
+									<span class="col text-right">{{ total.text }}</span>
+								</div>  
+								{% endif %}
+							{% endfor %}
+						</div>
+					{% else %}
+						<div class="cart_empty">
+							<i class="fal fa-info-circle"></i>
+							{{ text_cart_empty }}
+						</div>
+					{% endif %}
+				</div>
+				<div class="modal-footer">
+					{% if products or vouchers %}
+						<a href="{{ checkout }}" class="btn btn-block btn-primary">{{ text_checkout }}</a>
+						<a href="{{ cart }}" class="btn btn-block btn-primary">{{ text_cart }}</a>
+					{% else %}
+						<a href="{{ checkout }}" class="btn btn-block btn-primary disabled">{{ text_checkout }}</a>
+						<a href="{{ cart }}" class="btn btn-block btn-primary disabled">{{ text_cart }}</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

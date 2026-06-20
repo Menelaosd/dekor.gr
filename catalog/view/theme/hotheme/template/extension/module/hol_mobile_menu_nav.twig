@@ -1,0 +1,144 @@
+<nav id="mmenu">
+	<a class="closeMMENU" id="closeMMENU" href="#"><i class="fal fa-times"></i></a>
+	<ul class="mmenu-parent-menu">
+		{% for nav_item in nav %}
+			{% if nav_item.children and not nav_item.megamenu %}
+				<li class="nav-item {{ nav_item.icon_class }}">
+					<a href="{{ nav_item.url }}" class="nav-link">{{ nav_item.title }}</a>
+					<ul>
+						{% for child in nav_item.children %}
+							{% if child.children %}
+								<li>
+									<a href="{{ child.url }}">{{ child.title }}</a>
+									<ul>
+										{% for childer in child.children %}
+											<li><a href="{{ childer.url }}">{{ childer.title }}</a></li>
+										{% endfor %}
+									</ul>
+							{% else %}
+								<li><a href="{{ child.url }}">{{ child.title }}</a></li>
+							{% endif %}
+						{% endfor %}
+					</ul>
+				</li>
+			{% elseif nav_item.megamenu and not nav_item.children %}
+				<li class="nav-item {{ nav_item.icon_class }}">
+					<a href="{{ nav_item.url }}" class="nav-link mmenu-haschild">{{ nav_item.title }}</a>
+					
+					{% for megamenu_row in nav_item.megamenu %}					
+						{% for megamenu_block in megamenu_row %}
+							
+							{% for megamenu in megamenu_block %}	
+								
+								{% set blocktitle = '' %}
+								{% if megamenu.type == 'type1' and megamenu.categories %}
+									{% set blocktitle = megamenu.categories.title %}
+								{% endif %}
+								
+								{% if megamenu.title %}
+									{% set blocktitle = megamenu.title %}
+								{% endif %}
+							
+								{% if megamenu.type == 'type1' and megamenu.categories.children %}
+									<ul class="megamenu-categories-mob">
+			
+										{% for megamenucategory in megamenu.categories.children %}
+											<li>
+												<a href="{{ megamenucategory.href }}" title="{{ megamenucategory.name }}" {% if megamenucategory.children %}class="mmenu-haschild"{% endif %}>
+													
+													<span class="category-c-small">{{ megamenucategory.name }}</span>
+													{% if megamenucategory.thumbsmall %}
+													<div class="megamenu-thumb">
+														<img 
+														class="cthumb-img" src="{{ megamenucategory.thumbsmall }}"
+														srcset="{{ megamenucategory.thumbsmall }} 1x, {{ megamenucategory.thumbsmall2 }} 2x"
+
+														alt="{{ megamenucategory.name }}">
+													</div>
+													{% endif %}
+												</a>
+												{% if megamenucategory.children %}
+													<ul class="megamenu-lastlvl">
+														{% for megamenuchild in megamenucategory.children %}
+															<li>
+																<a href="{{ megamenuchild.href }}" title="{{ megamenuchild.name }}">
+																	{{ megamenuchild.name }}
+																</a>
+															</li>
+														{% endfor %}
+													</ul>
+												{% endif %}
+												
+											</li>
+										{% endfor %}
+										
+									</ul>
+								{% endif %}
+							{% endfor %}
+						{% endfor %}
+					{% endfor %}
+				</li>
+			{% else %}
+				<li class="nav-item {{ nav_item.icon_class }}"><a href="{{ nav_item.url }}" class="nav-link">{{ nav_item.title }}</a></li>
+			{% endif %}
+		{% endfor %}
+		
+		{#
+		<li class="nav-item mob-menu-ideas simple-mob-item">
+			<a href="{{ ideas_link }}" title="{{ text_menu_idea }}">{{ text_menu_idea }}</a>
+		</li>	
+		#}
+		
+		{#
+		<li class="nav-item mob-menu-diy simple-mob-item">
+			<a href="{{ videos_link }}" title="{{ text_menu_diy }}">{{ text_menu_diy }}</a>
+		</li>
+		#}		
+		<li class="nav-item mob-menu-diy simple-mob-item">
+			<a href="https://ginigroup.com/#diy-wrapper0" title="{{ text_menu_diy }}">{{ text_menu_diy }}</a>
+		</li>
+		
+		<li class="nav-item mob-menu-wishlist simple-mob-item">
+			<a href="{{ wishlist }}" title="{{ text_mob_wishlist }}">
+				<i class="fal fa-heart"></i>
+				{{ text_mob_wishlist }}
+				<span data-has-total="{{wish_total}}" class="ho-total-counter wish-total">{{wish_total}}</span>
+			</a>
+		</li>
+		
+		<li class="nav-item mob-menu-account simple-mob-item">
+			<a href="{{ account }}" title="{{ menu_account }}">
+				<i class="fal fa-user-circle"></i>
+				{{ menu_account }}
+			</a>
+		</li>
+		
+		<li class="nav-item mob-menu-currency simple-mob-item">
+			<b class="menu-cur-grp">
+			{{ currency }}
+			</b>
+		</li>
+		
+		<li class="nav-item mob-menu-social simple-mob-item">
+			<div class="mob-social__heading">
+				<span class="mob-social__title">FOLLOW US</span>
+						
+				<span class="mob-social__wrap">			
+
+					<a class="banner-image banner-social">
+						<i class="fab fa-facebook-f"></i>
+					</a>
+				
+					<a class="banner-image banner-social">
+						<i class="fab fa-instagram"></i>
+					</a>
+				
+					<a class="banner-image banner-social">
+						<i class="fab fa-pinterest-p"></i>
+					</a>
+				
+				</span>
+			</div>
+		</li>
+	</ul>
+</nav>

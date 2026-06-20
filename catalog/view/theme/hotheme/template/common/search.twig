@@ -1,0 +1,25 @@
+<div id="search" class="search_mod">
+	<form class="search-wrap">
+		<label for="header_search" class="visuallyhidden">{{ text_search }}</label>
+		<input type="text" name="search" id="header_search" value="{{ search }}" placeholder="{{ text_search }}" class="form-control input-lg" autocomplete="chrome-off"/>
+		<button type="button" class="header-search" title="{{ text_search }}"><i class="fal fa-search"></i></button>
+	</form>
+	{#
+		<a class="close-arrow">
+			<i class="fas fa-arrow-left"></i>
+		</a>
+	#}
+	{# <div class="select-categories-header-search">
+		<select name="category_id" class="form-control">
+			<option value="0">{{ text_allcategories }}</option>
+			{% for category_1 in categories %}
+			{% if category_1.category_id == category_id %}
+			<option value="{{ category_1.category_id }}" selected="selected">{{ category_1.name }}</option>
+			{% else %}
+			<option value="{{ category_1.category_id }}">{{ category_1.name }}</option>
+			{% endif %}
+			{% endfor %}
+		</select>  
+		<i class="fas fa-times"></i>
+	</div> #}
+</div>

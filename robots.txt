@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /old
+Disallow: /oldsite
+Disallow: /new
+Disallow: /wp-admin
+Disallow: /admin

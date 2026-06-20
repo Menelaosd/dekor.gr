@@ -1,0 +1,34 @@
+<h2>{{ fullname }}</h2>
+<hr>
+<b>Τηλέφωνο:</b> {{ phone }}<br>
+<b>E-mail:</b> {{ email }}<br>
+<b>Ημ/νια Γέννησης:</b> {{ dob }}<br>
+<hr>
+{% if afm or doy %}
+
+{% if afm %}
+<b>ΑΦΜ:</b> {{ afm }}<br>
+{% endif %}
+
+{% if doy %}
+<b>ΔΟΥ:</b> {{ doy }}<br>
+{% endif %}
+
+<hr>
+{% endif %}
+
+{% if expertise_area %}
+<b>Ποιά είναι η περιοχή ενδιαφέροντος:</b><br>{{ expertise_area }}<br><br>
+{% endif %}
+
+{% if budget %}
+<b>Ποιό είναι το διαθέσιμο ποσό προς επένδυση σε ένα κατάστημα Franchise Gini;</b><br>{{ budget }}<br><br>
+{% endif %}
+
+{% if experience %}
+<b>Έχετε ασχοληθεί ποτέ με την κατασκευή κοσμημάτων;</b><br>{{ experience }}<br><br>
+{% endif %}
+
+{% if found %}
+<b>Πώς μάθατε για εμάς;</b><br>{{ found }}<br><br>
+{% endif %}

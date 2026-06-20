@@ -1,0 +1,1012 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-menu_item" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+                <h1>{{ heading_title }}</h1>
+                <ul class="breadcrumb">
+                    {% for breadcrumb in breadcrumbs %}
+                        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="container-fluid">
+            {% if error_warning %}
+                <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            {% endif %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-menu_item" class="form-horizontal">
+
+                        <div class="page-header">
+                            <h4 class="heading-title">Informations</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-offset-2 col-sm-10">
+                                <ul class="nav nav-tabs" id="language">
+                                    {% for language in languages %}
+                                        <li><a href="#language{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> {{ language.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab-content">
+                            {% for language in languages %}
+                                <div class="tab-pane" id="language{{ language.language_id }}">
+                                    <div class="form-group required">
+                                        <label class="col-sm-2 control-label" for="input-title{{ language.language_id }}">{{ entry_title }}</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="item_description[{{ language.language_id }}][title]" value="{{ item_description[language.language_id] ? item_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title{{ language.language_id }}" class="form-control" />
+                                            {% if error_title[language.language_id] %}
+                                                <div class="text-danger">{{ error_title[language.language_id] }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
+                                        <div class="col-sm-10">
+                                            <textarea name="item_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" class="form-control">{{ item_description[language.language_id] ? item_description[language.language_id].description }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="page-header">
+                            <h4 class="heading-title">Type &amp; Parameters</h4>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-parent_id">{{ entry_parent }}</label>
+                            <div class="col-sm-10">
+                                <select name="parent_id" id="input-parent_id" class="form-control">
+                                    <option value="0">----</option>
+                                    {% for parent in parents %}
+                                        {% if parent_id == parent.parent_id %}
+                                            <option value="{{ parent.parent_id }}" selected="selected">{{ parent.title }}</option>
+                                        {% else %}
+                                            <option value="{{ parent.parent_id }}">{{ parent.title }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                            <div class="col-sm-10">
+                                <select name="status" id="input-status" class="form-control">
+                                    {% if status %}
+                                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                                        <option value="0">{{ text_disabled }}</option>
+                                    {% else %}
+                                        <option value="1">{{ text_enabled }}</option>
+                                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-icon_class">{{ entry_icon_class }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="icon_class" value="{{ icon_class }}" placeholder="{{ entry_icon_class }}" id="input-icon_class" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-target">{{ entry_target }}</label>
+                            <div class="col-sm-10">
+                                <select name="target" id="input-target" class="form-control">
+                                    <option value="0" {{ (target == 0) ? 'selected="selected"' : '' }}>Parent</option>
+                                    <option value="1" {{ (target == 1) ? 'selected="selected"' : '' }}>New Window With Navigation</option>
+                                    <option value="2" {{ (target == 2) ? 'selected="selected"' : '' }}>New Without Navigation</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_route }}</label>
+                            <div class="col-sm-10">
+                                <select name="route" id="input-route" class="form-control">
+                                    <option value="category" {{ (route == 'category') ? 'selected="selected"' : '' }}>Category</option>
+                                    <option value="product" {{ (route == 'product') ? 'selected="selected"' : '' }}>Product</option>
+                                    <option value="information" {{ (route == 'information') ? 'selected="selected"' : '' }}>Information</option>
+                                    <option value="manufacturer" {{ (route == 'manufacturer') ? 'selected="selected"' : '' }}>Manufacturer</option>
+                                    <option value="manufacturers" {{ (route == 'manufacturers') ? 'selected="selected"' : '' }}>Manufacturers</option>
+                                    <option value="blog" {{ (route == 'blog') ? 'selected="selected"' : '' }}>Blog</option>
+                                    <option value="contact" {{ (route == 'contact') ? 'selected="selected"' : '' }}>Contact</option>
+                                    <option value="cart" {{ (route == 'cart') ? 'selected="selected"' : '' }}>Cart</option>
+                                    <option value="checkout" {{ (route == 'checkout') ? 'selected="selected"' : '' }}>Checkout</option>
+                                    <option value="home" {{ (route == 'home') ? 'selected="selected"' : '' }}>Home</option>
+                                    <option value="url" {{ (route == 'url') ? 'selected="selected"' : '' }}>Link</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-sm-2 control-label" for="input-url">{{ entry_url }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="url" value="{{ url }}" placeholder="{{ entry_url }}" id="input-url" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-category">{{ entry_category }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="category" value="{{ category }}" placeholder="{{ category }}" id="input-category" class="form-control" />
+                                <input type="hidden" name="category_id" value="{{ category_id }}" />
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-sm-2 control-label" for="input-product">{{ entry_product }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="product" value="{{ product }}" placeholder="{{ product }}" id="input-product" class="form-control" />
+                                <input type="hidden" name="product_id" value="{{ product_id }}" />
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-sm-2 control-label" for="input-information">{{ entry_information }}</label>
+                            <div class="col-sm-10">
+                                <select name="information_id" id="input-information" class="form-control">
+                                    {% for information in informations %}
+                                        {% if information_id == information.parent_id %}
+                                            <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
+                                        {% else %}
+                                            <option value="{{ information.information_id }}">{{ information.title }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-sm-2 control-label" for="input-manufacturer">{{ entry_manufacturer }}</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ manufacturer }}" id="input-manufacturer" class="form-control" />
+                                <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-image">{{ entry_image }}</label>
+                            <div class="col-sm-10">
+                                <a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+                                <input type="hidden" name="image" value="{{ image }}" id="input-image" />
+                            </div>
+                        </div>
+						
+						
+						
+          <ul class="nav nav-tabs" id="languagebottom">
+            {% for language in languages %}
+            <li><a href="#languagebottom{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> {{ language.name }}</a></li>
+            {% endfor %}
+          </ul>
+          <div class="tab-content">
+			{% set image_row = 0 %}
+			{% set banner_row = 0 %} 
+			{% set col_row = 0 %} 
+			{% for language in languages %}
+			{% set image_row = 0 %}
+			{% set banner_row = 0 %} 
+			{% set col_row = 0 %} 
+            <div class="tab-pane" id="languagebottom{{ language.language_id }}">
+				<div class="banner-rows-container">
+					<div class="banner-rows" lang-id="{{language.language_id}}">
+						{% if banner_images[language.language_id] %}
+							{% for banner_rows in banner_images[language.language_id] %}
+								<div class="banner-row-container">
+									<div class="banner-row-header">
+										<button type="button" onclick="addColumn({{banner_row}})" class="btn btn-primary btn-lg"><i class="fa fa-plus"></i>{{entry_addcolumn}}</button>						
+									</div>
+									<div class="banner-row banner-row{{banner_row}}" data-count="{{banner_rows|length}}">
+									{% set col_row = 0 %} 
+									{% for banner_images in banner_rows %}
+										<div class="banner-column" data-cols="{{banner_images|length}}" data-rowid="{{banner_row}}" data-colid="{{col_row}}">
+											<div class="column-header">
+												<button type="button" onclick="removeColumn($(this))" class="data-remove btn btn-danger btn-lg"><i class="fa fa-minus"></i>{{entry_removecolumn}}</button>
+												<button type="button"  class="btn btn-success data-split btn-lg" onClick="splitColumn($(this))" ><i class="fa fa-bars" aria-hidden="true"></i>{{entry_addbanner}}</button>
+											</div>
+											{% for banner_image in banner_images %}
+												<div class="image-row image-row{{image_row}}">
+													<div class="column-banner-tab-content">
+														<a class="btn btn-danger data-imageremove" onClick="removeImage({{image_row}})" ><i class="fa fa-minus" aria-hidden="true"></i></a>
+														<div class="column-banner-inputs">
+															<input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][hypertitle]" value="{{ banner_image.hypertitle }}" placeholder="{{ entry_hypertitle }}" class="form-control" />
+															{% if error_banner_image[language.language_id][image_row] %}
+															<div class="text-danger">{{ error_banner_image[language.language_id][image_row] }}</div>
+															{% endif %}
+															<input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][menuclass]" value="{{ banner_image.menuclass }}" placeholder="{{ entry_menuclass }}" class="form-control" />
+															<select name="banner_image[{{ language.language_id }}][{{ image_row }}][menutype]"  class="form-control menutype-switch input-sm">
+																<option value="" selected="selected">{{ text_none }}</option>
+																<option {% if banner_image.menutype == 'type1' %}selected="selected"{% endif %} value="type1">{{ entry_type1 }}</option>
+																<option {% if banner_image.menutype == 'type2' %}selected="selected"{% endif %} value="type2">{{ entry_type2 }}</option>
+																<option {% if banner_image.menutype == 'type3' %}selected="selected"{% endif %} value="type3">{{ entry_type3 }}</option>
+																<option {% if banner_image.menutype == 'type4' %}selected="selected"{% endif %} value="type4">{{ entry_type4 }}</option>
+																<option {% if banner_image.menutype == 'type5' %}selected="selected"{% endif %} value="type5">{{ entry_type5 }}</option>
+															</select>													
+															<input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][menucategoryname]" value="{{ banner_image.menucategoryname }}" placeholder="{{ entry_menucategory }}" class="form-control menucategory" />
+															<input type="hidden" name="banner_image[{{ language.language_id }}][{{ image_row }}][menucategory]" value="{{ banner_image.menucategory }}" class="menucategoryhidden"/>
+																			
+															<select name="banner_image[{{ language.language_id }}][{{ image_row }}][menumodule]" class="form-control menumodule-switch input-sm">
+															{% for extension in extensions %}
+															<optgroup label="{{ extension.name }}">
+															{% if not extension.module %}
+															{% if extension.code == banner_image.menumodule %}
+															<option value="{{ extension.code }}" selected="selected">{{ extension.name }}</option>
+															{% else %}
+															<option value="{{ extension.code }}">{{ extension.name }}</option>
+															{% endif %}
+															{% else %}
+															{% for module in extension.module %}
+															{% if module.code == banner_image.menumodule %}
+															<option value="{{ module.code }}" selected="selected">{{ module.name }}</option>
+															{% else %}
+															<option value="{{ module.code }}">{{ module.name }}</option>
+															{% endif %}
+															{% endfor %}
+															{% endif %}
+															</optgroup>
+															{% endfor %}
+															</select>
+															<select name="banner_image[{{ language.language_id }}][{{ image_row }}][filtergroup]" class="form-control filtergroup-switch input-sm">
+																<option value="" selected="selected">{{ text_none }}</option>
+																{% for filter in filters %}
+																{% set selected = '' %}
+																{% if (filter.filter_group_id) == banner_image.filtergroup %}
+																{% set selected = 'selected' %}
+																{% endif %}
+																<option {{ selected }} value="{{filter.filter_group_id}}">{{ filter.name }}</option>
+																{% endfor %}
+															</select>
+															<div class="megamenu-custom-blocks" data-namepath="banner_image[{{ language.language_id }}][{{ image_row }}][custom_links]">
+																<hr>
+																<h4>{{ text_custom_links_list }}</h4>
+																<div class="inputs-group-wrap">
+																{% if not banner_image.custom_links %}
+																	<div class="inputs-group" data-row="1">
+																		<input placeholder = "{{ text_custom_title }}" type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][custom_links][1][title]">
+																		<input placeholder = "{{ text_custom_link }}" type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][custom_links][1][url]">
+																		<button type="button"  data-toggle="tooltip" title="{{ button_product_tab_add }}" class="btn btn-primary addCustomBlock"><i class="fa fa-plus-circle"></i></button>
+																	</div>
+																{% else %}
+																	{% for custom_link in banner_image.custom_links %}
+																		<div class="inputs-group" data-row="{{ loop.index }}">
+																			<input placeholder = "{{ text_custom_title }}" value="{{ custom_link.title }}" type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][custom_links][{{loop.index}}][title]">
+																			<input placeholder = "{{ text_custom_link }}" value="{{ custom_link.url }}" type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][custom_links][{{loop.index}}][url]">
+																			<button type="button" data-toggle="tooltip" title="{{ button_product_tab_add }}" class="btn btn-primary addCustomBlock"><i class="fa fa-plus-circle"></i></button>
+																			<button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger removeCustomBlock"><i class="fa fa-minus-circle"></i></button>
+																		</div>
+																	{% endfor %}
+																{% endif %}
+																</div>
+															</div>
+														</div>
+														<div id="image{{image_row}}_{{language.language_id}}" class="tab-pane fade in active">
+															<a href="" id="thumb-image{{ image_row }}_{{language.language_id}}" data-toggle="image" class="img-thumbnail"><img src="{{ banner_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+															<input type="hidden" name="banner_image[{{ language.language_id }}][{{ image_row }}][image]" value="{{ banner_image.image }}" id="input-image{{ image_row }}_{{language.language_id}}" />
+															<div class="trigger-container"><a class="btn btn-primary data-trigger" onClick="dataTrigger($(this))"><i class="fa fa-image"></i></a></div>
+														</div>
+													</div>	
+													<input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][sort_order]" value="{{ banner_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="sort-order form-control" />
+													<input type="hidden" name="banner_image[{{language.language_id}}][{{image_row}}][row]" value="{{banner_row}}" />
+													<input type="hidden" name="banner_image[{{language.language_id}}][{{image_row}}][col]" value="{{banner_row}}{{col_row}}" />
+												</div>
+												{% set image_row = image_row + 1 %}
+											{% endfor %}
+										</div>
+										{% set col_row = col_row + 1 %} 
+									{% endfor %}
+									</div>
+									<div class="button-rows-container">	
+										<button type="button" onclick="removeRow({{banner_row}})" class="btn btn-danger btn-lg"><i class="fa fa-minus"></i>{{entry_removerow}}</button>
+									</div>
+								</div>
+								{% set banner_row = banner_row + 1 %}
+							{% endfor %}
+						{% else %}
+						{% endif %}
+					</div>
+					<div class="button-rows-container">	
+						<button type="button" onclick="addRow()" class="btn btn-primary btn-lg"><i class="fa fa-plus"></i>{{entry_addrow}}</button>
+					</div>
+				</div>
+			</div>
+            {% endfor %}
+          </div>
+						
+						
+						
+
+						
+                    </form>
+                </div>
+            </div>
+        </div>  
+		<style type="text/css">
+			.megamenu-custom-blocks {
+				color:#fff;
+			}
+			.menumodule-switch,.filtergroup-switch,.megamenu-custom-blocks {
+				display:none;
+			}
+			.menucategory {
+				display:none;
+			}
+		
+			/*Banners*/
+			.button-rows-container {
+				background:#eee;
+				border:1px solid #ededed;
+				padding:2rem;
+				display:flex;
+				align-items:center;
+				justify-content:center;
+			}
+			.button-rows-container .btn {
+				margin-left:1rem;
+				margin-right:1rem;	
+				text-transform:uppercase;
+				font-size:1.2rem;
+				letter-spacing:0.1rem;
+				font-weight:bold;
+			}
+			.button-rows-container .btn i {
+				margin-right:1rem;
+			}
+			.banner-row-header .btn {
+				margin-left:1rem;
+				margin-right:1rem;	
+				text-transform:uppercase;
+				font-size:1.2rem;
+				letter-spacing:0.1rem;
+				font-weight:bold;
+			}
+			.banner-row-header .btn i {
+				margin-right:1rem;
+			}
+			.banner-rows-container {
+
+			}
+			.banner-row-container {
+				padding:1rem;
+				background:#f4f4f4;
+				border:1px solid #ededed;
+				margin-bottom:2rem;
+			}
+			.banner-row-header {
+				display:flex;
+				justify-content:center;
+				padding-top:1rem;
+				padding-bottom:1rem;
+				margin-left:-1rem;
+				margin-right:-1rem;
+			}
+			.banner-row {
+				display:flex;
+				justify-content:center;
+				align-content:stretch;
+				margin-left:-1rem;
+				margin-right:-1rem;
+			}
+			.banner-row[data-count="1"] .banner-column {
+				width:100%;
+			}
+			.banner-row[data-count="2"] .banner-column {
+				width:50%;
+			}
+			.banner-row[data-count="3"] .banner-column {
+				width:33.333%;
+			}
+			.banner-row[data-count="4"] .banner-column {
+				width:25%;
+			}
+			.banner-row[data-count="5"] .banner-column {
+				width:20%;
+			}
+			.banner-column {
+				padding:1rem;
+				position:relative;
+			}
+			.banner-column > div {
+				border:1px solid #ededed;
+				background:#fff;
+				padding:2rem;
+			}
+			.banner-column a[data-toggle="image"] {
+				width:100%;
+				padding:1rem;
+				margin-bottom:2rem;
+				height:300px;
+				display:flex;
+				justify-content:center;
+				align-items:center;
+				border-top:0px;
+				border:0px;
+				background:#ccc;
+			}
+			.banner-column[data-cols="1"] {
+				
+			}
+			.banner-column[data-cols="2"] a[data-toggle="image"]{
+				height:320px;
+			}
+			.banner-column[data-cols="3"] a[data-toggle="image"]{
+				height:320px;
+			}
+			.banner-column a[data-toggle="image"] img {
+				max-width:100%;
+				max-height:100%;
+			}
+			.banner-column a[data-toggle="image"] .image-text {
+				margin-top:2rem;
+			}
+			.banner-column .column-banner-inputs  input[type="text"],
+			.banner-column .column-banner-inputs  select {
+				border:0px;
+				border-radius:0px;
+				background:none;
+				outline:none;
+				padding:1rem;
+				height:40px;
+				margin-bottom:0.5rem;
+				background:rgba(60,60,120,0.2);
+				box-shadow:none;
+				font-size:14px;
+				font-weight:bold;
+				color:#fff;
+				letter-spacing:0.1rem;
+				width:100%;
+				max-width:100%;
+			}
+			
+			.banner-column .column-banner-inputs  select:focus {
+				color:rgba(60,60,120,0.7);
+			}
+
+			.banner-column .column-banner-inputs input[type="text"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+				color:#ddd;
+			}
+			.banner-column .column-banner-inputs input[type="text"]::-moz-placeholder { /* Firefox 19+ */
+				color:#ddd;
+			}
+			.banner-column .column-banner-inputs input[type="text"]:-ms-input-placeholder { /* IE 10+ */
+				color:#ddd;
+			}
+			.banner-column .column-banner-inputs input[type="text"]:-moz-placeholder { /* Firefox 18- */
+				color:#ddd;
+			}
+			.banner-column .sort-order {
+				max-width:100px;
+				box-shadow:none;
+				border:0px;
+				border-radius:0px;
+				background:none;
+				outline:none;
+				border-bottom:1px solid rgba(0,0,0,0.5);
+			}
+			.banner-column  .column-banner-tab-content {
+				position:relative;
+			}
+			.banner-column  .column-banner-tab-content {
+				position:relative;
+			}
+			.banner-column  .column-banner-tab-content .column-banner-inputs {
+				z-index:999;
+				opacity:1;
+				background:rgba(60,60,120,0.4);
+				padding:2rem;
+			}
+			.banner-column  .column-banner-tab-content .data-trigger{
+				position:absolute;
+				right:2rem;
+				bottom:2rem;	
+				z-index:1000;
+			}
+			.banner-column  .data-split {
+				text-transform: uppercase;
+				font-size: 1.2rem;
+				letter-spacing: 0.1rem;
+				font-weight: bold;	
+				margin-left:1rem;
+				margin-right:1rem;
+			}
+			.banner-column  .data-split i {
+				margin-right:1rem;
+			}
+			.banner-column  .data-imageremove {
+				position:absolute;
+				left:2rem;
+				bottom:2rem;	
+				z-index:1000;		
+			}
+			.banner-column  .data-remove {
+				text-transform: uppercase;
+				font-size: 1.2rem;
+				letter-spacing: 0.1rem;
+				font-weight: bold;	
+				margin-left:1rem;
+				margin-right:1rem;
+			}
+			.banner-column  .data-remove i {
+				margin-right:1rem;
+			}
+			.banner-column .column-header {
+				display:flex;
+				justify-content:center;
+				padding-top:2rem;
+				padding-bottom:2rem;
+			}
+			.banner-column  .column-banner-tab-content  .trigger-container {
+
+			}
+			.banner-column .column-image-tabs {
+				margin-bottom:0;
+				border:0px;
+				box-shadow:none!important;
+			}
+			.nav-tabs > li {
+				box-shadow:none!important;	
+			}
+			.banner-column .nav-tabs > li.active > a,.banner-column .nav-tabs > li.active > a:hover,.banner-column .nav-tabs > li.active > a:focus {
+				background: #9292aa;
+				color:#fff;
+
+			}
+			.banner-column .nav-tabs > li > a {
+				border:0px!important;
+				margin:0px!important;
+				box-shadow:none!important;
+				outline:none!important;
+				border:0px!important;
+				
+			}
+			.banner-column .column-banner-tab-content .popover{
+				bottom:2rem!important;
+				left:100%!important;
+				margin-left:-2rem!important;
+				top:auto!important;
+				width:auto!important;
+				white-space:nowrap;
+			}
+			
+			
+			.inputs-group {
+				margin-bottom: 15px;
+				padding-bottom: 15px;
+				border-bottom: dotted 1px #fff;
+			}
+			
+			.inputs-group:last-child {
+				margin-bottom:0;
+				padding-bottom:0;
+				border:none;
+			}
+		</style>
+		
+        <script type="text/javascript"><!--	
+			$(document).ready(function(){
+				$('#languagebottom a:first').tab('show');
+				appendAutocomplete();
+				showTypes();
+			});
+			var image_row = {{image_row}};
+			var banner_row = {{banner_row}};
+			
+			$('#content').on('click','.addCustomBlock',function(){
+				var namepath = $(this).closest('.megamenu-custom-blocks').data('namepath');
+				var parent = $(this).closest('.inputs-group-wrap');
+				var blockParent = $(this).closest('.inputs-group')
+				var maximum = null;
+				var blockHtml = '';
+				parent.find('.inputs-group').each(function() {
+				  var value = parseFloat($(this).data('row'));
+				  maximum = (value > maximum) ? value : maximum;
+				});
+				var blockRow = maximum + 1;
+				
+				blockHtml  += '<div class="inputs-group" data-row="'+blockRow+'">';
+				blockHtml  += '<input placeholder = "{{ text_custom_title }}" type="text" name="'+namepath+'['+blockRow+'][title]">';
+				blockHtml  += '<input placeholder = "{{ text_custom_link }}" type="text" name="'+namepath+'['+blockRow+'][url]">';
+				blockHtml  += '<button type="button" data-toggle="tooltip" title="{{ button_product_tab_add }}" class="btn btn-primary addCustomBlock"><i class="fa fa-plus-circle"></i></button>';
+				blockHtml  += '<button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger removeCustomBlock"><i class="fa fa-minus-circle"></i></button>';
+				blockHtml  += '</div>';
+				
+				blockParent.after(blockHtml);
+			});
+			
+			$('#content').on('click','.removeCustomBlock',function(){
+				$(this).closest('.inputs-group').remove();
+			});
+			
+			$('#content').on('change','.menutype-switch',function(){
+				var val = $(this).find('option:selected').val();
+				$(this).parent().find('.filtergroup-switch,.menumodule-switch,.menucategory,.megamenu-custom-blocks').hide();
+				if(val == 'type1') {
+					$(this).parent().find('.menucategory').fadeIn(200);
+				};
+				if(val == 'type3') {
+					$(this).parent().find('.menumodule-switch').fadeIn(200);
+				};
+				if(val == 'type4') {
+					$(this).parent().find('.filtergroup-switch').fadeIn(200);
+				};
+				if(val == 'type5') {
+					$(this).parent().find('.megamenu-custom-blocks').fadeIn(200);
+				};
+			});
+			
+			function showTypes(){
+				$('.menutype-switch').each(function(){
+					var val = $(this).find('option:selected').val();
+					$(this).parent().find('.filtergroup-switch,.menumodule-switch,.menucategory,.megamenu-custom-blocks').hide();
+					if(val == 'type1') {
+						$(this).parent().find('.menucategory').fadeIn(200);
+					};
+					if(val == 'type3') {
+						$(this).parent().find('.menumodule-switch').fadeIn(200);
+					};
+					if(val == 'type4') {
+						$(this).parent().find('.filtergroup-switch').fadeIn(200);
+					};
+					if(val == 'type5') {
+						$(this).parent().find('.megamenu-custom-blocks').fadeIn(200);
+					};
+				});
+			}
+
+
+			function dataTrigger(e) {
+				e.parent().prev().prev().trigger('click');
+			}
+			
+			function addCustomBlock() {
+			}
+			
+			function addRow() {
+				var col_row = 0;
+				var language_id = "langtoreplace";
+				html  =  '<div class="banner-row-container">';
+				html  += '	<div class="banner-row-header">';
+				html  += '		<button type="button" onclick="addColumn('+banner_row+')" class="btn btn-primary btn-lg"><i class="fa fa-plus"></i>{{entry_addcolumn}}</button>';
+				html  += 	'</div>';
+				html  += '	<div class="banner-row banner-row'+banner_row+'" data-count="1">';
+				html  += '		<div class="banner-column" data-cols="1" data-rowid="'+banner_row+'" data-colid="0">';
+				html  += '			<div class="column-header">';
+				html  += '	        	<button type="button" onclick="removeColumn($(this))" class="data-remove btn btn-danger btn-lg"><i class="fa fa-minus"></i>{{entry_removecolumn}}</button>';
+				html  += '          	<button type="button"  class="btn btn-success data-split btn-lg" onClick="splitColumn($(this))" ><i class="fa fa-bars" aria-hidden="true"></i>{{entry_addbanner}}</button>';
+				html  += '			</div>';
+				html  += '			<div class="image-row image-row' + image_row + '">';
+				html  += '				<div class="column-banner-tab-content">';
+				html  += '                  <a class="btn btn-danger data-imageremove" onClick="removeImage(' + image_row + ')" ><i class="fa fa-minus" aria-hidden="true"></i></a>';
+				html  += '					<div class="column-banner-inputs">';
+				html  += '						<input type="text" name="banner_image[' + language_id + '][' + image_row + '][hypertitle]" value="" placeholder="{{ entry_hypertitle }}" class="form-control"/>';	
+				html  += '						<input type="text" name="banner_image[' + language_id + '][' + image_row + '][menuclass]" value="" placeholder="{{ entry_menuclass }}" class="form-control"/>';	
+				html  += '						<select name="banner_image[' + language_id + '][' + image_row + '][menutype]" class="form-control menutype-switch input-sm">';
+				html  += '							<option value="" selected="selected">{{ text_none }}</option>';
+				html  += '							<option value="type1">{{ entry_type1 }}</option>';
+				html  += '							<option value="type2">{{ entry_type2 }}</option>';
+				html  += '							<option value="type3">{{ entry_type3 }}</option>';
+				html  += '							<option value="type4">{{ entry_type4 }}</option>';
+				html  += '							<option value="type5">{{ entry_type5 }}</option>';
+				html  += '						</select>';
+				
+				html  += '						<input type="text" name="banner_image[' + language_id + '][' + image_row + '][menucategoryname]" value="" placeholder="{{ entry_menucategory }}" class="form-control menucategory" />';
+				html  += '						<input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][menucategory]" value="" class="menucategoryhidden"/>';	
+				
+				html  += '						<select name="banner_image[' + language_id + '][' + image_row + '][menumodule]" class="form-control menumodule-switch input-sm">';
+													{% for extension in extensions %}
+				html  += '							<optgroup label="{{ extension.name }}">';
+													{% if not extension.module %}
+				html  += '							<option value="{{ extension.code }}">{{ extension.name }}</option>';
+													{% else %}
+													{% for module in extension.module %}
+				html  += '							<option value="{{ module.code }}">{{ module.name }}</option>';
+													{% endfor %}
+													{% endif %}
+				html  += '							</optgroup>';
+													{% endfor %}
+				html  += '						</select>';
+				
+				html  += '						<select name="banner_image[' + language_id + '][' + image_row + '][filtergroup]" class="form-control filtergroup-switch input-sm">';
+				html  += '						<option value="" selected="selected">{{ text_none }}</option>';
+												{% for filter in filters %}
+				html  += '						<option value="{{filter.filter_group_id}}">{{ filter.name }}</option>';
+												{% endfor %}
+				html  += '						</select>';
+				
+				html  += '  				</div>';
+				html  += ' 					<div id="image' + image_row + '_' + language_id + '" class="tab-pane fade in active">';
+				html  += '  					<a href="" id="thumb-image' + image_row + '_' + language_id + '" data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][image]" value="" id="input-image' + image_row + '_' + language_id + '" />';
+				html  += '						<div class="trigger-container"><a class="btn btn-primary data-trigger" onClick="dataTrigger($(this))"><i class="fa fa-image"></i></a></div>';
+				html  += '  				</div>';
+				html  += '  			</div>';
+				html  += '  		    <input type="text" name="banner_image[' + language_id + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="sort-order form-control" />';
+				html  += '  			<input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][row]" value="'+ banner_row +'" />';
+				html  += '              <input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][col]" value="'+ banner_row +''+ col_row +'" />';
+				html  += '			</div>';
+				html  += '		</div>';
+				html  += '	</div>';
+				html  += '	<div class="button-rows-container">';
+				html  += '		<button type="button" onclick="removeRow('+banner_row+')" class="btn btn-danger btn-lg"><i class="fa fa-minus"></i>{{entry_removerow}}</button>';
+				html  += '	</div>';
+				html  += '</div>';
+				$('.banner-rows').each(function(index) { 
+					$(this).append(html.replace(/\langtoreplace/g, $(this).attr('lang-id')));
+				});
+				banner_row++;
+				image_row++;	
+				appendAutocomplete();
+			}
+			function removeRow(row) {
+				$('.banner-row'+row).parent().remove();
+			}
+			function addColumn(row) {
+				var language_id = "langtoreplace";
+				var col_row = $('.banner-row'+row).attr('data-count');
+				html   = '		<div class="banner-column" data-cols="1" data-rowid="'+row+'" data-colid="'+$('.banner-row'+row).attr('data-count')+'">';
+				html  += '			<div class="column-header">';
+				html  += '	        	<button type="button" onclick="removeColumn($(this))" class="data-remove btn btn-danger btn-lg"><i class="fa fa-minus"></i>{{entry_removecolumn}}</button>';
+				html  += '          	<button type="button"  class="btn btn-success data-split btn-lg" onClick="splitColumn($(this))" ><i class="fa fa-bars" aria-hidden="true"></i>{{entry_addbanner}}</button>';
+				html  += '			</div>';
+				html  += '			<div class="image-row image-row' + image_row + '">';
+				html  += '				<div class="column-banner-tab-content">';
+				html  += '              	<a class="btn btn-danger data-imageremove" onClick="removeImage(' + image_row + ')" ><i class="fa fa-minus" aria-hidden="true"></i></a>';
+				html  += '					<div class="column-banner-inputs">';
+				html  += '						<input type="text" name="banner_image[' + language_id + '][' + image_row + '][hypertitle]" value="" placeholder="{{ entry_hypertitle }}" class="form-control"/>';
+				html  += '						<input type="text" name="banner_image[' + language_id + '][' + image_row + '][menuclass]" value="" placeholder="{{ entry_menuclass }}" class="form-control"/>';					
+				html  += '						<select name="banner_image[' + language_id + '][' + image_row + '][menutype]" class="form-control menutype-switch input-sm">';
+				html  += '							<option value="" selected="selected">{{ text_none }}</option>';
+				html  += '							<option value="type1">{{ entry_type1 }}</option>';
+				html  += '							<option value="type2">{{ entry_type2 }}</option>';
+				html  += '							<option value="type3">{{ entry_type3 }}</option>';
+				html  += '						</select>';
+				
+				html  += '						<input type="text" name="banner_image[' + language_id + '][' + image_row + '][menucategoryname]" value="" placeholder="{{ entry_menucategory }}" class="form-control menucategory" />';
+				html  += '						<input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][menucategory]" value="" class="menucategoryhidden"/>';	
+		
+				html  += '						<select name="banner_image[' + language_id + '][' + image_row + '][menumodule]" class="form-control menumodule-switch input-sm">';
+													{% for extension in extensions %}
+				html  += '							<optgroup label="{{ extension.name }}">';
+													{% if not extension.module %}
+				html  += '							<option value="{{ extension.code }}">{{ extension.name }}</option>';
+													{% else %}
+													{% for module in extension.module %}
+				html  += '							<option value="{{ module.code }}">{{ module.name }}</option>';
+													{% endfor %}
+													{% endif %}
+				html  += '							</optgroup>';
+													{% endfor %}
+				html  += '						</select>';
+				html  += '  				</div>';
+				html  += ' 					<div id="image' + image_row + '_' + language_id + '" class="tab-pane fade in active">';
+				html  += '  					<a href="" id="thumb-image' + image_row + '_' + language_id + '" data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][image]" value="" id="input-image' + image_row + '_' + language_id + '" />';
+				html  += '						<div class="trigger-container"><a class="btn btn-primary data-trigger" onClick="dataTrigger($(this))"><i class="fa fa-image"></i></a></div>';
+				html  += '  				</div>';
+				html  += '  			</div>';
+				html  += '  			<input type="text" name="banner_image[' + language_id + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="sort-order form-control" />';
+				html  += '  			<input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][row]" value="'+ row +'" />';
+				html  += '              <input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][col]" value="'+ row +''+ col_row +'" />';
+				html  += '			</div>';
+				html  += '		</div>';
+				
+				$('.banner-row'+row).each(function(index) {
+					$(this).append(html.replace(/\langtoreplace/g, $(this).closest('.banner-rows').attr('lang-id')));
+					$(this).attr('data-count',$(this).children('.banner-column').length);
+					
+				});
+				image_row++;	
+				appendAutocomplete();				
+			}
+			function splitColumn(e) {
+				var language_id = "langtoreplace";
+				var colid = e.parent().parent().attr('data-colid');
+				var rowid = e.parent().parent().attr('data-rowid');
+				
+				var col = $('.banner-column[data-rowid="'+rowid+'"][data-colid="'+colid+'"]');
+				html  = '			<div class="image-row image-row' + image_row + '">';
+				html  += '				<div class="column-banner-tab-content">';
+				html  += '              	<a class="btn btn-danger data-imageremove" onClick="removeImage(' + image_row + ')" ><i class="fa fa-minus" aria-hidden="true"></i></a>';
+				html  += '					<div class="column-banner-inputs">';
+				html  += '						<input type="text" name="banner_image[' + language_id + '][' + image_row + '][hypertitle]" value="" placeholder="{{ entry_hypertitle }}" class="form-control"/>';
+				html  += '						<input type="text" name="banner_image[' + language_id + '][' + image_row + '][menuclass]" value="" placeholder="{{ entry_menuclass }}" class="form-control"/>';				
+				html  += '						<select name="banner_image[' + language_id + '][' + image_row + '][menutype]" class="form-control menutype-switch input-sm">';
+				html  += '							<option value="" selected="selected">{{ text_none }}</option>';
+				html  += '							<option value="type1">{{ entry_type1 }}</option>';
+				html  += '							<option value="type2">{{ entry_type2 }}</option>';
+				html  += '							<option value="type3">{{ entry_type3 }}</option>';
+				html  += '						</select>';
+				
+				html  += '						<input type="text" name="banner_image[' + language_id + '][' + image_row + '][menucategoryname]" value="" placeholder="{{ entry_menucategory }}" class="form-control menucategory" />';
+				html  += '						<input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][menucategory]" value="" class="menucategoryhidden"/>';	
+				
+				html  += '						<select name="banner_image[' + language_id + '][' + image_row + '][menumodule]" class="form-control menumodule-switch input-sm">';
+													{% for extension in extensions %}
+				html  += '							<optgroup label="{{ extension.name }}">';
+													{% if not extension.module %}
+				html  += '							<option value="{{ extension.code }}">{{ extension.name }}</option>';
+													{% else %}
+													{% for module in extension.module %}
+				html  += '							<option value="{{ module.code }}">{{ module.name }}</option>';
+													{% endfor %}
+													{% endif %}
+				html  += '							</optgroup>';
+													{% endfor %}
+				html  += '						</select>';
+				html  += '  				</div>';
+				html  += ' 					<div id="image' + image_row + '_' + language_id + '" class="tab-pane fade in active">';
+				html  += '  					<a href="" id="thumb-image' + image_row + '_' + language_id + '" data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][image]" value="" id="input-image' + image_row + '_' + language_id + '" />';
+				html  += '						<div class="trigger-container"><a class="btn btn-primary data-trigger" onClick="dataTrigger($(this))"><i class="fa fa-image"></i></a></div>';
+				html  += '  				</div>';
+				html  += '  			</div>';
+				html  += '  			<input type="text" name="banner_image[' + language_id + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="sort-order form-control" />';
+				html  += '  			<input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][row]" value="'+ rowid +'" />';
+				html  += '              <input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][col]" value="'+ rowid +''+ colid +'" />';
+				html  += '			</div>';
+
+				col.each(function(index) {
+					$(this).append(html.replace(/\langtoreplace/g, $(this).closest('.banner-rows').attr('lang-id')));
+					$(this).attr('data-cols', $(this).children('.image-row').length); 
+				});
+				image_row++;	
+				appendAutocomplete();
+			}
+			
+			function appendAutocomplete() {
+				$('.menucategory').each(function(){
+					if(!$(this).hasClass('hasutocomplete')) {
+						$(this).addClass('hasutocomplete');
+						$(this).autocomplete({
+							'source': function(request, response) {
+								$.ajax({
+									url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+									dataType: 'json',
+									success: function(json) {
+										json.unshift({
+											category_id: 0,
+											name: '{{ text_none }}'
+										});
+
+										response($.map(json, function(item) {
+											return {
+												label: item['name'],
+												value: item['category_id']
+											}
+										}));
+									}
+								});
+							},
+							'select': function(item) {
+								$(this).val(item['label']);
+								$(this).siblings('.menucategoryhidden').val(item['value']);
+							}
+						});
+					};
+				});
+			};
+			
+			function removeImage(row) {
+				var parentCol = $('.image-row'+row).parent();
+				
+				$('.image-row'+row).remove();
+				
+				parentCol.each(function(index) {
+					$(this).attr('data-cols',$(this).children('.image-row').length); 
+				});
+			}
+			function removeColumn(e) {
+				var parentCol = e.parent().parent();
+				var rowid = parentCol.attr('data-rowid');
+				var colid = parentCol.attr('data-colid');
+				var parentRow = $('.banner-column[data-rowid="'+rowid+'"][data-colid="'+colid+'"]').parent();
+
+				$('.banner-column[data-rowid="'+rowid+'"][data-colid="'+colid+'"]').remove();
+				
+				parentRow.each(function(index) {
+					$(this).attr('data-count',$(this).children('.banner-column').length);
+				});
+			}
+		
+		
+            $('#input-route').change(function(){
+                $('#input-url, #input-category, #input-product, #input-information, #input-manufacturer').parent().parent().addClass('hidden');
+                $('#input-'+$(this).val()).parent().parent().removeClass('hidden');
+            });
+
+            $('input[name=\'category\']').autocomplete({
+                'source': function(request, response) {
+                    $.ajax({
+                        url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                        dataType: 'json',
+                        success: function(json) {
+                            json.unshift({
+                                category_id: 0,
+                                name: '{{ text_none }}'
+                            });
+
+                            response($.map(json, function(item) {
+                                return {
+                                    label: item['name'],
+                                    value: item['category_id']
+                                }
+                            }));
+                        }
+                    });
+                },
+                'select': function(item) {
+                    $('input[name=\'category\']').val(item['label']);
+                    $('input[name=\'category_id\']').val(item['value']);
+                }
+            });
+			
+            $('input[name=\'product\']').autocomplete({
+                'source': function(request, response) {
+                    $.ajax({
+                        url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                        dataType: 'json',
+                        success: function(json) {
+                            response($.map(json, function(item) {
+                                return {
+                                    label: item['name'],
+                                    value: item['product_id']
+                                }
+                            }));
+                        }
+                    });
+                },
+                'select': function(item) {
+                    $('input[name=\'product\']').val(item['label']);
+                    $('input[name=\'product_id\']').val(item['value']);
+                }
+            });
+            $('input[name=\'manufacturer\']').autocomplete({
+                'source': function(request, response) {
+                    $.ajax({
+                        url: 'index.php?route=catalog/manufacturer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+                        dataType: 'json',
+                        success: function(json) {
+                            json.unshift({
+                                manufacturer_id: 0,
+                                name: '{{ text_none }}'
+                            });
+
+                            response($.map(json, function(item) {
+                                return {
+                                    label: item['name'],
+                                    value: item['manufacturer_id']
+                                }
+                            }));
+                        }
+                    });
+                },
+                'select': function(item) {
+                    $('input[name=\'manufacturer\']').val(item['label']);
+                    $('input[name=\'manufacturer_id\']').val(item['value']);
+                }
+            });
+        //--></script>
+
+
+
+        <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
+        <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
+        <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
+        <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
+        <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
+
+        <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+        <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+        <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>
+        <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
+      
+        <script type="text/javascript"><!--
+            $('#language a:first').tab('show');
+            $('#input-route').change();
+        //--></script>
+</div>
+{{ footer }}

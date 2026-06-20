@@ -1,0 +1,54 @@
+{% if (layout_type) == 1 %}
+	<div class="filter-banners-wrapper-square">
+		<div class="container">
+			{% if module_name %}
+			<h3 class="module-title">{{module_name}}</h3>
+			{% endif %}  
+			<div class="filter-banners-square">
+				{% for filter in filters %}
+					<div class="filter-banner-block-wrap-square col-lg-2 col-md-2 col-sm-4 col-xs-6">
+						<div class="filter-banner-block-square">
+							<div class="filter-banner-block-image-square">
+								<a title="{{filter.name}}" href="{{filter.href}}">
+									<img src="{{filter.image}}" alt="{{filter.name}}">
+								</a>
+							</div>
+							<h3>
+								<a title="{{filter.name}}" href="{{filter.href}}">
+									{{filter.name}}
+								</a>
+							</h3>
+						</div>
+					</div>
+				{% endfor %}
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+{% elseif (layout_type) == 2 %}
+	<div class="filter-banners-wrapper">
+		<div class="container">
+			{% if module_name %}
+			<h3 class="module-title">{{module_name}}</h3>
+			{% endif %}  
+			<div class="filter-banners">
+				{% for filter in filters %}
+					<div class="filter-banner-block-wrap col-lg-2 col-md-2 col-sm-4 col-xs-12">
+						<div class="filter-banner-block">
+							<div class="filter-banner-block-image">
+								<a title="{{filter.name}}" href="{{filter.href}}">
+									<img src="{{filter.image}}" alt="{{filter.name}}">
+								</a>
+							</div>
+							<h3>
+							{{filter.name}}
+							</h3>
+							<a class="filter-banner-link" title="{{filter.name}}" href="{{filter.href}}"><span>{{readmore}} <i class="fas fa-caret-right"></i></span></a>
+						</div>
+					</div>
+				{% endfor %}
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+{% endif %}

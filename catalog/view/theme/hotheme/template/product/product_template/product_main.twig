@@ -1,0 +1,148 @@
+<div class="product-block {% if product.banner_data %}is_banner{% endif %}">
+
+	{% if product.banner_data %}
+		<div class="product-block-banner">
+			{% if product.banner.title %}
+				<h3>{{ product.banner.title }}</h3>
+			{% endif %}
+			<img src="{{ product.banner.image }}">
+			{% if product.banner.readmore %}
+				<div class="category-banner-button">
+					<a class="btn btn-default category-banner-link" tile="{{ product.banner.title }}" href=" {{ product.banner.link }}">
+						{{ product.banner.readmore }}
+					</a>
+				</div>
+			{% endif %}
+		</div>
+	{% else %}
+		<div class="product-top">
+			<div class="product-block-image">
+				<a href="{{ product.href }}">
+					<div class="product-thumbnail">
+						<img id="p_{{product.product_id}}" itemprop="image" alt="{{ product.name }}" src="{{ product.thumb }}" class="current">
+					</div>
+				</a>
+				{% if product.is_new %}
+					<div class="product-label product-label-new">
+						{{ text_new }}
+					</div>
+				{% endif %}
+				{% if product.special %}
+					<div class="product-label product-label-sale">
+						-{{ product.percentage }}%
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="product-block-caption">
+			<div class="product-block-title">
+				<h3 class="product-name" itemprop="name">
+					<a href="{{ product.href }}">{{ product.name }}</a>
+				</h3>
+			</div>
+		</div>
+		
+		{% if product.optionsproduct %}
+			<div class="product-block-options-wrapper hidden-mobile">
+				<div class="swiper-button-prev swiper-button-disabled product-color-button-prev productcolors-button-prev-{{product.product_id}}"></div>
+				<div class="product_color_swiper{{product.product_id}}  product-block-options">
+					<div class="product-option-color-container" data-transform="0">
+						{% for oproduct in product.optionsproduct %}
+							<div 
+							data-image="{{oproduct.over_image}}" 
+							data-name="{{oproduct.name}}" 
+							class="product-option-color {% if loop.index == 1 %}active{% endif %}"
+							data-image-2="{{oproduct.over_image_2}}"
+							data-href="{{oproduct.href}}"
+							>
+								<span title="{{oproduct.title}}" {# data-toggle="tooltip" #} href ="{{oproduct.href }}" class="item" >
+									<img {% if oproduct.color %} style="background-color:{{oproduct.color}};"{% endif %} class="option-product-additional thumb" src="{{ oproduct.image }}" alt="{{ oproduct.name }}"/>
+								</span>						
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="swiper-button-next product-color-button-next swiper-button-disabled productcolors-button-next-{{product.product_id}}"></div>
+			</div>
+			<div class="hidden-desktop options-ref__mobile">
+				+{{ product.optionsproduct|length }} {{ text_colors }}
+			</div>
+		{% endif %}	
+		
+		{% if product.optionsproduct %}
+			<div class="curColorSelected hidden-mobile">
+				<span class="colorBlock">{{ product.optionsproduct[0].name }}</span>
+			</div>
+		{% endif %}	
+
+		{% if product.color or product.sizes %}
+			<div class="optionProperties hidden-mobile">
+				{% if product.sizes %}
+					<div class="product-block-sizes-wrapper">
+						<div class="swiper-button-prev swiper-button-disabled product-size-button-prev productsize-button-prev-{{product.product_id}}"></div>
+						
+						<div class="product-block-sizes-nav">
+							<div class="product-block-sizes" data-transform="0">
+								{% for size in product.sizes %}							
+									<div class="product-block-size">
+										{{ size }}
+									</div>						
+								{% endfor %}
+							</div>
+						</div>
+
+						<div class="swiper-button-next product-size-button-next swiper-button-disabled productsize-button-next-{{product.product_id}}"></div>
+					</div>
+				{% endif %}
+			</div>
+		{% endif %}
+
+		<div class="product-block-price-container">
+		
+			<div class="price_text">{{ text_packaging_price }}</div>
+			
+			<div class="product-block-price" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+				
+				<a href="javascript:;" onclick="wishlist.add('{{ product.product_id }}');" title="{{ button_wishlist }}" class="btn btn-default product-wishlist text-desktop"><i class="fas fa-heart"></i></a>
+				
+				<div class="priceWraP">
+					<meta itemprop="priceCurrency" content="EUR">
+					{% if product.price %}
+						{% if not product.special %}
+							<meta itemprop="price" content="{{ product.price|replace({',': '.', '€': ''}) }}">
+							<h3 class="amount">{{ product.price }}</h3>
+						{% else %}
+							<meta itemprop="price" content="{{ product.special|replace({',': '.', '€': ''}) }}">
+							<del class="amount_before">{{ product.price }}</del>
+							<h3 class="amount">{{ product.special }}</h3>
+						{% endif %}
+					{% endif %}
+				</div>
+				
+				<a href="javascript:;" data-name="{{ product.name }}" data-price=" {% if not product.special %}{{ product.price|trim('€') }}{% else %}{{ product.special|trim('€') }}{% endif %}" onclick="cart.add('{{ product.product_id }}', 1, $(this) );" title="{{ button_cart }}" class="btn btn-default product-cart text-desktop"><i class="fas fa-shopping-bag"></i></i></a>
+				
+			</div>
+			
+			{% if product.package_details %}
+				<div class="packaging_item_value">{{ product.package_details }}</div>
+			{% endif %}
+			
+			<div class="product-actions-buttons product-actions-mobile">
+			
+				<a href="javascript:;" onclick="wishlist.add('{{ product.product_id }}');" title="{{ button_wishlist }}" class="product-wishlist-mobile"><i class="fal fa-heart"></i></a>	
+				
+				<a data-url="{{ product.href }}" onclick="quickview( $(this) )" title="{{ text_quickview }}" href="javascript:;" class="product-quickview-mobile">
+					<i class="fal fa-search"></i>
+				</a>
+				
+				<a href="javascript:;" onclick="cart.add('{{ product.product_id }}');" title="{{ button_cart }}" class="product-cart-mobile"><i class="fal fa-shopping-bag"></i></a>
+				
+			</div>		
+		</div>
+		
+		{# <div class="product-block-actions"> 
+			<a href="javascript:;" onclick="cart.add('{{ product.product_id }}');" title="{{ button_cart }}" class="btn btn-default product-cart"><i class="fal fa-shopping-bag"></i> <span>{{button_cart}}</span></a>
+			<a href="javascript:;" onclick="wishlist.add('{{ product.product_id }}');" title="{{ button_wishlist }}" class="btn btn-default  product-wishlist"><i class="fas fa-heart"></i></a>		
+		</div> #}
+	{% endif %}
+</div>

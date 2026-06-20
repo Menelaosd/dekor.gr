@@ -1,0 +1,161 @@
+{% if additional_class == 'megamenu-products' %}
+	{% for tab in tabs %}
+		<div class="mega-products-wrapper">
+			<div class="products_carousel_inner">
+				<div class="products_carousel swiper-container mega-products-carousel" id="products_carousel_mega{{ module }}_{{ loop.index }}">
+					<div class="swiper-wrapper">
+						{% for product in tab.products %}    
+							<div class="product-layout swiper-slide">
+								{{ include('happy/template/hostore/product_blocks/product_owl.twig') }}
+							</div>
+						{% endfor %} 
+					</div>
+				</div>
+				<div id ="products-pagination{{ module }}_{{ loop.index }}" class="swiper-pagination-mega"></div>
+				<div class="swiper-pager">
+					<div id="products-button-next{{ module }}_{{ loop.index }}" class="products-button-next"><i class="fa fa-chevron-right"></i></div>
+					<div id="products-button-prev{{ module }}_{{ loop.index }}" class="products-button-prev"><i class="fa fa-chevron-left"></i></div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var swiperTabs{{ module }}_{{ loop.index }} = new Swiper('#products_carousel_mega{{ module }}_{{ loop.index }}', {
+				slidesPerView: 1,
+				pagination: {
+					el: '#products-pagination{{ module }}_{{ loop.index }}',
+					type: 'bullets',
+					clickable: true
+				},
+				navigation: {
+					nextEl: '#products-button-next{{ module }}_{{ loop.index }}',
+					prevEl: '#products-button-prev{{ module }}_{{ loop.index }}'
+				},
+				spaceBetween: 0,
+				observer: true,
+				observeParents: true,
+				watchSlidesProgress: true,
+				watchSlidesVisibility: true
+			});
+		</script>
+	{% endfor %}
+{% else %}
+<div class="ho_product_tabs-wrap {{ additional_class }}">	
+	{% if module_title %}
+	<div class="container">
+		<h3 class="module-title">
+			{% if logo %}
+				<span class="module-title-logo">
+					<img src="{{ logo }}" alt="{{ module_title }}">
+				</span>
+			{% endif %}
+			<span class="module-title-text">{{ module_title }}</span>
+		</h3>
+	</div>
+	{% endif %}	
+	{% set single_tab_class = '' %}
+	{% if tabs|length < 2 %}
+		{% set single_tab_class = 'single-tab' %}
+	{% endif %}	
+	<div class="ho_product_tabs {{ single_tab_class }}" id="ho_product_tabs{{ module }}">
+		<div class="container nav-tabs-container">
+			<div class="nav-tabs-wrapper">
+				<ul class="nav nav-tabs" role="tablist">
+					{% set active = 'active' %}
+					{% for tab in tabs %}
+						<li role="presentation" class="{{ active }}"><a href="#tab{{ module }}_{{ loop.index }}" class="aria-controls="tab{{ module }}_{{ loop.index }}" role="tab" data-toggle="tab">{{ tab.title }}</a></li>
+						{% set active = '' %}
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		<div class="tab-content">
+			{% set active = 'active' %}
+			{% for tab in tabs %}
+				{% set has_description = '' %}
+				{% set numslides = 4 %}
+				{% if tab.alt_title or tab.description or tab.all %}
+					{% set has_description = ' has-description' %}
+					{% set numslides = 3 %}
+				{% endif %}	
+				<div role="tabpanel" class="tab-pane {{ active }}" id="tab{{ module }}_{{ loop.index }}">				
+					<div class="tab-content-wrapper {{ tabs_layout }} {{ has_description }}{% if tab.background_image %} has-background{% endif %}">
+						<div class="container tabs-container">
+							<div class="tabs-container-flex">
+								{% if tab.alt_title or tab.description or tab.all %}
+									<div class="tab-description-wrapper" {% if tab.background_image %} style="background-image:url('{{ tab.background_image }}'); background-repeat:no-repeat;"{% endif %}>
+										<div class="tab-description-content">
+										{% if tab.alt_title %}
+											<h4>{{ tab.alt_title }}</h4>
+										{% endif %}
+										{% if tab.description %}
+											<div class="tab-text">{{ tab.description }}</div>
+										{% endif %}	
+										{% if tab.all %}
+											<a href="{{ tab.all }}" title="{{ tab.title }}">{{ text_all_products }} <i class="fas fa-caret-right"></i></a>
+										{% endif %}	
+										</div>
+									</div>
+								{% endif %}					
+								<div class="products_carousel_outter">
+									<div class="products_carousel_inner">
+										<div class="products_carousel swiper-container swiper-container-horizontal" id="products_carousel{{ module }}_{{ loop.index }}">
+											<div class="swiper-wrapper">
+												{% for product in tab.products %}    
+													<div class="product-layout swiper-slide">
+														{{ include('happy/template/hostore/product_blocks/product_owl.twig') }}
+													</div>
+												{% endfor %} 
+											</div>
+											{% if additional_class == 'show-pagination' %}
+												<div id ="products-pagination{{ module }}_{{ loop.index }}" class="products-pagination swiper-pagination-bullets swiper-pagination-bullets-dynamic"></div>
+											{% endif %}	
+										</div>
+									</div>
+									<div class="swiper-pager">
+										<div id="products-button-next{{ module }}_{{ loop.index }}" class="slider-button-next tab-button-next"><i class="fa fa-chevron-right"></i></div>
+										<div id="products-button-prev{{ module }}_{{ loop.index }}" class="slider-button-prev tab-button-prev"><i class="fa fa-chevron-left"></i></div>
+									</div>
+								</div>
+							</div>
+							{% if tab.all %}
+							<div class="view-all-mobile">
+								<a href="{{ tab.all }}" title="{{ tab.title }}">{{ text_all_products }} <i class="fas fa-caret-right"></i></a>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					var swiperTabs{{ module }}_{{ loop.index }} = new Swiper('#products_carousel{{ module }}_{{ loop.index }}', {
+						slidesPerView: {{ numslides }},
+						slidesPerGroup:  {{ numslides }},
+						spaceBetween: 15,
+						mode: 'horizontal',
+						observer: true,
+						dynamicBullets:true,
+						{% if additional_class == 'show-pagination' %}
+							pagination: '#products-pagination{{ module }}_{{ loop.index }}',
+							paginationClickable: true,
+							nextButton: '#products-button-next{{ module }}_{{ loop.index }}',
+							prevButton: '#products-button-prev{{ module }}_{{ loop.index }}',
+						{% endif %}
+						observeParents: true,
+						breakpoints: {
+							991: {
+							slidesPerGroup:  2,
+							  slidesPerView: 2,
+							  spaceBetween: 3,
+							}
+						}
+					});
+		
+				</script>
+				{% set active = '' %}
+			{% endfor %}			
+		</div>
+	</div>
+</div>
+
+{% endif %}
+
+

@@ -1,0 +1,87 @@
+{{ header }}
+<div id="container" class="container j-container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      {{ text_message }}
+	 
+	  {% if show_bank_details %}
+	  <h3>{{text_instruction}}</h3>
+		<p><b>{{text_description}}</b></p>
+		<div class="well well-sm">
+		  <p>{{bank}}</p>
+		  <p>{{text_payment}}</p>
+		</div> 
+		{% endif %}
+	  
+      {{invoice}} <br/>
+	  
+	  {% if print_invoice %}
+	  <a target="_new" class="btn btn-primary pull-left" href="{{print_invoice}}">{{text_print_invoice}}</a>
+	  {% else %}
+	  <a target="_new" class="hide" href="{{print_invoice}}">{{text_print_invoice}}</a>
+	  {% endif %}
+	   <div class="buttons" style="margin:0">
+        <div class="pull-right"><a href="{{continue}}" class="btn btn-primary">{{button_continue}}</a></div>
+      </div>
+	  <div class="clearfix"></div>
+	  {{products}}
+	  
+     
+      {{content_bottom}}</div>
+    {{column_right}}</div>
+</div>
+{% if order_success_page_google_analytics %}
+<script type="text/javascript"><!--
+ (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', '{{order_success_page_google_analytics}}']);
+	_gaq.push(['_setClientInfo', true]);
+	_gaq.push(['_setAllowHash', true]);
+	_gaq.push(['_setDetectFlash', true]);
+	_gaq.push(['_setDetectTitle', true]);
+	_gaq.push(['_set', 'currencyCode', '{{currency_code}}']);
+	_gaq.push(['_trackPageview']);
+
+	_gaq.push(['_addTrans',
+		{{ addTrans.order_id }},
+		'{{ addTrans.store_name }}',
+		'{{ addTrans.total }},
+		{{ addTrans.tax }},
+		{{ addTrans.shipping_price }},
+		'{{ addTrans.payment_city }}',
+		'{{ addTrans.payment_zone }}',
+		'{{ addTrans.payment_country }}'
+	]);
+
+	{% for item in addItem %}
+	_gaq.push(['_addItem',
+		{{ item.order_id }},
+		'{{ item.model }}',
+		'{{ item.name }}',
+		'{{ item.category }}',
+		{{ item.unit_price }},
+		{{ item.quantity }}
+	]);
+	{% endfor %}
+	_gaq.push(['_trackTrans']);
+//--></script>
+{% endif %}
+{{footer}}

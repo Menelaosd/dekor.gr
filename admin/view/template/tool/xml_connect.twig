@@ -1,0 +1,58 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+	        	<a href="{{ constant('HTTP_CATALOG') }}crawler/cr_01.php" target="_blank" data-toggle="tooltip" title="Ενημέρωση XML Feed 1" class="btn btn-danger" >
+	        		<i class="fa fa-bolt"></i> Ανανέωση Feed 001
+	        	</a>
+	        	<a href="{{ constant('HTTP_CATALOG') }}crawler/cr_01_1.php" target="_blank" data-toggle="tooltip" title="Ενημέρωση XML Feed 1" class="btn btn-danger" >
+	        		<i class="fa fa-bolt"></i> Ανανέωση Feed 001 - Stock
+	        	</a>
+	      	</div>
+	      	<h1>{{ heading_title }}</h1>
+			<ul class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="table-responsive">
+		            <table class="table table-bordered table-hover">
+		        		<thead>
+		                	<tr>
+		                		<th>#</th>
+		                		<th>Feed</th>
+		                		<th>Σχόλια</th>
+		                		<th>Ημερομηνία</th>
+		                	</tr>
+						</thead>
+						<tbody>
+							{% for message in messages %}
+								<tr>
+									<td>{{ message.id }}</td>
+									<td>{{ message.comment }}</td>
+										
+									<td>
+										{{ message.message }}
+										{% if message.product_id %}
+											<a href="{{ message.edit }}" target="_blank"> Δες το!</a>
+										{% endif %}
+									</td>
+									<td>{{ message.date_created }}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="row">
+		          	<div class="col-sm-6 text-left">{{ pagination }}</div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</div>

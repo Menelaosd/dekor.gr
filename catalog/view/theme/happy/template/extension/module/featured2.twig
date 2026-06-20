@@ -1,0 +1,46 @@
+<div id="featured2">
+<div class="home_product_block m_t_30  m_b_30 container">
+
+
+
+{% if lang == 'el' %}      <h4>ΜΕΛΙΤΟΞΑΓΩΓΕΙΣ</h4>    {% else %} <h4>HONEY EXTRACTORS</h4> {% endif %}
+
+
+     <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#tab6" aria-controls="tab6" role="tab" data-toggle="tab">ΗΛΕΚΤΡΙΚΟΙ ΜΕΛΙΤΟΕΞΑΓΩΓΕΙΣ</a></li>
+         <li role="presentation"><a href="#tab7"  aria-controls="tab7" role="tab" data-toggle="tab">ΧΕΙΡΟΚΙΝΗΤΟΙ ΜΕΛΙΤΟΕΞΑΓΩΓΕΙΣ</a></li>
+    </ul>
+    <div class="product_block-wrap">
+      
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="tab6">
+                    <div id="ilektrikoi" class="container">
+                       
+                                {% for product in products_ilektrikoi_meli %}
+                                    <div class="col-md-3">
+                                        {{ include('happy/template/hostore/product_blocks/product_owl.twig') }}
+                                    </div>
+                                {% endfor %}
+                     
+                 </div>
+             </div>
+          
+             <div role="tabpanel" class="tab-pane" id="tab7">
+                    <div id="xeirokinitoi" class="container">
+                      
+                                {% for product_xeir in products_xeirokiniti_meli %}
+                                    <div class="col-md-3">
+                                        {{ include('happy/template/hostore/product_blocks/product_owl2.twig') }}
+                                    </div>
+                                {% endfor %}
+                      
+                 </div>
+             </div>
+               </div>
+            </div>
+ 
+    </div>
+
+</div>
+
+

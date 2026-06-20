@@ -1,0 +1,30 @@
+{{ text_order_id }} {{ actual_order_id }}
+<br><br>
+{{ text_date_added }} {{ date_added }}
+<br><br>
+{{ text_order_status }}
+<br>
+<span style="color:#dd0000;font-weight:bold;">
+{{ order_status }}
+</span>
+<br>
+{% if link %}
+{{ text_link }}
+
+{{ link }}
+{% endif %}
+
+<br>
+{% if comment %}
+
+{{ text_comment }}
+
+<span style="color:#dd0000;font-weight:bold;">
+{{ comment }}
+</span>
+
+<br><br>
+{{ text_footer }}
+{% else %} 
+{{ text_footer }}
+{% endif %}

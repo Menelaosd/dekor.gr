@@ -1,0 +1,710 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<br>
+<div class="pull-right dropdown" style="padding-bottom:5px;">
+	<button type="button" id="button-filter" data-toggle="tooltip" title="{{ button_preview_filter }}" class="btn btn-primary" onclick="$('.nav a[href=\'#tab_action_preview\']').click();" style="padding: 5px 13px;"><i class="fa fa-filter"></i> {{ button_preview_filter }}</button>
+	<button type="button" data-toggle="dropdown" title="{{ button_add_filter }}" class="btn btn-primary dropdown-toggle btn-filter-field" style="padding: 5px 13px;"><i class="fa fa-plus"></i>&nbsp;<span class="caret"></span></button>
+	<ul class="dropdown-menu">
+		<li><a data-filter_field="store_id">{{ entry_store }}</a></li>
+		<li><a data-filter_field="language_id">{{ entry_language }}</a></li>
+		<li class="divider"></li>
+		{% for field in text_fields %}
+		<li><a data-filter_field="{{ field.input }}">{{ field.label }}</a></li>
+		{% endfor %}
+		<li class="divider"></li>
+		{% if oc_filter %}
+		<li><a data-filter_field="filters">{{ column_filter }}</a></li>
+		{% endif %}
+		<li><a data-filter_field="categories">{{ entry_category }}</a></li>
+		<li><a data-filter_field="manufacturers">{{ entry_manufacturer }}</a></li>
+		<li><a data-filter_field="options">{{ column_option }}</a></li>
+		<li><a data-filter_field="attributes">{{ column_attribute }}</a></li>
+		{% if ext_labels %}
+		<li><a data-filter_field="labels">{{ tab_labels }}</a></li>
+		{% endif %}
+		<li><a data-filter_field="date_available">{{ entry_date_available }}</a></li>
+		<li><a data-filter_field="date_added">{{ entry_date_added }}</a></li>
+		<li><a data-filter_field="date_modified">{{ entry_date_modified }}</a></li>
+		<li><a data-filter_field="status">{{ entry_status }}</a></li>
+		<li><a data-filter_field="sort_order">{{ entry_sort_order }}</a></li>
+		<li><a data-filter_field="price">{{ entry_price }}</a></li>
+		<li><a data-filter_field="special">{{ column_special }}</a></li>
+		<li><a data-filter_field="discount">{{ column_discount }}</a></li>
+		<li><a data-filter_field="tax_class_id">{{ entry_tax_class }}</a></li>
+		<li><a data-filter_field="quantity">{{ entry_quantity }}</a></li>
+		<li><a data-filter_field="minimum">{{ entry_minimum }}</a></li>
+		<li><a data-filter_field="subtract">{{ entry_subtract }}</a></li>
+		<li><a data-filter_field="stock_status_id">{{ entry_stock_status }}</a></li>
+		<li><a data-filter_field="shipping">{{ entry_shipping }}</a></li>
+		<li><a data-filter_field="points">{{ entry_points }}</a></li>
+		<li><a data-filter_field="weight_class_id">{{ entry_weight_class }}</a></li>
+		<li><a data-filter_field="weight">{{ entry_weight }}</a></li>
+		<li><a data-filter_field="length_class_id">{{ entry_length_class }}</a></li>
+		<li><a data-filter_field="length">{{ entry_length }}</a></li>
+		<li><a data-filter_field="width">{{ entry_width }}</a></li>
+		<li><a data-filter_field="height">{{ entry_height }}</a></li>
+		<li><a data-filter_field="seo_url">{{ entry_seo_url }}</a></li>
+		{% if custom_fields %}
+		<li class="divider"></li>
+		{% for field in custom_fields %}
+		<li><a data-filter_field="custom-{{ field.input }}">{{ field.label }}</a></li>
+		{% endfor %}
+		{% endif %}
+		<li class="divider"></li>
+		<li><a data-filter_field="sql">{{ tab_action_sql }}</a></li>
+	</ul>
+</div>
+<h4>{{ text_filters }}</h4>
+<hr/>
+{% set col1 = '3' %}
+{% set col2 = '7' %}
+{% set col3 = '2' %}
+<div class="form-group filter-group-filter_layout filter-group-default">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[filter_layout][name]">{{ entry_editor_layout }}</label>
+	<div class="col-sm-{{ col2 }}">
+		<!-- <select name="filter[filter_layout]" id="filter[filter_layout]" class="form-control" onchange="bpe.loadLayout(this);">
+		</select> -->
+		<input type="text" value="" placeholder="{{ entry_editor_layout_name }}" name="filter[filter_layout][name]" id="filter[filter_layout][name]" class="form-control filter-layout-select" data-target="filter[filter_layout][id]" />
+		<input type="hidden" name="filter[filter_layout][id]" id="filter[filter_layout][id]" value="" />
+		<input type="hidden" name="filter[filter_layout][data]" id="filter[filter_layout][data]" value="" />
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.saveLayout(this);" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+	<button type="button" onclick="bpe.deleteLayout(this);" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-warning"><i class="fa fa-trash-o"></i></button>
+	</div>
+</div>
+{% set col1 = '3' %}
+{% set col2 = '8' %}
+{% set col3 = '1' %}
+<div class="form-group filter-group-store_id">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[store_id]">{{ entry_store }}</label>
+	<div class="col-sm-{{ col2 }}">
+		<select name="filter[store_id]" id="filter[store_id]" class="form-control">
+			<option value="">{{ text_all }}</option>
+			{% for store in stores %}
+			<option value="{{ store.store_id }}">{{ store.name }}</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-language_id">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[language_id]">{{ entry_language }}</label>
+	<div class="col-sm-{{ col2 }}">
+		<select name="filter[language_id]" id="filter[language_id]" class="form-control">
+			<option value="">{{ text_all }}</option>
+			{% for language in languages %}
+			<option value="{{ language.language_id }}">{{ language.name }}</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter"><button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></div>
+</div>
+{% for field in text_fields %}
+<div class="form-group filter-group-{{ field.input }}{% if field.default %} filter-group-default{% endif %}">
+	<label class="col-sm1-{{ col1 }} col-sm-12 col-md-12 col-lg-3 control-label" for="filter[{{ field.input }}]">{{ field.label }}</label>
+	<div class="col-sm1-{{ col2 }} col-sm-10 col-md-10 col-lg-8">
+		<input type="text" name="filter[{{ field.input }}]" value="" placeholder="{{ field.label }}" id="filter[{{ field.input }}]" class="form-control" />
+		<div class="row form-row">
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-default active" data-toggle="tooltip" title="{{ info_contains }}" onclick="$('.batch-wr .filter-{{ field.input }}-condition').show();">
+				<input name="filter[{{ field.input }}_contains]" value="contains" checked="checked" type="radio">{{ entry_contains }}
+				</label>
+				<label class="btn btn-default" data-toggle="tooltip" title="{{ info_contains }}" onclick="$('.batch-wr .filter-{{ field.input }}-condition').hide();">
+				<input name="filter[{{ field.input }}_contains]" value="starts" type="radio">{{ entry_starts }}
+				</label>
+				<label class="btn btn-default" data-toggle="tooltip" title="{{ info_contains }}" onclick="$('.batch-wr .filter-{{ field.input }}-condition').hide();">
+				<input name="filter[{{ field.input }}_contains]" value="ends" type="radio">{{ entry_ends }}
+				</label>
+				<label class="btn btn-default" data-toggle="tooltip" title="{{ info_contains }}" onclick="$('.batch-wr .filter-{{ field.input }}-condition').hide();">
+				<input name="filter[{{ field.input }}_contains]" value="empty" type="radio">{{ entry_empty }}
+				</label>
+			</div>
+			&nbsp;&nbsp;
+			<div class="btn-group filter-{{ field.input }}-condition" data-toggle="buttons">
+				<label class="btn btn-default active" data-toggle="tooltip" title="{{ info_or }}">
+				<input name="filter[{{ field.input }}_or]" value="and" checked="checked" type="radio">{{ entry_and }}
+				</label>
+				<label class="btn btn-default" data-toggle="tooltip" title="{{ info_or }}">
+				<input name="filter[{{ field.input }}_or]" value="or" type="radio">{{ entry_or }}
+				</label>
+				<label class="btn btn-default" data-toggle="tooltip" title="{{ info_or }}">
+				<input name="filter[{{ field.input }}_or]" value="equal" type="radio">{{ entry_equal }}
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm1-{{ col3 }} col-sm-2 col-md-2 col-lg-1 hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+{% endfor %}
+<div class="clone-wr">
+	<div class="form-group filter-group-categories clone-master filter-group-default">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[categories][---0---][category_id]">{{ entry_category }}</label>
+		<div class="col-sm-{{ col2 - col3 }}">
+			<input type="text" value="" placeholder="{{ entry_category }}" id="filter[categories][---0---][category_id]" class="form-control category-select" data-target="filter[categories][---0---][category_id]" data-na="1" />
+			<input type="hidden" name="filter[categories][---0---][category_id]" value="" />
+			<div class="checkbox">
+				<label><input name="filter[categories][---0---][sub_category]" type="checkbox" value="1"> {{ entry_category_sub }}</label>
+			</div>
+		</div>
+		<div class="col-sm-{{ col3 + col3 }} hide-filter">
+			<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+			<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+		</div>
+	</div>
+</div>
+<div class="clone-wr">
+	<div class="form-group filter-group-manufacturers clone-master filter-group-default">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[manufacturers][---0---][manufacturer_id]">{{ entry_manufacturer }} <span data-toggle="tooltip" title="{{ help_zero }}"></span></label>
+		<div class="col-sm-{{ col2 - col3 }}">
+			<input type="text" value="" placeholder="{{ entry_manufacturer }}" id="filter[manufacturers][---0---][manufacturer_id]" data-target="filter[manufacturers][---0---][manufacturer_id]" class="form-control manufacturer-select" data-na="1" />
+			<input type="hidden" name="filter[manufacturers][---0---][manufacturer_id]" value="" />
+		</div>
+		<div class="col-sm-{{ col3 + col3 }} hide-filter">
+			<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+			<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+		</div>
+	</div>
+</div>
+
+<div class="clone-wr">
+	<div class="form-group filter-group-options clone-master">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[options][---0---][option_id]">{{ column_option }}</label>
+		<div class="col-sm-{{ col2 - col3 }}">
+			<div class="row form-row">
+				<input type="text" value="" placeholder="{{ column_option }}" id="filter[options][---0---][option_id]" data-target="filter[options][---0---][option_id]" data-target-values="filter[options][---0---][option_value_id]" class="form-control option-select" data-na="1" />
+				<input type="hidden" name="filter[options][---0---][option_id]" value="" />
+			</div>
+			<div class="row form-row">
+				<select name="filter[options][---0---][option_value_id]" id="filter[options][---0---][option_value_id]" class="form-control">
+					<option value="">--- {{ text_all }} ---</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-sm-{{ col3 + col3 }} hide-filter">
+			<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+			<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+		</div>
+	</div>
+</div>
+
+<div class="clone-wr">
+	<div class="form-group filter-group-attributes clone-master">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[attributes][---0---][attribute_id]">{{ column_attribute }} <span data-toggle="tooltip" title="{{ help_filter_attribute }}"></span></label>
+		<div class="col-sm-{{ col2 - col3 }}">
+			<div class="row form-row">
+				<input type="text" value="" placeholder="{{ column_attribute }}" id="filter[attributes][---0---][attribute_id]" data-target="filter[attributes][---0---][attribute_id]" class="form-control attribute-select" data-na="1" />
+				<input type="hidden" name="filter[attributes][---0---][attribute_id]" value="" />
+			</div>
+			<div class="row form-row">
+			<input type="text" id="filter[attributes][---0---][attribute_text]" name="filter[attributes][---0---][attribute_text]" data-target="filter[attributes][---0---][attribute_text]" data-attribute_id="filter[attributes][---0---][attribute_id]" data-language_id="0" value="" placeholder="{{ entry_attribute_text }}" class="form-control attribute-value-select" />
+			</div>
+		</div>
+		<div class="col-sm-{{ col3 + col3 }} hide-filter">
+			<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+			<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+		</div>
+	</div>
+</div>
+
+{% if ext_labels %}
+<div class="clone-wr">
+	<div class="form-group filter-group-labels clone-master">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[labels][---0---][label_id]">{{ entry_label }}</label>
+		<div class="col-sm-{{ col2 - col3 }}">
+			<div class="row form-row">
+				<input type="text" value="" placeholder="{{ entry_label }}" id="filter[labels][---0---][label_id]" data-target="filter[labels][---0---][label_id]" class="form-control label-select" />
+				<input type="hidden" name="filter[labels][---0---][label_id]" value="" />
+			</div>
+		</div>
+		<div class="col-sm-{{ col3 + col3 }} hide-filter">
+			<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+			<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+		</div>
+	</div>
+</div>
+{% endif %}
+
+{% if oc_filters %}
+<div class="clone-wr">
+	<div class="form-group filter-group-filters clone-master filter-group-default">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[filters][---0---][filter_id]">{{ column_filter }}</label>
+		<div class="col-sm-{{ col2 - col3 }}">
+			<div class="row form-row">
+				<input type="text" value="" placeholder="{{ column_filter }}" id="filter[filters][---0---][filter_id]" data-target="filter[filters][---0---][filter_id]" class="form-control filter-select" data-na="1" />
+				<input type="hidden" name="filter[filters][---0---][filter_id]" value="" />
+			</div>
+		</div>
+		<div class="col-sm-{{ col3 + col3 }} hide-filter">
+			<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+			<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+		</div>
+	</div>
+</div>
+{% endif %}
+
+<div class="form-group filter-group-price filter-group-default">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[price_from]">{{ entry_price }}</label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[price_from]" value="" placeholder="{{ entry_price_from }}" id="filter[price_from]" class="form-control" />
+	</div>
+	<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[price_till]" value="" placeholder="{{ entry_price_to }}" id="filter[price_till]" class="form-control" />
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-special">
+	<div class="row form-row">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[special_from]">{{ column_special }}</label>
+		<div class="col-sm-{{ col2 - 5 }}">
+			<input type="text" name="filter[special_from]" value="" placeholder="{{ entry_price_from }}" id="filter[special_from]" class="form-control" />
+		</div>
+		<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+		<div class="col-sm-{{ col2 - 5 }}">
+			<input type="text" name="filter[special_till]" value="" placeholder="{{ entry_price_to }}" id="filter[special_till]" class="form-control" />
+		</div>
+		<div class="col-sm-{{ col3 }} hide-filter">
+			<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+		</div>
+	</div>
+	<div class="row form-row">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[special_date_start]">{{ entry_date }}</label>
+		<div class="col-sm-{{ col2 - 5 }}">
+			<div class="input-group date">
+				<input type="text" name="filter[special_date_start]" value="" placeholder="{{ entry_price_from }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="filter[special_date_start]" class="form-control" />
+				<div class="input-group-btn">
+					<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+				</div>
+			</div>
+		</div>
+		<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+		<div class="col-sm-{{ col2 - 5 }}">
+			<div class="input-group date">
+				<input type="text" name="filter[special_date_end]" value="" placeholder="{{ entry_price_to }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="filter[special_date_end]" class="form-control" />
+				<div class="input-group-btn">
+					<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-{{ col3 }}"></div>
+	</div>
+</div>
+<div class="form-group filter-group-discount">
+	<div class="row form-row">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[discount_from]">{{ column_discount }}</label>
+		<div class="col-sm-{{ col2 - 5 }}">
+			<input type="text" name="filter[discount_from]" value="" placeholder="{{ entry_price_from }}" id="filter[discount_from]" class="form-control" />
+		</div>
+		<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+		<div class="col-sm-{{ col2 - 5 }}">
+			<input type="text" name="filter[discount_till]" value="" placeholder="{{ entry_price_to }}" id="filter[discount_till]" class="form-control" />
+		</div>
+		<div class="col-sm-{{ col3 }} hide-filter">
+			<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+		</div>
+	</div>
+	<div class="row form-row">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[discount_date_start]">{{ entry_date }}</label>
+		<div class="col-sm-{{ col2 - 5 }}">
+			<div class="input-group date">
+				<input type="text" name="filter[discount_date_start]" value="" placeholder="{{ entry_price_from }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="filter[discount_date_start]" class="form-control" />
+				<div class="input-group-btn">
+					<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+				</div>
+			</div>
+		</div>
+		<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+		<div class="col-sm-{{ col2 - 5 }}">
+			<div class="input-group date">
+				<input type="text" name="filter[discount_date_end]" value="" placeholder="{{ entry_price_to }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="filter[discount_date_end]" class="form-control" />
+				<div class="input-group-btn">
+					<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-{{ col3 }}"></div>
+	</div>
+</div>
+<div class="form-group filter-group-tax_class_id">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[tax_class_id]">{{ entry_tax_class }}</label>
+	<div class="col-sm-{{ col2 }}">
+		<select name="filter[tax_class_id]" id="filter[tax_class_id]" class="form-control">
+			<option value=""></option>
+			{% for tax_class in tax_classes %}
+			<option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-quantity">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[quantity_from]">{{ entry_quantity }}</label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[quantity_from]" value="" placeholder="{{ entry_price_from }}" id="filter[quantity_from]" class="form-control" />
+	</div>
+	<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[quantity_till]" value="" placeholder="{{ entry_price_to }}" id="filter[quantity_till]" class="form-control" />
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-minimum">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[minimum_from]">{{ entry_minimum }}</label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[minimum_from]" value="" placeholder="{{ entry_price_from }}" id="filter[minimum_from]" class="form-control" />
+	</div>
+	<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[minimum_till]" value="" placeholder="{{ entry_price_to }}" id="filter[minimum_till]" class="form-control" />
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-stock_status_id filter-group-default">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[stock_status_id]">{{ entry_stock_status }}</label>
+	<div class="col-sm-{{ col2 }}">
+		<select name="filter[stock_status_id]" id="filter[stock_status_id]" class="form-control">
+			<option value=""></option>
+			{% for stock_status in stock_statuses %}
+			<option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-status filter-group-default">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[status]">{{ entry_status }}</label>
+	<div class="col-sm-{{ col2 }}">
+		<select name="filter[status]" id="filter[status]" class="form-control">
+			<option value=""></option>
+			<option value="1">{{ text_enabled }}</option>
+			<option value="0">{{ text_disabled }}</option>
+		</select>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-sort_order">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[sort_order_from]">{{ entry_sort_order }}</label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[sort_order_from]" value="" placeholder="{{ entry_price_from }}" id="filter[sort_order_from]" class="form-control" />
+	</div>
+	<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[sort_order_till]" value="" placeholder="{{ entry_price_to }}" id="filter[sort_order_till]" class="form-control" />
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-weight_class_id">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[weight_class_id]">{{ entry_weight_class }}</label>
+	<div class="col-sm-{{ col2 }}">
+		<select name="filter[weight_class_id]" id="filter[weight_class_id]" class="form-control">
+			<option value=""></option>
+			{% for weight_class in weight_classes %}
+			<option value="{{ weight_class.weight_class_id }}">{{ weight_class.title }}</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-weight">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[weight_from]">{{ entry_weight }}</label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[weight_from]" value="" placeholder="{{ entry_price_from }}" id="filter[weight_from]" class="form-control" />
+	</div>
+	<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[weight_till]" value="" placeholder="{{ entry_price_to }}" id="filter[weight_till]" class="form-control" />
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter"><button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></div>
+</div>
+<div class="form-group filter-group-length_class_id">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[length_class_id]">{{ entry_length_class }}</label>
+	<div class="col-sm-{{ col2 }}">
+		<select name="filter[length_class_id]" id="filter[length_class_id]" class="form-control">
+			<option value=""></option>
+			{% for length_class in length_classes %}
+			<option value="{{ length_class.length_class_id }}">{{ length_class.title }}</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-length">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[length_from]">{{ entry_length }}</label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[length_from]" value="" placeholder="{{ entry_price_from }}" id="filter[length_from]" class="form-control" />
+	</div>
+	<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[length_till]" value="" placeholder="{{ entry_price_to }}" id="filter[length_till]" class="form-control" />
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter"><button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></div>
+</div>
+<div class="form-group filter-group-width">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[width_from]">{{ entry_width }}</label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[width_from]" value="" placeholder="{{ entry_price_from }}" id="filter[width_from]" class="form-control" />
+	</div>
+	<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[width_till]" value="" placeholder="{{ entry_price_to }}" id="filter[width_till]" class="form-control" />
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter"><button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></div>
+</div>
+<div class="form-group filter-group-height">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[height_from]">{{ entry_height }}</label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[height_from]" value="" placeholder="{{ entry_price_from }}" id="filter[height_from]" class="form-control" />
+	</div>
+	<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[height_till]" value="" placeholder="{{ entry_price_to }}" id="filter[height_till]" class="form-control" />
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-date_available">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[date_available_from]">{{ entry_date_available }}</label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<div class="input-group date">
+			<input type="text" name="filter[date_available_from]" value="" placeholder="{{ entry_price_from }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="filter[date_available_from]" class="form-control" />
+			<div class="input-group-btn">
+				<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+			</div>
+		</div>
+	</div>
+	<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<div class="input-group date">
+			<input type="text" name="filter[date_available_till]" value="" placeholder="{{ entry_price_to }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="filter[date_available_till]" class="form-control" />
+			<div class="input-group-btn">
+				<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter"><button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></div>
+</div>
+<div class="form-group filter-group-date_added filter-group-default">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[date_added_from]">{{ entry_date_added }}</label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<div class="input-group date">
+			<input type="text" name="filter[date_added_from]" value="" placeholder="{{ entry_price_from }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="filter[date_added_from]" class="form-control" />
+			<div class="input-group-btn">
+				<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+			</div>
+		</div>
+	</div>
+	<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<div class="input-group date">
+			<input type="text" name="filter[date_added_till]" value="" placeholder="{{ entry_price_to }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="filter[date_added_till]" class="form-control" />
+			<div class="input-group-btn">
+				<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-date_modified">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[date_modified_from]">{{ entry_date_modified }}</label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<div class="input-group date">
+			<input type="text" name="filter[date_modified_from]" value="" placeholder="{{ entry_price_from }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="filter[date_modified_from]" class="form-control" />
+			<div class="input-group-btn">
+				<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+			</div>
+		</div>
+	</div>
+	<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<div class="input-group date">
+			<input type="text" name="filter[date_modified_till]" value="" placeholder="{{ entry_price_to }}" data-date-format="YYYY-MM-DD" data-locale="{{ datepicker }}" id="filter[date_modified_till]" class="form-control" />
+			<div class="input-group-btn">
+				<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-subtract">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[subtract]">{{ entry_subtract }}</label>
+	<div class="col-sm-{{ col2 }}">
+		<select name="filter[subtract]" id="filter[subtract]" class="form-control">
+			<option value=""></option>
+			<option value="0">{{ text_yes }}</option>
+			<option value="1">{{ text_no }}</option>
+		</select>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter"><button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></div>
+</div>
+<div class="form-group filter-group-shipping">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[shipping]">{{ entry_shipping }}</label>
+	<div class="col-sm-{{ col2 }}">
+		<select name="filter[shipping]" id="filter[shipping]" class="form-control">
+			<option value=""></option>
+			<option value="0">{{ text_yes }}</option>
+			<option value="1">{{ text_no }}</option>
+		</select>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-points">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[points_from]">{{ entry_points }}</label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[points_from]" value="" placeholder="{{ entry_price_from }}" id="filter[points_from]" class="form-control" />
+	</div>
+	<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+	<div class="col-sm-{{ col2 - 5 }}">
+		<input type="text" name="filter[points_till]" value="" placeholder="{{ entry_price_to }}" id="filter[points_till]" class="form-control" />
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="form-group filter-group-seo_url">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[seo_url]">{{ entry_seo_url }}</label>
+	<div class="col-sm-{{ col2 }}">
+		<input type="text" name="filter[seo_url]" value="" placeholder="{{ entry_seo_url }}" id="filter[seo_url]" class="form-control" />
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+{% if custom_fields %}
+{% for field in custom_fields %}
+	{% if field.type == 'int' or field.type == 'bigint' or field.type == 'tinyint' or field.type == 'float' or field.type == 'decimal' %}
+	<div class="form-group filter-group-custom-{{ field.input }}">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[{{ field.input }}_from]">{{ field.label }}</label>
+		<div class="col-sm-{{ col2 - 5 }}">
+			<input type="text" name="filter[{{ field.input }}_from]" value="" placeholder="{{ entry_price_from }}" id="filter[{{ field.input }}_from]" class="form-control" />
+		</div>
+		<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+		<div class="col-sm-{{ col2 - 5 }}">
+			<input type="text" name="filter[{{ field.input }}_till]" value="" placeholder="{{ entry_price_to }}" id="filter[{{ field.input }}_till]" class="form-control" />
+		</div>
+		<div class="col-sm-{{ col3 }} hide-filter">
+		<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+		</div>
+	</div>
+	{% elseif field.type == 'date' or field.type == 'datetime' %}
+	<div class="form-group filter-group-custom-{{ field.input }}">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[{{ field.input }}_from]">{{ field.label }}</label>
+		<div class="col-sm-{{ col2 - 5 }}">
+			<div class="input-group date">
+				<input type="text" name="filter[{{ field.input }}_from]" value="" placeholder="{{ entry_price_from }}" data-date-format="YYYY-MM-DD HH:mm:ss" data-locale="{{ datepicker }}" id="filter[{{ field.input }}_from]" class="form-control" />
+				<div class="input-group-btn">
+					<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+				</div>
+			</div>
+		</div>
+		<label class="col-sm-2 control-label" style="text-align:center;"><i class="fa fa-minus"></i></label>
+		<div class="col-sm-{{ col2 - 5 }}">
+			<div class="input-group date">
+				<input type="text" name="filter[{{ field.input }}_till]" value="" placeholder="{{ entry_price_to }}" data-date-format="YYYY-MM-DD HH:mm:ss" data-locale="{{ datepicker }}" id="filter[{{ field.input }}_till]" class="form-control" />
+				<div class="input-group-btn">
+					<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-{{ col3 }} hide-filter">
+		<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+		</div>
+	</div>
+	{% else %}
+	{# if field.type == 'char' or field.type == 'varchar' or field.type == 'text' or field.type == 'mediumtext' or field.type == 'longtext' #}
+	<div class="form-group filter-group-custom-{{ field.input }}">
+		<label class="col-sm-{{ col1 }} control-label" for="filter[{{ field.input }}]">{{ field.label }}</label>
+		<div class="col-sm-{{ col2 }}">
+			<input type="text" name="filter[{{ field.input }}]" value="" placeholder="{{ field.label }}" id="filter[{{ field.input }}]" class="form-control" />
+			<div class="row form-row">
+				<div class="btn-group" data-toggle="buttons">
+					<label class="btn btn-default active" data-toggle="tooltip" title="{{ info_contains }}" onclick="$('.batch-wr .filter-{{ field.input }}-condition').show();">
+					<input name="filter[{{ field.input }}_contains]" value="contains" checked="checked" type="radio">{{ entry_contains }}
+					</label>
+					<label class="btn btn-default" data-toggle="tooltip" title="{{ info_contains }}" onclick="$('.batch-wr .filter-{{ field.input }}-condition').hide();">
+					<input name="filter[{{ field.input }}_contains]" value="starts" type="radio">{{ entry_starts }}
+					</label>
+					<label class="btn btn-default" data-toggle="tooltip" title="{{ info_contains }}" onclick="$('.batch-wr .filter-{{ field.input }}-condition').hide();">
+					<input name="filter[{{ field.input }}_contains]" value="ends" type="radio">{{ entry_ends }}
+					</label>
+					<label class="btn btn-default" data-toggle="tooltip" title="{{ info_contains }}" onclick="$('.batch-wr .filter-{{ field.input }}-condition').hide();">
+					<input name="filter[{{ field.input }}_contains]" value="empty" type="radio">{{ entry_empty }}
+					</label>
+				</div>
+				&nbsp;&nbsp;
+				<div class="btn-group filter-{{ field.input }}-condition" data-toggle="buttons">
+					<label class="btn btn-default active" data-toggle="tooltip" title="{{ info_or }}">
+					<input name="filter[{{ field.input }}_or]" value="and" checked="checked" type="radio">{{ entry_and }}
+					</label>
+					<label class="btn btn-default" data-toggle="tooltip" title="{{ info_or }}">
+					<input name="filter[{{ field.input }}_or]" value="or" type="radio">{{ entry_or }}
+					</label>
+					<label class="btn btn-default" data-toggle="tooltip" title="{{ info_or }}">
+					<input name="filter[{{ field.input }}_or]" value="equal" type="radio">{{ entry_equal }}
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-{{ col3 }} hide-filter">
+		<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+		</div>
+	</div>
+	{% endif %}
+{% endfor %}
+{% endif %}
+
+<div class="form-group filter-group-sql">
+	<label class="col-sm-{{ col1 }} control-label" for="filter[sql]">{{ entry_sql }}</label>
+	<div class="col-sm-{{ col2 }}">
+		<textarea name="filter[sql]" id="filter[sql]" class="form-control" rows="4" placeholder="{{ help_filter_query_example|striptags }}" style="max-height:none;"></textarea>
+		<div class="row">
+			<div class="col-sm-12">
+				{{ help_filter_query }}
+				{{ help_filter_query_example }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12" style="font-size:85%;">
+				{{ help_single_query_warning }}
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-{{ col3 }} hide-filter">
+	<button type="button" onclick="bpe.hideFilter(this);" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
+	</div>
+</div>
+<div class="clearfix"></div>

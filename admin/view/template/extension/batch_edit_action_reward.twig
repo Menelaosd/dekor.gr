@@ -1,0 +1,19 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<h4>{{ tab_action_reward }}</h4>
+<hr/>
+<h4>{{ text_update_existing }}</h4>
+<hr/>
+{% for customer_group in customer_groups %}
+<div class="form-group action-group-default">
+	<label class="col-sm-3 control-label" for="action[reward][update][{{ customer_group.customer_group_id }}][points]">{{ customer_group.name }}</label>
+	<div class="col-sm-9">
+		<input type="text" value="" placeholder="{{ entry_points }}" id="action[reward][update][{{ customer_group.customer_group_id }}][points]" name="action[reward][update][{{ customer_group.customer_group_id }}][points]" class="form-control" />
+	</div>
+</div>
+{% endfor %}

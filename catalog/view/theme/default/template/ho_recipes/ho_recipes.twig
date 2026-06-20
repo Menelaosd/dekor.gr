@@ -1,0 +1,370 @@
+{{ header }}
+<div class="container breadcrumbs-container container-max-width">
+  <ul class="breadcrumb">
+	{% for breadcrumb in breadcrumbs %}
+	<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+	{% endfor %}
+  </ul>
+</div>
+<div id="ho_recipes-ho_recipes" class="container">
+	<div class="row">{{ column_left }}
+		<div id="content" class="col-sm-12">
+			<h1 class="recipe-title"><span>{{ heading_title }}</span></h1>
+			{% if servings or preptime or diff %}
+			<div class="recipe-details">
+				<ul>
+					{% if servings %}
+						<li><i class="fas fa-utensils"></i> {{ servings }}</li>
+					{% endif %}
+					{% if preptime %}
+						<li><i class="far fa-clock"></i> {{ preptime }}</li>
+					{% endif %}
+					{% if diff %}
+						<li>{{ diff }}</li>
+					{% endif %}
+				</ul>
+			</div>
+			{% endif %}
+			{% if image %}
+			<div class="recipe-header">
+				<img src="{{ image }}" alt="{{ heading_title }}">
+			</div>
+			{% endif %}
+			<div class="recipe-content">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="recipe-text">
+							<h3>{{ text_instructions }}</h3>
+							{{ description }}
+						</div>
+						{% if tip %}
+							<div class="recipe-tip">
+								<h3><i class="fas fa-check-circle"></i>{{ text_tip }}</h3>
+								{{ tip }}
+							</div>
+						{% endif %}
+					</div>
+					<div class="col-md-6">
+						<div class="recipe-related">
+							<h3>{{ text_req_products }}</h3> 
+							<div class="recipe-related-wrap">
+								{% if products %}
+									{% for product in products %}
+										<div class="rec-product-block" id="product{{ product.product_id }}" data-productid="{{ product.product_id }}">
+											<div class="rec-product-image">
+												<img src="{{ product.thumb }}" alt="{{ product.name }}">
+											</div>
+											<div class="rec-product-text">
+												<div class="rec-product-title">
+													<h4>{{ product.name }}</h4>
+													<input type="hidden" name="product_id" value="{{ product.product_id }}" />
+												</div>
+												<div class="rec-product-price">
+													{% if product.price %}
+														{% if not product.special %}
+															<meta itemprop="price" content="{{ product.price|replace({',': '.', '€': ''}) }}">
+															<span class="amount">{{ product.price }}</span>
+														{% else %}
+															<meta itemprop="price" content="{{ product.special|replace({',': '.', '€': ''}) }}">
+															<del class="amount_before">{{ product.price }}</del>
+															<span class="amount">{{ product.special }}</span>
+														{% endif %}
+													{% endif %}
+												</div>
+												<div class="rec-product-options">
+													<div class="product-options">
+														{% if product.product_options %}
+															{% for option in product.product_options %}
+																{% if option.type == 'radio' %}
+																<div class="form-radios{% if option.required %} required {% endif %}">
+																  <div id="input-option_{{product.product_id}}_{{ option.product_option_id }}">
+																		{% for option_value in option.product_option_value %}
+																		<div class="radio">
+																			<input data-productid="{{product.product_id}}" id="option_{{product.product_id}}_{{ option_value.product_option_value_id }}" type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" />
+																			<label for="option_{{product.product_id}}_{{ option_value.product_option_value_id }}" >{{ option_value.name }}</label>
+																		</div>
+																		{% endfor %}
+																	</div>
+																</div>
+																{% endif %}
+															{% endfor %}
+														{% endif %}
+													</div>
+												</div>
+											</div>
+											<div class="rec-product-quantity">
+												<div class="rec-quantity-label">{{ text_quantity }}</div>
+												<input type="text" name="quantity" value="{{ product.minimum }}" size="2" id="input-quantity" class="form-control" />
+											</div>
+											<div class="rec-product-cart">
+												<button type="button" class="button-add-single" id="button-cart{{ product.product_id }}" data-loading-text="{{ text_loading }}" class="product-cart-button">
+													<i class="fa fa-shopping-bag"></i> <span>{{ button_cart}}</span>
+												</button>
+											</div>
+										</div>
+									{% endfor %}
+									<div class="add-all-wrapper">
+										<button id="add_all" data-loading-text="{{ text_loading }}"><i class="fa fa-shopping-bag"></i> {{ text_add_all }}</button>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			{% if author_name and author_title and author_bio and author_image %}
+			<div class="recipe-author">
+				<div class="author-image">
+					<div class="author-image-wrap">
+						<img src="{{ author_image }}" alt="{{ author_name }}">
+					</div>
+				</div>
+				<div class="author-details">
+					<div class="author-name">{{ author_name }}</div>
+					<div class="author-title">{{ author_title }}</div>
+				</div>
+				<div class="author-bio">
+					{{ author_bio }}
+				</div>
+			</div>
+			{% endif %}
+			<div class="recipes-share-wrapper">
+				<div class="product-share">
+					<span>{{ text_share }}</span>
+					<a href="#">
+						<i class="fab fa-facebook-f"></i>
+					</a>
+					<a href="#">
+						<i class="fab fa-instagram"></i>
+					</a>
+					<a href="#">
+						<i class="fab fa-pinterest-p"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% if recipes %}
+	<div class="recipes-wrapper">
+		<div class="container">
+			<h3 class="module-title">{{ text_related_recipes }}</h3>
+			<div class="related-recipes owl-carousel">
+			{% for recipe in recipes %}
+				<div class="recipe-banner-block-wrap-carousel">
+					<div class="recipe-block">
+						<div class="recipe-block-left">
+							<div class="recipe-block-image">
+								<a title="{{recipe.name}}" href="{{recipe.href}}">
+									<img src="{{recipe.image}}" alt="{{recipe.title}}">
+								</a>
+							</div>
+						</div>
+						<div class="recipe-block-right">
+							<div class="recipe-block-content">
+								<h3>
+									<a title="{{recipe.name}}" href="{{recipe.href}}">
+										{{recipe.title}}
+									</a>
+								</h3>
+							</div>
+							<div class="recipe-block-intro">
+								{{recipe.intro}}
+							</div>
+							<div class="recipe-details">
+								<ul>
+									<li><i class="fas fa-utensils"></i> {{ recipe.servings }}</li>
+									<li><i class="far fa-clock"></i> {{ recipe.preptime }}</li>
+									<li>{{ recipe.diff }}</li>
+								</ul>
+							</div>
+							<div class="recipe-readmore">
+								<a class="recipe-readmore-btn" title="{{recipe.name}}" href="{{recipe.href}}">
+									{{ text_view_recipe }}
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+{% endif %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.related-recipes').owlCarousel({
+			infinite:true,
+			responsiveClass:true,
+			dots:true,
+			nav:true,
+			margin:30,
+			loop:true,
+			responsive:{
+				0:{
+					items:1,
+					nav:false,
+					dots:true,
+					margin:0
+				},
+				280:{
+					items:2,
+					nav:false,
+					dots:true,
+					margin:0
+				},
+				560:{
+					items:2,
+					nav:false,
+					dots:true,
+					margin:10
+				},
+				991:{
+					items:2,
+					nav:false,
+					dots:true,
+					margin:10
+				},
+				1200:{
+					items:2,
+					nav:true
+				}
+			}
+		});
+	});
+</script>
+<script type="text/javascript">
+$('.button-add-single').on('click', function() {
+	$('.alert-dismissible').remove();
+	var invalid = false;
+	var target = $(this).closest('.rec-product-block');
+	var targetButton = $(this);
+	var product_id = target.data('productid');
+	$('.rec-product-block .required').removeClass('error');
+	target.find('.required').each(function(){
+		if(!$(this).find('input:checked').length) {
+			$(this).closest('.required').addClass('error');
+			invalid = true;
+			return false;
+		};
+	});
+	if(invalid) {
+		$('html, body').animate({
+			scrollTop: $('.rec-product-block .required.error').closest('.rec-product-block').offset().top
+		}, 'slow');
+		return false;
+	}
+	$.ajax({
+		url: 'index.php?route=checkout/cart/add',
+		type: 'post',
+		data: $('#product'+product_id+' input[type=\'text\'], #product'+product_id+' input[type=\'hidden\'], #product'+product_id+' input[type=\'radio\']:checked, #product'+product_id+' input[type=\'checkbox\']:checked, #product'+product_id+' select, #product'+product_id+' textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			targetButton.button('loading');
+		},
+		complete: function() {
+			targetButton.button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible, .text-danger').remove();
+			//$('.form-group').removeClass('has-error');
+			if (json['error']) {
+				if (json['error']['option']) {
+					for (i in json['error']['option']) {
+						var element = $('#input-option_'+product_id+'_' + i.replace('_', '-'));
+						if (element.parent().hasClass('input-group')) {
+							element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						} else {
+							element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						}
+					}
+				}
+				if (json['error']['recurring']) {
+					$('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
+				}
+				$('.text-danger').parent().addClass('has-error');
+			}
+			if (json['success']) {
+				target.prepend('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#cart #cart-total').html(json['total']);
+				$('#cart-container .modal-inner').load('index.php?route=common/cart/info #cart-container .cart-content');			
+				setTimeout(function(){
+					$('#cart-container').modal('show');
+				}, 200);
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+$('#add_all').on('click', function() {
+	$('.alert-dismissible').remove();
+	var invalid = false;
+	$('.rec-product-block .required').removeClass('error');
+	$('.rec-product-block .required').each(function(){
+		if(!$(this).find('input:checked').length) {
+			$(this).closest('.required').addClass('error');
+			invalid = true;
+			return false;
+		};
+	});
+	if(invalid) {
+		$('html, body').animate({
+			scrollTop: $('.rec-product-block .required.error').closest('.rec-product-block').offset().top
+		}, 'slow');
+		return false;
+	}
+	$('.rec-product-block').each(function(){
+		var targetChild = $(this);
+		var product_id = $(this).data('productid');
+		$.ajax({
+			url: 'index.php?route=checkout/cart/add',
+			type: 'post',
+			data: $('#product'+product_id+' input[type=\'text\'], #product'+product_id+' input[type=\'hidden\'], #product'+product_id+' input[type=\'radio\']:checked, #product'+product_id+' input[type=\'checkbox\']:checked, #product'+product_id+' select, #product'+product_id+' textarea'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#add_all').button('loading');
+			},
+			complete: function() {
+				$('#add_all').button('reset');
+			},
+			success: function(json) {
+				//$('.alert-dismissible, .text-danger').remove();
+				//$('.form-group').removeClass('has-error');
+				if (json['error']) {
+					if (json['error']['option']) {
+						for (i in json['error']['option']) {
+							var element = $('#input-option_'+product_id+'_' + i.replace('_', '-'));
+							if (element.parent().hasClass('input-group')) {
+								element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+							} else {
+								element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+							}
+						}
+					}
+					if (json['error']['recurring']) {
+						$('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
+					}
+					$('.text-danger').parent().addClass('has-error');
+				}
+				if (json['success']) {
+					targetChild.prepend('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#cart #cart-total').html(json['total']);
+					$('#cart-container .modal-inner').load('index.php?route=common/cart/info #cart-container .cart-content');	
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}).promise().done( function(){
+		$('html, body').animate({
+			scrollTop: $('.recipe-related').offset().top
+		}, 'slow');
+	});
+});
+</script>
+{{ footer }}

@@ -1,0 +1,22 @@
+<ul class="nav navbar-nav">
+    {% macro render_menu(items, current_path) %}
+        {% for item in items %}
+            {% set active = (current_path and (current_path == item.category_id or current_path starts with (item.category_id ~ '_'))) %}
+            <li class="{% if item.children %}dropdown {% endif %}{% if active %}active{% endif %}">
+                <a href="{{ item.href }}"
+                   {% if item.children %}class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"{% endif %}>
+                    {{ item.name }}
+                    {% if item.children %}<span class="caret"></span>{% endif %}
+                </a>
+
+                {% if item.children %}
+                    <ul class="dropdown-menu">
+                        {{ _self.render_menu(item.children, current_path) }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+    {% endmacro %}
+
+    {{ _self.render_menu(nav, current_path) }}
+</ul>

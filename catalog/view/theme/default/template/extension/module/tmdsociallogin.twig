@@ -1,0 +1,26 @@
+	{% if warning %}
+	<div class="alert alert-warning"><i class="fa fa-check-circle"></i> {{ warning }}</div>
+	{% endif %}
+	<div class="social_login">
+		<span class="login-details">{{ module_title }}</span>
+		{% if fbstatus %}
+		<a class="socalicon facebook-icon btn btn-primary" href="{{ fblink }}">
+			<i class="fab fa-facebook-f"></i> {{ fbtitle }}
+		</a>
+		{% endif %}
+		{% if twitstatus %}
+		<a class="socalicon"  href="{{ twitlink }}">
+		<img  class="img-responsive" src="{{ twitimage }}" data-toggle="tooltip" title="{{ twittertitle }}" alt="{{ twittertitle }}" alt="{{ twittertitle }}" title="{{ twittertitle }}">
+		</a>
+		{% endif %}
+		{% if goglestatus %}
+		<a class="socalicon google-icon  btn btn-primary"  href="{{ goglelink }}">
+		<i class="fab fa-google"></i> {{ googletitle }}
+		</a>
+		{% endif %}
+		{% if linkstatus %}
+		<a class="socalicon"  href="{{ linkdinlink }}">
+		<img  class="img-responsive" src="{{ linkdinimage }}" data-toggle="tooltip" title="{{ linkedintitle }}" alt="{{ linkedintitle }}" alt="{{ linkedintitle }}" title="{{ linkedintitle }}">
+		</a>
+		{% endif %}
+	</div>

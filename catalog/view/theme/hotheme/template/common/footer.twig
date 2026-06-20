@@ -1,0 +1,391 @@
+</main>
+
+{{ footer_modules }}
+
+<div id="newsletterWrap">
+
+	<div class="togglenl" id="toggleNL">
+		<div class="toggleNL-wrap">
+			<span class="hidden-mobile">NEWSLETTER</span>
+			<span class="hidden-desktop"><i class="fas fa-envelope"></i></span>
+		</div>
+	</div>
+	
+	<div class="newsletter-form-wrap">
+		<div class="nlClose">
+			<i class="fal fa-times"></i>
+		</div>
+		<h3>NEWSLETTER</h3>
+		<div class="newsletter-form-text">
+			{{ newsletter_text }}
+		</div>
+		<div class="newsletter-form-wrap-form">
+			<label for="nlName" class="visuallyhidden">{{ text_yourname }}</label>
+			<input type="text" placeholder="{{ text_yourname }}" value="" id="nlName" name="nlName">
+			<label for="nlMail" class="visuallyhidden">{{ text_youremail }}</label>
+			<input type="text" placeholder="{{ text_youremail }}" value="" id="nlMail" name="nlMail">
+			<div class="newsletter-form-button">
+				<button id="nlSubmit">
+					<span class="nlSubmitText">
+						{{ text_nl_subscribe }}
+					</span>
+					<span class="nlSubmitSuccess">
+						<i class="fas fa-check"></i>
+					</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+</script><link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script type="text/javascript">
+	window.addEventListener("load", function(){
+	window.cookieconsent.initialise({
+	  "palette": {
+		"popup": {
+		  "background": "#FFF",
+		  "text": "#000"
+		},
+		"button": {
+		  "background": "#000",
+		  "text": "#FFF"
+		}
+	  },
+	  "content": {
+		"message": "Η ιστοσελίδα χρησιμοποιεί τα cookies  για να βελτιώσει την εμπειρία σας. Με την παραμονή σας στην ιστοσελίδα μας, συμφωνείτε στην εκ' μέρους μας τοποθέτηση cookies στον υπολογιστή σας.",
+		"dismiss": "Συμφωνώ",
+		
+		"link": "Μάθετε Περισσότερα"
+	  }
+	})
+});
+
+
+$('#toggleNL').on('click',function(e){
+	var toggler = $(this);
+	$(this).closest('#newsletterWrap').addClass('expanded');
+	$('.newsletter-form-wrap').fadeIn(150);
+	toggler.fadeOut(150);
+});
+
+$('#newsletterWrap').on('click','.nlClose',function(e){
+	var toggler = $('#toggleNL');
+	$('.newsletter-form-wrap').fadeOut(150);
+	$(this).closest('#newsletterWrap').removeClass('expanded');
+	toggler.fadeIn(150);
+});
+
+$('#nlSubmit').on('click',function(e) {
+	e.preventDefault();
+	
+	$('#newsletterWrap').append('<div class="lds-ring"><div></div></div>');
+	
+	var name 	= $('#nlName').val();
+	var mail 	= $('#nlMail').val();
+	var trigger = $(this);
+	
+	if(!name) {
+		$('#nlName').addClass('error');
+	} else {
+		$('#nlName').removeClass('error');
+	};
+	
+	if(!mail) {
+		$('#nlMail').addClass('error');
+	} else {
+		$('#nlMail').removeClass('error');
+	};
+	
+	
+	if(name && mail) {
+	
+		$.ajax({
+			url: "api/newsletter.php",
+			data: 'nl_name='+$('#nlName').val()+'&nl_mail='+$('#nlMail').val(),                  
+			type: 'POST',
+			success: function(){
+				trigger.addClass('success');
+				$('button#nlSubmit.success .nlSubmitSuccess').fadeIn(150);		
+				$('#newsletterWrap').find('.lds-ring').remove();
+			}
+		});		
+
+	} else {
+		$('#newsletterWrap').find('.lds-ring').remove();
+		$(this).removeClass('success');
+		$('button#nlSubmit .nlSubmitSuccess').hide();
+	};
+	
+});
+
+function createCookie(name,value,days) {
+   var expires = "";
+   if (days) {
+	   var date = new Date();
+	   date.setTime(date.getTime() + (days*24*60*60*1000));
+	   expires = "; expires=" + date.toUTCString();
+   }
+   document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+function readCookie(name) {
+   var nameEQ = name + "=";
+   var ca = document.cookie.split(';');
+   for(var i=0;i < ca.length;i++) {
+	   var c = ca[i];
+	   while (c.charAt(0)==' ') c = c.substring(1,c.length);
+	   if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+   }
+   return null;
+}
+
+function eraseCookie(name) {
+   createCookie(name,"",-1);
+}
+
+</script>
+
+{% if entrypopup %}
+	<div class="d-none">
+		<div id ="entrypopup">
+			<div class="entry-content">
+				{{ entrypopup }}
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(window).load(function() {
+			if(!readCookie('entry_pop')) {
+				setTimeout(
+				function() {
+					$.fancybox.open({
+						src  : '#entrypopup',
+						type : 'inline',
+						opts : {
+							afterShow : function( instance, current ) {
+								//console.info( 'done!' );
+							}
+						}
+					});
+				}, 3000);
+			};
+			createCookie('entry_pop',1,1)
+		});
+	</script>
+{% endif %}
+
+{% if exitpopup %}
+	<div class="d-none">
+		<div id ="exitpopup">
+			<div class="entry-content">
+				{{ exitpopup }}
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var mouseX = 0;
+		var mouseY = 0;
+		var popupCounter = 0;
+		document.addEventListener("mousemove", function(e) {
+			mouseX = e.clientX;
+			mouseY = e.clientY;
+			//document.getElementById("coordinates").innerHTML = "<br />X: " + e.clientX + "px<br />Y: " + e.clientY + "px";
+		});
+		$(document).mouseleave(function () {
+			if (mouseY < 10) {
+				if (popupCounter < 1 && !readCookie('exit_pop')) {
+					$.fancybox.close();
+					$.fancybox.open({
+						src  : '#exitpopup',
+						type : 'inline',
+						opts : {
+							afterShow : function( instance, current ) {
+								//console.info( 'done!' );
+							}
+						}
+					});
+				}
+				createCookie('exit_pop',1,1);
+				popupCounter ++;
+			}
+		});
+	</script>
+{% endif %}
+
+<style>
+#google_translate_element {
+    display: none;
+}
+.language-switcher {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.language-flag {
+    cursor: pointer;
+    width: 30px;
+    height: 20px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+</style>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'el',
+        includedLanguages: 'el,en,bg',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+}
+
+function changeLang(lang) {
+    const select = document.querySelector('select.goog-te-combo');
+    if (select) {
+        select.value = lang;
+        select.dispatchEvent(new Event('change'));
+    }
+}
+</script>
+
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+<footer>
+  <div class="footer-wrap">
+	<div class="top">
+	  <div class="container">
+		{# <div class="row">
+			<div class="footer-logo-container col-12">
+				<div id="footer-logo">
+					{% if logo %}
+						<a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-fluid" /></a>
+					{% else %}
+						<h1><a href="{{ home }}">{{ name }}</a></h1>
+					{% endif %} 
+				</div>
+			</div>
+		</div> #}
+		<div class="row">
+            <div class="first">
+                <p>{{ text_contact_title }}</p>
+                <a href="mailto:{{ text_contact_email }}"><div class="whiteBack"><i class="fas fa-envelope"></i>{{ text_contact_email }}</div></a>
+            </div>
+
+            <div class="flex-grow-footer">
+                 <div class="row footer-content-row">
+                    <div class="footer-block">
+                        <h5>{{ text_extra }}</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="/sxetika-me-emas">About us</a></li>
+                            <li><a href="#locations">Stores</a></li>
+                            {# <li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li> #}
+                            <li><a href="{{ voucher }}">{{ text_voucher }}</a></li>
+                            {# <li><a href="{{ affiliate }}">{{ text_affiliate }}</a></li> #}
+                            {# <li><a href="{{ special }}">{{ text_special }}</a></li> #}
+                            
+                        </ul>
+                    </div>
+
+                    {% if informations %}
+                        <div class="footer-block">
+                            <h5>{{ text_information }}</h5>
+                            <ul class="list-unstyled">
+                            {% for information in informations %}
+                                {% if information.information_id != 4 and information.information_id != 5 %}
+                                    <li><a href="{{ information.href }}">{{ information.title }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            <li><a href="/oroi-xrisis?section=12">{{ text_payment_methods }}</a></li>
+                            <li><a href="/oroi-xrisis?section=10">{{ text_return_policy }}</a></li>
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    <div class="footer-block">
+                        <h5>{{ text_service }}</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ account }}">{{ text_account }}</a></li>
+                            {# <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li> #}
+                            {# <li><a href="{{ cart }}">{{ text_cart }}</a></li> #}
+                            {# <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li> #}
+                            {# <li><a href="{{ order }}">{{ text_order }}</a></li> #}
+                            <li><a href="{{ contact }}">{{ text_contact }}</a></li>
+							 <li><a href="{{ return }}">{{ text_return_form }}</a></li>
+                        </ul>
+                    </div>
+                 
+                 </div>
+            </div>
+
+            <div class="footer-block last">
+                <h5>{{ text_franchise }}</h5>
+                <p>{{ text_franchise_title }}</p>
+                <span>{{ text_franchise_text }}</span>
+                <div class="button">
+					<a href="{{ franchise_link }}"><div class="generic-button">{{ text_franchise_link }}</div></a>
+				</div>
+            </div>
+		  
+        </div>
+	  </div>
+	</div>
+
+	<div class="middle">
+		<div class="footer-horizontal-row">
+			{{ text_espa }}
+		</div>	
+		{#
+		<div class="footer-horizontal-row mid-block">
+			<img src="image/catalog/icons/espa_logos.png" alt="espa"/>
+		</div>		
+		#}
+		
+		<div class="footer-horizontal-row">
+			<img src="image/catalog/icons/cards2.png" alt="payment"/>
+		</div>	
+	</div>
+
+	<div class="bottom">
+	  <div class="container">
+		<div class="row ">
+			<div class="col-12 col-lg-3 col-md-3 col-sm-12 copyright">
+				<p>{{ text_copyright }}</p>
+			</div>
+			<div class="col-12 col-lg-6 col-md-6 col-sm-12 cards">
+                <div class="footer-mini-menu">
+                    <div class="help-pages"><a href="/oroi-xrisis">{{text_oroi}}</a></div>
+                    <div class="help-pages"><a href="/oroi-xrisis?section=17">{{text_cookies}}</a></div>
+                    <div class="help-pages"><a href="/oroi-xrisis?section=7">{{text_privacy}}</a></div>
+                    <div class="help-pages"><a href="/oroi-xrisis?section=8">{{text_gdpr}}</a></div>
+                </div>
+            </div>
+			<div class="col-12 col-lg-3 col-md-3 col-sm-12 design">
+				{{ text_design }} <a href="https://happyonline.gr/" target="_blank"><img src="image/catalog/icons/h_monogram.png" alt="HO"/></a>
+			</div>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="footer-logo">
+		<img srcset="{{ desktop_logo }} 1x, {{ desktop_logo2x }} 2x" src="{{ desktop_logo }}" title="Gini" alt="Gini">
+	</div>
+
+	  </div>
+  </div>
+</footer>
+</div>
+{% for script in scripts %}
+<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+</div>
+
+<div class="menu-overlay"></div>
+
+<div id="temp-ajax-container" class="d-none">
+</div>	
+
+</body></html>

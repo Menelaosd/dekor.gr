@@ -1,0 +1,68 @@
+<div id="endimasia">
+<div class="home_product_block m_t_30  m_b_30 container">
+
+            {% if lang == 'el' %}  <h4>ΤΡΟΦΟΔΟΣΙΑ</h4>   {% else %} <h4>CLOTHING</h4> {% endif %}
+     <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#tab26" aria-controls="tab26" role="tab" data-toggle="tab">ΜΑΣΚΑ ΜΠΟΥΦΑΝ</a></li>
+         <li role="presentation"><a href="#tab27"  aria-controls="tab27" role="tab" data-toggle="tab">ΜΑΣΚΕΣ</a></li>
+         <li role="presentation"><a href="#tab28"  aria-controls="tab28" role="tab" data-toggle="tab">ΦΟΡΜΕΣ ΟΛΟΣΩΜΕΣ</a></li>
+         <li role="presentation"><a href="#tab29"  aria-controls="tab29" role="tab" data-toggle="tab">ΓΑΝΤΙΑ</a></li>
+    </ul>
+    <div class="product_block-wrap">
+      
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="tab26">
+                    <div id="ilektrikoi" class="container">
+                       
+                                {% for product_mpouf in products_masks_boyfan %}
+                                    <div class="col-md-3">
+                                        {{ include('happy/template/hostore/product_blocks/product_owl7.twig') }}
+                                    </div>
+                                {% endfor %}
+                     
+                 </div>
+             </div>
+          
+             <div role="tabpanel" class="tab-pane" id="tab27">
+                    <div id="xeirokinitoi" class="container">
+                      
+                                {% for product_mask in products_masks %}
+                                    <div class="col-md-3">
+                                        {{ include('happy/template/hostore/product_blocks/product_owl8.twig') }}
+                                    </div>
+                                {% endfor %}
+                      
+                 </div>
+             </div>
+             <div role="tabpanel" class="tab-pane" id="tab28">
+                    <div id="xeirokinitoi" class="container">
+                      
+                                {% for product_form in products_forms %}
+                                    <div class="col-md-3">
+                                        {{ include('happy/template/hostore/product_blocks/product_owl9.twig') }}
+                                    </div>
+                                {% endfor %}
+                      
+                 </div>
+             </div>
+             <div role="tabpanel" class="tab-pane" id="tab29">
+                    <div id="xeirokinitoi" class="container">
+                      
+                                {% for product_ganti in products_gantia %}
+                                    <div class="col-md-3">
+                                        {{ include('happy/template/hostore/product_blocks/product_owl10.twig') }}
+                                    </div>
+                                {% endfor %}
+                      
+                 </div>
+             </div>
+
+               </div>
+            </div>
+ 
+  
+
+</div>
+</div>
+
+

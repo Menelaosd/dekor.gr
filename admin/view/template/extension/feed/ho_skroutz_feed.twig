@@ -1,0 +1,237 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-feed" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-feed" class="form-horizontal">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+            <li><a href="#tab-data" data-toggle="tab">{{ tab_options }}</a></li>
+            <li><a href="#tab-analytics" data-toggle="tab">{{ tab_analytics }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="feed_ho_skroutz_feed_status" id="input-status" class="form-control">
+                    {% if feed_ho_skroutz_feed_status %}
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-data-feed">{{ entry_data_feed }}</label>
+                <div class="col-sm-10">
+                  <textarea rows="5" readonly id="input-data-feed" class="form-control">{{ data_feed }}</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-analytics">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-skroutz_analytics_id">{{ entry_skroutz_analytics_id }}</label>
+                <div class="col-sm-10">
+                  <input id="input-skroutz_analytics_id" class="form-control" placeholder="SA-xxxx-xxxx" name="feed_ho_skroutz_analytics_id" value="{{ feed_ho_skroutz_analytics_id }}" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-skroutz_analytics">{{ entry_skroutz_analytics }}</label>
+                <div class="col-sm-10">
+                  <select name="feed_ho_skroutz_analytics" id="input-skroutz_analytics" class="form-control">
+                    {% if feed_ho_skroutz_analytics %}
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-data">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-feed_ho_skroutz_mode"><span data-toggle="tooltip" title="{{ help_mode }}">{{ entry_mode }}</span></label>
+                <div class="col-sm-10">
+                  <select name="feed_ho_skroutz_mode" id="input-feed_ho_skroutz_mode" class="form-control">
+                    {% if feed_ho_skroutz_mode %}
+                    <option value="1" selected="selected">{{ text_cached }}</option>
+                    <option value="0">{{ text_live }}</option>
+                    {% else %}
+                    <option value="1">{{ text_cached }}</option>
+                    <option value="0" selected="selected">{{ text_live }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-feed_ho_skroutz_feed_display_weight"><span data-toggle="tooltip" title="{{ help_weight }}">{{ entry_display_weight }}</span></label>
+                <div class="col-sm-10">
+                  <select name="feed_ho_skroutz_feed_display_weight" id="input-feed_ho_skroutz_feed_display_weight" class="form-control">
+                    {% if feed_ho_skroutz_feed_display_weight %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-feed_ho_skroutz_feed_additional_images"><span data-toggle="tooltip" title="{{ help_additional_images }}">{{ entry_additional_images }}</span></label>
+                <div class="col-sm-10">
+                  <select name="feed_ho_skroutz_feed_additional_images" id="input-feed_ho_skroutz_feed_additional_images" class="form-control">
+                    {% if feed_ho_skroutz_feed_additional_images %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-feed_ho_skroutz_feed_display_manufacturer">{{ entry_manufacturer }}</label>
+                <div class="col-sm-10">
+                  <select name="feed_ho_skroutz_feed_display_manufacturer" id="input-feed_ho_skroutz_feed_display_manufacturer" class="form-control">
+                    {% if feed_ho_skroutz_feed_display_manufacturer %}
+                    <option value="1" selected="selected">{{ text_yes }}</option>
+                    <option value="0">{{ text_no }}</option>
+                    {% else %}
+                    <option value="1">{{ text_yes }}</option>
+                    <option value="0" selected="selected">{{ text_no }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-entry_stock_status"><span data-toggle="tooltip" title="{{ help_stock_status }}">{{ entry_stock_status }}</span></label>
+                <div class="col-sm-10">
+                  <div class="row">
+                    <label class="col-sm-3 control-label">{{ entry_availability_available }}</label>
+                    <div class="col-sm-9">
+                      <select name="feed_ho_skroutz_availability_1" id="input-feed_ho_skroutz_availability_1" class="form-control">
+                        <option value="0">---</option>
+                        {% for stock_status in stock_statuses %}
+                          {% if (stock_status.stock_status_id == feed_ho_skroutz_availability_1) %}
+                            <option value="{{ stock_status.stock_status_id }}" selected="selected">{{ stock_status.name }}</option>
+                          {% else %}
+                            <option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-3 control-label">{{ entry_availability_1_to_3_days }}</label>
+                    <div class="col-sm-9">
+                      <select name="feed_ho_skroutz_availability_2" id="input-feed_ho_skroutz_availability_2" class="form-control">
+                        <option value="0">---</option>
+                        {% for stock_status in stock_statuses %}
+                          {% if (stock_status.stock_status_id == feed_ho_skroutz_availability_2) %}
+                            <option value="{{ stock_status.stock_status_id }}" selected="selected">{{ stock_status.name }}</option>
+                          {% else %}
+                            <option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-3 control-label">{{ entry_availability_4_to_7_days }}</label>
+                    <div class="col-sm-9">
+                      <select name="feed_ho_skroutz_availability_3" id="input-feed_ho_skroutz_availability_3" class="form-control">
+                        <option value="0">---</option>
+                        {% for stock_status in stock_statuses %}
+                          {% if (stock_status.stock_status_id == feed_ho_skroutz_availability_3) %}
+                            <option value="{{ stock_status.stock_status_id }}" selected="selected">{{ stock_status.name }}</option>
+                          {% else %}
+                            <option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-3 control-label">{{ entry_availability_upon_order }}</label>
+                    <div class="col-sm-9">
+                      <select name="feed_ho_skroutz_availability_4" id="input-feed_ho_skroutz_availability_4" class="form-control">
+                        <option value="0">---</option>
+                        {% for stock_status in stock_statuses %}
+                          {% if (stock_status.stock_status_id == feed_ho_skroutz_availability_4) %}
+                            <option value="{{ stock_status.stock_status_id }}" selected="selected">{{ stock_status.name }}</option>
+                          {% else %}
+                            <option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-feed_ho_skroutz_option_size"><span data-toggle="tooltip" title="{{ help_colors }}">{{ entry_option_for_color }}</span></label>
+                <div class="col-sm-10">
+                  <select name="feed_ho_skroutz_option_color" id="input-feed_ho_skroutz_option_color" class="form-control">
+                    <option value="0">---</option>
+                    {% for product_option in product_options %}
+                      {% if (product_option.option_id == feed_ho_skroutz_option_color) %}
+                        <option value="{{ product_option.option_id }}" selected="selected">{{ product_option.name }}</option>
+                      {% else %}
+                        <option value="{{ product_option.option_id }}">{{ product_option.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-feed_ho_skroutz_option_size"><span data-toggle="tooltip" title="{{ help_sizes }}">{{ entry_option_for_size }}</span></label>
+                <div class="col-sm-10">
+                  <select name="feed_ho_skroutz_option_size" id="input-feed_ho_skroutz_option_size" class="form-control">
+                    <option value="0">---</option>
+                    {% for product_option in product_options %}
+                      {% if (product_option.option_id == feed_ho_skroutz_option_size) %}
+                        <option value="{{ product_option.option_id }}" selected="selected">{{ product_option.name }}</option>
+                      {% else %}
+                        <option value="{{ product_option.option_id }}">{{ product_option.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

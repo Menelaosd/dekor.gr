@@ -1,0 +1,52 @@
+<div class="product-block">
+	<div class="product-block-image">
+        <a href="{{ product.href }}">
+            <div class="product-thumbnail">
+                <img id="p_{{product.product_id}}" itemprop="image" alt="{{ product.name }}" src="{{ product.thumb }}" class="current">
+            </div>
+        </a>
+		<div class="product-block-labels">
+		{% if product.is_new %}
+			<span class="product-new">
+				{{ text_new }}
+			</span>
+		{% endif %}
+		{% if product.special %}
+			<span class="product-sale">
+				{# {{ product.percentage }}% #}
+				{{ text_sale }}
+			</span>
+		{% endif %}
+		</div>
+		<a href="javascript:;" onclick="quickview($(this))"class="product-quickview" data-url="{{ product.href }}"><i class="fa fa-eye"></i></a>
+		<a href="javascript:;" onclick="compare.add('{{ product.product_id }}');" title="{{ button_cart }}" class="product-compare"><i class="fa fa-retweet"></i></a>
+		<a href="javascript:;" onclick="wishlist.add('{{ product.product_id }}');" title="{{ button_wishlist }}" class="product-wishlist"><i class="fa fa-heart"></i></a>
+	</div>
+	<div class="product-block-title">
+		<h3 class="product-name" itemprop="name">
+			<a href="{{ product.href }}">{{ product.name }}</a>
+		</h3>
+	</div>
+	<div class="product-block-price" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+		{% if not product.disablecart %}
+			<meta itemprop="priceCurrency" content="EUR">
+			{% if product.price %}
+				{% if not product.special %}
+					<meta itemprop="price" content="{{ product.price|replace({',': '.', '€': ''}) }}">
+					<span class="amount">{{ product.price }}</span>
+				{% else %}
+					<meta itemprop="price" content="{{ product.special|replace({',': '.', '€': ''}) }}">
+					<del class="amount_before">{{ product.price }}</del>
+					<span class="amount">{{ product.special }}</span>
+				{% endif %}
+			{% endif %}
+		{% endif %}
+	</div>
+	<div class="product-block-actions">
+        <div class="product-block-actions"> 
+			{% if not product.disablecart %}
+				<a href="javascript:;" onclick="cart.add('{{ product.product_id }}');" title="{{ button_cart }}" class="btn btn-primary product-cart">{{button_cart}}<i class="fa fa-shopping-cart"></i></a>
+			{% endif %}
+        </div>
+	</div>
+</div>

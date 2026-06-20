@@ -1,0 +1,105 @@
+{% for field in fields %} 
+{% if field == 'email' %}
+{% else %}
+  {% if field == 'country' %}
+    {% if attribute(_context, 'field_' ~ field).display %}  
+	<div class="col-sm-6{{ attribute(_context, 'field_' ~ field).required ? ' required' }}">
+	  <label class="control-label">{{ entry_country }}</label>
+	  <select name="country_id" class="form-control" id="input-payment-country">
+	  {% for country in countries %} 
+		{% if country.country_id == country_id %} 
+		<option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+		{% else %}   
+		<option value="{{ country.country_id }}">{{ country.name }}</option>
+		{% endif %}
+	  {% endfor %}
+	  </select>
+	</div>
+	{% else %}   
+	<select name="country_id" class="hide">
+	{% for country in countries %} 
+	  {% if country.country_id == country_id %} 
+	  <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
+	  {% else %}   
+	  <option value="{{ country.country_id }}">{{ country.name }}</option>
+	  {% endif %}
+	{% endfor %}
+	</select>
+	{% endif %}
+  {% elseif  field == 'zone' %} 
+    {% if attribute(_context, 'field_' ~ field).display %}  
+	<div class="col-sm-6{{ attribute(_context, 'field_' ~ field).required ? ' required' }}">
+	  <label class="control-label">{{ entry_zone }}</label>
+	  <select name="zone_id" class="form-control" id="input-payment-zone"></select>
+	</div>
+	{% else %}   
+	  <select name="zone_id" class="hide"></select>
+	{% endif %} 
+  {% elseif field == 'customer_group' %} 
+    {% if attribute(_context, 'field_' ~ field).display %}  
+	<div class="col-sm-6 required"{{ customer_groups|length <= 1 ? ' style="display:none !important"' }}>
+	  <label class="control-label">{{ entry_customer_group }}</label>
+	  <select name="customer_group_id" class="form-control" id="input-payment-customer-group">
+		{% for customer_group in customer_groups %} 
+		<option value="{{ customer_group.customer_group_id }}"{{ customer_group.customer_group_id == customer_group_id ? ' selected="selected"' }}>{{ customer_group.name }}</option>
+		{% endfor %} 
+	  </select>
+	</div>
+	{% else %}   
+	  <select name="customer_group_id" class="hide">
+		{% for customer_group in customer_groups %} 
+		<option value="{{ customer_group.customer_group_id }}"{{ customer_group.customer_group_id == customer_group_id ? ' selected="selected"' }}>{{ customer_group.name }}</option>
+		{% endfor %} 
+	  </select>
+	{% endif %}
+  {% else %}   
+    {% if attribute(_context, 'field_' ~ field).display %}  
+	<div{{ field == 'postcode' ? ' id="payment-postcode-required"' }} class="col-sm-6{{attribute(_context, 'field_' ~ field).required ? ' required' }}">
+	  <label class="control-label" for="input-payment-{{ field|replace({'_' : '-'}) }}">{{ attribute(_context, 'entry_' ~ field) }}</label>
+	  <input type="text" name="{{ field }}" placeholder="{{ attribute(_context, 'field_' ~ field).placeholder }}" value="{{ attribute(_context, field) ? attribute(_context, field) : attribute(_context, 'field_' ~ field).default }}" class="form-control"  id="input-payment-{{ field|replace({'_' : '-'}) }}" />
+	</div>
+	{% else %}   
+	<input type="text" name="{{ field }}" value="{{ attribute(_context, field) ? attribute(_context, field) : attribute(_context, 'field_' ~ field).default }}" class="hide" />
+	{% endif %}
+  {% endif %}
+{% endif %}
+{% endfor %}
+
+<div id="login">
+	<div class="login-top">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h5 class="login-button-intro">
+					{{ text_already_have }}
+				</h5>
+				<button type="button" id="button-login-top" class="btn btn-primary">{{ button_login_top }}</button>
+			</div>
+		</div>
+	</div>
+	<div class="login-bottom" style="display:none;">
+		<div class="row">
+			<div class="col-12 text-left">
+				<label for="input-login-email">{{ entry_email }}</label>
+				<input type="text" name="input-login-email" value="" class="form-control" id="input-login-email" />
+			</div>
+			<div class="col-12 text-left">
+				<label for="input-login-password">{{ entry_password }}</label>
+				<input type="password" name="password" value="" class="form-control" />
+			</div>
+			<div class="col-12 text-left">
+				<button type="button" id="button-login" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_login }}</button>
+			</div>
+		</div>
+		<div class="forgotten">
+			<a href="{{ forgotten }}" title="{{ text_forgotten }}"><i class="fa fa-question-circle"></i> {{ text_forgotten }}</a>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript"><!--
+$('#login input').keydown(function(e) {
+	if (e.keyCode == 13) {
+		$('#button-login').click();
+	}
+});
+//--></script>   

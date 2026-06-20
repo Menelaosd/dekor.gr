@@ -1,0 +1,185 @@
+{{ header }}
+
+{% if not idea_view and not idea_module %}
+	<div id="product-category" class="container">
+{% else %}
+	<div id="product-category" class="idea-category__wrap">
+	<div id="product-category-container" class="container">
+{% endif %}
+  
+	  <div class="category-heading">
+		   <nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+			  {% for breadcrumb in breadcrumbs %}
+			  <li class="breadcrumb-item"{% if loop.last %} aria-current="page"{% endif %}><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			  {% endfor %}
+			</ol>
+		  </nav>
+		  
+		  {% if not idea_view and not idea_module %}
+			  <div class="category-heading-caption">
+				<h1 class="main-content-title">{{ heading_title }}</h1>
+				{% if description or sdescription %}
+					<div class="category-heading-text">
+						{% if description %}
+							<div class="ch-text-top">
+								{{ description }}
+							</div>
+						{% endif %}				
+						{% if sdescription %}
+							<div class="ch-text-bottom">
+								{{ sdescription }}
+							</div>
+						{% endif %}
+					</div>
+				{% endif %}
+			  </div>
+		  {% endif %}
+	  </div>
+  
+  {% if idea_view and idea_module %}
+	{# //CONTAINER WRAP @product-category-container ENDS HERE #}
+	</div>
+  {% endif %}
+  
+  
+  {% if idea_view and idea_module %}
+	<div class="idea-wrapper__all">
+		{{ idea_module }}
+	</div>
+  {% endif %}
+  
+  
+{% if not idea_view and not idea_module %}
+	  {% if categories %}
+		<div class="category-categories">
+			<div class="categories-text-t">
+				{{ text_define_categories }}
+			</div>
+			<div class="row category-categories-row">
+				{% for category in categories %}
+					<div class="c-category-block-wrap col-3">
+						<div class="c-category-block">
+							<a class="c-category-image" href="{{ category.href }}" title="{{ category.name }}">
+								<img src="{{ category.image }}" alt="{{ category.name }}">
+							</a>
+							<div class="category-caption">
+								<a href="{{ category.href }}" title="{{ category.name }}" class="c-category-title">
+									{{ category.name }}
+								</a>								
+								<a href="{{ category.href }}" title="{{ category.name }}" class="c-category-all">
+									{{ text_see_products }}
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			  </ul>
+			</div>
+		</div>
+	  {% endif %}
+{% endif %}
+  
+{% if not idea_view and not idea_module %}  
+  
+  <div class="row">
+  
+	{{ column_left }}
+    {% if column_left  %}
+		{% set class = 'col-12 col-lg-9' %}
+    {% else %}
+		{% set productclass = 'col-12 col-lg-3 col-sm-4' %}
+		{% set class = 'col-12' %}
+    {% endif %}
+	
+    <div id="content" class="{{ class }}">{{ content_top }}
+      {% if products and not categories %}
+      <div class="row">
+        <div class="col-12">
+		  <div class="top-toolbar">
+		  
+			  <div class="top-toolbar-forms">
+					{% if column_right %}
+					{{ column_right }}
+					{% endif %}
+					<div class="form-group">
+						<label class="input-group-prepend" for="input-sort"><span>{{ text_sort }}</span></label>
+						<select id="input-sort" class="form-control" >
+						  {% for sorts in sorts %}
+						  {% if sorts.value == '%s-%s'|format(sort, order) %}
+						  <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+						  {% else %}
+						  <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+						  {% endif %}
+						  {% endfor %}
+						</select>
+					</div>
+
+					{#
+					<div class="form-group">
+						<label class="input-group-prepend" for="input-limit"><span>{{ text_limit }}</span></label>
+						<select id="input-limit" class="form-control">
+						  {% for limits in limits %}
+						  {% if limits.value == limit %}
+						  <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
+						  {% else %}
+						  <option value="{{ limits.href }}">{{ limits.text }}</option>
+						  {% endif %}
+						  {% endfor %}
+						</select>
+					</div>
+					#}
+					<div class="grid-switch">
+						<a href="" class="toggle-grid toggle-grid4 active-grid" data-togglegrid="grid4" data-toggle="tooltip" title=" {{ text_grid4 }}">
+							<span class="icon-grid-4"></span>
+						</a>
+						<a href="" class="toggle-grid toggle-grid3" data-togglegrid="grid3" data-toggle="tooltip" title=" {{ text_grid3 }}">
+							<span class="icon-grid-3"></span>
+						</a>
+					</div>					
+			  </div>
+		  </div>
+        </div>
+      </div>
+	  
+	  <div id="productsWrapper">
+		  <div id="ajax-wrapper">
+			  <div id="ajax-container">
+				  <div id="product-container" class="product-container row">
+					{% for product in products %}
+						<div class="product-layout product-grid {{productclass}}">
+							{{ include('hotheme/template/product/product_template/product_main.twig') }}
+						</div>
+					{% endfor %} 
+				  </div>
+				  <div class="pagination-page-container">{{ pagination }}</div>
+			  </div>
+		  </div>
+	  </div>
+	  
+      {% endif %}
+      {% if not categories and not products %}
+	  <div id="ajax-wrapper">
+		  <div id="ajax-container">	
+			  <p>{{ text_empty }}</p>
+			  <div class="buttons">
+				<div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+			  </div>
+		  </div>
+	  </div>
+      {% endif %}
+      {{ content_bottom }}</div>
+	</div>
+	
+{% endif %}	
+</div>
+
+<script>
+	pintrk('track', 'viewcategory');
+	fbq('track', 'ViewContent');
+</script>
+<noscript>
+ <img height="1" width="1" style="display:none;" alt="" src="https://ct.pinterest.com/v3/?tid=2613584957027&event=viewcategory&noscript=1" />
+</noscript>
+
+{{ footer }}

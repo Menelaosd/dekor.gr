@@ -1,0 +1,110 @@
+<div id="deals{{ module }}" class="deals-module-container module-wrapper arrow-nav-wrapper arrow-nav-offset row {{ class }}">
+	<div class="container">
+		{% if module_title %}
+		<h3 class="module-title">
+			<span class="module-title-text">{{ module_title }}</span>
+		</h3>
+		{% endif %}			
+	</div>
+	<div class="container">
+		<div class="product-deals-outer products_carousel_outter">
+		  <div class="swiper-viewport">
+			  <div class="product-deals swiper-container" id="product-deals{{ module }}">
+				  <div class="swiper-wrapper">  
+					  {% set prodCounter = 1 %}
+					  {% for product in products %}
+					  <div class="product-layout swiper-slide">
+						<div class="product-block">
+							<div class="row">
+							<div class="product-top product-left col-12 col-sm-5">
+								<div class="product-block-image">
+									<a href="{{ product.href }}">
+										<div class="product-thumbnail">
+											<img id="p_{{product.product_id}}" itemprop="image" alt="{{ product.name }}" src="{{ product.thumb }}" class="current">
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="product-right col-12 col-sm-7">
+								<div class="product-block-countdown" id="countdown{{prodCounter}}"></div>
+								<div class="product-block-caption">
+									<div class="product-block-title">
+										<h3 class="product-name" itemprop="name">
+											<a href="{{ product.href }}">{{ product.name }}</a>
+										</h3>
+									</div>
+									<div class="product-block-intro">
+										<div class="product-intro">
+											{{ product.intro }}
+										</div>
+									</div>
+								</div>
+								<div class="product-block-price" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+									<meta itemprop="priceCurrency" content="EUR">
+									{% if product.price %}
+										{% if not product.special %}
+											<meta itemprop="price" content="{{ product.price|replace({',': '.', '€': ''}) }}">
+											<h3 class="amount">{{ product.price }}</h3>
+										{% else %}
+											<meta itemprop="price" content="{{ product.special|replace({',': '.', '€': ''}) }}">
+											<del class="amount_before">{{ product.price }}</del>
+											<h3 class="amount">{{ product.special }}</h3>
+										{% endif %}
+									{% endif %}
+								</div>
+								<div class="product-block-actions"> 
+									<a href="javascript:;" onclick="cart.add('{{ product.product_id }}');" title="{{ button_cart }}" class="btn btn-default product-cart"><i class="fal fa-shopping-bag"></i> {{button_cart}}</a>
+									<a href="javascript:;" onclick="wishlist.add('{{ product.product_id }}');" title="{{ button_wishlist }}" class="btn btn-default  product-wishlist"><i class="fal fa-heart"></i></a>		
+								</div>
+							</div>
+							</div>
+						</div>
+					  <script type="text/javascript">
+					  $("#countdown{{prodCounter}}")
+					  .countdown(new Date("{{product.special_end}}"), function(event) {
+						$(this).html(
+						  event.strftime('<div class="dat_wrapper"><div class="dat_cont"><div class="dat_var">%D</div><div class="dat_text">{{entry_days}}</div></div><div class="dat_cont"><div class="dat_var">%H</div><div class="dat_text">{{entry_hours}}</div></div><div class="dat_cont"><div class="dat_var">%M</div><div class="dat_text">{{entry_mins}}</div></div><div class="dat_cont"><div class="dat_var">%S</div><div class="dat_text">{{entry_secs}}</div></div></div>'));
+					  });
+					  </script>
+					  </div>
+					 {% set prodCounter = prodCounter + 1 %}
+					 {% endfor %}
+				  </div>
+				  {% if products|length > 1 and not mobile %} 
+					<div class="swiper-navigation">
+						<div class="swiper-button-next deals-button-next-{{module}}"></div>
+						<div class="swiper-button-prev deals-button-prev-{{module}}"></div>
+					</div>
+				  {% endif %} 
+			  </div>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$('.deals-module-title-span').html(function(){
+	  var text= $(this).text().trim().split(" ");
+	  var first = text.shift();
+	  return (text.length > 0 ? "<span class='first'>"+ first + "</span> " : first) + text.join(" ");
+	});
+</script>
+
+{% if products|length > 1 %} 
+	<script>
+		var swiperTabs{{ module }} = new Swiper('#product-deals{{ module }}', {
+			slidesPerView: 1,
+			spaceBetween: 0,
+			mode: 'horizontal',
+			observer: true,
+			observeParents: true,
+			loop: true,
+			{% if products|length > 1 and not mobile %} 
+			navigation: {
+				nextEl: '.deals-button-next-{{module}}',
+				prevEl: '.deals-button-prev-{{module}}',
+			},
+			{% endif %}		
+		});
+	</script>
+{% endif %} 

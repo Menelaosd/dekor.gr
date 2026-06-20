@@ -1,0 +1,869 @@
+{{ header }}{{ column_left }}
+<div id="content">
+<div id="content">
+<style>
+.chkbox {
+padding-right:20px;
+padding-top:7px;
+}
+.chklabel {
+padding-left:10px;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
+	   <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab1" data-toggle="tab">{{ tab_tab1 }} </a></li>
+                <li><a href="#tab2" data-toggle="tab">{{ tab_tab2 }} </a></li>
+                <li><a href="#tab3" data-toggle="tab">{{ tab_tab3 }} </a></li>
+                <li><a href="#tab4" data-toggle="tab">{{ tab_tab4 }} </a></li>
+		<li><a href="#tab5" data-toggle="tab">{{ tab_tab5 }} </a></li>
+		<li><a href="#tab6" data-toggle="tab">{{ tab_tab6 }} </a></li>
+		<li><a href="#tab7" data-toggle="tab">{{ tab_tab7 }} </a></li>
+           </ul>
+	   <div class="tab-content">
+<!---- Tab General -->
+		<div class="tab-pane active" id="tab1">
+			<div class="col-sm-8">
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-status">{{ entry_status }}</label>
+				    	<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" name="{{ PREFIX }}tagmanager_status" {% if analytics_tagmanager_status %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group required">
+					<label class="col-sm-4 control-label" for="input-code">{{ entry_code }}</label>
+					<div class="col-sm-8">
+						<input type="text" name="{{ PREFIX }}tagmanager_code" placeholder="{{ entry_code }}" class="form-control" value="{{ analytics_tagmanager_code }}"/>
+						{% if error_code %}
+						<div class="text-danger">{{ error_code }}</div>
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="form-group required">
+					<label class="col-sm-4 control-label" for="input-gid"><span data-toggle="tooltip" title="{{ help_gid }}">{{ entry_gid }}</span></label>
+					<div class="col-sm-8">
+						<input type="text" name="{{ PREFIX }}tagmanager_gid" placeholder="{{ entry_gid }}" class="form-control" value="{{ analytics_tagmanager_gid }}"/>
+						{% if error_analytics %}
+						<div class="text-danger">{{ error_analytics }}</div>
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-admin"><span data-toggle="tooltip" title="{{ help_admin }}">{{ entry_admin }}</span></label>
+				    	<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" name="{{ PREFIX }}tagmanager_admin" {% if analytics_tagmanager_admin %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-userid"><span data-toggle="tooltip" title="{{ help_userid }}">{{ entry_userid_status }}</span></label>
+				    	<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" name="{{ PREFIX }}tagmanager_userid_status" {% if analytics_tagmanager_userid_status %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div> 
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-cache"><span data-toggle="tooltip" title="{{ help_cache }}">{{ entry_cache }}</span></label>
+					<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" name="{{ PREFIX }}tagmanager_cache" {% if analytics_tagmanager_cache %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div> 
+				
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-ptitle"><span data-toggle="tooltip" title="{{ help_ptitle }}">{{ entry_ptitle }}</span></label>
+					<div class="col-sm-8">
+					      <select name="{{ PREFIX }}tagmanager_ptitle" id="input-ptitle" class="form-control">
+						    {% for ptitle in product_title %}
+						      {% if ptitle == analytics_tagmanager_ptitle %}
+						    <option value="{{ ptitle }}" selected="selected">{{ ptitle }}</option>
+						    {% else %}
+						  <option value="{{ ptitle }}">{{ ptitle }}</option>
+						    {% endif %}
+						    {% endfor %}
+					      </select>
+					</div>
+				</div> 
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-product"><span data-toggle="tooltip" title="{{ help_product }}">{{ entry_product }}</span></label>
+					<div class="col-sm-8">
+					      <select name="{{ PREFIX }}tagmanager_product" id="input-adword" class="form-control">
+						{% for pmap in product_map %}
+						    {% if pmap == analytics_tagmanager_product %}
+						    <option value="{{ pmap }}" selected="selected">{{ pmap }}</option>
+						    {% else %}
+						  <option value="{{ pmap }}">{{ pmap }}</option>
+						    {% endif %}
+						    {% endfor %}
+					      </select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-route-checkout"><span data-toggle="tooltip" title="{{ help_route }}">{{ entry_route_checkout }}</span></label>
+					<div class="col-sm-5">
+					      <textarea rows="4" cols="50" name="{{ PREFIX }}tagmanager_route_checkout">{% if analytics_tagmanager_route_checkout %}{{ analytics_tagmanager_route_checkout }}{% endif %}</textarea>
+					</div>
+					<div class="col-sm-3">
+					 {{ help_route_checkout }}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-route-success"><span data-toggle="tooltip" title="{{ help_route }}">{{ entry_route_success }}</span></label>
+					<div class="col-sm-5">
+					      <textarea rows="4" cols="50" name="{{ PREFIX }}tagmanager_route_success">{% if analytics_tagmanager_route_success %}{{ analytics_tagmanager_route_success }}{% endif %}</textarea>
+					</div>
+					<div class="col-sm-3">
+					 {{ help_route_success }}
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<h3>Tag Manager Version {{ text_version }}</h3>
+				{{ text_about }}
+				<h3>{{ heading_container }}</h3>
+				{{ text_container }}
+			</div>
+		</div>
+<!---- Tab Marketing -->
+		<div class="tab-pane" id="tab2">
+			<div class="col-sm-8">
+				<div class="form-group">
+				    <label class="col-sm-4 control-label" for="input-adword">{{ entry_adword }}</label>
+					<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" id="tagmanager_adword" name="{{ PREFIX }}tagmanager_adword" {% if analytics_tagmanager_adword %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div> 
+
+				<div id="conversion" style="display:{% if not analytics_tagmanager_adword %}none{% endif %}">
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-cid"><span data-toggle="tooltip" title="{{ help_conversion_id }}">{{ entry_conversion_id }}</span></label>
+						<div class="col-sm-8">
+						      <input type="text" name="{{ PREFIX }}tagmanager_conversion_id" placeholder="{{ entry_conversion_id }}" class="form-control" value="{{ analytics_tagmanager_conversion_id }}"/>
+						</div>
+					</div>   
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-clabel"><span data-toggle="tooltip" title="{{ help_conversion_label }}">{{ entry_conversion_label }}</span></label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_conversion_label" placeholder="{{ entry_conversion_label }}" class="form-control" value="{{ analytics_tagmanager_conversion_label }}"/>
+						</div>
+					</div> 
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-adwordre"><span data-toggle="tooltip" title="{{ help_remarketing }}">{{ entry_remarketing }}</span></label>
+						<div class="col-sm-8">
+							<label class="switch">
+								<input type="checkbox" id="tagmanager_remarketing" name="{{ PREFIX }}tagmanager_remarketing" {% if analytics_tagmanager_remarketing %}checked{% endif %}>
+								<span class="slider round"></span>
+							</label>
+						</div>
+					</div>
+
+					<div id="remarketing" style="display:{% if not analytics_tagmanager_remarketing %}none{% endif %}">
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="input-customfields"><span data-toggle="tooltip" title="{{ help_custom }}">{{ entry_custom }}</span></label>
+							<div class="col-sm-8">
+								<label class="switch">
+									<input type="checkbox" id="tagmanager_custom" name="{{ PREFIX }}tagmanager_custom" {% if analytics_tagmanager_custom %}checked{% endif %}>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+
+						<div id="customfields" style="display:{% if not analytics_tagmanager_custom %}none{% endif %}">
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="input-dynx">Selcet the required custom parameters</label>	
+								<div class="col-sm-8">
+									<label class="chkbox"><input type="checkbox" name="{{ PREFIX }}tagmanager_dynx_itemid" {% if analytics_tagmanager_dynx_itemid %}checked{% endif %}><span class="chklabel">{{ entry_dynx_itemid }}</span></label>
+									<label class="chkbox"><input type="checkbox" name="{{ PREFIX }}tagmanager_dynx_itemid2" {% if analytics_tagmanager_dynx_itemid2 %}checked{% endif %}><span class="chklabel">{{ entry_dynx_itemid2 }}</span></label>
+									<label class="chkbox"><input type="checkbox" name="{{ PREFIX }}tagmanager_dynx_pagetype" {% if analytics_tagmanager_dynx_pagetype %}checked{% endif %}><span class="chklabel">{{ entry_dynx_pagetype }}</span></label>
+									<label class="chkbox"><input type="checkbox" name="{{ PREFIX }}tagmanager_dynx_totalvalue" {% if analytics_tagmanager_dynx_totalvalue %}checked{% endif %}><span class="chklabel">{{ entry_dynx_totalvalue }}</span></label>
+									<br/>
+									<label class="chkbox"><input type="checkbox" name="{{ PREFIX }}tagmanager_ecomm_pagetype" {% if analytics_tagmanager_ecomm_pagetype %}checked{% endif %}><span class="chklabel">{{ entry_ecomm_pagetype }}</span></label>
+									<label class="chkbox"><input type="checkbox" name="{{ PREFIX }}tagmanager_ecomm_totalvalue" {% if analytics_tagmanager_ecomm_totalvalue %}checked{% endif %}><span class="chklabel">{{ entry_ecomm_totalvalue }}</span></label>
+									<label class="chkbox"><input type="checkbox" name="{{ PREFIX }}tagmanager_ecomm_prodid" {% if analytics_tagmanager_ecomm_prodid %}checked{% endif %}><span class="chklabel">{{ entry_ecomm_prodid }}</span></label>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-gostatus">{{ entry_google_optimize_status }}</label>
+					<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" id="optimize" name="{{ PREFIX }}tagmanager_google_optimize_status" {% if analytics_tagmanager_google_optimize_status %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+				<div id="optimizeid" style="display:{% if not analytics_tagmanager_google_optimize_status %}none{% endif %}">
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-golabel">{{ entry_google_optimize }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_google_optimize" placeholder="{{ entry_google_optimize }}" class="form-control" value="{{ analytics_tagmanager_google_optimize }}"/>
+						</div>
+					</div> 
+				</div>
+			</div>
+			<div class="col-sm-4">
+
+			</div>
+		</div>
+<!---- Tab Pixel -->		
+		<div class="tab-pane" id="tab3">
+			<div class="col-sm-8">
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-pixel">{{ entry_pixel }}</label>
+					<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" id="tagmanager_pixel" name="{{ PREFIX }}tagmanager_pixel" {% if analytics_tagmanager_pixel %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>  
+
+				<div id="pixel" style="display:{% if not analytics_tagmanager_pixel %}none{% endif %}">
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-pixelcode">{{ entry_pixelcode }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_pixelcode" placeholder="{{ entry_pixelcode }}" class="form-control" value="{{ analytics_tagmanager_pixelcode }}"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-fb_catalog_id">{{ entry_fb_catalog_id }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_fb_catalog_id" placeholder="{{ entry_fb_catalog_id }}" class="form-control" value="{{ analytics_tagmanager_fb_catalog_id }}"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-alt_currency_status">{{ entry_alt_currency_status }}</label>
+						<div class="col-sm-8">
+							<label class="switch">
+								<input type="checkbox" id="tagmanager_alt_currency" name="{{ PREFIX }}tagmanager_alt_currency_status" {% if analytics_tagmanager_alt_currency_status %}checked{% endif %}>
+								<span class="slider round"></span>
+							</label>
+						</div>
+					</div>
+
+					<div id="altcurrency" style="display:{% if not analytics_tagmanager_alt_currency_status %}none{% endif %}">
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="input-alt-cur">{{ entry_alt_currency }}</label>
+							<div class="col-sm-8">
+								<select name="{{ PREFIX }}tagmanager_alt_currency" id="input-alt-curr" class="form-control">
+								{% for curr in currencies %}
+								<option value="{{ curr.code }}" {% if analytics_tagmanager_alt_currency == curr.code %} selected="selected" {% endif %}>{{ curr.title }}</option>
+								{% endfor %}
+								</select>
+							</div>
+						</div> 
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+	
+			</div>	
+		</div>
+<!---- Tab hotjar -->
+		<div class="tab-pane" id="tab4">
+			<div class="col-sm-8">
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-hotjarstatus">{{ entry_hotjar_status }}</label>
+				    	<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" id="tagmanager_hotjar_status" name="{{ PREFIX }}tagmanager_hotjar_status" {% if analytics_tagmanager_hotjar_status %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+
+				<div id="hotjar" style="display:{% if not analytics_tagmanager_hotjar_status %}none{% endif %}">
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-hotjar_id">{{ entry_hotjar_siteid }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_hotjar_siteid" placeholder="{{ entry_hotjar_siteid }}" class="form-control" value="{{ analytics_tagmanager_hotjar_siteid }}"/>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-skroutzstatus">{{ entry_skroutz_status }}</label>
+				    	<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" id="tagmanager_skroutz_status" name="{{ PREFIX }}tagmanager_skroutz_status" {% if analytics_tagmanager_skroutz_status %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+
+				<div id="skroutz" style="display:{% if not analytics_tagmanager_skroutz_status %}none{% endif %}">
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-skroutz_id">{{ entry_skroutz_siteid }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_skroutz_siteid" placeholder="{{ entry_skroutz_siteid }}" class="form-control" value="{{ analytics_tagmanager_skroutz_siteid }}"/>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-yandexstatus">{{ entry_yandex_status }}</label>
+				    	<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" id="tagmanager_yandex_status" name="{{ PREFIX }}tagmanager_yandex_status" {% if analytics_tagmanager_yandex_status %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+
+				<div id="yandex" style="display:{% if not analytics_tagmanager_yandex_status %}none{% endif %}">
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-yandex_code">{{ entry_yandex_code }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_yandex_code" placeholder="{{ entry_yandex_code }}" class="form-control" value="{{ analytics_tagmanager_yandex_code }}"/>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-bingstatus">{{ entry_bing_status }}</label>
+					<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" id="tagmanager_bing_status" name="{{ PREFIX }}tagmanager_bing_status" {% if analytics_tagmanager_bing_status %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+
+				<div id="bing" style="display:{% if not analytics_tagmanager_bing_status %}none{% endif %}">
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-bing_id">{{ entry_bing_uetid }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_bing_uetid" placeholder="{{ entry_bing_uetid }}" class="form-control" value="{{ analytics_tagmanager_bing_uetid }}"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+
+			</div>
+		</div>
+<!---- Tab cookie -->
+		<div class="tab-pane" id="tab5">
+			<div class="col-sm-8">
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-eu">{{ entry_eu_cookie }}</label>
+					<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" id="tagmanager_cookie" name="{{ PREFIX }}tagmanager_eu_cookie" {% if analytics_tagmanager_eu_cookie %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+
+				<div id="cookie" style="display:{% if not analytics_tagmanager_eu_cookie %}none{% endif %}">
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-eu_cookie_enforce">{{ entry_eu_cookie_enforce }}</label>
+						<div class="col-sm-8">
+							<label class="switch">
+								<input type="checkbox" id="tagmanager_eu_cookie_enforce" name="{{ PREFIX }}tagmanager_eu_cookie_enforce" {% if analytics_tagmanager_eu_cookie_enforce %}checked{% endif %}>
+								<span class="slider round"></span>
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-cookieposition"></label>
+						<div class="col-sm-8">
+						      <select name="{{ PREFIX }}tagmanager_cookie_position" id="input-cookie_position" class="form-control">
+							{% for cposition in cookie_positions %}
+							    {% if cposition == analytics_cookie_position %}
+							    <option value="{{ cposition }}" selected="selected">{{ cposition }}</option>
+							    {% else %}
+							  <option value="{{ cposition }}">{{ cposition }}</option>
+							    {% endif %}
+							    {% endfor %}
+						      </select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-cookietitle">{{ entry_cookie_title }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_cookie_title" placeholder="{{ entry_cookie_title }}" class="form-control" value="{{ analytics_tagmanager_cookie_title }}"/>
+						</div>
+					</div> 
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-cookie_text">{{ entry_cookie_text }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_cookie_text" placeholder="{{ entry_cookie_text }}" class="form-control" value="{{ analytics_tagmanager_cookie_text }}"/>
+						</div>
+					</div> 
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-cookie_text2">{{ entry_cookie_text2 }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_cookie_text2" placeholder="{{ entry_cookie_text2 }}" class="form-control" value="{{ analytics_tagmanager_cookie_text2 }}"/>
+						</div>
+					</div>
+					
+					<div class="form-group">
+					    <label class="col-sm-4 control-label" for="input-cookielink">{{ entry_cookie_link }}</label>
+					    <div class="col-sm-8">
+					      <input type="text" name="{{ PREFIX }}tagmanager_cookie_link" placeholder="{{ entry_cookie_link }}" class="form-control" value="{{ analytics_tagmanager_cookie_link }}"/>
+					    </div>
+					</div> 
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-cookieb1">{{ entry_cookie_button1 }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_cookie_button1" placeholder="{{ entry_cookie_button1 }}" class="form-control" value="{{ analytics_tagmanager_cookie_button1 }}"/>
+						</div>
+					</div> 
+					
+					<div class="form-group">
+					    <label class="col-sm-4 control-label" for="input-cookieb2">{{ entry_cookie_button2 }}</label>
+					    <div class="col-sm-8">
+					      <input type="text" name="{{ PREFIX }}tagmanager_cookie_button2" placeholder="{{ entry_cookie_button2 }}" class="form-control" value="{{ analytics_tagmanager_cookie_button2 }}"/>
+					   </div>
+					</div> 
+
+					<div class="form-group">
+					    <label class="col-sm-4 control-label" for="input-cookieb3">{{ entry_cookie_button3 }}</label>
+					    <div class="col-sm-8">
+					      <input type="text" name="{{ PREFIX }}tagmanager_cookie_button3" placeholder="{{ entry_cookie_button3 }}" class="form-control" value="{{ analytics_tagmanager_cookie_button3 }}"/>
+					   </div>
+					</div> 
+					
+					<div class="form-group">
+					    <label class="col-sm-4 control-label" for="input-bgpopup">{{ entry_cookie_bg_popup }}</label>
+					    <div class="col-sm-8">
+					      <input type="text" name="{{ PREFIX }}tagmanager_cookie_bg_popup" placeholder="{{ entry_cookie_bg_popup }}" class="form-control" value="{{ analytics_tagmanager_cookie_bg_popup }}"/>
+					   </div>
+					</div>
+					
+					<div class="form-group">
+					    <label class="col-sm-4 control-label" for="input-textpopup">{{ entry_cookie_text_popup }}</label>
+					    <div class="col-sm-8">
+					      <input type="text" name="{{ PREFIX }}tagmanager_cookie_text_popup" placeholder="{{ entry_cookie_text_popup }}" class="form-control" value="{{ analytics_tagmanager_cookie_text_popup }}"/>
+					   </div>
+					</div>
+					
+					<div class="form-group">
+					    <label class="col-sm-4 control-label" for="input-bgbt">{{ entry_cookie_bg_button }}</label>
+					    <div class="col-sm-8">
+					      <input type="text" name="{{ PREFIX }}tagmanager_cookie_bg_button" placeholder="{{ entry_cookie_bg_button }}" class="form-control" value="{{ analytics_tagmanager_cookie_bg_button }}"/>
+					   </div>
+					</div>
+					
+					<div class="form-group">
+					    <label class="col-sm-4 control-label" for="input-textbtn">{{ entry_cookie_text_button }}</label>
+					    <div class="col-sm-8">
+					      <input type="text" name="{{ PREFIX }}tagmanager_cookie_text_button" placeholder="{{ entry_cookie_text_button }}" class="form-control" value="{{ analytics_tagmanager_cookie_text_button }}"/>
+					   </div>
+					</div>
+
+					<div class="form-group">
+					    <label class="col-sm-4 control-label" for="input-cookieheading">{{ entry_cookie_heading_color }}</label>
+					    <div class="col-sm-8">
+					      <input type="text" name="{{ PREFIX }}tagmanager_cookie_heading_color" placeholder="{{ entry_cookie_heading_color }}" class="form-control" value="{{ analytics_tagmanager_cookie_heading_color }}"/>
+					   </div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-badge">{{ entry_cookie_badge }}</label>
+						<div class="col-sm-8">
+							<label class="switch">
+								<input type="checkbox" id="tagmanager_badge" name="{{ PREFIX }}tagmanager_cookie_badge" {% if analytics_tagmanager_cookie_badge %}checked{% endif %}>
+								<span class="slider round"></span>
+							</label>
+						</div>
+					</div>
+
+					<div id="badge" style="display:{% if not analytics_tagmanager_cookie_badge %}none{% endif %}">
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="input-cookie_badge_position"></label>
+							<div class="col-sm-8">
+							      <select name="{{ PREFIX }}tagmanager_cookie_badge_position" id="input-cookie_badge_position" class="form-control">
+								{% for cposition in badge_positions %}
+								    {% if cposition == analytics_cookie_badge_position %}
+								    <option value="{{ cposition }}" selected="selected">{{ cposition }}</option>
+								    {% else %}
+								  <option value="{{ cposition }}">{{ cposition }}</option>
+								    {% endif %}
+								    {% endfor %}
+							      </select>
+							</div>
+						</div>
+
+						<div class="form-group">
+						    <label class="col-sm-4 control-label" for="input-cookie_badge_color">{{ entry_cookie_badge_color }}</label>
+						    <div class="col-sm-8">
+						      <input type="text" name="{{ PREFIX }}tagmanager_cookie_badge_color" placeholder="{{ entry_cookie_badge_color }}" class="form-control" value="{{ analytics_tagmanager_cookie_badge_color }}"/>
+						   </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<h3>EU / GDPR Cookie Consent</h3>
+				{{ text_about_cookie }}
+			</div>
+		</div>
+<!---- Tab addons amp -->
+		<div class="tab-pane" id="tab6">
+			<div class="col-sm-8">
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-zenchatstatus">{{ entry_zenchat_status }}</label>
+				    	<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" id="tagmanager_zenchat_status" name="{{ PREFIX }}tagmanager_zenchat_status" {% if analytics_tagmanager_zenchat_status %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+
+				<div id="zenchat" style="display:{% if not analytics_tagmanager_zenchat_status %}none{% endif %}">
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-zenchat_code">{{ entry_zenchat_code }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_zenchat_code" placeholder="{{ entry_zechat_code }}" class="form-control" value="{{ analytics_tagmanager_zenchat_code }}"/>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="input-ampstatus">{{ entry_ampstatus }}</label>
+				    	<div class="col-sm-8">
+						<label class="switch">
+							<input type="checkbox" id="tagmanager_amp" name="{{ PREFIX }}tagmanager_ampstatus" {% if analytics_tagmanager_ampstatus %}checked{% endif %}>
+							<span class="slider round"></span>
+						</label>
+					</div>
+				</div>
+
+				<div id="amp" style="display:{% if not analytics_tagmanager_ampstatus %}none{% endif %}"> 
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="input-ampcode">{{ entry_ampcode }}</label>
+						<div class="col-sm-8">
+							<input type="text" name="{{ PREFIX }}tagmanager_ampcode" placeholder="{{ entry_ampcode }}" class="form-control" value="{{ analytics_tagmanager_ampcode }}"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<p>Google Analytics tracking for AMP Web pages. If you are using Webkul Accelerated Mobile Pages extesion you can setup Google Analytics tracking using the Tag Manager AMP container.</p>
+				<p>Please note AMP tracking is in beta, and only Google Analytics is currently supported</p> 
+			</div>
+		</div>
+		<input type="hidden" name="{{ PREFIX }}tagmanager_mp" value="1">
+		<input type="hidden" name="{{ PREFIX }}tagmanager_route_confirm" value="{{ analytics_tagmanager_route_confirm }}">
+</form>
+		<div class="tab-pane" id="tab7">
+			<div class="table-responsive col-sm-6">
+			    <table class="table table-bordered table-hover">
+			      <thead>
+				<tr>
+				  <td class="text-left">{{ column_oid }}</td>
+				  <td class="text-left">{{ column_status }}</td>
+				  <td class="text-center">{{ column_action }}</td>
+				</tr>
+			      </thead>
+			      <tbody>
+				{% if transactions %}
+				{% for trans in transactions %}
+				<tr>
+				  <td class="text-left">{{ trans.order_id }}</td>
+				  <td class="text-left">
+				  {% if trans.hit == "0" %}Not Sent to Analytics{% endif %}
+				  {% if trans.hit == "1" %}Sent to Analytics{% endif %}
+				  {% if trans.hit == "2" %}Refund Sent to Analytics{% endif %}
+				  </td>
+				  <td class="text-center">
+					<div id="div-send-{{ trans.id }}" data-loading-text="loading" onclick="hitorder({{ trans.order_id }},{{ trans.id }});" class="btn btn-primary" {% if trans.hit != "0" %} disabled {% endif %}><i class="fa fa-plus-circle"></i> {{ button_send }}</div>
+					<div id="div-refund-{{ trans.id }}" data-loading-text="loading" onclick="refundorder({{ trans.order_id }},{{ trans.id }});"  class="btn btn-primary" {% if trans.hit != "1" %} disabled {% endif %}><i class="fa fa-plus-circle"></i> {{ button_refund }}</div>
+				</td>
+				</tr>
+				{% endfor %}
+				{% else %}
+				<tr>
+				  <td class="text-center" colspan="6">{{ text_no_results }}</td>
+				</tr>
+				{% endif %}
+			      </tbody>
+			    </table>
+			</div>
+			<div class="col-sm-6">
+			{{ text_order }}
+			
+			</div>
+		</div>
+	   </div>
+        
+     <script>
+       $('form').submit(function () {
+    $(this).find('input[type="checkbox"]').each( function () {
+        var checkbox = $(this);
+        if( checkbox.is(':checked')) {
+            checkbox.attr('value','1');
+        } else {
+            checkbox.after().append(checkbox.clone().attr({type:'hidden', value:0}));
+            checkbox.prop('disabled', true);
+        }
+    })
+});
+    $(function () {
+        $("#tagmanager_adword").click(function () {
+            if ($(this).is(":checked")) {
+                $("#conversion").show();
+            } else {
+                $("#conversion").hide();
+            }
+        });
+	$("#optimize").click(function () {
+            if ($(this).is(":checked")) {
+                $("#optimizeid").show();
+            } else {
+                $("#optimizeid").hide();
+            }
+        });
+	$("#tagmanager_remarketing").click(function () {
+            if ($(this).is(":checked")) {
+                $("#remarketing").show();
+            } else {
+                $("#remarketing").hide();
+            }
+        });
+	$("#tagmanager_custom").click(function () {
+            if ($(this).is(":checked")) {
+                $("#customfields").show();
+            } else {
+                $("#customfields").hide();
+            }
+        });
+	$("#tagmanager_pixel").click(function () {
+            if ($(this).is(":checked")) {
+                $("#pixel").show();
+            } else {
+                $("#pixel").hide();
+            }
+        });
+	$("#tagmanager_alt_currency").click(function () {
+            if ($(this).is(":checked")) {
+                $("#altcurrency").show();
+            } else {
+                $("#altcurrency").hide();
+            }
+        });
+	$("#tagmanager_hotjar_status").click(function () {
+            if ($(this).is(":checked")) {
+                $("#hotjar").show();
+            } else {
+                $("#hotjar").hide();
+            }
+        });
+	$("#tagmanager_skroutz_status").click(function () {
+            if ($(this).is(":checked")) {
+                $("#skroutz").show();
+            } else {
+                $("#skroutz").hide();
+            }
+        });
+	$("#tagmanager_yandex_status").click(function () {
+            if ($(this).is(":checked")) {
+                $("#yandex").show();
+            } else {
+                $("#yandex").hide();
+            }
+        });
+	$("#tagmanager_zenchat_status").click(function () {
+            if ($(this).is(":checked")) {
+                $("#zenchat").show();
+            } else {
+                $("#zenchat").hide();
+            }
+        });
+	$("#tagmanager_zopim_status").click(function () {
+            if ($(this).is(":checked")) {
+                $("#zopim").show();
+            } else {
+                $("#zopim").hide();
+            }
+        });
+	$("#tagmanager_bing_status").click(function () {
+            if ($(this).is(":checked")) {
+                $("#bing").show();
+            } else {
+                $("#bing").hide();
+            }
+        });
+	$("#tagmanager_cookie").click(function () {
+            if ($(this).is(":checked")) {
+                $("#cookie").show();
+            } else {
+                $("#cookie").hide();
+            }
+        });
+	$("#tagmanager_amp").click(function () {
+            if ($(this).is(":checked")) {
+                $("#amp").show();
+            } else {
+                $("#amp").hide();
+            }
+        });
+	$("#tagmanager_badge").click(function () {
+            if ($(this).is(":checked")) {
+                $("#badge").show();
+            } else {
+                $("#badge").hide();
+            }
+        });
+    });
+    
+    function hitorder(orderid,id) {
+    		$.ajax({
+			url: '{{ catalog }}index.php?route=extension/module/tagmanager/hitorder&oid=' + orderid + '&v={{ tagmanager.vs }}',
+			type: 'get',
+			dataType: 'json',
+			beforeSend: function() {
+				$("#div-send-" + id).prop('disabled',true);
+			},
+			complete: function() {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> Order Sent to Analytics</div>');
+				location.reload();
+				
+			},
+			success: function(json) {
+			
+			},
+			
+		});
+	}
+	function refundorder(orderid,id) {
+		$.ajax({
+			url: '{{ catalog }}index.php?route=extension/module/tagmanager/refund&oid=' + orderid + '&v={{ tagmanager.vs }}&order_status_id=7',
+			type: 'get',
+			dataType: 'json',
+			
+			beforeSend: function() {
+				$("#div-refund-" + id).prop('disabled',true);
+			},
+			complete: function() {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> Refund Sent to Analytics</div>');
+				location.reload();
+				
+			},
+			success: function(json) {
+			
+			},
+		});
+	}
+</script>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{{ footer }}

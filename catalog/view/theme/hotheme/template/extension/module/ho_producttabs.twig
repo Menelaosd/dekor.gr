@@ -1,0 +1,163 @@
+<div id="product_tabs{{ module }}" class="{{tabs_layout}} {% if background %} has-background full-container {% endif %} product-tabs-wrapper module-wrapper{{ additional_class }}  arrow-nav-wrapper arrow-nav-offset">	
+	{% if background %} 
+		<div class="product-tabs-background">
+			<div class="product-tabs-background-parallax parallax-image">
+				<img src="image/{{background}}" class="parallax-image" alt="{{module_title}}" />
+			</div>
+		</div>
+	{% endif %} 
+	<div class="module-row"> 
+		<div class="container">
+			{% if module_title %}
+			<h3 class="module-title">
+				{% if logo %}
+					<span class="module-title-logo">
+						<img src="{{ logo }}" alt="{{ module_title }}">
+					</span>
+				{% endif %}
+				<span class="module-title-text">{{ module_title }}</span>
+			</h3>
+			{% endif %}
+			{% if subtitle %}
+			<h4 class="module-subtitle">
+				<span class="module-subtitle-text">{{ subtitle}}</span>
+			</h4>
+			{% endif %}				
+		</div>
+		{% set single_tab_class = '' %}
+		{% if tabs|length < 2 %}
+			{% set single_tab_class = 'single-tab' %}
+		{% endif %}	
+		<div class="product-tabs {{ single_tab_class }} container" id="product-tabs{{ module }}">
+			{% if tabs|length > 1 %}
+				<div class="nav-tabs-container">
+					<div class="nav-tabs-wrapper">
+						<ul class="nav nav-tabs" role="tablist">
+							{% set active = 'parent-active' %}
+							{% set ch_active = 'active' %}
+							{% for tab in tabs %}
+								<li class="nav-item {{ active }}" role="presentation">
+								<a href="#tab{{ module }}_{{ loop.index }}" class="nav-link {{ ch_active }}" aria-controls="tab{{ module }}_{{ loop.index }}" role="tab" data-toggle="tab">
+									{% if tab.alt_title %}
+										{{ tab.alt_title }}
+									{% else %}
+										{{ tab.title }}
+									{% endif %}
+								</a></li>
+								{% set active = '' %}
+								{% set ch_active = '' %}
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			{% endif %}	
+			<div class="tab-content">
+				{% set active = 'active' %}
+				{% for tab in tabs %}
+					{% set has_description = '' %}
+
+					{% set numslides = 4 %}
+					{% if tab.description or tab.all %}
+						{% set has_description = ' has-description' %}
+						{% set numslides = 3 %}
+					{% endif %}	
+					
+					{% if mobile %}
+						{% set comp = 1 %}
+					{% else %}
+						{% set comp = 2 %}
+					{% endif %}
+					
+					<div role="tabpanel" class="tab-pane {{ active }}" id="tab{{ module }}_{{ loop.index }}">				
+						<div class="product-tabs-tab-wrapper {{has_description}}">
+							<div class="tabs-container-flex">
+								{% if tab.description or tab.all %}
+									<div class="tab-description-wrapper" {% if tab.background_image %} style="background-image:url('{{ tab.background_image }}'); background-repeat:no-repeat;"{% endif %}>
+										<div class="tab-description-content">
+										{% if tab.alt_title %}
+											<h2>{{ tab.alt_title }}</h2>
+										{% endif %}
+										{% if tab.description %}
+											<div class="tab-text">{{ tab.description }}</div>
+										{% endif %}	
+										{% if tab.all %}
+											<div class="more-container">
+												<a class="generic-button" href="{{ tab.all }}" title="{{ tab.title }}">{{ text_all_products }} <i class="fal fa-arrow-right"></i></a>
+											</div>
+										{% endif %}	
+										</div>
+									</div>
+								{% endif %}	
+								<div class="products-carousel-outter">
+									<div class="products-carousel-inner">
+										<div class="product-tabs-carousel-wrapper swiper-container" id="product-tabs-swiper{{ module }}_{{ loop.index }}">
+											<div class="swiper-wrapper">
+												{% for product in tab.products %}    
+													<div class="product-layout swiper-slide">
+														{{ include('hotheme/template/product/product_template/product_main.twig') }}
+													</div>
+												{% endfor %} 
+											</div>
+											
+										</div>
+									</div>
+
+									<div class="container pagination-static">
+										<div class="swiper-pagination producttabs-pagination-{{module}}_{{ loop.index }}"></div>
+									</div>
+									<div class="swiper-navigation">
+										<div class="swiper-button-next producttabs-button-next-{{module}}_{{ loop.index }}"></div>
+										<div class="swiper-button-prev producttabs-button-prev-{{module}}_{{ loop.index }}"></div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<script>
+						var swiperTabs{{ module }}_{{ loop.index }} = new Swiper('#product-tabs-swiper{{ module }}_{{ loop.index }}', {
+							slidesPerView: {{numslides}},
+							slidesPerGroup: {{numslides}},
+							spaceBetween: 0,
+							mode: 'horizontal',
+							observer: true,
+							observeParents: true,
+							resizeReInit: true,
+							autoplay: {
+							  delay: 5000,
+							  disableOnInteraction: true,
+							},
+							loop:false,
+							pagination: {
+								el: '.producttabs-pagination-{{module}}_{{ loop.index }}',
+								type: 'bullets',
+								clickable: true
+							},
+							navigation: {
+								nextEl: '.producttabs-button-next-{{module}}_{{ loop.index }}',
+								prevEl: '.producttabs-button-prev-{{module}}_{{ loop.index }}',
+							},
+							breakpoints: {								
+								768: {
+								  slidesPerView: 1,
+								  slidesPerGroup: 1,
+								  loop: true
+								},
+								992: {
+								  slidesPerView: 2,
+								  slidesPerGroup: 2
+								},
+								1400: {
+								  slidesPerView: {{numslides}} -1,
+								  slidesPerGroup: {{numslides}} -1
+								}
+							}
+						});
+					</script>
+					{% set active = '' %}
+				{% endfor %}			
+			</div>
+		</div>
+	</div>
+</div>

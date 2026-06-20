@@ -1,0 +1,207 @@
+{{ header }}
+<div class="full-container blog-page">
+  <nav aria-label="breadcrumb" class="full-row">
+    <ol class="breadcrumb">
+      {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"{% if loop.last %} aria-current="page"{% endif %}><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      {% endfor %}
+    </ol>
+  </nav>
+   <div class="row justify-content-md-center">
+	   {% if column_left and column_right %}
+	   {% set class = 'col-12 col-sm-6' %}
+	   {% elseif column_left or column_right %}
+	   {% set class = 'col-12 col-sm-9' %}
+	   {% else %}
+			{% set class = 'col-md-9 col-12' %}
+	   {% endif %}
+	   {{ column_left }}
+      <div id="content" {#class="{{ class }}"#} class="blog-page">
+         {{ content_top }}
+		 <div class="blog_grip-wrapper">
+			 <div class="blog_post">
+				 <div class="blog_item single-blog">
+					{% if main_thumb and  blogsetting_post_thumb %}
+						<div class="main_thumb"><img src="{{ blogsetting_post_thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" /></div>
+					{% endif %}
+					<div class="blog-text">
+						<div class="blog_stats">
+							{% if date_added_status %}
+								<span>{{ date_added_full }}</span>
+							{% endif %} 
+							{% if page_view_status %}
+								<span><i class="fal fa-eye"></i>{{ text_read }} {{ new_read_counter_value }}</span>
+							{% endif %} 
+						</div>
+						<h1 class="main-content-title">{{ heading_title }}</h1> 		
+						
+						<div class="main_description">
+						{{ description }}
+						</div>
+					</div>
+					{% if tags %}
+					<p class="tags">
+					   {{ text_tags }}
+					   {% for i in 0..tags|length %}
+					   {% if i < (tags|length - 1) %} 
+					   <a href="{{ tags[i].href }}">{{ tags[i].tag }}</a>,
+					   {% else %} 
+					   <a href="{{ tags.i.href }}">{{ tags.i.tag }}</a> 
+					   {% endif %}
+					   {% endfor %} 
+					</p>
+					{% endif %}
+					<div class="share">
+					   {% if share_status %} 
+						<!-- Go to www.addthis.com/dashboard to customize your tools -->
+						<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e4d15c713aee331"></script>
+						<div class="addthis_inline_share_toolbox_zxfe"></div>
+					   {% endif %} 
+					</div>
+				</div>
+			</div>
+            <!-- Related Products -->
+            {% if products %} 
+				{{ tab_products_info_output }}
+			{% endif %}
+			
+         </div>
+      </div>
+      {{ column_right }}
+   </div>
+               <!-- Related Products End -->
+			
+            {% if related_blogs %} 
+			
+			{% if mobile %}
+				{% set comp = 1 %}
+			{% else %}
+				{% set comp = 2 %}
+			{% endif %}
+			
+			{% set numslides = 3  %}
+			
+			<div class="module-wrapper arrow-nav-wrapper arrow-nav-offset blog-related">
+				<div class="blog_grid_holder blog-related-blogs {% if related_blogs|length > comp %}{% else %}column-{{numslides}}{% endif %}">
+					<h3 class="module-title"><div class="module-title-text">{{ text_related_blog }}</div></h3>
+					<div class="blog_grip-wrapper">
+						<div class="blog_grip-container grid">
+							<div class="swiper-container carousel-related">
+								<div class="swiper-wrapper">
+									{% for blog in related_blogs %} 
+										<div class="blog_item swiper-slide">
+											<div class="summary">
+												 {% if blog.image and rel_thumb_status %} 
+												<div class="image">
+													<a href="{{ blog.href }}"><img src="{{ blog.image }}" alt="{{ blog.title }}" title="{{ blog.title }}" /></a>
+												</div>
+												{% endif %} 
+												<div class="blog_caption">
+													<h3 class="blog_title"><a href="{{ blog.href }}">{{ blog.title }}</a></h3>
+													<div class="blog_stats">
+														{% if date_added_status %}
+														<span>{{ blog.date_added_full }}</span>
+														{% endif %} 
+														{% if page_view_status %}
+														<span><i class="fal fa-eye"></i>{{ text_read }} {{ blog.count_read }}</span>
+														{% endif %} 
+													</div>
+													<div class="blog_description">{{ blog.short_description }}</div>
+												</div>
+											</div>
+										</div>
+									{% endfor %}
+								</div>
+								{% if related_blogs|length > comp and not mobile %}
+								<div class="container pagination-static">
+									<div class="swiper-pagination blogrelated-pagination-{{module}}"></div>
+								</div>
+								<div class="swiper-navigation">
+									<div class="swiper-button-next blogrelated-button-next"></div>
+									<div class="swiper-button-prev blogrelated-button-prev"></div>
+								</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+		
+			
+			
+			{% if related_blogs|length > comp %}
+			<script>
+				var swiperBlog = new Swiper('.carousel-related', {
+					slidesPerView: {{numslides}},
+					spaceBetween: 16,
+					mode: 'horizontal',
+					observer: true,
+					observeParents: true,
+					loop:true,
+					{% if not mobile %}
+					pagination: {
+						el: '.blogrelated-pagination-{{module}}',
+						type: 'bullets',
+						clickable: true
+					},
+					navigation: {
+						nextEl: '.blogrelated-button-next',
+						prevEl: '.blogrelated-button-prev',
+					},
+					{% endif %}
+					breakpoints: {
+						0: {
+						  slidesPerView: 1,
+						},
+						576: {
+						  slidesPerView: 2,
+						},
+						1200: {
+						  slidesPerView: {{numslides}},
+						}
+					}
+				});
+			</script>
+		   {% endif %}
+
+           {% endif %}
+            <!-- Related Blog End -->
+    {{ content_bottom }}
+</div>
+<script type="application/ld+json">
+   {
+   "@context": "http://schema.org",
+   "@type": "NewsArticle",
+   "mainEntityOfPage": {
+   "@type": "WebPage",
+   "@id": "https://google.com/article"
+   },
+   "headline": "{{ heading_title }}",
+   {% if blogsetting_post_thumb %} 
+   "image": {
+   "@type": "ImageObject",
+   "url": "{{ blogsetting_post_thumb }}",
+   "height": {{ img_height }},
+   "width": {{ img_width }}
+   },
+   {% endif %} 
+   "datePublished": "{{ date_added_full }}",
+   "dateModified": "{{ date_added_full }}",
+   "author": {
+   "@type": "Person",
+   "name": "{{ author }}"
+   },
+   "publisher": {
+   "@type": "Organization",
+   "name": "{{ store }}",
+   {% if logo %} 
+   "logo": {
+   "@type": "ImageObject",
+   "url": "{{ logo }}"
+   }
+   {% endif %} 
+   },
+   "description": "{{ short_description }}"
+   }
+</script>
+{{ footer }}

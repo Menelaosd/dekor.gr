@@ -1,0 +1,117 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right"><a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-menus').submit() : false;"><i class="fa fa-trash-o"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title_items }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">{% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_menu_items_list }}</h3>
+          </div>
+          <div class="panel-body">
+            <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-menus">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td style="width: 50px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                      <td class="text-left">{{ column_title }}</td>
+                      <td class="text-center" style="width: 100px;">{{ column_sort_order }}</td>
+                      <td class="text-center" style="width: 100px;">{{ column_status }}</td>
+                      <td class="text-right" style="width: 50px;">{{ column_action }}</td>
+                  	</tr>
+                  </thead>
+                  <tbody>
+          					{% if menu_items %}
+          						{% for menu_item in menu_items %}
+          							<tr>
+          								<td class="text-center">
+          									{% if menu_item.menu_item_id in selected %}
+          										<input type="checkbox" name="selected[]" value="{{ menu_item.menu_item_id }}" checked="checked" />
+          									{% else %}
+          										<input type="checkbox" name="selected[]" value="{{ menu_item.menu_item_id }}" />
+          									{% endif %}
+          								</td>
+          								<td>{{ menu_item.title }} (ID: {{ menu_item.menu_item_id }})</td>
+                          <td class="text-center">{{ menu_item.sort_order }}</td>
+          								<td class="text-center">{{ menu_item.status == 1 ? '<span class="text-success"><i class="fa fa-check"></span>' : '<span class="text-danger"><i class="fa fa-times"></span>' }}</td>
+          								<td class="text-right">
+                            <a href="{{ edit }}&item_id={{ menu_item.menu_item_id }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                          </td>
+          							</tr>
+                        {% if menu_item.children %}
+                          {% for child in menu_item.children %}
+                            <tr>
+                              <td class="text-center">
+                                {% if child.menu_item_id in selected %}
+                                  <input type="checkbox" name="selected[]" value="{{ child.menu_item_id }}" checked="checked" />
+                                {% else %}
+                                  <input type="checkbox" name="selected[]" value="{{ child.menu_item_id }}" />
+                                {% endif %}
+                              </td>
+                              <td>––&nbsp; {{ child.title }} (ID: {{ child.menu_item_id }})</td>
+                              <td class="text-center">{{ child.sort_order }}</td>
+                              <td class="text-center">{{ child.status == 1 ? '<span class="text-success"><i class="fa fa-check"></span>' : '<span class="text-danger"><i class="fa fa-times"></span>' }}</td>
+                              <td class="text-right">
+                                <a href="{{ edit }}&item_id={{ child.menu_item_id }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                              </td>
+                            </tr>
+                            {% if child.children %}
+                              {% for child2 in child.children %}
+                                <tr>
+                                  <td class="text-center">
+                                    {% if child2.menu_item_id in selected %}
+                                      <input type="checkbox" name="selected[]" value="{{ child2.menu_item_id }}" checked="checked" />
+                                    {% else %}
+                                      <input type="checkbox" name="selected[]" value="{{ child2.menu_item_id }}" />
+                                    {% endif %}
+                                  </td>
+                                  <td>––––&nbsp; {{ child2.title }} (ID: {{ child2.menu_item_id }})</td>
+                                  <td class="text-center">{{ child2.sort_order }}</td>
+                                  <td class="text-center">{{ child2.status == 1 ? '<span class="text-success"><i class="fa fa-check"></span>' : '<span class="text-danger"><i class="fa fa-times"></span>' }}</td>
+                                  <td class="text-right">
+                                    <a href="{{ edit }}&item_id={{ child2.menu_item_id }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                                  </td>
+                                </tr>
+                              {% endfor %}
+                            {% endif %}
+                          {% endfor %}
+                        {% endif %}
+                      {% endfor %}
+                    {% else %}
+          						<tr>
+          							<td class="text-center" colspan="8">{{ text_no_results }}</td>
+          						</tr>
+          					{% endif %}
+        					</tbody>
+              	</table>
+              </div>
+          	</form>
+          </div>
+      	</div>
+      </div>
+  	</div>
+  </div>
+</div>

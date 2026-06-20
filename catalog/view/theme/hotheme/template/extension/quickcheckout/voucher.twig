@@ -1,0 +1,98 @@
+<div class="quickcheckout-heading"><i class="fa fa-tags"></i> {{entry_disc}}</div>
+{% if coupon_module %}
+
+<div class="cart-coupon-form">
+	<a href="#" class="toggleCoupon">
+		<span class="toggleCoupon-icon"><i class="fas fa-plus"></i></span>
+		<span class="toggleCoupon-text">{{ text_toggle_coupon }}</span>
+	</a>	
+	
+	<div id="coupon-content" style="display:none">
+	  <div class="input-group">
+		<div class="button-coupon-container">
+		<input type="text" name="coupon" placeholder="{{entry_coupon_text}}" value="" class="form-control" />
+		</div>
+		<span class="input-group-btn">
+		  <button type="button" id="button-coupon" class="btn btn-primary">{{ text_use_coupon }}</button>
+		</span>
+	  </div>
+	</div>
+	
+</div>
+
+{% endif %}
+
+{% if voucher_module %} 
+<div id="voucher-heading"><i class="fa fa-gift"></i> {{ entry_voucher }}</div>
+<div id="voucher-content">
+  <div class="input-group">
+	<input type="text" name="voucher" value="" class="form-control" />
+	<span class="input-group-btn">
+	  <button type="button" id="button-voucher" class="btn btn-primary">{{ text_use_voucher }}</button>
+	</span>
+  </div>
+</div>
+{% endif %}
+
+{% if reward_module and reward %} 
+<div id="reward-heading"><i class="fa fa-star"></i> {{ entry_reward }}</div>
+<div id="reward-content">
+  <div class="input-group">
+	<input type="text" name="reward" value="" class="form-control" />
+	<span class="input-group-btn">
+	  <button type="button" id="button-reward" class="btn btn-primary">{{ text_use_reward }}</button>
+	</span>
+  </div>
+</div>
+{% endif %} 
+
+<script type="text/javascript"><!--
+
+$(document).on('click','.toggleCoupon', function(e) {
+	e.preventDefault();
+	var target = $(this).siblings('#coupon-content');
+	target.slideToggle(100);
+
+});
+
+
+$('#coupon-heading').click(function() {
+    if($('#coupon-title-box').is(':checked')){
+      $('#coupon-title-box').prop("checked",false);
+    } else {
+      $('#coupon-title-box').prop("checked",true);
+    };
+});
+
+$('#coupon-title-box').click(function() {
+    if($('#coupon-content').is(':visible')){
+      $('#coupon-content').slideUp('slow');
+    } else {
+      $('#coupon-content').slideDown('slow');
+    };
+});
+
+$('#coupon-heading').on('click', function() {
+    if($('#coupon-content').is(':visible')){
+      $('#coupon-content').slideUp('slow');
+    } else {
+      $('#coupon-content').slideDown('slow');
+    };
+});
+
+$('#voucher-heading').on('click', function() {
+    if($('#voucher-content').is(':visible')){
+      $('#voucher-content').slideUp('slow');
+    } else {
+      $('#voucher-content').slideDown('slow');
+    };
+});
+
+$('#reward-heading').on('click', function() {
+    if($('#reward-content').is(':visible')){
+      $('#reward-content').slideUp('slow');
+    } else {
+      $('#reward-content').slideDown('slow');
+    };
+});
+//--></script>

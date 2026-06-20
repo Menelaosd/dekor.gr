@@ -1,0 +1,17 @@
+{% if testmode %}
+	<div class="alert alert-danger">{{ text_testmode }}</div>
+{% endif %}
+<form action="#" method="post" id="checkout-form">
+	<div class="buttons">
+		<div class="pull-right">
+			<input type="submit" value="{{ button_continue }}" class="btn btn-primary" id="button-confirm" data-loading-text="{{ text_loading }}" />
+		</div>
+	</div>
+</form>
+
+<script type="text/javascript">
+	$('#button-confirm').click(function(e) {
+		e.preventDefault();
+		window.location = '{{ action }}';
+	});
+</script>

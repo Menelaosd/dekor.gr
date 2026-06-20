@@ -1,0 +1,60 @@
+<div class="bundle-category-product-block">
+	<div class="bundle-category-product-image">
+		<a href="{{ product.href }}" title="{{ product.name }}">
+			<img src="{{ product.thumb }}" alt="{{ product.name }}">
+		</a>
+	</div>
+	<div class="bundle-category-product-info">
+		<h3>
+			<a href="{{ product.href }}" title="{{ product.name }}">
+				{{ product.name }}
+			</a>
+		</h3>
+		
+		{% if product.quantity <= 0 %}
+			<div class="short__label_oos">
+				{{ text_out_of_stock }}
+			</div>
+		{% endif %}
+		
+		{% if product.product_colors_ac or product.product_sizes_ac or product.selected_options %}
+			<div class="product-add-info">
+				{% if product.product_colors_ac %}
+					<div class="bundle-colors-intro">
+						{{ product.product_colors_ac }}
+					</div>
+				{% endif %}		
+
+				{% if product.product_sizes_ac %}
+					<div class="bundle-sizes-intro">
+						{{ product.product_sizes_ac }}
+					</div>
+				{% endif %}
+
+				{% if product.selected_options %}
+					{% for selected_option in product.selected_options %}
+					<div class="bundle-sizes-intro">
+						{{ selected_option.name }}
+					</div>
+					{% endfor %}
+				{% endif %}
+			</div>
+		{% endif %}
+		
+		<div class="product-bundle-bottom">
+
+			<div class="bundle-product-block-price" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+				<meta itemprop="priceCurrency" content="EUR">
+				{% if product.price %}
+					{% if not product.special %}
+						<span class="amount">{{ product.price }}</span>
+					{% else %}		
+						<span class="amount_before">{{ product.price }}</span>
+						<span class="amount">{{ product.special }}</span>
+					{% endif %}
+				{% endif %}
+			</div>
+		</div>
+
+	</div>
+</div>

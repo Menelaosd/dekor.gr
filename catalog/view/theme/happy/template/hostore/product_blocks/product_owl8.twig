@@ -1,0 +1,99 @@
+
+    
+
+
+
+    <div class="product-media">
+        {% if product_mask.percentage %}
+            <span class="sale-percentage">{{ product_mask.percentage }}&#37;</span>
+        {% endif %}
+        <a href="{{ product_mask.href }}">
+            <div class="product-thumbnail">
+                <img id="p_{{product_mask.product_id}}" itemprop="image" alt="{{ product_mask.name }}" src="{{ product_mask.thumb }}" class="current">
+            </div>
+        </a>
+        <div class="product-actions product-actions-left">
+            <a onclick="cart.add('{{ product_mask.product_id }}');" data-toggle="tooltip" title="{{ button_cart }}" class="awe-button product-quick-view"><i class="fa fa-shopping-bag"></i></a>
+        </div>
+        <div class="product-actions">
+            <a onclick="wishlist.add('{{ product_mask.product_id }}');" data-toggle="tooltip" title="{{ button_wishlist }}" class="awe-button product-wishlist"><i class="fa fa-heart"></i></a>
+        </div>
+
+            <div class="product-body">
+
+
+        <div class="onomatimi">
+                      <div class="product-pnamesec col-md-12">
+                        <h2 class="product-name" itemprop="name">
+                            <a href="{{ product_mask.href }}">{{ product_mask.name }}{{ product_mask.category_id }}</a>
+                        </h2>
+                    </div>
+
+                    <div class="product-price col-md-12" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                        <meta itemprop="priceCurrency" content="EUR">
+                        {% if product_mask.price %}
+                            {% if not product_mask.special %}
+                                <meta itemprop="price" content="{{ product_mask.price|replace({',': '.', '€': ''}) }}">
+                                <span class="amount">{{ product_mask.price }}</span>
+                            {% else %}
+                                <meta itemprop="price" content="{{ product_mask.special|replace({',': '.', '€': ''}) }}">
+                                <span class="amount">{{ product_mask.special }}</span>
+                                <del class="amount_before">{{ product_mask.price }}</del>
+                            {% endif %}
+                        {% endif %}
+                       
+                    </div>
+       
+    </div>
+<!--             <div class="product-codee">
+    <p>{{ text_model }}  {{ product_mask.model }}</p>
+</div> -->
+<div class="ifasmata">
+ {% if product_mask.option %}
+          {% for option_value in product_mask.option %}
+                {% if product_mask.type_option == 'image' %}
+                <div id="input-option{{ option.product_option_id }}" class="colors-new-category ">
+                    <img src="{{ option_value.image }}" alt="{{ option_value.name }}" class="img-thumbnail" />
+                               
+                </div>
+           {% endif %} 
+           {% endfor %}
+{% endif %} 
+</div>   
+        <div class="product-description">
+            <p class="more-content" itemprop="description">{{ product_mask.description }}</p>
+        </div>
+
+
+    </div>
+
+
+
+        <div class="product-list-actions">
+            <a target="_blank" class="btn btn-default" onclick="cart.add('{{ product_mask.product_id }}', '{{ product_mask.minimum }}');" ><i class="fa fa-shopping-cart"></i> ΑΓΟΡΑΣΕ ΤΟ</a>
+            <a target="_blank" class="btn btn-primary" href="{{ product_mask.href }}"><i class="fa fa-eye"></i> ΔΕΣ ΤΟ</a>
+        </div>
+
+    </div>
+
+        <div class="product-deiteto">
+           <div class="favoritam col-md-2 col-sm-12">
+              <button type="button" data-toggle="tooltip" class="wishara btn btn-default" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
+           </div>
+            <div class="valtostokalathi col-md-8 col-sm-12">
+                 <a target="_blank" class="btn btn-default" onclick="cart.add('{{ product_mask.product_id }}');" ><i class="fa fa-shopping-cart"></i>  {% if lang == 'el' %}   ΠΡΟΣΘΗΚΗ ΣΤΟ ΚΑΛΑΘΙ    {% else %} ADD TO CART {% endif %} </a>
+            </div>   
+            <div class="comparem col-md-2 col-sm-12">              
+                <button type="button" data-toggle="tooltip" class="compare btn btn-outline-inverse btn-variant" title="" onclick="compare.addcompare('{{ product_id }}');" data-original-title="Σύγκριση">
+                    <i class="fa fa-refresh"></i>
+                    
+                </button>
+    
+
+
+            </div>
+
+    </div>
+    
+
+

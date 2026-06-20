@@ -1,0 +1,1007 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+<script type="text/javascript"> 			
+$(document).ready(function() {
+	$('.editable').focus(function() {
+		$(this).addClass("focusField");		
+      if (this.value == this.defaultValue){
+        this.select();
+    	}
+      if(this.value != this.defaultValue){
+	    	this.select();
+      }
+    });
+    $('.editable').change(function() {
+    	$(this).removeClass("focusField");				
+      if (this.value == ''){
+        this.value = (this.defaultValue ? this.defaultValue : '');			
+    	}				
+   });	
+});
+</script>
+<style type="text/css">		
+.btn-default {background-color: #00FF00;}
+.btn-primary2 {background-color: #009900; border-color: #1978ab; color: #ffffff; margin-left: 3px;}
+.editable {color: #000;	border: none; cursor: pointer; border-radius: 0.25em;}
+.focusField {background: #FFEEEE !important;color: #000; border: none; cursor: pointer; border-radius: 0.25em;}
+.quantity {padding-left:4px;}
+.text-center .img-thumbnail {height: 40px; max-width: 40px;}
+</style>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+	  <button type="button" data-toggle="tooltip" title="{{ column_save }}"  class="btn btn-primary2" onclick="$('#form-product').attr('action', '{{ edit_list }}').submit()"><i class="fa fa-save"></i></button>
+	  
+        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-product').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
+        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+        <button type="submit" form="form-product" formaction="{{ copy }}" data-toggle="tooltip" title="{{ button_copy }}" class="btn btn-default"><i class="fa fa-copy"></i></button>
+        <button type="button" form="form-product" formaction="{{ delete }}" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-product').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+<div class="container-fluid">
+  {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+<div class="panel panel-default">
+<div class="panel-body">
+            <div class="form-group col-sm-3">
+              <label class="control-label" for="input-name">Κατηγορία</label>
+              <select name="filter_category" id="input-status" class="form-control">
+              <option value="*"></option>
+      			  {% for category in categories %}
+      			  {% if category.product_count >= '1' %}			  
+      			  {% if category.category_id == filter_category %}
+                        <option value="{{ category.category_id }}" selected="selected">{{ category.name }} ({{ category.product_count }})</option>
+                      {% else %}
+                        <option value="{{ category.category_id }}">{{ category.name }}
+      				  {% if category.product_count >= '1' %}
+      				   ({{ category.product_count }})
+      				   {% endif %}
+      				   </option> 
+                      {% endif %}
+      				{% endif %}
+      			  {% endfor %}
+              </select>
+            </div>
+            <div class="form-group col-sm-3">
+              <label class="control-label" for="input-name">{{ entry_name }}</label>
+              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+            </div>
+            <div class="form-group col-sm-3">
+              <label class="control-label" for="input-model">{{ entry_model }}</label>
+              <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
+            </div>
+            <div class="form-group col-sm-3">
+              <label class="control-label" for="input-price">{{ entry_price }}</label>
+              <input type="text" name="filter_price" value="{{ filter_price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control" />
+            </div>
+            <div class="form-group col-sm-3">
+              <label class="control-label" for="input-quantity">{{ entry_quantity }}</label>
+              <input type="text" name="filter_quantity" value="{{ filter_quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control" />
+            </div>
+            <div class="form-group col-sm-3">
+              <label class="control-label" for="input-status">{{ entry_status }}</label>
+              <select name="filter_status" id="input-status" class="form-control">
+                <option value=""></option>
+                  {% if filter_status == '1' %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                  {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                  {% endif %}
+                  {% if filter_status == '0' %}
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                  {% else %}
+                <option value="0">{{ text_disabled }}</option>
+                  {% endif %}
+              </select>
+            </div>
+			
+            <div class="form-group col-sm-3">
+              <label class="control-label" for="input-noimage">Χωρίς Εικόνα</label>
+              <select name="filter_noimage" id="input-noimage" class="form-control">
+					<option value=""></option>
+					<option value="1" {% if filter_noimage == '1' %}selected="selected"{% endif %}>Ναι</option>
+              </select>
+            </div>
+           
+            <div class="form-group col-sm-1">
+              <label class="control-label" for="input-status"><h3 class="panel-title">{{ text_filter }}</h3></label><br />
+
+              <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+            </div>
+			
+</div>
+</div>
+</div>
+
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-md-12 col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+          </div>
+          <div class="panel-body">
+            <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-product">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+
+                      <td class="text-left">{% if sort == 'pd.name' %} <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a> {% else %} <a href="{{ sort_name }}">{{ column_name }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'p.model' %} <a href="{{ sort_model }}" class="{{ order|lower }}">{{ column_model }}</a> {% else %} <a href="{{ sort_model }}">{{ column_model }}</a> {% endif %}</td>
+                      <td class="text-left">Σειρά</td>
+						{#
+						<td class="text-left">{{ column_stock }}</td>
+						#}
+						<td class="text-left">SEO-URL</td>
+						<td class="text-left">Στατικό<br>Προϊόν</td>
+						<td class="text-left">Μόνο στο<br>Φυσικό Κατάστημα</td>
+						
+						
+                      <td class="text-right">{% if sort == 'p.price' %} <a href="{{ sort_price }}" class="{{ order|lower }}">{{ column_price }}</a> {% else %} <a href="{{ sort_price }}">{{ column_price }}</a> {% endif %}</td>
+                      <td class="text-right">{% if sort == 'p.quantity' %} <a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a> {% else %} <a href="{{ sort_quantity }}">{{ column_quantity }}</a> {% endif %}</td>
+                      <td class="text-left">{% if sort == 'p.status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
+					  
+					  <td class="text-center">Βάρος [Κιλά]</td>
+					  <td class="text-center">Ποσότητα Συσκευασίας</td>
+                      <td class="text-right">{{ column_action }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  
+                  {% if products %}
+                  {% for product in products %}
+                  <tr>
+                    <td class="text-center">{% if product.image %} <img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail" /> {% else %} <span class="img-thumbnail list"><i class="fa fa-camera fa-2x"></i></span> {% endif %}<br />
+					{% if product.product_id in selected %}
+                      <input type="checkbox" name="selected[]" id="{{ product.product_id }}_select"  value="{{ product.product_id }}" checked="checked" />
+                      {% else %}
+                      <input type="checkbox" name="selected[]" id="{{ product.product_id }}_select"  value="{{ product.product_id }}" />
+                      {% endif %}</td>
+                    <td class="text-left"><textarea name="{{ product.product_id }}_name" class="editable" id="{{ product.product_id }}_name" onClick="document.getElementById(&quot;{{ product.product_id }}_select&quot;).setAttribute(&quot;checked&quot;,&quot;checked&quot;);">{{ product.name }}</textarea>
+					</td>
+                    <td class="text-left">
+					<textarea name="{{ product.product_id }}_model" class="editable" id="{{ product.product_id }}_model" onClick="document.getElementById(&quot;{{ product.product_id }}_select&quot;).setAttribute(&quot;checked&quot;,&quot;checked&quot;);" cols="10">{{ product.model }}</textarea></td>
+
+					
+					<td class="text-right">
+						<div class="input-group" style="display:flex">
+							<input type="text" class="form-control qChangeOrder" style="width:60px;" value="{{ product.sort_order }}">
+							<button data-productid="{{ product.product_id }}" class="btn btn-primary qChangeOrderBtn"><i class="fa fa-check"></i></button>
+						</div>
+					</td>  
+					
+					{#
+				  <td class="text-left">
+				  <select name="{{ product.product_id }}_stock_status_id" id="{{ product.product_id }}_stock_status_id" class="editable"  onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");'>
+                    {% for stock_status in stock_statuses %}
+                    {% if stock_status.stock_status_id == product.stock_status_id %}
+                    <option value="{{ stock_status.stock_status_id }}" selected="selected">{{ stock_status.name }}</option>
+                     {% else %}
+                    <option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+				  </td>
+				  #}
+				  
+					<td class="text-left">
+						<div style="min-width:150px">
+						{% for product_seo_url in product.product_seo_urls %}
+							<b>{{ product_seo_url.store }}</b><br>
+							<div class="input-group" style="display:flex">
+								<input type="text" value="{{ product_seo_url.2 }}" data-productid="{{ product.product_id }}" class="editSeoUrl">
+								<button data-productid="{{ product.product_id }}" data-storeid="{{ product_seo_url.store_id }}" class="btn btn-primary updateSeoUrl">
+									<i class="fa fa-check"></i>
+								</button>
+							</div>
+						{% endfor %}
+						</div>
+					</td>
+					
+					<td class="text-left">
+						<div class="onoffswitch4">
+							<input type="checkbox" name="productSwitch{{ product.product_id }}" class="onoffswitch4-checkbox DISABLECART" id="productSwitch{{ product.product_id }}" data-productid="{{ product.product_id }}" {% if product.disablecart %}checked{% endif %}>
+							<label class="onoffswitch4-label" for="productSwitch{{ product.product_id }}">
+								<span class="onoffswitch4-inner"></span>
+								<span class="onoffswitch4-switch"></span>
+							</label>
+						</div>
+					</td>					
+					
+					<td class="text-left">
+						<div class="onoffswitch4">
+							<input type="checkbox" name="productSwitchS{{ product.product_id }}" class="onoffswitch4-checkbox STOREONLY" id="productSwitchS{{ product.product_id }}" data-productid="{{ product.product_id }}" {% if product.storeonly %}checked{% endif %}>
+							<label class="onoffswitch4-label" for="productSwitchS{{ product.product_id }}">
+								<span class="onoffswitch4-inner"></span>
+								<span class="onoffswitch4-switch"></span
+							</label>
+						</div>
+					</td>
+				  
+                    <td class="text-left">
+					{% if product.special %}
+                    <span style="text-decoration: line-through;"><input type="text" class="editable" name="{{ product.product_id }}_price" id="{{ product.product_id }}_price" value="{{ product.price }}" size="8" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");' /></span><br/>
+                    <div class="text-danger">    
+	  {{ column_spec }} :<br><input type="text" class="editable" name="{{ product.product_id }}_special" id="{{ product.product_id }}_special" value="{{ product.special }}" size="8" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");' />
+		</div>
+                    {% else %}
+                    <input type="text" class="editable" name="{{ product.product_id }}_price" id="{{ product.product_id }}_price" value="{{ product.price }}" size="8" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");' />
+                    {% endif %}
+					  </td>
+                    <td class="text-right">
+				  {% if product.quantity <= 0 %}
+					<input type="text" class="editable label-warning" name="{{ product.product_id }}_quantity" id="{{ product.product_id }}_quantity" value="{{ product.quantity }}" size="3" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");' />
+                    {% elseif product.quantity <= 5 %}
+					<input type="text" class="editable label-danger" name="{{ product.product_id }}_quantity" id="{{ product.product_id }}_quantity" value="{{ product.quantity }}" size="3" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");' />
+                    {% else %}
+                    <input type="text" class="editable label-success" name="{{ product.product_id }}_quantity" id="{{ product.product_id }}_quantity" value="{{ product.quantity }}" size="3" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");' />
+                    {% endif %}
+					</td>
+                    <td class="text-left">
+{{ product.status }}					
+	<select name="{{ product.product_id }}_status" id="{{ product.product_id }}_status" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");'> 
+                    {% if product.status == text_enabled %}
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+    </select>
+	
+	
+					<br />id: {{ product.product_id }}
+					</td>
+					
+                    <td class="text-left">
+						<div class="input-group input-group-weight mb-3">
+						  <input type="text" class="form-control editWeight" value="{{ product.weight }}" data-productid="{{ product.product_id }}" aria-label="Recipient's username">
+						  <div class="input-group-append">
+							<button class="btn btn-primary editWeighBtn" data-productid="{{ product.product_id }}" type="button"><i class="fa fa-save"></i></button>
+						  </div>
+						</div>
+					</td>                  
+					<td class="text-left">
+						<div class="input-group input-group-package mb-3">
+						  <input type="text" class="form-control editPackage" value="{{ product.package }}" data-productid="{{ product.product_id }}" aria-label="Recipient's username">
+						  <div class="input-group-append">
+							<button class="btn btn-primary editPackageBtn" data-productid="{{ product.product_id }}" type="button"><i class="fa fa-save"></i></button>
+						  </div>
+						</div>
+					</td>
+                    <td class="text-right">
+					<a href="{{ product.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+					</td>
+                  </tr>
+                  {% endfor %}
+                  {% else %}
+                  <tr>
+                    <td class="text-center" colspan="10">{{ text_no_results }}</td>
+                  </tr>
+                  {% endif %}
+                    </tbody>
+                  
+                </table>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-sm-6 text-left">{{ pagination }}</div>
+              <div class="col-sm-6 text-right">{{ results }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+	$('.qChangeOrderBtn').on('click',function(e){
+		var $master = $(this);
+		var $product_id = $(this).data('productid');
+		var $value = $(this).siblings('.qChangeOrder').val();
+		e.preventDefault();
+		$.ajax({
+		url: "scripts/updateproduct.php",
+		method: "POST",
+		data: {id:$product_id,value:$value}
+	  }).success(function(response) {
+		$master.removeClass('btn-success').addClass('btn-success');
+	  });
+	});
+	
+	$('.editWeighBtn').on('click',function(e){
+		var $master = $(this);
+		var $mastercon = $(this).closest('tr');
+		var $product_id = $(this).data('productid');
+		var $value = $mastercon.find('.editWeight').val();
+		e.preventDefault();
+		$.ajax({
+		url: "scripts/updateproductweight.php",
+		method: "POST",
+		data: {id:$product_id,value:$value}
+	  }).success(function(response) {
+		$master.removeClass('btn-success').addClass('btn-success');
+	  });
+	});
+	
+	$('.editPackageBtn').on('click',function(e){
+		var $master = $(this);
+		var $mastercon = $(this).closest('tr');
+		var $product_id = $(this).data('productid');
+		var $value = $mastercon.find('.editPackage').val();
+		e.preventDefault();
+		$.ajax({
+		url: "scripts/updateproductpackage.php",
+		method: "POST",
+		data: {id:$product_id,value:$value}
+	  }).success(function(response) {
+		$master.removeClass('btn-success').addClass('btn-success');
+	  });
+	});
+	
+
+	$('.updateSeoUrl').on('click',function(e){
+		var $master = $(this);
+		var $mastercon = $(this).closest('.input-group');
+		var $product_id = $(this).data('productid');
+		var $store_id = $(this).data('storeid');
+		var $value = $mastercon.find('.editSeoUrl').val();
+
+		e.preventDefault();
+		$.ajax({
+			url: "scripts/update_seourl.php",
+			method: "POST",
+			data: {id:$product_id,store_id:$store_id,value:$value}
+		}).success(function(response) {
+			$master.removeClass('btn-success').addClass('btn-success');
+		});
+	});
+	
+</script> 
+<style type="text/css">
+.input-group-weight {
+	display:flex;
+}
+
+.input-group-package {
+	display:flex;
+}
+
+input.form-control.editWeight {
+	min-width:100px;
+}
+</style>
+
+  <script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+	var url = '';
+
+	var filter_name = $('input[name=\'filter_name\']').val();
+
+	if (filter_name) {
+		url += '&filter_name=' + encodeURIComponent(filter_name);
+	}
+
+	var filter_model = $('input[name=\'filter_model\']').val();
+
+	if (filter_model) {
+		url += '&filter_model=' + encodeURIComponent(filter_model);
+	}
+
+	var filter_price = $('input[name=\'filter_price\']').val();
+
+	if (filter_price) {
+		url += '&filter_price=' + encodeURIComponent(filter_price);
+	}
+
+  var filter_xml = $('select[name=\'filter_xml\'] option:selected').val();
+
+  if (filter_xml) {
+    url += '&filter_xml=' + encodeURIComponent(filter_xml);
+  }
+
+  var filter_manufacturer = $('select[name=\'filter_manufacturer\']').val();
+
+  if (filter_manufacturer) {
+    url += '&filter_manufacturer=' + encodeURIComponent(filter_manufacturer);
+  }
+
+	var filter_category = $('select[name=\'filter_category\']').val();    		
+    if (filter_category != '*') {
+		url += '&filter_category=' + encodeURIComponent(filter_category);
+	}
+
+	var filter_quantity = $('input[name=\'filter_quantity\']').val();
+
+	if (filter_quantity) {
+		url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
+	}
+
+  var filter_status = $('select[name=\'filter_status\']').val();
+
+  if (filter_status !== '') {
+    url += '&filter_status=' + encodeURIComponent(filter_status);
+  }
+  
+  var filter_noimage = $('select[name=\'filter_noimage\']').val();
+
+  if (filter_noimage !== '') {
+    url += '&filter_noimage=' + encodeURIComponent(filter_noimage);
+  }
+
+	location = 'index.php?route=catalog/product&user_token={{ user_token }}' + url;
+});
+//--></script> 
+  <script type="text/javascript"><!--
+// IE and Edge fix!
+$('button[form=\'form-product\']').on('click', function(e) {
+	$('#form-product').attr('action', $(this).attr('formaction'));
+});
+  
+$('input[name=\'filter_name\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['product_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_name\']').val(item['label']);
+	}
+});
+
+$('input[name=\'filter_model\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_model=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['model'],
+						value: item['product_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_model\']').val(item['label']);
+	}
+});
+
+
+    $('body').on('change','.onoffswitch4-checkbox.DISABLECART',function(e) {
+        var isChecked = $(this).prop('checked') ? 1 : 0; // Convert boolean to 0 or 1
+        var productId = $(this).data('productid');
+        
+        $.ajax({
+            url: "api/toggle_product_cart.php",
+            data: {
+                check: isChecked,
+                product_id: productId
+            },
+            type: 'POST',
+            success: function(){
+
+            }
+        });
+    });   
+
+	$('body').on('change','.onoffswitch4-checkbox.STOREONLY',function(e) {
+        var isChecked = $(this).prop('checked') ? 1 : 0; // Convert boolean to 0 or 1
+        var productId = $(this).data('productid');
+        
+        $.ajax({
+            url: "api/toggle_product_cartstore.php",
+            data: {
+                check: isChecked,
+                product_id: productId
+            },
+            type: 'POST',
+            success: function(){
+
+            }
+        });
+    });
+
+//--></script></div>
+
+  <style>
+.onoffswitch {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+
+.onoffswitch-checkbox {
+    display: none;
+}
+
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.onoffswitch-inner:before {
+    content: "NAI";
+    padding-left: 10px;
+    background-color: #2FCCFF; color: #FFFFFF;
+}
+
+.onoffswitch-inner:after {
+    content: "ΟΧΙ";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+
+.onoffswitch-switch {
+    display: block; width: 18px; margin: 6px;
+    background: #FFFFFF;
+    border: 2px solid #999999; border-radius: 20px;
+    position: absolute; top: 0; bottom: 0; right: 56px;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+
+
+ .onoffswitch1 {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+
+.onoffswitch1-checkbox {
+    display: none;
+}
+
+.onoffswitch1-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 30px;
+}
+
+.onoffswitch1-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch1-inner:before, .onoffswitch1-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+    border-radius: 30px;
+    box-shadow: 0px 15px 0px rgba(0,0,0,0.08) inset;
+}
+
+.onoffswitch1-inner:before {
+    content: "NAI";
+    padding-left: 10px;
+    background-color: #2FCCFF; color: #FFFFFF;
+    border-radius: 30px 0 0 30px;
+}
+
+.onoffswitch1-inner:after {
+    content: "ΟΧΙ";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+    border-radius: 0 30px 30px 0;
+}
+
+.onoffswitch1-switch {
+    display: block; width: 30px; margin: 0px;
+    background: #FFFFFF;
+    border: 2px solid #999999; border-radius: 30px;
+    position: absolute; top: 0; bottom: 0; right: 56px;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+    background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%); 
+    background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%); 
+    background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%); 
+    background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+    box-shadow: 0 1px 1px white inset;
+}
+
+.onoffswitch1-checkbox:checked + .onoffswitch1-label .onoffswitch1-inner {
+    margin-left: 0;
+}
+
+.onoffswitch1-checkbox:checked + .onoffswitch1-label .onoffswitch1-switch {
+    right: 0px; 
+}
+
+.onoffswitch2 {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+
+.onoffswitch2-checkbox {
+    display: none;
+}
+
+.onoffswitch2-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 5px;
+}
+
+.onoffswitch2-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch2-inner:before, .onoffswitch2-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.onoffswitch2-inner:before {
+    content: "NAI";
+    padding-left: 10px;
+    background-color: #2FCCFF; color: #FFFFFF;
+}
+
+.onoffswitch2-inner:after {
+    content: "ΟΧΙ";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+
+.onoffswitch2-switch {
+    display: block; width: 18px; margin: 0px;
+    background: #FFFFFF;
+    border: 2px solid #999999; border-radius: 5px;
+    position: absolute; top: 0; bottom: 0; right: 68px;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+    background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+    background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+    background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+    background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+}
+
+.onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-inner {
+    margin-left: 0;
+}
+
+.onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
+    right: 0px; 
+}
+
+.onoffswitch3
+{
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+
+.onoffswitch3-checkbox {
+    display: none;
+}
+
+.onoffswitch3-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 0px solid #999999; border-radius: 0px;
+}
+
+.onoffswitch3-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch3-inner > span {
+    display: block; float: left; position: relative; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.onoffswitch3-inner .onoffswitch3-active {
+    padding-left: 10px;
+    background-color: #EEEEEE; color: #FFFFFF;
+}
+
+.onoffswitch3-inner .onoffswitch3-inactive {
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #FFFFFF;
+    text-align: right;
+}
+
+.onoffswitch3-switch {
+    display: block; width: 18px; margin: 0px; text-align: center; 
+    border: 0px solid #999999;border-radius: 0px; 
+    position: absolute; top: 0; bottom: 0;
+}
+.onoffswitch3-active .onoffswitch3-switch {
+    background: #27A1CA; left: 0;
+}
+.onoffswitch3-inactive .onoffswitch3-switch {
+    background: #A1A1A1; right: 0;
+}
+
+.onoffswitch3-active .onoffswitch3-switch:before {
+    content: " "; position: absolute; top: 0; left: 18px; 
+    border-style: solid; border-color: #27A1CA transparent transparent #27A1CA; border-width: 15px 9px;
+}
+
+
+.onoffswitch3-inactive .onoffswitch3-switch:before {
+    content: " "; position: absolute; top: 0; right: 18px; 
+    border-style: solid; border-color: transparent #A1A1A1 #A1A1A1 transparent; border-width: 15px 9px;
+}
+
+
+.onoffswitch3-checkbox:checked + .onoffswitch3-label .onoffswitch3-inner {
+    margin-left: 0;
+}
+
+.onoffswitch4 {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+
+.onoffswitch4-checkbox {
+    display: none;
+}
+
+.onoffswitch4-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #27A1CA; border-radius: 0px;
+}
+
+.onoffswitch4-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch4-inner:before, .onoffswitch4-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 26px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+.onoffswitch4-inner:before {
+    content: "NAI";
+    padding-left: 10px;
+    background-color: #FFFFFF; color: #27A1CA;
+}
+
+.onoffswitch4-inner:after {
+    content: "ΟΧΙ";
+    padding-right: 10px;
+    background-color: #FFFFFF; color: #666666;
+    text-align: right;
+}
+
+.onoffswitch4-switch {
+    display: block; width: 25px; margin: 0px;
+    background: #27A1CA;
+    position: absolute; top: 0; bottom: 0; right: 65px;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+}
+
+.onoffswitch4-checkbox:checked + .onoffswitch4-label .onoffswitch4-inner {
+    margin-left: 0;
+}
+
+.onoffswitch4-checkbox:checked + .onoffswitch4-label .onoffswitch4-switch {
+    right: 0px; 
+}
+
+
+
+.cmn-toggle 
+{
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+
+.cmn-toggle + label 
+{
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input.cmn-toggle-round-flat + label 
+{
+  padding: 2px;
+  width: 75px;
+  height: 30px;
+  background-color: #dddddd;
+  -webkit-border-radius: 60px;
+  -moz-border-radius: 60px;
+  -ms-border-radius: 60px;
+  -o-border-radius: 60px;
+  border-radius: 60px;
+  -webkit-transition: background 0.4s;
+  -moz-transition: background 0.4s;
+  -o-transition: background 0.4s;
+  transition: background 0.4s;
+}
+
+input.cmn-toggle-round-flat + label:before, input.cmn-toggle-round-flat + label:after 
+{
+  display: block;
+  position: absolute;
+  content: "";
+}
+
+input.cmn-toggle-round-flat + label:before 
+{
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  background-color: #fff;
+  -webkit-border-radius: 60px;
+  -moz-border-radius: 60px;
+  -ms-border-radius: 60px;
+  -o-border-radius: 60px;
+  border-radius: 60px;
+  -webkit-transition: background 0.4s;
+  -moz-transition: background 0.4s;
+  -o-transition: background 0.4s;
+  transition: background 0.4s;
+}
+
+input.cmn-toggle-round-flat + label:after 
+{
+  top: 4px;
+  left: 4px;
+  bottom: 4px;
+  width: 22px;
+  background-color: #dddddd;
+  -webkit-border-radius: 52px;
+  -moz-border-radius: 52px;
+  -ms-border-radius: 52px;
+  -o-border-radius: 52px;
+  border-radius: 52px;
+  -webkit-transition: margin 0.4s, background 0.4s;
+  -moz-transition: margin 0.4s, background 0.4s;
+  -o-transition: margin 0.4s, background 0.4s;
+  transition: margin 0.4s, background 0.4s;
+}
+
+input.cmn-toggle-round-flat:checked + label 
+{
+  background-color: #27A1CA;
+}
+
+input.cmn-toggle-round-flat:checked + label:after 
+{
+  margin-left: 45px;
+  background-color: #27A1CA;
+}
+
+div.switch5 { clear: both; margin: 0px 0px; }
+div.switch5 > input.switch:empty { margin-left: -999px; }
+div.switch5 > input.switch:empty ~ label { position: relative; float: left; line-height: 1.6em; text-indent: 4em; margin: 0.2em 0px; cursor: pointer; -moz-user-select: none; }
+div.switch5 > input.switch:empty ~ label:before, input.switch:empty ~ label:after { position: absolute; display: block; top: 0px; bottom: 0px; left: 0px; content: "off"; width: 3.6em; height: 1.5em; text-indent: 2.4em; color: rgb(153, 0, 0); background-color: rgb(204, 51, 51); border-radius: 0.3em; box-shadow: 0px 0.2em 0px rgba(0, 0, 0, 0.3) inset; }
+div.switch5 > input.switch:empty ~ label:after { content: " "; width: 1.4em; height: 1.5em; top: 0.1em; bottom: 0.1em; text-align: center; text-indent: 0px; margin-left: 0.1em; color: rgb(255, 136, 136); background-color: rgb(255, 255, 255); border-radius: 0.15em; box-shadow: 0px -0.2em 0px rgba(0, 0, 0, 0.2) inset; transition: all 100ms ease-in 0s; }
+div.switch5 > input.switch:checked ~ label:before { content: "on"; text-indent: 0.5em; color: rgb(102, 255, 102); background-color: rgb(51, 153, 51); }
+div.switch5 > input.switch:checked ~ label:after { margin-left: 2.1em; color: rgb(102, 204, 102); }
+div.switch5 > input.switch:focus ~ label { color: rgb(0, 0, 0); }
+div.switch5 > input.switch:focus ~ label:before { box-shadow: 0px 0px 0px 3px rgb(153, 153, 153); }
+
+
+
+
+
+
+
+.switch6 {  max-width: 17em;  margin: 0 auto; }
+.switch6-light > span, .switch-toggle > span {  color: #000000; }
+.switch6-light span span, .switch6-light label, .switch-toggle span span, .switch-toggle label {  color: #2b2b2b; }
+
+.switch-toggle a, 
+.switch6-light span span { display: none; }
+
+.switch6-light { display: block; height: 30px; position: relative; overflow: visible; padding: 0px; margin-left:0px; }
+.switch6-light * { box-sizing: border-box; }
+.switch6-light a { display: block; transition: all 0.3s ease-out 0s; }
+
+.switch6-light label, 
+.switch6-light > span { line-height: 30px; vertical-align: middle;}
+
+.switch6-light label {font-weight: 700; margin-bottom: px; max-width: 100%;}
+
+.switch6-light input:focus ~ a, .switch6-light input:focus + label { outline: 1px dotted rgb(136, 136, 136); }
+.switch6-light input { position: absolute; opacity: 0; z-index: 5; }
+.switch6-light input:checked ~ a { right: 0%; }
+.switch6-light > span { position: absolute; left: -100px; width: 100%; margin: 0px; padding-right: 100px; text-align: left; }
+.switch6-light > span span { position: absolute; top: 0px; left: 0px; z-index: 5; display: block; width: 50%; margin-left: 100px; text-align: center; }
+.switch6-light > span span:last-child { left: 50%; }
+.switch6-light a { position: absolute; right: 50%; top: 0px; z-index: 4; display: block; width: 50%; height: 100%; padding: 0px; }
+
+
+.onoffswitch4-label {
+    border-radius: 10px;
+    border-color: #dd0000;
+    padding: 0;
+    margin: 0;
+}
+
+.onoffswitch4-switch {
+    background: #dd0000;
+}
+
+.onoffswitch4 {border-radius: 10px;overflow: hidden;width: 70px;}
+
+.onoffswitch4-switch {
+    left: 0;
+    right: auto;
+}
+
+.onoffswitch4-checkbox:checked + .onoffswitch4-label .onoffswitch4-switch {
+    right: 0;
+    left: auto;
+    background: #00dd00;
+}
+
+.onoffswitch4-checkbox:checked + .onoffswitch4-label {
+    border-color: #00dd00;
+}
+
+  </style>
+{{ footer }} 

@@ -1,0 +1,115 @@
+{% if style == 1 %}
+	<div id="banner-cats{{ module }}" class="banner-container module-wrapper {{ class }}">
+		
+		{% if module_title or subtitle %}
+		<div class="container">
+			{% if module_title %}
+			<h3 class="module-title">
+				<span class="module-title-text">{{ module_title }}</span>
+			</h3>
+			{% endif %}
+			{% if subtitle %}
+			<h4 class="module-subtitle">
+				<span class="module-subtitle-text">{{ subtitle }}</span>
+			</h4>
+			{% endif %}
+		</div>
+		{% endif %}
+		
+		<div class="container module-container {% if carousel %}category__has-carousel{% endif %}">
+			<div class="banner-cats-carousel-wrapper swiper-container" id="banner-cats-swiper{{ module }}">
+				<div class="swiper-wrapper banner-row">
+				{% for category in categories %}
+					<div class="banner-col col-12 col-sm-4 swiper-slide">
+						<a class="banner-item banner-image-left banner-text-over-image" title="{{ category.name }}" href="{{ category.href }}">
+							<div class="banner-image">
+								<img src="{{ category.image }}" alt="{{ category.name }}" class="img-fluid">
+							</div>
+							<div class="banner-caption">
+								<h2 class="banner-title">
+									{{ category.name }}
+								</h2>
+								{% if readmore %}
+									<div class="banner-readmore">
+										<div class="generic-button">{{ readmore }}</div>
+									</div>
+								{% endif %}
+							</div>				
+						</a>
+
+					</div>
+				{% endfor %}
+				</div>
+			</div>
+		</div>
+		
+		{% if carousel %}
+			<div class="pagination-static category-banner__pagination">
+				<div class="swiper-pagination category-swipe-pagination-{{module}}"></div>
+			</div>
+		{% endif %}
+		
+	</div>
+	
+	{% if carousel %}
+		<script type="text/javascript">
+		
+			var swiperCategories{{ module }} = undefined;
+			var resizeCategories{{ module }};
+			
+			var swiperCategories{{ module }}_settings = {
+				slidesPerView: 1,
+				slidesPerGroup: 1,
+				loop:true,
+				spaceBetween: 0,
+				mode: 'horizontal',
+				observer: true,
+				observeParents: true,
+				pagination: {
+					el: '.category-swipe-pagination-{{module}}',
+					type: 'bullets',
+					clickable: true
+				},
+			};
+			
+			$(window).on('resize load',function() {
+				
+				clearTimeout( resizeCategories{{ module }} );
+				resizeCategories{{ module }} = setTimeout(function() {
+
+				if( window.innerWidth && typeof(swiperCategories{{ module }}) === "undefined") {
+					swiperCategories{{ module }} = new Swiper('#banner-cats-swiper{{ module }}', swiperCategories{{ module }}_settings);	
+				};
+				
+				if( window.innerWidth > 991 ) {
+					if ( typeof(swiperCategories{{ module }}) !== "undefined" ) {
+						swiperCategories{{ module }}.destroy();
+						swiperCategories{{ module }} = undefined;
+					}
+				};
+						
+				}, 250);
+			})	
+		
+		</script>
+	{% endif %}
+	
+{% else %}
+	<div class="list-group">
+	  {% for category in categories %}
+	  {% if category.category_id == category_id %} 
+	  <a href="{{ category.href }}" class="list-group-item active">{{ category.name }}</a> 
+	  {% if category.children %}
+	  {% for child in category.children %}
+	  {% if child.category_id == child_id %}
+	  <a href="{{ child.href }}" class="list-group-item active">&nbsp;&nbsp;&nbsp;- {{ child.name }}</a> 
+	  {% else %} 
+	  <a href="{{ child.href }}" class="list-group-item">&nbsp;&nbsp;&nbsp;- {{ child.name }}</a>
+	  {% endif %}
+	  {% endfor %}
+	  {% endif %}
+	  {% else %} <a href="{{ category.href }}" class="list-group-item">{{ category.name }}</a>
+	  {% endif %}
+	  {% endfor %}
+	</div>
+{% endif %}

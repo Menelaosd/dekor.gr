@@ -1,0 +1,32 @@
+<div class="card card-default">
+  <div class="card-header">{{ heading_title }}</div>
+  <div class="list-group"> {% for filter_group in filter_groups %} <a class="list-group-item">{{ filter_group.name }}</a>
+    <div class="list-group-item">
+      <div id="filter-group{{ filter_group.filter_group_id }}">{% for filter in filter_group.filter %}
+        <div class="form-check">
+            {% if filter.filter_id in filter_category %}
+            <input class="form-check-input" type="checkbox" name="filter[]" value="{{ filter.filter_id }}" checked>
+            <label class="form-check-label">{{ filter.name }}
+            {% else %}
+            <input class="form-check-input" type="checkbox" name="filter[]" value="{{ filter.filter_id }}">
+            <label class="form-check-label">{{ filter.name }}
+            {% endif %}</label>
+        </div>
+        {% endfor %}</div>
+    </div>
+    {% endfor %}</div>
+  <div class="card-footer text-right">
+    <button type="button" id="button-filter" class="btn btn-primary">{{ button_filter }}</button>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-filter').on('click', function() {
+	filter = [];
+
+	$('input[name^=\'filter\']:checked').each(function(element) {
+		filter.push(this.value);
+	});
+
+	location = '{{ action }}&filter=' + filter.join(',');
+});
+//--></script>

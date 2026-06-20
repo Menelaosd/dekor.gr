@@ -1,0 +1,152 @@
+{{ header }}
+
+<div id="product-category" class="container idea-category__wrap-landing">
+  
+  <div class="category-heading">
+	   <nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+		  {% for breadcrumb in breadcrumbs %}
+		  <li class="breadcrumb-item"{% if loop.last %} aria-current="page"{% endif %}><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		  {% endfor %}
+		</ol>
+	  </nav>
+	  
+	  <div class="category-heading-caption">
+		<h1 class="main-content-title">{{ heading_title }}</h1>
+		{% if description or sdescription %}
+			<div class="category-heading-text">
+				{% if description %}
+					<div class="ch-text-top">
+						{{ description }}
+					</div>
+				{% endif %}				
+				{% if sdescription %}
+					<div class="ch-text-bottom">
+						{{ sdescription }}
+					</div>
+				{% endif %}
+			</div>
+		{% endif %}
+	  </div>
+  </div>
+  
+
+  {% if idea_categories %}
+  
+	<div class="category-categories">
+	
+		<div id="banner-cats{{ module }}" class="banner-container module-wrapper tipsaxneis subtitleLine">
+			
+			{% if module_title or subtitle %}
+			<div class="container">
+				{% if module_title %}
+				<h3 class="module-title">
+					<span class="module-title-text">{{ module_title }}</span>
+				</h3>
+				{% endif %}
+				{% if subtitle %}
+				<h4 class="module-subtitle">
+					<span class="module-subtitle-text">{{ subtitle }}</span>
+				</h4>
+				{% endif %}
+			</div>
+			{% endif %}
+			
+			<div class="container">
+					
+				<div class="banner-row">					
+					{% for category in idea_categories %}
+						<div class="banner-col col-12 col-sm-4">
+							<a class="banner-item banner-image-left banner-text-over-image" title="{{ category.name }}" href="{{ category.href }}">
+								<div class="banner-image">
+									<img src="{{ category.image }}" alt="{{ category.name }}" class="img-fluid">
+								</div>
+								<div class="banner-caption">
+									<h2 class="banner-title">
+										{{ category.name }}
+									</h2>
+									{% if readmore %}
+										<div class="banner-readmore">
+											<div class="generic-button">{{ readmore }}</div>
+										</div>
+									{% endif %}
+								</div>				
+							</a>
+						</div>
+					{% endfor %}
+				</div>
+					
+			</div>
+		</div>
+	
+	</div>
+  {% endif %}
+  
+  {% if categories and not idea_categories %}
+  
+		<div class="category-categories category-categories__ideas">
+			<div class="category-categories-row row">
+				{% for category in categories %}
+					<div class="idea-category-block-wrap col-12 col-sm-3">
+						<div class="idea-category-block">
+							<a class="idea-category-image" href="{{ category.href }}" title="{{ category.name }}">
+								<img src="{{ category.image }}" alt="{{ category.name }}">
+							</a>
+							<div class="idea-category-caption">
+								<a href="{{ category.href }}" title="{{ category.name }}" class="idea-category-title">
+									{{ category.name }}
+								</a>
+								<div class="idea-category__readmore">
+									<a href="{{ category.href }}" title="{{ category.name }}" class="idea-category-all product-bundles-all">
+										<span>{{ text_see_idea }}</span> <i class="fas fa-chevron-right"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			  </ul>
+			</div>
+		</div>
+  
+  {% endif %}
+  
+  	<div class="row">
+		{{ column_left }}
+		{% if column_left  %}
+			{% set class = 'col-12 col-lg-9' %}
+		{% else %}
+			{% set productclass = 'col-12 col-lg-3 col-sm-4' %}
+			{% set class = 'col-12' %}
+		{% endif %}
+
+		<div id="content" class="{{ class }}">
+			{{ content_top }}
+			{% if not idea_categories and not categories %}
+			  <div id="ajax-wrapper">
+				  <div id="ajax-container">	
+					  <p>{{ text_empty }}</p>
+					  <div class="buttons">
+						<div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+					  </div>
+				  </div>
+			  </div>
+			{% endif %}
+			{#
+			{{ content_bottom }}
+			#}
+		</div>
+	</div>
+	
+</div>
+
+<script>
+	pintrk('track', 'viewcategory');
+	fbq('track', 'ViewContent');
+</script>
+<noscript>
+ <img height="1" width="1" style="display:none;" alt="" src="https://ct.pinterest.com/v3/?tid=2613584957027&event=viewcategory&noscript=1" />
+</noscript>
+
+
+{{ footer }}

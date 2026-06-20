@@ -1,0 +1,231 @@
+{% if layout == 1 %}
+
+	<div id="diy-wrapper{{ module }}" class="diy-wrapper">
+	
+		<div class="diy-content">
+		
+			<div class="container">
+				
+				{% if main_description %}
+					{% if main_description.heading %}
+						<h3 class="module-title">
+							<div class="module-title-left">
+								<span class="module-title-text">{{ main_description.heading }}</span>
+							</div>
+						</h3>
+					{% endif %}
+					{% if main_description.subtitle %}
+						<div class="module-subtitle">
+							<span class="module-subtitle-text">
+								{{ main_description.subtitle }}
+							</span>
+						</div>
+					{% endif %}
+					
+				{% endif %}
+				
+				<div class="diy-videos">
+				
+					{% if main_description.side_heading %}
+						<div class="side_heading_block">
+							<div class="side_heading_content">
+								{{ main_description.side_heading }}
+							</div>
+						</div>
+					{% endif %}
+				
+					<div class="diy-row">
+						<div class="diy-left-section">
+							{% if fvideo %}
+							<div class="video-layout-grid-featured">
+								<a data-fancybox class="video-block-link" href="https://www.youtube.com/embed/{{ fvideo.video_id }}?controls=0&rel=0" title="DIY SCHOOL 1">
+									<span class="video-play">
+										<i class="fal fa-play"></i>
+									</span>
+								</a>
+								<div class="video-block">
+									<img src="{{ fvideo.thumb }}" alt="DIY SCHOOL 1">
+								</div>
+							</div>
+							{% endif %}
+						</div>
+						<div class="diy-right-section">
+							<div class="header-right">
+								<div class="header-right-top">
+								
+									{% if sub_description %}
+										{% if sub_description.hypertitle %}
+											<h4>{{ sub_description.hypertitle }}</h4>
+										{% endif %}
+										{% if sub_description.heading %}
+											<h3> {{ sub_description.heading  }}</h3>
+										{% endif %}
+										{% if sub_description.subtitle %}
+											<div class="desc">{{ sub_description.subtitle }}</div>
+										{% endif %}
+										
+									{% endif %}
+									
+									{% if hyperlink %}
+										<a class="diy-readmore" href="{{ hyperlink }}" title="{{ text_all_diy }}">
+											{{ text_all_diy }}<i class="fas fa-chevron-right"></i>
+										</a>
+									{% endif %}
+								
+								</div>
+								<div class="header-right-bottom">
+									<div class="videos-row">
+										<div class="swiper-button-next diy-button-next-{{module}}"></div>
+										<div class="swiper-button-prev diy-button-prev-{{module}}"></div>
+										
+										<div class="diy-swiper-container swiper-container" id="diy-carousel{{ module }}">
+											<div class="swiper-wrapper">
+												{% for video in videos %}									
+													<div class="video-layout-grid swiper-slide">
+														<a data-fancybox class="video-block-link" href="https://www.youtube.com/embed/{{ video.video_id }}?controls=0&rel=0" title="DIY SCHOOL {{ loop.index + 1 }}">
+															<span class="video-play">
+																<i class="fal fa-play"></i>
+															</span>
+														</a>
+														<div class="video-block">
+															<img src="{{ video.thumb }}" alt="DIY SCHOOL {{ loop.index + 1 }}">
+														</div>
+													</div>									
+												{% endfor %}
+											</div>
+											
+											<div class="pagination-static diy__pagination">
+												<div class="swiper-pagination diy-swipe-pagination-{{module}}"></div>
+											</div>
+											
+											<a class="diy-readmore hidden-desktop" href="{{ hyperlink }}" title="{{ text_all_diy }}">
+												{{ text_all_diy }}<i class="fas fa-chevron-right"></i>
+											</a>
+											
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>	
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var diyCarousel{{ module }} = new Swiper('#diy-carousel{{ module }}', {
+			slidesPerView: 3,
+			slidesPerGroup: 3,
+			watchSlidesProgress: true,
+			watchSlidesVisibility: true,
+			mode: 'horizontal',
+			spaceBetween: 30,
+			observer: true,
+			observeParents: true,
+			loop:false,
+			navigation: {
+				nextEl: '.diy-button-next-{{module}}',
+				prevEl: '.diy-button-prev-{{module}}',
+			},
+			breakpoints: {
+				992: {
+					pagination: {
+						el: '.diy-swipe-pagination-{{module}}',
+						type: 'bullets',
+						clickable: true
+					},				
+					slidesPerView: 1,
+					slidesPerGroup: 1,
+					spaceBetween: 0,
+					loop:true
+				},
+				1200: {
+				  slidesPerView: 3,
+				}
+			}
+		});
+	</script>
+{% else %}
+
+	<div id="diy-wrapper{{ module }}" class="diy-wrapper">
+	
+		<div class="diy-content">
+		
+			<div class="container">
+				
+				{% if main_description %}
+					{% if main_description.heading %}
+						<h3 class="module-title">
+							<div class="module-title-left">
+								<span class="module-title-text">{{ main_description.heading }}</span>
+							</div>
+						</h3>
+					{% endif %}
+					{% if main_description.subtitle %}
+						<div class="module-subtitle">
+							<span class="module-subtitle-text">
+								{{ main_description.subtitle }}
+							</span>
+						</div>
+					{% endif %}
+					
+				{% endif %}
+				
+				<div class="diy-videos-simple">
+					<div class="diy-row-simple">
+						<div class="diy-swiper-container-simple swiper-container" id="diy-carousel{{ module }}">
+							<div class="swiper-wrapper">
+								{% for video in videos %}									
+									<div class="video-layout-grid swiper-slide">
+										<a data-fancybox class="video-block-link" href="https://www.youtube.com/embed/{{ video.video_id }}?controls=0&rel=0">
+											<span class="video-play">
+												<i class="fal fa-play"></i>
+											</span>
+										</a>
+										<div class="video-block video-block-simple">
+											<img src="{{ video.thumb }}">
+										</div>
+									</div>									
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>	
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var diyCarousel{{ module }} = new Swiper('#diy-carousel{{ module }}', {
+			slidesPerView: 3,
+			slidesPerGroup: 3,
+			watchSlidesProgress: true,
+			watchSlidesVisibility: true,
+			mode: 'horizontal',
+			spaceBetween: 30,
+			observer: true,
+			observeParents: true,
+			loop:false,
+			navigation: {
+				nextEl: '.diy-button-next-{{module}}',
+				prevEl: '.diy-button-prev-{{module}}',
+			},
+			breakpoints: {
+				992: {
+				  slidesPerView: 1,
+				  slidesPerGroup: 1,
+				  spaceBetween: 0,
+				  loop:true
+				},
+				1200: {
+				  slidesPerView: 3,
+				}
+			}
+		});
+	</script>
+
+{% endif %}

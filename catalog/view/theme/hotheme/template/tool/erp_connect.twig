@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GINI ERP</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <main>
+    <form id="form" action="https://ginigroup.com/index.php" method="GET">
+      <input type="hidden" name="route" value="tool/erp_connect/entity" />
+      <label for="">Επιλογή view</label>  
+      <select name="entity" id="entity">
+          <option value="">Επιλογή</option>
+          <option value="product">ΕΙΔΗ</option>
+          <option value="stock">STOCK</option>
+          <option value="" disabled>---------------</option>
+          <option value="category">ΚΑΤΗΓΟΡΙΕΣ</option>
+          <option value="" disabled>---------------</option>
+          <option value="customer">ΠΕΛΑΤΕΣ</option>
+          <option value="" disabled>---------------</option>
+          <option value="filter">ΦΙΛΤΡΑ</option>
+      </select>
+      <div style="margin-top:1rem;" class="options">
+            <div>
+                <label>Debug</label>
+                <input type="radio" name="action" value="debug" />
+            </div>
+            <div>
+                <label>Import</label>
+                <input type="radio" name="action" value="import" />
+            </div>
+            <div>
+                <label>Delete</label>
+                <input type="radio" name="action" value="delete" />
+            </div>
+       </div>
+        <div style="margin-top:1rem;">
+            <button type="submit" title="Go">Go</button>
+        </div>
+    </form>
+    </main>
+
+     <script>
+        const select = document.getElementById('entity');
+        const options = document.querySelector('.options').children;
+        
+        select.addEventListener('change', (event) => {
+            if ( event.target.value == 'orders' ){
+                options[1].children[0].innerText = 'Send';
+                options[1].children[1].value = 'post';
+            }else{
+                options[1].children[0].innerText = 'Import';
+                options[1].children[1].value = 'import';
+            }
+        });
+
+    </script>
+
+</body>
+</html>

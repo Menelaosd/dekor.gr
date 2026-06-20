@@ -1,0 +1,182 @@
+{{ header }}
+{% set class = 'no-image' %}
+{% if large_image %}
+	{% set class = 'has-image' %}
+{% endif %}
+<div class="category-header {{class}}">
+	{% if large_image %}
+		<img src="{{ large_image }}" alt="{{ heading_title }}">
+	{% endif %}
+	<div class="breadcrumbs-container">
+		<div class="container container-max-width">
+		  <ul class="breadcrumb">
+			{% for breadcrumb in breadcrumbs %}
+			<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			{% endfor %}
+		  </ul>
+		</div>
+	</div>
+	<div class="caption-container">
+		<div class="container container-max-width">
+			<div class="category-caption-box">
+			<h1>
+				<span>{{ heading_title }}</span>
+			</h1>
+			{% if main_description %}
+			<div class="category-description">
+				<div class="category-description-c">
+					{{ main_description }}
+				</div>
+			</div>
+			{% endif %}
+			{% if store_id != 2 %}
+				<a href="https://dekor.gr/paragogi-kerion-xondriki-lianiki" title="«Μάθετε περισσότερα για την Παραγωγή Κεριών – Χονδρική & Λιανική" class="learn-more-category">
+					👉 «Μάθετε περισσότερα για την Παραγωγή Κεριών – Χονδρική & Λιανική
+				</a>
+			{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% if categories %}
+<div class="categories-refine">
+	<div id="product-category-top" class="container container-max-width">
+		<div class="categories-carousel swiper-container swiper-container-horizontal" id="categories-carousel">
+		<div class="swiper-cat-wrapper">
+		{% for category in categories %}
+		
+			<div class="category-refine-block">
+				<div class="category-refine-image">
+					<a href="{{ category.href }}">
+						<img src="{{ category.image }}" alt="{{ category.name }}">
+					</a>
+				</div>
+				<h3 class="category-refine-title">
+				<a href="{{ category.href }}">
+					{{ category.name }}
+				</a>
+				</h3>
+			</div>
+		
+		{% endfor %}
+		</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+
+
+<div id="product-category" class="container container-max-width">
+	<div class="category-title-hidden hidden">{{ heading_title }}</div>
+      {% if products %}
+		<div class="visible-xs visible-sm">
+		<div class="row">
+		<div class="category-filters category-filters-mobile col-xs-12">
+			<div class="input-filters">
+				<a href="#" class="filters-toggle visible-xs visible-sm"><i class="fa fa-filter" aria-hidden="true"></i> ΦΙΛΤΡΑ</a>
+			</div>
+          <div class="input-sort">
+            <label for="input-sort-mobile"><i class="fa fa-sort" aria-hidden="true"></i></label>
+            <select id="input-sort-mobile" onchange="location = this.value;">
+              {% for sorts in sorts %}
+              {% if sorts.value == '%s-%s'|format(sort, order) %}
+              <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+              {% else %}
+              <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+		</div>
+		</div>
+			<script type="text/javascript">
+				$('.filters-toggle').on('click',function(e){
+					e.preventDefault();
+					$('.bf-panel-wrapper').slideToggle(100);
+				});
+			</script>
+		</div>
+      {% endif %}
+  <div class="content-row row">
+	{% if column_left %}
+	{% endif %}
+	{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-10' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }} filter">{{ content_top }}
+
+      {% if products %}
+
+		<div class="category-filters hidden-xs hidden-sm">
+          <div class="input-sort">
+            <label for="input-sort">{{ text_sort }}</label>
+            <select id="input-sort" onchange="location = this.value;">
+              {% for sorts in sorts %}
+              {% if sorts.value == '%s-%s'|format(sort, order) %}
+              <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+              {% else %}
+              <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+          <div class="input-limit">
+            <label for="input-limit">{{ text_limit }}</label>
+            <select id="input-limit" onchange="location = this.value;">
+              {% for limits in limits %}
+              {% if limits.value == limit %}
+              <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
+              {% else %}
+              <option value="{{ limits.href }}">{{ limits.text }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+		</div>
+      <div class="row products-row"> {% for product in products %}
+        <div class="product product-grid col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			{{ include('happy/template/hostore/product_blocks/product_owl.twig') }}
+        </div>
+        {% endfor %} </div>
+        <div class="pagination-wrap">{{ pagination }}</div>
+      {% endif %}
+
+      {% if not categories and not products %}
+      <p>{{ text_empty_categories }}</p>
+      <div class="buttons">
+        <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      </div>
+      {% endif %}
+      </div>
+    {{ column_right }}</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var title = $('.category-title-hidden').text();
+		$('.box-heading').html('<h3>'+title+'</h3>');
+	});
+</script>
+{% if content_bottom  %}
+<div class="content-bottom-wrapper">
+{{ content_bottom }}
+</div>
+ {% endif %}
+ 
+ 
+ <script type="text/javascript">
+$('.category-description .category-description-c').readall({
+  showheight: 230,
+   btnTextShowmore: 'Διαβάστε Περισσότερα',
+  btnTextShowless: 'Διαβάστε λιγότερα',
+  btnClassShowmore: 'readall-button btn btn-primary',
+  btnClassShowless: 'readall-button btn btn-primary'
+});
+</script>
+ 
+{{ footer }} 

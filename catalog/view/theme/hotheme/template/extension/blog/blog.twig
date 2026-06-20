@@ -1,0 +1,252 @@
+{{ header }}
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"{% if loop.last %} aria-current="page"{% endif %}><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      {% endfor %}
+    </ol>
+  </nav>
+  <div class="row">
+	  <div class="col-12">
+		  <div class="main-content-title-container">
+			<h1 class="main-content-title">{{ heading_title }}</h1>
+		  </div>
+	  </div>
+  </div>  
+   <div class="row justify-content-md-center">
+	   {% if column_left and column_right %}
+	   {% set class = 'col-12 col-sm-6' %}
+	   {% elseif column_left or column_right %}
+	   {% set class = 'col-12 col-sm-9' %}
+	   {% else %}
+			{% set class = 'col-md-9 col-12' %}
+	   {% endif %}
+	   {{ column_left }}
+      <div id="content" class="{{ class }}">
+         {{ content_top }}
+		 <div class="blog_grip-wrapper">
+			 <div class="blog_post">
+				 <div class="blog_item single-blog">
+					{% if main_thumb  and  blogsetting_post_thumb %} 
+					<div class="main_thumb"><img src="{{ blogsetting_post_thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" /></div>
+					{% endif %} 		
+					<div class="blog_stats">
+						{% if date_added_status %}
+							<span><i class="fal fa-clock"></i>{{ date_added_full }}</span>
+						{% endif %} 
+						{% if page_view_status %}
+							<span><i class="fal fa-eye"></i>{{ text_read }} {{ new_read_counter_value }}</span>
+						{% endif %} 
+					</div>		
+					
+					<div class="main_description">
+					   {{ description }}
+					</div>
+					{% if tags %}
+					<p class="tags">
+					   {{ text_tags }}
+					   {% for i in 0..tags|length %}
+					   {% if i < (tags|length - 1) %} 
+					   <a href="{{ tags[i].href }}">{{ tags[i].tag }}</a>,
+					   {% else %} 
+					   <a href="{{ tags.i.href }}">{{ tags.i.tag }}</a> 
+					   {% endif %}
+					   {% endfor %} 
+					</p>
+					{% endif %}
+					<div class="share">
+					   {% if share_status %} 
+						<!-- Go to www.addthis.com/dashboard to customize your tools -->
+						<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e4d15c713aee331"></script>
+						<div class="addthis_inline_share_toolbox_zxfe"></div>
+					   {% endif %} 
+					</div>
+				</div>
+			</div>
+            <!-- Related Products -->
+            {% if products %} 
+			<div class="module-wrapper">
+				<h3 class="module-title"><div class="module-title-text">{{ text_related_products }}</div></h3>
+				<div class="blog_grid_holder blog_products column-{{ rel_prod_per_row }}">
+					  <div id="product-container" class="product-container row">
+						{% for product in products %}
+							<div class="product-layout product-grid col-12 col-md-4 col-lg-4">
+								{{ include('hotheme/template/product/product_template/product_main.twig') }}
+							</div>
+						{% endfor %} 
+					  </div>
+				</div>
+			</div>
+            {% endif %}
+			
+            <!-- Related Products End -->
+			
+            {% if related_blogs %} 
+			
+			{% if mobile %}
+				{% set comp = 1 %}
+			{% else %}
+				{% set comp = 2 %}
+			{% endif %}
+			
+			{% set numslides = 2  %}
+			
+			<div class="module-wrapper blog-module arrow-nav-wrapper arrow-nav-offset">
+				<h3 class="module-title"><div class="module-title-text">{{ text_related_blog }}</div></h3>
+				<div class="blog_grid_holder blog-related-blogs {% if related_blogs|length > comp %}{% else %}column-{{numslides}}{% endif %}">
+					<div class="blog_grip-wrapper">
+						<div class="blog_grip-container">
+							<div class="swiper-container carousel-related">
+								<div class="swiper-wrapper">
+									{% for blog in related_blogs %} 
+										<div class="blog_item swiper-slide">
+											<div class="summary">
+												 {% if blog.image and rel_thumb_status %} 
+												<div class="image">
+													<a href="{{ blog.href }}"><img src="{{ blog.image }}" alt="{{ blog.title }}" title="{{ blog.title }}" /></a>
+												</div>
+												{% endif %} 
+												<div class="blog_caption">
+													<h3 class="blog_title"><a href="{{ blog.href }}">{{ blog.title }}</a></h3>
+													<div class="blog_stats">
+														{% if date_added_status %}
+														<span><i class="fal fa-clock"></i>{{ blog.date_added_full }}</span>
+														{% endif %} 
+														{% if page_view_status %}
+														<span><i class="fal fa-eye"></i>{{ text_read }} {{ blog.count_read }}</span>
+														{% endif %} 
+													</div>
+													{% if not characters == '0' %} 
+													<div class="blog_description">{{ blog.description }}</div>
+													{% endif %}
+												</div>
+												<div class="blog_read-more-container">
+													<a class="generic-button blog_read-more" href="{{ blog.href }}">{{ text_read_more }} <i class="fal fa-arrow-right"></i></a>
+												</div>
+											</div>
+										</div>
+									{% endfor %}
+								</div>
+								{% if related_blogs|length > comp and not mobile %}
+								<div class="swiper-navigation">
+									<div class="swiper-button-next blogrelated-button-next"></div>
+									<div class="swiper-button-prev blogrelated-button-prev"></div>
+								</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+		
+			
+			
+			{% if related_blogs|length > comp %}
+			<script>
+				var swiperBlog = new Swiper('.carousel-related', {
+					slidesPerView: {{numslides}},
+					spaceBetween: 0,
+					mode: 'horizontal',
+					observer: true,
+					observeParents: true,
+					loop:true,
+					{% if not mobile %}
+					navigation: {
+						nextEl: '.blogrelated-button-next',
+						prevEl: '.blogrelated-button-prev',
+					},
+					{% endif %}
+					breakpoints: {
+						0: {
+						  slidesPerView: 1,
+						},
+						576: {
+						  slidesPerView: 2,
+						},
+						1200: {
+						  slidesPerView: {{numslides}},
+						}
+					}
+				});
+			</script>
+		   {% endif %}
+
+           {% endif %}
+            <!-- Related Blog End -->
+         </div>
+         {{ content_bottom }}
+      </div>
+      {{ column_right }}
+   </div>
+</div>
+<script type="application/ld+json">
+   {
+   "@context": "http://schema.org",
+   "@type": "NewsArticle",
+   "mainEntityOfPage": {
+   "@type": "WebPage",
+   "@id": "https://google.com/article"
+   },
+   "headline": "{{ heading_title }}",
+   {% if blogsetting_post_thumb %} 
+   "image": {
+   "@type": "ImageObject",
+   "url": "{{ blogsetting_post_thumb }}",
+   "height": {{ img_height }},
+   "width": {{ img_width }}
+   },
+   {% endif %} 
+   "datePublished": "{{ date_added_full }}",
+   "dateModified": "{{ date_added_full }}",
+   "author": {
+   "@type": "Person",
+   "name": "{{ author }}"
+   },
+   "publisher": {
+   "@type": "Organization",
+   "name": "{{ store }}",
+   {% if logo %} 
+   "logo": {
+   "@type": "ImageObject",
+   "url": "{{ logo }}"
+   }
+   {% endif %} 
+   },
+   "description": "{{ short_description }}"
+   }
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Τι είναι η παραγωγή κεριών;",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Η παραγωγή κεριών είναι η διαδικασία δημιουργίας κεριών από πρώτες ύλες όπως παραφίνη, σόγια και μελισσοκέρι."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ποια κεριά είναι καλύτερα;",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Τα κεριά υψηλής ποιότητας έχουν καθαρή καύση, σωστό φιτίλι και μεγάλη διάρκεια."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Πού χρησιμοποιούνται τα κεριά;",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Σε σπίτια, επαγγελματικούς χώρους, ξενοδοχεία, spa και εκδηλώσεις."
+      }
+    }
+  ]
+}
+</script>
+{{ footer }}

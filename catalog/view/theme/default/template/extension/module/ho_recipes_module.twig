@@ -1,0 +1,50 @@
+<div class="recipes-wrapper">
+	<div class="container">
+	<div class="row">
+		{% if module_name %}
+		<h3 class="module-title">{{module_name}}</h3>
+		{% endif %}  
+		<div class="recipes-block">
+			{% for recipe in recipes %}
+				<div class="recipe-banner-block-wrap col-lg-6 col-md-6 col-sm-12 col-xs-12">
+					<div class="recipe-block">
+						<div class="recipe-block-left">
+							<div class="recipe-block-image">
+								<a title="{{recipe.name}}" href="{{recipe.href}}">
+									<img src="{{recipe.image}}" alt="{{recipe.title}}">
+								</a>
+							</div>
+						</div>
+						<div class="recipe-block-right">
+							<div class="recipe-block-content">
+								<h3>
+									<a title="{{recipe.name}}" href="{{recipe.href}}">
+										{{recipe.title}}
+									</a>
+								</h3>
+							</div>
+							<div class="recipe-block-intro">
+								{{recipe.intro}}
+							</div>
+							<div class="recipe-details">
+								<ul>
+									<li><i class="fas fa-utensils"></i> {{ recipe.servings }}</li>
+									<li><i class="far fa-clock"></i> {{ recipe.preptime }}</li>
+									<li>{{ recipe.diff }}</li>
+								</ul>
+							</div>
+							<div class="recipe-readmore">
+								<a class="recipe-readmore-btn" title="{{recipe.name}}" href="{{recipe.href}}">
+									{{ text_view_recipe }}
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			<div class="clearfix"></div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	</div>
+</div>

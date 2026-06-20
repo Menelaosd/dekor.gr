@@ -1,0 +1,136 @@
+<div class="swiper-viewport slideshow-wrapper full-container arrow-nav-wrapper">
+	<div id="slideshow{{ module }}" class="swiper-container">
+		<div class="swiper-wrapper">
+			{% for banner in banners %}
+				<div class="swiper-slide" id="slideshow-slide{{ module }}_{{ loop.index }}">
+					<div class="slideshow-slide-wrapper">
+						<div class="slideshow-slide-image-wrapper">
+							<div class="slideshow-slide-image-container {% if parallax %} parallax-image {% endif %}">
+								
+								{% if banner.video %}
+									<a data-fancybox class="video-block-link videblock-slider" href="https://www.youtube.com/embed/{{ banner.video }}?controls=0&rel=0" title="{{ banner.title }}">
+										<span class="video-play">
+											<i class="fal fa-play"></i>
+										</span>
+									</a>
+								{% endif %}
+								
+								{% if not banner.video and banner.link %}
+									<a class="video-block-link videblock-slider" href="{{ banner.link }}" title="{% if banner.title %}{{ banner.title }}{% else %} Banner {{ loop.index }}{% endif %}"></a>
+								{% endif %}							
+								
+								{% if banner.mimage and mobile %}
+									<img src="{{ banner.mimage }}" alt="{{ banner.title }}"> 
+								{% else %}
+									<img src="{{ banner.image }}" alt="{{ banner.title }}"> 
+								{% endif %}
+							</div> 
+						</div>
+						<div class="slideshow-slide-caption-wrapper container">
+							<div class="slideshow-slide-caption-container" data-swiper-parallax="-123%">
+								{% if banner.hypertitle %}
+									<h4 class="slideshow-slide-hypertitle">{{ banner.hypertitle }}</h4>
+								{% endif %}
+								{% if banner.title %}
+									<h2 class="slideshow-slide-title">{{ banner.title }}</h2>
+								{% endif %}
+								{% if banner.subtitle %}
+									<div class="slideshow-slide-subtitle">{{ banner.subtitle }}</div>
+								{% endif %}
+								{% if banner.readmore %}
+									<div class="slideshow-slide-button-container">
+										<a title="{{ banner.title }}" href="{{ banner.link }}" class="btn btn-secondary slideshow-slide-button"  data-swiper-parallax="-43%">{{ banner.readmore }}</a>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+			
+		<div class="swiper-pagination slideshow-pagination-{{module}}"></div>
+		
+		{% if not mobile %}
+			{#
+			<div class="swiper-navigation">
+				<div class="swiper-button-next slideshow-button-next-{{module}}"></div>
+				<div class="swiper-button-prev slideshow-button-prev-{{module}}"></div>
+			</div>
+			#}
+		{% endif %}
+		
+	</div>
+</div>
+<script type="text/javascript">
+	var swiper = new Swiper('#slideshow{{ module }}', {
+		speed: 1000,
+		parallax: true,
+		mode: 'horizontal',
+		visibilityFullFit: true,
+		autoResize: false,
+		slidesPerView: 1,
+		observeParents: true,
+		pagination: {
+			el: '.slideshow-pagination-{{module}}',
+			type: 'bullets',
+			clickable:true,
+		},
+		{% if not mobile %}
+		navigation: {
+			//nextEl: '.slideshow-button-next-{{module}}',
+			//prevEl: '.slideshow-button-prev-{{module}}',
+		},
+		{% endif %}
+		paginationClickable: true,
+		autoHeight:true,
+		spaceBetween: 0,
+		autoplay: 4000,
+		autoplayDisableOnInteraction: true,
+		loop: true
+	});
+</script>
+
+<style type="text/css">
+	{% for banner in banners %}
+		#slideshow-slide{{ module }}_{{ loop.index }} h2.slideshow-slide-title {
+			color:{{ banner.hex }};
+		}		
+		
+		#slideshow-slide{{ module }}_{{ loop.index }} .slideshow-slide-subtitle {
+			color:{{ banner.hex }};
+		}
+		
+		#slideshow-slide{{ module }}_{{ loop.index }} .slideshow-slide-button {
+			color: {{ banner.hex }};
+			border-color: {{ banner.hex }};
+			background: none;
+			position:relative;
+		}
+
+		#slideshow-slide{{ module }}_{{ loop.index }} .slideshow-slide-button:hover,	
+		#slideshow-slide{{ module }}_{{ loop.index }} .slideshow-slide-button:active,	
+		#slideshow-slide{{ module }}_{{ loop.index }} .slideshow-slide-button:focus {
+			background: none;
+		}
+
+		#slideshow-slide{{ module }}_{{ loop.index }} .slideshow-slide-button:before {
+			content: "";
+			position: absolute;
+			display: block;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: {{ banner.accenthex }};
+			opacity: {{ banner.opacity }};
+			z-index: -1;
+		}
+		
+		#slideshow-slide{{ module }}_{{ loop.index }} .slideshow-slide-button:hover:before {
+			opacity:1;
+		}
+			
+		
+	{% endfor %}
+</style>

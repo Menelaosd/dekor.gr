@@ -1,0 +1,109 @@
+<div class="product-block">
+	
+	{% if product.special %}
+		<span class="product-sale">
+			{{ product.percentage }}<span class="per-span">%</span>
+		</span>
+	{% endif %}
+	<div class="product-block-image">
+        <a href="{{ product.href }}">
+            <div class="product-thumbnail">
+                <img id="p_{{product.product_id}}" itemprop="image" alt="{{ product.name }}" src="{{ product.thumb }}" class="current" rel="preload" fetchpriority="high"  decoding="async" loading="eager" width="488" height="488">
+				{% if product.second_image %}
+				<img id="p_s_{{product.product_id}}" itemprop="image" alt="{{ product.name }}" src="{{ product.second_image }}" class="current second-image" rel="preload" fetchpriority="high"  decoding="async" loading="eager" width="488" height="488">
+				{% endif %}
+			</div>
+        </a>
+	</div>
+	<div class="product-block-title">
+		<h3 class="product-name" itemprop="name">
+			<a href="{{ product.href }}">{{ product.name }}</a>
+		</h3>
+	</div>
+	<div class="product-block-avail">
+		{% if product.storeonly %}
+			<span class="stock-status storeonly"><i class="fas fa-store"></i><span>Διαθέσιμο μόνο στο Κατάστημα</span></span>
+		{% else %}			
+			{% if not product.disablecart %}
+				{% if product.quantity > 0 and product.working %}
+					<span class="prod-avail">Άμεσα Διαθέσιμο</span>
+				{% else %}
+					<span class="prod-noavail">Καλέστε μας</span>
+				{% endif %}
+			{% else %}
+				<span class="prod-avail"></span>
+			{% endif %}
+		{% endif %}
+	</div>
+	<div class="product-block-code">
+		{% if not product.disablecart %}
+			Κωδικός: {{ product.model }}
+		{% endif %}
+	</div>
+	<div class="product-block-price" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+		{% if not product.disablecart %}
+			{% if product.quantity > 0 and product.working %}
+				{% if product.package %}
+					<div class="list-prices-package">
+						<div class="list-price-block">
+							<span class="priceRef">Τιμή Τεμαχίου</span>
+							{% if product.package_price %}
+								{% if not product.package_special %}
+									<span class="amount">{{ product.package_price }}</span>
+								{% else %}
+									<del class="amount_before">{{ product.package_price }}</del>
+									<span class="amount">{{ product.package_special }}</span>
+								{% endif %}
+							{% endif %}
+						</div>
+						<div class="list-price-block">
+							<span class="priceRef">Τιμή Συσκευασίας</span>
+							<meta itemprop="priceCurrency" content="EUR">
+							{% if product.price %}
+								{% if not product.special %}
+									<meta itemprop="price" content="{{ product.price|replace({',': '.', '€': ''}) }}">
+									<span class="amount">{{ product.price }}</span>
+								{% else %}
+									<meta itemprop="price" content="{{ product.special|replace({',': '.', '€': ''}) }}">
+									<del class="amount_before">{{ product.price }}</del>
+									<span class="amount">{{ product.special }}</span>
+								{% endif %}
+							{% endif %}
+						</div>
+					</div>
+					{% if product.package %}
+						<span class="packageRef">Η συσκευασία περιέχει <b>{{ product.package }}</b> Τεμ.</span>
+					{% endif %}					
+				{% else %}
+					<meta itemprop="priceCurrency" content="EUR">
+					{% if product.price %}
+						{% if not product.special %}
+							<meta itemprop="price" content="{{ product.price|replace({',': '.', '€': ''}) }}">
+							<span class="amount">{{ product.price }}</span>
+						{% else %}
+							<meta itemprop="price" content="{{ product.special|replace({',': '.', '€': ''}) }}">
+							<del class="amount_before">{{ product.price }}</del>
+							<span class="amount">{{ product.special }}</span>
+						{% endif %}
+					{% endif %}
+				{% endif %}
+			{% endif %}
+		{% else %}
+			<span class="amount">-</span>
+		{% endif %}
+	</div>
+	<div class="product-block-actions">
+        <div class="product-block-actions">
+			{% if not product.disablecart and not global_disable_cart %}
+				<a onclick="wishlist.add('{{ product.product_id }}');" title="{{ button_wishlist }}" class="awe-button product-wishlist"><i class="fa fa-heart"></i></a>
+				{% if product.quantity > 0 and product.working %}
+					<a onclick="cart.add('{{ product.product_id }}');" title="{{ button_cart }}" class="awe-button product-quick-view"><i class="fa fa-shopping-cart"></i><span>{{button_cart}}</span></a>
+				{% else %}
+					<a href="#" onclick="return false;" title="{{ button_cart }}" class="awe-button product-quick-view not-enabled"><i class="fa fa-shopping-cart"></i><span>Μη Διαθέσιμο</span></a>
+				{% endif %}
+			{% else %}
+				<a href="{{ product.href }}" title="{{ product.name }}" class="disablecart awe-button product-quick-view"><i class="fa fa-eye"></i><span>Δείτε το</span></a>
+			{% endif %}
+        </div>
+	</div>
+</div>

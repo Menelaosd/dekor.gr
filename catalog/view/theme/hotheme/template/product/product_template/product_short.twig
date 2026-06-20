@@ -1,0 +1,49 @@
+<div class="product-block">
+	<div class="product-top">
+		<div class="product-block-image">
+			<a href="{{ product.href }}">
+				<div class="product-thumbnail">
+					<img id="p_{{product.product_id}}" itemprop="image" alt="{{ product.name }}" src="{{ product.thumb }}" class="current">
+				</div>
+			</a>
+			{% if product.is_new %}
+				<div class="product-label product-label-new">
+					{{ text_new }}
+				</div>
+			{% endif %}
+			{% if product.special %}
+				<div class="product-label product-label-sale">
+					{# {{ product.percentage }}% #}
+					{{ text_sale }}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	<div class="product-block-caption">
+		<div class="product-block-title">
+			<h3 class="product-name" itemprop="name">
+				<a href="{{ product.href }}">{{ product.name }}</a>
+			</h3>
+		</div>
+	</div>
+	<div class="product-block-price" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+		<meta itemprop="priceCurrency" content="EUR">
+		{% if product.price %}
+			{% if not product.special %}
+				<meta itemprop="price" content="{{ product.price|replace({',': '.', '€': ''}) }}">
+				<span class="amount">{{ product.price }}</span>
+			{% else %}
+				<meta itemprop="price" content="{{ product.special|replace({',': '.', '€': ''}) }}">
+				<del class="amount_before">{{ product.price }}</del>
+				<span class="amount">{{ product.special }}</span>
+			{% endif %}
+		{% endif %}
+	</div>
+	<div class="product-block-actions">
+		<a href="javascript:;" onclick="wishlist.add('{{ product.product_id }}');" title="{{ button_wishlist }}" class="btn btn-primary  product-wishlist"><i class="fa fa-heart"></i></a>
+
+		<a href="javascript:;" data-name="{{ product.name }}" data-price=" {% if not product.special %}{{ product.price|trim('€') }}{% else %}{{ product.special|trim('€') }}{% endif %}" onclick="cart.add('{{ product.product_id }}', 1, $(this) );" title="{{ button_cart }}" class="btn btn-primary product-cart">{{button_cart}}<i class="fa fa-shopping-cart"></i></a>
+
+		<a href="javascript:;" onclick="quickview($(this))"class="btn btn-primary  product-quickview" data-url="{{ product.href }}"><i class="fa fa-eye"></i></a>			
+	</div>
+</div>

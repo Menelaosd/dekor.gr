@@ -1,0 +1,419 @@
+<div class="footer-sep clearfix"></div>
+
+<div class="category-header no-image footer-category-header">
+	<div class="caption-container">
+		<div class="container container-max-width">
+			<div class="category-caption-box">
+				<h3>
+					{% if store_id != 2 %}<span>Αποστολή και στην Κύπρο</span>{% endif %}
+				</h3>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.language-switcher {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+	}
+	.language-flag {
+		cursor: pointer;
+		width: 30px;
+		height: 20px;
+		object-fit: cover;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+	}
+	
+	div#google_translate_element {
+		display: none;
+	}
+	
+	.skiptranslate {
+		display: none;
+	}
+	
+	body {
+		top: 0 !important;
+	}
+	
+	.header-right-end {
+		align-items: center;
+	}
+
+	.header-langs {
+		margin-right: 2rem;
+	}
+
+	button#languageDropdown {
+		padding: 0.75rem;
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+		border-radius: 0.5rem;
+		border: solid 1px #666;
+		font-size: 11px;
+	}
+
+	.dropdown.language-dropdown {
+		border-radius: 0.5rem;
+	}
+
+	button#languageDropdown img {
+		max-width: 25px;
+}
+</style>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'el',
+        includedLanguages: 'el,en,bg',
+        layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+  // Language data
+  const languages = {
+    el: { flag: "https://flagcdn.com/w20/gr.png", label: "ΕΛ" },
+    en: { flag: "https://flagcdn.com/w20/gb.png", label: "EN" },
+    bg: { flag: "https://flagcdn.com/w20/bg.png", label: "BG" }
+  };
+
+  // Cookie helpers
+  function setCookie(name, value, days = 365) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+  }
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  }
+
+  // Active language init from cookie or default to 'el'
+  let activeLang = getCookie('selectedLang') || 'el';
+
+  // Change language function with Google Translate logic and cookie save
+  function changeLanguage(lang, event) {
+    if (event) event.preventDefault();
+    if (lang === activeLang) return;
+
+    activeLang = lang;
+    setCookie('selectedLang', lang, 365);
+
+    $('#active-flag').attr('src', languages[lang].flag).attr('alt', lang);
+    $('#active-label').text(languages[lang].label);
+
+    rebuildDropdown();
+
+    if (lang === 'el') {
+      // Reset Google Translate cookie and reload
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname + ";";
+      location.reload();
+    } else {
+      // Trigger Google Translate widget select change
+      const interval = setInterval(() => {
+        const select = document.querySelector('select.goog-te-combo');
+        if (select) {
+          select.value = lang;
+          select.dispatchEvent(new Event('change'));
+          clearInterval(interval);
+        }
+      }, 100);
+    }
+  }
+
+  // Rebuild dropdown menu with other languages only
+  function rebuildDropdown() {
+    const menu = $('#language-menu');
+    menu.empty();
+    for (const lang in languages) {
+      if (lang !== activeLang) {
+        const item = `<li>
+          <a href="#" onclick="changeLanguage('${lang}', event)">
+            <img src="${languages[lang].flag}" alt="${lang}" class="language-flag">
+            <span class="language-label">${languages[lang].label}</span>
+          </a>
+        </li>`;
+        menu.append(item);
+      }
+    }
+  }
+
+  // Toggle dropup class based on screen width
+  function updateDropdownDirection() {
+    const $dropdown = $('.language-dropdown');
+    if (window.innerWidth < 991) {
+      $dropdown.addClass('dropup');
+    } else {
+      $dropdown.removeClass('dropup');
+    }
+  }
+
+  // Initialize UI & possibly trigger Google Translate on page load
+  $(document).ready(function () {
+    $('#active-flag').attr('src', languages[activeLang].flag).attr('alt', activeLang);
+    $('#active-label').text(languages[activeLang].label);
+    rebuildDropdown();
+
+    // Set dropdown direction
+    updateDropdownDirection();
+    $(window).resize(updateDropdownDirection);
+
+    // If not Greek, trigger translation
+    if (activeLang !== 'el') {
+      const interval = setInterval(() => {
+        const select = document.querySelector('select.goog-te-combo');
+        if (select) {
+          select.value = activeLang;
+          select.dispatchEvent(new Event('change'));
+          clearInterval(interval);
+        }
+      }, 100);
+    }
+  });
+</script>
+
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="footer-top">
+				<div class="footer-block-1 footer-block col-lg-3 col-md-3 col-sm-12 col-xs-12">
+					<div class="footer-block-content">
+						<div class="footer-logo">
+							<a href="{{ home }}" title="{{ name }}">
+								<img src="{{logo}}" alt="{{ name }}"/>
+							</a>
+						</div>
+						<div class="footer-text">
+							{% if store_id != 2 %}
+							Στο dekor.gr θα βρείτε, κεριά όλων των ειδών για χονδρική πώληση, πασχαλινές λαμπάδες, λαμπάδες γάμου, λαμπάδες βάπτισης, διακοσμητικά κεριά, κεριά εκδηλώσεων, εκκλησιαστικά κεριά, υλικά κατασκευής κεριών, αποστολή και στην Κύπρο.
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				<div class="footer-block-2 footer-block col-lg-3 col-md-3 col-sm-12 col-xs-12">
+					<h3 class="footer-title">Πληροφοριές</h3>
+					 <ul class="list-unstyled footer-nav">
+						 {% for information in informations %}
+							<li><a href="{{ information.href }}">{{ information.title }}</a></li>
+						 {% endfor %}
+						 <li><a href="{{ contact }}">{{ text_contact }}</a></li>
+					</ul>
+				</div>
+				<div class="footer-block-3 footer-block col-lg-3 col-md-3 col-sm-12 col-xs-12">
+					<h3 class="footer-title">Ο Λογαριασμός μου</h3>
+					 <ul class="list-unstyled footer-nav">
+						<li><a href="{{ account }}">{{ text_account }}</a></li>
+						<li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
+						<li><a href="{{ order }}">{{ text_order }}</a></li>
+						{# <li><a href="{{ return }}">{{ text_return }}</a></li> #}
+					</ul>
+				</div>
+				<div class="footer-block-4 footer-block col-lg-3 col-md-3 col-sm-12 col-xs-12">
+					<h3 class="footer-title">Επικοινωνήστε μαζί μας</h3>
+					 <ul class="list-unstyled footer-contact-nav">
+							
+						{# <li><i class="fas fa-envelope"></i><div><a class="footer-mail" href="mailto:info@dekor.gr">info@dekor.gr</a></div></li> #}
+						
+						{% if store_id != 2 %}
+							<li><i class="fas fa-clock"></i><div>Δευτέρα - Παρασκευή<span>08:30 πμ - 16.30 μμ</span></div></li>
+							<li><i class="fas fa-clock" style="flex:0 0 40px;"></i><div>Σάββατο<span>09.00 πμ - 14.00 μμ</span>
+							{#<div class="footer-red" style="{% if store_id == 2 %}color:#111 {% else %}color:#fff{% endif %}">Θα είμαστε κλειστά κάθε Σάββατο από την 1η Μαΐου έως τις 30 Σεπτεμβρίου</div>#}
+							</div></li>
+						{% else %}
+							<li><i class="fas fa-clock"></i><div>Δευτέρα - Παρασκευή<span>10:00 πμ - 16.00 μμ</span></div></li>
+						{% endif %}
+					 
+							{% if store_id != 2 %}
+								<li class="list-phone"><i class="fas fa-phone"></i><a href="tel:{{ telephone }}"><span>{{ telephone }}</span></a></li>
+							{% else %}
+								<li class="list-phone"><i class="fas fa-phone"></i><a href="tel:{{ telephone }}"><span>{{ telephone }}</span></a></li>
+							{% endif %}
+					</ul>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="footer-bottom">
+				<div class="footer-bottom-1 col-lg-4 col-md-4 col-sm-12 col-xs-12 text-left">
+				© {{ year }} {% if store_id == 2 %}apokrifa.gr {% else %}dekor.gr {% endif %} All Rights Reserved
+				</div>
+				<div class="footer-bottom-2 col-lg-4 col-md-4 col-sm-12 col-xs-12 text-center">
+					{% if store_id == 2 %}
+					{% else %}
+						<img src="image/catalog/cards.png" alt="Τρόποι Πληρωμής">
+					{% endif %}
+				</div>
+				<div class="footer-bottom-3 col-lg-4 col-md-4 col-sm-12 col-xs-12 text-right">
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+</footer>  
+
+{% for script in scripts %}
+	<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+
+<script type="text/javascript">
+	$('#cart').on('click','a',function(e) {
+		e.preventDefault();
+		$('#cart-container .modal-inner').load('index.php?route=common/cart/info #cart-container .cart-content');	
+		setTimeout(function(){
+			$('#cart-container').modal('show');
+		}, 200);
+	});
+	function closeCart(){
+		$('#cart-container').removeClass('in');
+		setTimeout(function(){
+			$('#cart-container').modal('hide');
+		}, 600);
+	}
+
+	$('body').on('click', '#close-cart,#close-cart-footer', function (e) {
+		closeCart();
+	});
+
+	$('body').on('click', '.modal-backdrop', function (e) {
+		e.preventDefault();
+		closeCart();
+	});
+
+	$(document).keyup(function (e) {
+		if (e.which == 27 && $('body').hasClass('modal-open')) {
+			if ($('body').hasClass('modal-open') && $('#cart-container').hasClass('in')){
+				closeCart();
+			}
+		}
+	}) 
+	function createCookie(name,value,days) {
+	   var expires = "";
+	   if (days) {
+		   var date = new Date();
+		   date.setTime(date.getTime() + (days*24*60*60*1000));
+		   expires = "; expires=" + date.toUTCString();
+	   }
+	   document.cookie = name + "=" + value + expires + "; path=/";
+	}
+	function readCookie(name) {
+	   var nameEQ = name + "=";
+	   var ca = document.cookie.split(';');
+	   for(var i=0;i < ca.length;i++) {
+		   var c = ca[i];
+		   while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		   if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	   }
+	   return null;
+	}
+	function eraseCookie(name) {
+	   createCookie(name,"",-1);
+	}
+	$(document).ready(function(e){	
+		$('.product-block .product-block-title').matchHeight( { byRow: false } );
+		$('.product-block .product-block-avail').matchHeight({ byRow: false });
+		$('.product-block .product-block-code').matchHeight({ byRow: false });
+		$('.product-block .product-block-price').matchHeight({ byRow: false });
+		$('.product-block .product-block-actions').matchHeight({ byRow: false });
+		
+		$('.testimonial-comments').matchHeight();
+		$('.recipe-block-right').matchHeight();
+		$('.home-block-outter').matchHeight();
+		$('.filter-banners-square h3').matchHeight();
+		$('.banner-block .banner-title').matchHeight();
+	});
+	
+	$(window).load(function(e) {
+		$.fn.matchHeight._update()
+	});
+	
+	
+	
+</script>
+{% if exitpopup %}
+<div class="hidden">
+	<div id ="exitpopup">
+		<div class="entry-content">
+			{{ exitpopup }}
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var mouseX = 0;
+	var mouseY = 0;
+	var popupCounter = 0;
+	document.addEventListener("mousemove", function(e) {
+		mouseX = e.clientX;
+		mouseY = e.clientY;
+		//document.getElementById("coordinates").innerHTML = "<br />X: " + e.clientX + "px<br />Y: " + e.clientY + "px";
+	});
+	$(document).mouseleave(function () {
+		if (mouseY < 10) {
+			if (popupCounter < 1 && !readCookie('exit_p')) {
+				$.fancybox.open({
+					src  : '#exitpopup',
+					type : 'inline',
+					opts : {
+						afterShow : function( instance, current ) {
+							//console.info( 'done!' );
+						}
+					}
+				});
+			}
+			createCookie('exit_p',1,99999);
+			popupCounter ++;
+		}
+	});
+</script>
+{% endif %}
+{% if entrypopup %}
+	<div class="hidden">
+		<div id ="entrypopup">
+			<div class="entry-content">
+				{{ entrypopup }}
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var count = parseInt(readCookie('entry_p_countsess')) || 0;
+			
+			if (count < 1) {
+				setTimeout(function() {
+					$.fancybox.open({
+						src  : '#entrypopup',
+						type : 'inline',
+						opts : {
+							afterShow : function(instance, current) {
+								//console.info( 'done!' );
+							}
+						}
+					});
+					createCookie('entry_p_countsess', count+1, 0); // Set session expiration time
+				}, 3000);
+			};
+		});
+	</script>
+{% endif %}
+</div><!-- .ho_wrapper -->
+
+
+<script>
+	$(document).ready(function(){
+		$('input[name="email"], input#input-payment-email').on('input', function() {
+			this.value = this.value.toLowerCase();
+		});
+	});
+</script>
+</body>
+</html>

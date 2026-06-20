@@ -1,0 +1,88 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<h4>{{ tab_action_seo_url }}</h4>
+<hr/>
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_add_new }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle" style="display:block;">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<div class="row form-row">
+				<label class="col-sm-2 control-label" for="action[seo_url][insert][---0---][template]"><i class="required"></i> {{ entry_template }} <span data-toggle="tooltip" title="{{ help_seo_url_template }}"></span></label>
+				<div class="col-sm-8">
+					<input type="text" value="{manufacturer}-{name}-{model}-{sku}-{product_id}" placeholder="{{ entry_keyword }}" id="action[seo_url][insert][---0---][template]" name="action[seo_url][insert][---0---][template]" class="form-control" />
+				</div>
+				<div class="col-sm-2">
+					<div class="pull-right dropdown" style="">
+						<button type="button" data-toggle="dropdown" title="{{ entry_fields }}" class="btn btn-default dropdown-toggle" style="padding: 5px 13px;" aria-expanded="false">{{ entry_fields }}&nbsp;<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><a onclick="$('input[name=\'action[seo_url][insert][---0---][template]\']').val($('input[name=\'action[seo_url][insert][---0---][template]\']').val() + '{product_id}')">product_id</a></li>
+							<li><a onclick="$('input[name=\'action[seo_url][insert][---0---][template]\']').val($('input[name=\'action[seo_url][insert][---0---][template]\']').val() + '{manufacturer}')">manufacturer</a></li>
+							<li><a onclick="$('input[name=\'action[seo_url][insert][---0---][template]\']').val($('input[name=\'action[seo_url][insert][---0---][template]\']').val() + '{name}')">name</a></li>
+							<li><a onclick="$('input[name=\'action[seo_url][insert][---0---][template]\']').val($('input[name=\'action[seo_url][insert][---0---][template]\']').val() + '{model}')">model</a></li>
+							<li><a onclick="$('input[name=\'action[seo_url][insert][---0---][template]\']').val($('input[name=\'action[seo_url][insert][---0---][template]\']').val() + '{sku}')">sku</a></li>
+							<li><a onclick="$('input[name=\'action[seo_url][insert][---0---][template]\']').val($('input[name=\'action[seo_url][insert][---0---][template]\']').val() + '{upc}')">upc</a></li>
+							<li><a onclick="$('input[name=\'action[seo_url][insert][---0---][template]\']').val($('input[name=\'action[seo_url][insert][---0---][template]\']').val() + '{mpn}')">mpn</a></li>
+							<li><a onclick="$('input[name=\'action[seo_url][insert][---0---][template]\']').val($('input[name=\'action[seo_url][insert][---0---][template]\']').val() + '{ean}')">ean</a></li>
+							<li><a onclick="$('input[name=\'action[seo_url][insert][---0---][template]\']').val($('input[name=\'action[seo_url][insert][---0---][template]\']').val() + '{jan}')">jan</a></li>
+							<li><a onclick="$('input[name=\'action[seo_url][insert][---0---][template]\']').val($('input[name=\'action[seo_url][insert][---0---][template]\']').val() + '{isbn}')">isbn</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="row form-row">
+				<label class="col-sm-2 control-label">{{ entry_case }}</label>
+				<div class="col-sm-3">
+					<div class="btn-group" data-toggle="buttons">
+						<label class="btn btn-default active" data-toggle="tooltip" title="{{ help_case }}">
+							<input name="action[seo_url][insert][---0---][case]" value="lowercase" checked="checked" type="radio">{{ entry_lowercase|lower }}
+						</label>
+						<label class="btn btn-default" data-toggle="tooltip" title="{{ help_case }}">
+							<input name="action[seo_url][insert][---0---][case]" value="uppercase" type="radio">{{ entry_uppercase|upper }}
+						</label>
+						<label class="btn btn-default" data-toggle="tooltip" title="{{ help_case }}">
+							<input name="action[seo_url][insert][---0---][case]" value="" type="radio">{{ entry_asis|title }}
+						</label>
+					</div>
+				</div>
+				<label class="col-sm-2 control-label">{{ entry_max_length }} <span data-toggle="tooltip" title="{{ help_seo_url_max_length }}"></span></label>
+				<div class="col-sm-1">
+					<input type="text" value="80" placeholder="{{ entry_max_length }}" id="action[seo_url][insert][---0---][max_length]" name="action[seo_url][insert][---0---][max_length]"  class="form-control" />
+				</div>
+				<div class="col-sm-4">
+					<div class="btn-group" data-toggle="buttons">
+						<label class="btn btn-default active" data-toggle="tooltip" title="{{ help_translit }}">
+							<input name="action[seo_url][insert][---0---][translit]" value="1" checked="checked" type="radio">{{ entry_translit }}
+						</label>
+						<label class="btn btn-default" data-toggle="tooltip" title="{{ help_translit }}">
+							<input name="action[seo_url][insert][---0---][translit]" value="0" type="radio">{{ entry_asis|title }}
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_remove_existing }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<label class="col-sm-2 control-label" for="action[seo_url][delete][---0---][keyword]"><i class="required"></i> {{ entry_keyword }}</label>
+			<div class="col-sm-8">
+				<input type="text" value="" placeholder="{{ entry_contains }}" id="action[seo_url][delete][---0---][keyword]" name="action[seo_url][delete][---0---][keyword]" class="form-control" />
+			</div>
+			<div class="col-sm-2 hide-filter">
+				<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+				<button type="button" onclick="if (!$(this).closest('div.form-group').hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).closest('div.form-group').find('input').val(''); }" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+			</div>
+		</div>
+	</div>
+</div>

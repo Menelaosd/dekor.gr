@@ -1,0 +1,145 @@
+</main>
+
+{{ footer_modules }}
+
+</script><link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script type="text/javascript">
+	window.addEventListener("load", function(){
+	window.cookieconsent.initialise({
+	  "palette": {
+		"popup": {
+		  "background": "#FFF",
+		  "text": "#000"
+		},
+		"button": {
+		  "background": "#000",
+		  "text": "#FFF"
+		}
+	  },
+	  "content": {
+		"message": "Η ιστοσελίδα χρησιμοποιεί τα cookies  για να βελτιώσει την εμπειρία σας. Με την παραμονή σας στην ιστοσελίδα μας, συμφωνείτε στην εκ' μέρους μας τοποθέτηση cookies στον υπολογιστή σας.",
+		"dismiss": "Συμφωνώ",
+		
+		"link": "Μάθετε Περισσότερα"
+	  }
+	})
+});
+</script>
+
+<footer>
+  <div class="footer-wrap">
+	<div class="top">
+	  <div class="container">
+		{# <div class="row">
+			<div class="footer-logo-container col-12">
+				<div id="footer-logo">
+					{% if logo %}
+						<a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-fluid" /></a>
+					{% else %}
+						<h1><a href="{{ home }}">{{ name }}</a></h1>
+					{% endif %} 
+				</div>
+			</div>
+		</div> #}
+		<div class="row">
+			<div class="col-6 col-lg-3 first">
+				<p>{{ text_contact_title }}</p>
+				<a href="mailto:{{ text_contact_email }}"><div class="whiteBack"><i class="fas fa-envelope"></i>{{ text_contact_email }}</div></a>
+			</div>
+		  
+
+		  <div class="col-6 col-lg-3 footer-block" style="display:none !important">
+			<h5>{{ text_extra }}</h5>
+			<ul class="list-unstyled">
+			{#
+			  <li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
+			 #}
+			  <li><a href="{{ voucher }}">{{ text_voucher }}</a></li>
+			  {#
+			  <li><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>
+			  <li><a href="{{ special }}">{{ text_special }}</a></li>
+			  #}
+			</ul>
+		  </div>
+
+		  {% if informations %}
+		  <div class="col-6 col-lg-3 footer-block">
+			<h5>{{ text_information }}</h5>
+			<ul class="list-unstyled">
+			 {% for information in informations %}
+			  <li><a href="{{ information.href }}">{{ information.title }}</a></li>
+			  {% endfor %}
+			   <li><a href="{{ return }}">{{ text_return }}</a></li>
+			</ul>
+		  </div>
+		  {% endif %}
+		  <div class="col-6 col-lg-3 footer-block">
+			<h5>{{ text_service }}</h5>
+			<ul class="list-unstyled">
+				<li><a href="{{ account }}">{{ text_account }}</a></li>
+			  {# <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li> #}
+			  {# <li><a href="{{ cart }}">{{ text_cart }}</a></li> #}
+			  <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
+			  <li><a href="{{ order }}">{{ text_order }}</a></li>
+			   <li><a href="{{ contact }}">{{ text_contact }}</a></li>
+			</ul>
+		  </div>
+
+		  <div class="col-6 col-lg-3 footer-block last">
+			<h5>{{ text_franchise }}</h5>
+			<p>{{ text_franchise_title }}</p>
+			<span>{{ text_franchise_text }}</span>
+			<div class="button"><a href="#"><div class="generic-button">{{ text_franchise_link }}</div></a></div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<div class="middle">
+	  <div class="container">
+		<div class="row">
+			<div class="col-12 col-lg-3 col-md-3 col-sm-3 espatext">
+				<p>{{ text_espa }}</p>
+			</div>
+			<div class="col-12 col-lg-6 col-md-6 col-sm-6 espa">
+				<img src="image/catalog/icons/espa_logos.png" alt="payment"/>
+			</div>
+			<div class="col-12 col-lg-3 col-md-3 col-sm-3">
+			</div>
+		</div>
+	 </div>
+	</div>
+
+	<div class="bottom">
+	  <div class="container">
+		<div class="row ">
+			<div class="col-12 col-lg-4 col-md-4 col-sm-4 copyright">
+				<p>{{ text_copyright }}</p>
+			</div>
+			<div class="col-12 col-lg-4 col-md-4 col-sm-4 cards">
+				<img src="image/catalog/icons/cards.png" alt="payment"/>
+			</div>
+			<div class="col-12 col-lg-4 col-md-4 col-sm-4 design">
+				<p>{{ text_design }} <a href="https://happyonline.gr/" target="_blank"><img src="image/catalog/icons/h_monogram.png" alt="HO"/></a></p>
+			</div>
+		</div>
+	  </div>
+	</div>
+
+	  </div>
+  </div>
+</footer>
+</div>
+{% for script in scripts %}
+<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+</div>
+
+<div class="menu-overlay"></div>
+
+<div id="temp-ajax-container" class="d-none">
+</div>	
+
+
+</body></html>

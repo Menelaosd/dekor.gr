@@ -1,0 +1,201 @@
+{{ header }}
+<div id="product-search" class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"{% if loop.last %} aria-current="page"{% endif %}><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      {% endfor %}
+    </ol>
+  </nav>
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-12 col-lg-6' %}
+    {% elseif column_left or column_right %}
+	{% set productclass = 'col-12 col-sm-4' %}
+    {% set class = 'col-12 col-lg-9' %}
+    {% else %}
+	{% set productclass = 'col-12 col-lg-3 col-sm-4' %}
+    {% set class = 'col-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+		<div class="row">
+			<div class="col-12">
+				<div class="search-toolbar">
+					<div class="search-toolbar-block">
+					  <input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}" id="input-search" class="form-control" />
+					</div>
+					
+					{#
+					<div class="search-toolbar-block">
+					  <select name="category_id" class="form-control">
+						<option value="0">{{ text_category }}</option>
+						{% for category_1 in categories %}
+						{% if category_1.category_id == category_id %}
+						<option value="{{ category_1.category_id }}" selected="selected">{{ category_1.name }}</option>
+						{% else %}
+						<option value="{{ category_1.category_id }}">{{ category_1.name }}</option>
+						{% endif %}
+						{% for category_2 in category_1.children %}
+						{% if category_2.category_id == category_id %}
+						<option value="{{ category_2.category_id }}" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_2.name }}</option>
+						{% else %}
+						<option value="{{ category_2.category_id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_2.name }}</option>
+						{% endif %}
+						{% for category_3 in category_2.children %}
+						{% if category_3.category_id == category_id %}
+						<option value="{{ category_3.category_id }}" selected="selected">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_3.name }}</option>
+						{% else %}
+						<option value="{{ category_3.category_id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_3.name }}</option>
+						{% endif %}
+						{% endfor %}
+						{% endfor %}
+						{% endfor %}
+					  </select>
+					</div>
+					<div class="search-toolbar-block">
+						<div class="form-check form-check-inline">
+							{% if sub_category %}
+							<input class="form-check-input" type="checkbox" name="sub_category" value="1" checked="checked" />
+							{% else %}
+							<input class="form-check-input" type="checkbox" name="sub_category" value="1" />
+							{% endif %}
+							<label class="form-check-label">{{ text_sub_category }}</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  {% if description %}
+						  <input class="form-check-input" type="checkbox" name="description" value="1" id="description" checked>
+						  {% else %}
+						  <input class="form-check-input" type="checkbox" name="description" value="1" id="description" />
+						  {% endif %}
+						  <label class="form-check-label">{{ entry_description }}</label>
+						</div>
+					</div>
+					#}
+					<div class="search-toolbar-block search-toolbar-block-submit">
+						<input type="button" value="{{ button_search }}" id="button-search" class="btn btn-primary" />
+					</div>
+				</div>
+			</div>
+		</div>
+      {% if products %}
+      <div class="row">
+        <div class="col-12">
+
+		  <div class="top-toolbar">
+		  
+			  <div class="top-toolbar-forms">
+					{% if column_right %}
+					{{ column_right }}
+					{% endif %}
+					<div class="form-group">
+						<label class="input-group-prepend" for="input-sort"><span>{{ text_sort }}</span></label>
+						<select id="input-sort" class="form-control" >
+						  {% for sorts in sorts %}
+						  {% if sorts.value == '%s-%s'|format(sort, order) %}
+						  <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+						  {% else %}
+						  <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+						  {% endif %}
+						  {% endfor %}
+						</select>
+					</div>
+
+					{#
+					<div class="form-group">
+						<label class="input-group-prepend" for="input-limit"><span>{{ text_limit }}</span></label>
+						<select id="input-limit" class="form-control">
+						  {% for limits in limits %}
+						  {% if limits.value == limit %}
+						  <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
+						  {% else %}
+						  <option value="{{ limits.href }}">{{ limits.text }}</option>
+						  {% endif %}
+						  {% endfor %}
+						</select>
+					</div>
+					#}
+					<div class="grid-switch">
+						<a href="" class="toggle-grid toggle-grid4 active-grid" data-togglegrid="grid4" data-toggle="tooltip" title=" {{ text_grid4 }}">
+							<span class="icon-grid-4"></span>
+						</a>
+						<a href="" class="toggle-grid toggle-grid3" data-togglegrid="grid3" data-toggle="tooltip" title=" {{ text_grid3 }}">
+							<span class="icon-grid-3"></span>
+						</a>
+					</div>					
+			  </div>
+		  </div>
+
+
+        </div>
+      </div>
+	  
+	  <div id="productsWrapper">
+		  <div id="ajax-wrapper">
+			  <div id="ajax-container">
+				  <div id="product-container" class="product-container row">
+					{% for product in products %}
+						<div class="product-layout product-grid {{productclass}}">
+							{{ include('hotheme/template/product/product_template/product_main.twig') }}
+						</div>
+					{% endfor %} 
+				  </div>
+				  <div id="pagination"  class="pagination-page-container">{{ pagination }}</div>
+			  </div>
+		  </div>
+	  </div>
+	 
+      {% else %}
+      <p>{{ text_empty }}</p>
+      {% endif %}
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+<script type="text/javascript"><!--
+$('#button-search').bind('click', function() {
+	url = 'index.php?route=product/search';
+
+	var search = $('#content input[name=\'search\']').prop('value');
+
+	if (search) {
+		url += '&search=' + encodeURIComponent(search);
+	}
+
+	var category_id = $('#content select[name=\'category_id\']').prop('value');
+
+	if (category_id > 0) {
+		url += '&category_id=' + encodeURIComponent(category_id);
+	}
+
+	var sub_category = $('#content input[name=\'sub_category\']:checked').prop('value');
+
+	if (sub_category) {
+		url += '&sub_category=true';
+	}
+
+	var filter_description = $('#content input[name=\'description\']:checked').prop('value');
+
+	if (filter_description) {
+		url += '&description=true';
+	}
+
+	location = url;
+});
+
+$('#content input[name=\'search\']').bind('keydown', function(e) {
+	if (e.keyCode == 13) {
+		$('#button-search').trigger('click');
+	}
+});
+
+$('select[name=\'category_id\']').on('change', function() {
+	if (this.value == '0') {
+		$('input[name=\'sub_category\']').prop('disabled', true);
+	} else {
+		$('input[name=\'sub_category\']').prop('disabled', false);
+	}
+});
+
+$('select[name=\'category_id\']').trigger('change');
+--></script>
+{{ footer }}

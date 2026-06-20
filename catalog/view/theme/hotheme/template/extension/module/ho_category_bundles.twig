@@ -1,0 +1,619 @@
+{% if style == 1 %}
+
+	<div class="product-bundles-categories-all">
+		
+		<div class="container">
+		
+			{% if main_description %}
+				<div class="product-bundles-heading">
+					{% if main_description.heading %}
+						<h2>{{ main_description.heading }}</h2>
+					{% endif %}
+					{% if main_description.subtitle %}
+						<div class="product-bundles-subtitle">
+							{{ main_description.subtitle }}
+						</div>
+					{% endif %}
+				</div>
+			{% endif %}
+		
+			<div class="product-bundles-wrapper">
+				<div class="product-bundles-carousel-wrapper swiper-container" id="product-bundles-swiper{{ module }}">
+					<div class="swiper-wrapper">
+						{% for category in categories %}
+							<div class="bundle-category-1-wrap swiper-slide">
+								<div class="bundle-category-1-block">
+									{% if featured %}
+										<span class="bundle-category-label">
+											{{ bundle_featured }}
+										</span>
+									{% endif %}
+									
+									<div class="bundle-category-1-image">
+										<img src="{{ category.image }}" alt="{{ category.name }}">
+									</div>
+									<div class="bundle-category-1-caption">
+										<h3>{{ category.name }}</h3>
+										{% if category.sdescription %}
+											<div class="bundle-category-1-text">
+												{{ category.sdescription }}
+											</div>
+										{% endif %}
+									</div>
+									{% if readmore %}
+										<div class="readmore-bundle-w">
+											<a class="readmore-bundle-1" href="{{ category.href }}" title="{{ readmore }} - {{ category.name }}">
+												{{ readmore }}
+											</a>
+										</div>
+									{% endif %}
+								</div>	
+							</div>
+						{% endfor %}	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	
+		var swiperBundle{{ module }} = undefined;
+		var resizeBundles{{ module }};
+		
+		var swiperBundle{{ module }}_settings = {
+			slidesPerView: 3,
+			loop:false,
+			spaceBetween: 10,
+			mode: 'horizontal',
+			observer: true,
+			observeParents: true,
+			{% if not mobile %}
+			pagination: {
+				//el: '.producttabs-pagination-{{module}}',
+				//type: 'bullets',
+				//clickable: true
+			},
+			navigation: {
+				//nextEl: '.producttabs-button-next-{{module}}',
+				//prevEl: '.producttabs-button-prev-{{module}}',
+			},
+			{% endif %}
+			breakpoints: {
+				0: {
+				  slidesPerView: 1,
+				},
+				576: {
+				  //slidesPerView: {{numslides}}-1,
+				},
+				1400: {
+				  slidesPerView: 2
+				}
+			}
+		};
+		
+		$(window).on('resize load',function() {
+			
+			clearTimeout( resizeBundles{{ module }} );
+			resizeBundles{{ module }} = setTimeout(function() {
+
+			if( $(window).width() >= 992 && typeof(swiperBundle{{ module }}) === "undefined") {
+				swiperBundle{{ module }} = new Swiper('#product-bundles-swiper{{ module }}', swiperBundle{{ module }}_settings);	
+			};
+			
+			if( $(window).width() < 992 ) {
+				if ( typeof(swiperBundle{{ module }}) !== "undefined" ) {
+					swiperBundle{{ module }}.destroy();
+					swiperBundle{{ module }} = undefined;
+				}
+			};
+					
+			}, 250);
+		})
+		
+	</script>
+	
+{% elseif style == 3 %}	
+	<div class="product-bundles-pr-all__rest">
+		<div class="product-bundles-pr-all__restwrap">
+			<div class="main-category-bundles__container">
+				{#
+					{% if main_description %}
+						<div class="product-bundles-pr-heading">
+							{% if main_description.heading %}
+								<div class="product-bundles-pr-title">
+									{% if main_description.hypertitle %}
+										<h4>{{ main_description.hypertitle }}</h4>
+									{% endif %}
+									<h2>{{ main_description.heading }}</h2>
+								</div>
+							{% endif %}
+							
+							{% if main_description.subtitle or readmore_all %}
+								<div class="bundle-subheading">
+									{% if main_description.subtitle %}
+										<div class="product-bundles-subtitle">
+											{{ main_description.subtitle }}
+										</div>
+									{% endif %}
+									<div class="__sep">
+									</div>
+									{% if readmore_all %}
+										<a class="product-bundles-all" href="{{ bundles_category.href }}">
+										{{ text_more_ideas }} <i class="far fa-long-arrow-right"></i>
+										</a>
+									{% endif %}
+								</div>
+							{% endif %}
+										
+						</div>
+					{% endif %}
+				#}
+				
+				<div class="product-bundles-wrapper row">				
+					<div class="product-bundles-carousel-wrapper" id="product-bundles-swiper{{ module }}">		
+						<div class="product-bundles-flexwrap">
+							{% for category in categories %}
+								
+								<div class="bundle-category__heading__wrap col-12">									
+									<div class="bundle-category__heading">
+
+										{% if category.product_sku %}
+											<div class="bundle-category__sku">
+												{{ text_bundle_sku }}: {{ category.product_sku }}
+											</div>
+										{% endif %}
+										<div class="row">
+											<div class="bundle-category__heading__title col-12 col-sm-5">
+												<h1>{{ category.name }}</h1>
+											</div>
+											{% if category.cdescription %}
+												<div class="bundle-category__heading__caption col-12 col-sm-7">
+													{{ category.cdescription }}
+												</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							
+								<div class="bundle-category-block-row">
+									<div class="row bundle-category-row">							
+										<div class="bundle-category-left col-4">
+											<div class="bundle-category-left-wrap">
+
+												{% if category.product_id %}
+													<a  data-toggle="tooltip" data-placement="left" href="javascript:;" onclick="cart.add('{{ category.product_id }}');" title="{{ text_ind_idea }}" class="product-cart-bundle-ind">
+														<i class="fas fa-shopping-bag"></i>
+													</a>
+												{% endif %}
+
+												<img src="{{ category.image }}" alt="{{ category.name }}">
+												{#
+												<div class="bundle-buttons">
+													{% if category.cdescription %}
+														<div class="bundlecategory-cdescription">{{ category.cdescription }}</div>
+													{% endif %}
+													<a href="{{ category.href }}" title="{{ category.name }}"><span>{{ text_see_idea }}</span> <i class="fas fa-chevron-right"></i></a>
+												</div>
+												#}
+											</div>
+										</div>
+										<div class="bundle-category-right col-8">
+										
+											<div class="bundle-top-row">
+												<h3>{{ text_idea_details }}</h3>
+											</div>
+											
+											<div class="bundle-mid-outter">
+												<div class="bundle-mid-wrap scrollbar-inner" id="bundle-mid-wrap--{{module}}--{{loop.index}}">
+													<div class="bundle-mid row swiper-no-swiping">
+														{% for product in category.products %}
+															<div class="col-6 bundle-category-right-block">
+																{{ include('hotheme/template/product/product_template/product_bundle.twig') }}	
+															</div>
+														{% endfor %}
+													</div>
+												</div>
+											</div>
+											
+											
+											<div class="bundle-bottom-row">
+												<div class="--bbr-limit"></div>
+												<div class="bundle-bottom-wrap">												
+													<a 
+														data-products = "{{ category.add_all_string }}"
+														onclick="cart.multiple('{{ category.add_all_string }}');"
+														class="readmore-bundle-2" 
+														href="javascript:void(0);" 
+														title="{{ readmore }} - {{ category.name }}"
+													>
+														<i class="far fa-shopping-bag"></i> {{ text_add_all }}
+													</a>
+												</div>												
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<script type="text/javascript">
+									$(document).ready(function(){
+										$('#bundle-mid-wrap--{{module}}--{{loop.index}}').scrollbar(
+											{
+												"onScroll": function(y, x){
+													if(y.scroll >= y.maxScroll - 40 ){
+														$('#bundle-mid-wrap--{{module}}--{{loop.index}}').closest('.bundle-category-right').find('.--bbr-limit').fadeOut(300);
+													} else {
+														$('#bundle-mid-wrap--{{module}}--{{loop.index}}').closest('.bundle-category-right').find('.--bbr-limit').fadeIn(300);
+													};
+												}			
+											}
+										);
+									});
+								</script>
+							{% endfor %}
+						</div>
+					</div>
+				</div>			
+			</div>
+			
+			{% if landing_video %}
+			
+				{% if not mobile %}
+					<div id="video-container" class="container">
+						<div class="rest-categories__video">
+							<h4 class="rest-categories__heading">
+								{{ text_idea_video }}
+							</h4>
+							<div class="rest-categories__video_container">
+								<div class="embed-responsive embed-responsive-21by9">
+								  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ landing_video }}?controls=0&rel=0"></iframe>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% else %}
+					<div id="video-container video-container_mobile" class="container">
+						<div class="rest-categories__video">
+							<h4 class="rest-categories__heading">
+								{{ text_idea_video }}
+							</h4>
+							<div class="rest-categories__video_container-mobile">
+								<a href="https://www.youtube.com/watch?v={{ landing_video }}" target="_blank" title="{{ text_idea_video }}">
+									<span class="video-play">
+										<i class="fal fa-play"></i>
+									</span>
+									<img src="{{ landing_thumb }}" alt="{{ text_idea_video }}">
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+				
+			{% endif %}
+			
+		</div>
+		
+		{% if rest_categories %}
+		
+			{% if not mobile %}
+			
+				<div class="rest-categories__wrap">
+					<div class="container">
+						<div class="rest-categories__heading">
+						
+							<h3 class="module-title">
+								<span class="module-title-text">{{ text_more_ideas_title }}</span>
+							</h3>
+							
+							<h4 class="module-subtitle">
+								<span class="module-subtitle-text">{{ text_more_ideas_subtitle }}</span>
+							</h4>
+							
+						</div>
+						
+						<div class="rest-categories__row row">
+							{% for rest_category in rest_categories %}
+								<div class="rest-category__wrap col-3">
+									<div class="rest-category__block">
+										<div class="rest-category__image">
+									
+											
+											{% if rest_category.product_id %}
+										
+												<a  data-toggle="tooltip" data-placement="left" href="javascript:;" onclick="cart.add('{{ rest_category.product_id }}');" title="{{ text_ind_idea }}" class="product-cart-bundle-ind">
+													<i class="fas fa-shopping-bag"></i>
+												</a>
+											{% endif %}										
+									
+											<a href="{{ rest_category.href }}" title="{{ rest_category.name }}">
+												<img src="{{ rest_category.image }}" alt="{{ rest_category.name }}">
+											</a>
+										</div>
+										<h3 class="rest-category__title">
+											{{ rest_category.name }}
+										</h3>
+										<div class="rest-category__readmore">
+											<a class="product-bundles-all" href="{{ rest_category.href }}" title="{{ rest_category.name }}">
+												<span class="flex-text">{{ text_see_idea }}</span> <i class="fas fa-chevron-right"></i>
+											</a>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			
+			{% else %}
+			
+				{# APPEAR AS CAROUSEL IN MOBILE VIEW #}
+				
+				<div class="rest-categories__wrap rest-categories__has-carousel">
+				
+					<div class="rest-categories__heading">
+						<h3 class="module-title">
+							<span class="module-title-text">{{ text_more_ideas_title }}</span>
+						</h3>
+						<h4 class="module-subtitle">
+							<span class="module-subtitle-text">{{ text_more_ideas_subtitle }}</span>
+						</h4>
+					</div>
+						
+					<div class="swiper-container rest-categories-carousel__wrapper" id="rest-categories-carousel">
+						<div class="swiper-wrapper">
+							{% for rest_category in rest_categories %}
+								<div class="swiper-slide rest-category__slide">
+									<div class="rest-category__wrap-carousel">
+										<div class="rest-category__block">
+											<div class="rest-category__image">
+											
+												
+												{% if rest_category.product_id  %}
+											
+													<a  data-toggle="tooltip" data-placement="left" href="javascript:;" onclick="cart.add('{{ rest_category.product_id }}');" title="{{ text_ind_idea }}" class="product-cart-bundle-ind">
+														<i class="fas fa-shopping-bag"></i>
+													</a>
+												{% endif %}	
+											
+												<a href="{{ rest_category.href }}" title="{{ rest_category.name }}">
+													<img src="{{ rest_category.image }}" alt="{{ rest_category.name }}">
+												</a>
+											</div>
+											<h3 class="rest-category__title">
+												{{ rest_category.name }}
+											</h3>
+											<div class="rest-category__readmore">
+												<a class="product-bundles-all" href="{{ rest_category.href }}" title="{{ rest_category.name }}">
+													<span class="flex-text">{{ text_see_idea }}</span> <i class="fas fa-chevron-right"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+					
+				</div>	
+
+				<script type="text/javascript">
+					
+					var rest_categories__settings = {
+						slidesPerView: 1,
+						slidesPerGroup: 1,
+						loop:true,
+						spaceBetween: 0,
+						mode: 'horizontal',
+						observer: true,
+						observeParents: true,
+						pagination: {
+							//el: '.producttabs-pagination-{{module}}',
+							//type: 'bullets',
+							//clickable: true
+						},
+					};
+					
+					$(window).on('load',function() {
+						rest_categories__banners = new Swiper( '#rest-categories-carousel', rest_categories__settings );	
+					})	
+				
+				</script>				
+			
+			{% endif %}
+			
+		{% endif %}
+	
+	</div>
+
+
+{% else %}
+
+	<div class="product-bundles-pr-all">
+	
+		<div class="swiper-button-prev productbundles-button productbundles-button-prev-{{module}}"></div>
+		<div class="swiper-button-next productbundles-button productbundles-button-next-{{module}}"></div>
+		
+		<div class="container">
+			
+			{% if main_description %}
+				<div class="product-bundles-pr-heading">
+					{% if main_description.heading %}
+						<div class="product-bundles-pr-title">
+							{% if main_description.hypertitle %}
+								<h4>{{ main_description.hypertitle }}</h4>
+							{% endif %}
+							<h2>{{ main_description.heading }}</h2>
+						</div>
+					{% endif %}
+					
+					{% if main_description.subtitle or readmore_all %}
+						<div class="bundle-subheading">
+							{% if main_description.subtitle %}
+								<div class="product-bundles-subtitle">
+									{{ main_description.subtitle }}
+								</div>
+							{% endif %}
+							<div class="__sep">
+							</div>
+							{% if readmore_all %}
+								<a class="product-bundles-all" href="{{ all_link }}">
+								{{ text_more_ideas }} <i class="far fa-long-arrow-right"></i>
+								</a>
+							{% endif %}
+						</div>
+					{% endif %}
+								
+				</div>
+			{% endif %}
+			
+			<div class="product-bundles-wrapper row">				
+				<div class="product-bundles-carousel-wrapper swiper-container" id="product-bundles-swiper{{ module }}">		
+					<div class="swiper-wrapper">
+						{% for category in categories %}
+							<div class="bundle-category-block-row swiper-slide">
+								<div class="row bundle-category-row">							
+									<div class="bundle-category-left col-4">
+										<div class="bundle-category-left-wrap">
+								
+											
+											{% if category.product_id  %}
+												<a  data-toggle="tooltip" data-placement="left" href="javascript:;" onclick="cart.add('{{ category.product_id }}');" title="{{ text_ind_idea }}" class="product-cart-bundle-ind">
+													<i class="fas fa-shopping-bag"></i>
+												</a>
+											{% endif %}
+											<a class="hidden-desktop mobile-link-overlay" href="{{ category.href }}" title="{{ category.name }}">{{ category.name }}</a>
+											
+											<img src="{{ category.image }}" alt="{{ category.name }}">
+											<div class="bundle-buttons">
+												{% if category.cdescription %}
+													<div class="bundlecategory-cdescription">{{ category.cdescription }}</div>
+												{% endif %}
+												<a href="{{ category.href }}" title="{{ category.name }}"><span>{{ text_see_idea }}</span> <i class="fas fa-chevron-right"></i></a>
+											</div>
+										</div>
+									</div>
+									<div class="bundle-category-right col-8">
+									
+										<div class="bundle-top-row">
+											<h3>{{ category.name }}</h3>
+										</div>
+										
+										<div class="bundle-mid-outter">
+											<div class="bundle-mid-wrap scrollbar-inner" id="bundle-mid-wrap--{{module}}--{{loop.index}}">
+												<div class="bundle-mid row swiper-no-swiping">
+													{% for product in category.products %}
+														<div class="col-6 bundle-category-right-block">
+															{{ include('hotheme/template/product/product_template/product_bundle.twig') }}	
+														</div>
+													{% endfor %}
+												</div>
+											</div>
+										</div>
+										
+										<div class="bundle-bottom-row">
+											<div class="--bbr-limit"></div>
+											<div class="bundle-bottom-wrap">												
+												<a 
+													data-products = "{{ category.add_all_string }}"
+													onclick="cart.multiple('{{ category.add_all_string }}');"
+													class="readmore-bundle-2" 
+													href="javascript:void(0);" 
+													title="{{ readmore }} - {{ category.name }}"
+												>
+													<i class="far fa-shopping-bag"></i> {{ text_add_all }}
+												</a>
+											</div>
+											
+											<div class="pagination-bundle-2">
+												<div class="swiper-pagination productbundles-pagination-{{module}}"></div>
+											</div>
+											
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+					
+					<div class="pagination-bundle-2 hidden-desktop">
+						<div class="swiper-pagination productbundles-pagination-{{module}}"></div>
+					</div>
+					
+					{% if readmore_all %}
+						<a class="product-bundles-all hidden-desktop" href="{{ all_link }}">
+							{{ text_more_ideas }} <i class="far fa-long-arrow-right"></i>
+						</a>
+					{% endif %}
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	<script type="text/javascript">
+		{% for category in categories %}		
+			$(document).ready(function(){
+				$('#bundle-mid-wrap--{{module}}--{{loop.index}}').scrollbar(
+					{
+						"onScroll": function(y, x){
+							if(y.scroll >= y.maxScroll - 40 ){
+								$('#bundle-mid-wrap--{{module}}--{{loop.index}}').closest('.bundle-category-right').find('.--bbr-limit').fadeOut(300);
+							} else {
+								$('#bundle-mid-wrap--{{module}}--{{loop.index}}').closest('.bundle-category-right').find('.--bbr-limit').fadeIn(300);
+							};
+						}			
+					}
+				);
+			});		
+		{% endfor %}
+
+		$(document).ready(function(){
+			var swiperBundle{{ module }} = new Swiper('#product-bundles-swiper{{ module }}', {
+				slidesPerView: 1,
+				spaceBetween: 10,
+				mode: 'horizontal',
+				noSwiping: true,
+				noSwipingClass: 'swiper-no-swiping',	
+				resizeReInit: true,				
+				observer: true,
+				observeParents: true,
+				autoHeight:true,
+				loop: false,
+				autoplay: {
+					delay: 7000,
+					disableOnInteraction: false
+				},
+				pagination: {
+					el: '.productbundles-pagination-{{module}}',
+					type: 'bullets',
+					clickable: true
+				},
+				navigation: {
+					nextEl: '.productbundles-button-next-{{module}}',
+					prevEl: '.productbundles-button-prev-{{module}}',
+				},
+				breakpoints: {
+					992: {
+					  slidesPerView: 1,
+					  slidesPerGroup: 1,
+					  spaceBetween: 0,
+					  loop: true
+					}
+				}
+			});
+			
+			$('#product-bundles-swiper{{ module }}').on('mouseover', function() {
+			  swiperBundle{{ module }}.autoplay.stop();
+			});
+
+			$('#product-bundles-swiper{{ module }}').on('mouseout', function() {
+			  swiperBundle{{ module }}.autoplay.start();
+			});			
+			
+		});
+	</script>
+	
+{% endif %}

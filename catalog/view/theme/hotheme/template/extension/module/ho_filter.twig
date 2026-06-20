@@ -1,0 +1,760 @@
+<div class="filtersWrapper">
+
+<button type="button" class="filter-dropdown__toggle" aria-haspopup="true" aria-expanded="false" id="dropdownMenuFilters">{{ ho_filters_text }}</button>
+
+<div class="dropdown-menu-filters">
+
+	{% if (not mobile and not hidedesktop) or (mobile and not hidemobile) %}
+	<div id="ho-filter-block{{module_id}}" class="{{style}} ho-filters-wrapper">
+		
+		<div class="filters-header-mobile hidden-desktop">
+			<div class="module-side-title">{{ text_filters }}</div>
+			
+			<div class="layout-concept-view layout-concept-view-mobile">
+				<span class="custom-control-label-pre">{{ text_concept_view }}</span>
+				
+				<div class="custom-control custom-switch">
+					<input type="checkbox" class="custom-control-input" id="layoutSwitchMobile">
+					<label class="custom-control-label" for="layoutSwitchMobile"></label>
+				</div>	
+			</div>
+			
+			<div class="filters-header-close">
+				<i class="far fa-times"></i>
+			</div>
+		</div>
+		
+		{% if module_title %}
+			<div class="ho-filter-title ho-filter-trigger-container">
+				<div class="ho-filter-trigger-button" data-wrapper="ho-filter-block{{module_id}}">
+					{{module_title}}<span id="pcount{{module_id}}"></span>
+				</div>
+				<span class="filter-clear-all" id="clear_all{{module_id}}">{% if clear_all %}{{text_clear_all}}{% endif %}</span>
+			</div>	
+		{% endif %}
+		<div class="{% if style=='filter-style-horizontal-dropdown' %}navbar-nav{% endif%} filters-wrapper">
+			{% if style=='filter-style-vertical-list' %}
+			<div class="filters-responsive-top">
+				<div class="filters-responsive-title">
+					{{module_title}}
+				</div>
+				<div class="filters-responsive-close" data-wrapper="ho-filter-block{{module_id}}">
+					<i class="fal fa-times"></i>
+				</div>
+			</div>
+			{% endif %}
+		{% if style=='filter-style-vertical-list' %}	
+		<div class="filters-block-wrapper filters-block-wrapper{{module-id}}">	
+		{% endif %}
+			{% for filter_group in filter_groups %} 
+				{% if filter_group.type =="price" %}
+					{% if filter_group.style == 1 %}
+						<div class="{% if style=='filter-style-horizontal-dropdown' %} dropdown nav-item {% endif %} filter-group-container  g{{ filter_group.filter_group_id }}">
+							{% if style == 'filter-style-vertical-list' or style == 'filter-style-horizontal-dropdown' %}
+							<div {% if style=='filter-style-horizontal-dropdown' %}data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% endif %} class="{% if style=='filter-style-horizontal-dropdown' %} nav-link dropdown-toggle {% endif %} filter-group-title-container">
+								<span class="filter-group-title">{{ filter_group.name }}</span>
+								{% if style=='filter-style-vertical-list' %}
+								
+								{% if filter_group.clear %}
+								<span class="gc{{ filter_group.filter_group_id }} filter-group-clear filter-group-clear-price{{module_id}}" data-parent="g{{ filter_group.filter_group_id }}">{{text_clear}}</span>
+								{% endif %}
+								
+								{% endif %}
+							</div>
+							{% endif %}
+							{% if style=='filter-style-horizontal-dropdown' %}
+							<div class="dropdown-menu">{% endif %}
+								<div class="filter-group-filters-container">
+									{% if style=='filter-style-horizontal-dropdown' %}
+									
+									{% if filter_group.clear %}
+									<span class="gc{{ filter_group.filter_group_id }} filter-group-clear filter-group-clear-price{{module_id}}" data-parent="g{{ filter_group.filter_group_id }}">{{text_clear}}</span>
+									{% endif %}
+									
+									{% endif %}
+									<div id="price_slider{{module_id}}" class="form-slider">
+										<input id="price_slider{{module_id}}input" type="hidden" name="" value="" class="irs-hidden-input" tabindex="-1" readonly="">
+										<div id="prg{{ filter_group.filter_group_id }}" class="price-range-group input-group">
+											<input type="text" class="form-control filter_price_from" id="filter_price_from{{module_id}}" data-value="{% if min_price_value %}{{min_price_value}}{% else %}{{min_price}}{% endif %}" value="{% if min_price_value %}{{text_from}} {{currency.symbol_left}}{{min_price_value}}{{currency.symbol_right}}{% else %}{{text_from}} {{currency.symbol_left}}{{min_price}}{{currency.symbol_right}}{% endif %}" name="filter_price_from" placeholder="{{text_from}} {{currency.symbol_left}}{{currency.symbol_right}}">
+											<input type="text" class="form-control filter_price_to" id="filter_price_to{{module_id}}" data-value="{% if max_price_value %}{{max_price_value}}{% else %}{{max_price}}{% endif %}" value="{% if max_price_value %}{{text_to}} {{currency.symbol_left}}{{max_price_value}}{{currency.symbol_right}}{% else %}{{text_to}} {{currency.symbol_left}}{{max_price}}{{currency.symbol_right}}{% endif %}" name="filter_price_to" placeholder="{{text_to}} {{currency.symbol_left}}{{currency.symbol_right}}">
+										</div>
+									</div> 
+								</div>
+							{% if style=='filter-style-horizontal-dropdown' %}
+							</div>{% endif %}
+						<script>
+						var $range{{module_id}} = $('#price_slider{{module_id}}input');
+						var $instance{{module_id}};
+						var min = {{filter_group.filter.0}};
+						var max = {{filter_group.filter.1}};
+						$range{{module_id}}.ionRangeSlider({
+							min: min,
+							max: max,
+							{% if min_price_value %}
+							from: {{min_price_value}},
+							{% endif %}
+							{% if max_price_value %}
+							to: {{max_price_value}},
+							{% endif %}
+							type: "double",
+							skin: "round",
+							step: 5,
+							prefix: "{{currency.symbol_left}}",
+							postfix: "{{currency.symbol_right}}",
+							onChange: function(data) {
+								$('#filter_price_from{{module_id}}').attr("data-value", data.from);
+								$('#filter_price_to{{module_id}}').attr("data-value", data.to);
+								$('#filter_price_from{{module_id}}').val('{{text_from}} {{currency.symbol_left}}'+data.from+'{{currency.symbol_right}}');
+								$('#filter_price_to{{module_id}}').val('{{text_to}} {{currency.symbol_left}}'+data.to+'{{currency.symbol_right}}');
+								
+							},
+							onFinish: function (data) { 
+								updateFilters{{module_id}}();
+							}
+						});
+						
+						$instance{{module_id}} = $range{{module_id}}.data("ionRangeSlider");
+						
+						let inputfrom{{module_id}} = document.getElementById('filter_price_from{{module_id}}');
+						
+						let inputto{{module_id}} = document.getElementById('filter_price_to{{module_id}}');
+
+						let timeout{{module_id}} = null;
+						
+						$('#filter_price_from{{module_id}}').on("input", function() {
+							if(isNaN(parseInt($(this).val().replace(/[^0-9-]/g, '').replace(/(?!^)-/g, '')))) {
+								$(this).attr('data-value',min);
+							} else {
+								$(this).attr('data-value',parseInt($(this).val().replace(/[^0-9-]/g, '').replace(/(?!^)-/g, '')));
+							}
+
+							var val = parseInt($(this).attr("data-value"));
+							
+							if (val < min) {
+								val = min;
+							} else if (val > max) {
+								val = max;
+							}
+				
+							if ($('#filter_price_to{{module_id}}').attr('data-value') && val > parseInt($('#filter_price_to{{module_id}}').attr('data-value'))) {
+								val = parseInt($('#filter_price_to{{module_id}}').attr('data-value'));
+							}
+							
+							$instance{{module_id}}.update({
+							from: val
+							});
+							inputfrom{{module_id}}.addEventListener('keyup', function (e) {
+								clearTimeout(timeout{{module_id}});
+								timeout{{module_id}} = setTimeout(function () {
+									$('#filter_price_from{{module_id}}').attr('data-value',val);
+									$('#filter_price_from{{module_id}}').val('{{text_from}} {{currency.symbol_left}}'+val+'{{currency.symbol_right}}');
+									updateFilters{{module_id}}();
+								}, 1000);
+							});
+						});	
+						
+						$('#filter_price_to{{module_id}}').on("input", function() {
+							
+							if(isNaN(parseInt($(this).val().replace(/[^0-9-]/g, '').replace(/(?!^)-/g, '')))) {
+								$(this).attr('data-value',max);
+							} else {
+								$(this).attr('data-value',parseInt($(this).val().replace(/[^0-9-]/g, '').replace(/(?!^)-/g, '')));
+							}
+							
+							var val = parseInt($(this).attr("data-value"));
+							
+							if (val < min) {
+								val = min;
+							} 
+							else if (val > max) {
+								val = max;
+							}
+							
+							if (val=="") {
+								val = max;
+							}
+							
+							if ($('#filter_price_from{{module_id}}').attr('data-value') && val < $('#filter_price_from{{module_id}}').attr('data-value')) {
+								val = parseInt($('#filter_price_from{{module_id}}').attr('data-value'));
+							} 
+
+							$instance{{module_id}}.update({
+							to: val
+							});
+							inputto{{module_id}}.addEventListener('keyup', function (e) {
+								clearTimeout(timeout{{module_id}});
+								timeout{{module_id}} = setTimeout(function () {
+									$('#filter_price_to{{module_id}}').attr('data-value',val);
+									$('#filter_price_to{{module_id}}').val('{{text_to}} {{currency.symbol_left}}'+val+'{{currency.symbol_right}}');
+									updateFilters{{module_id}}();
+								}, 1000);
+							});
+						});	
+						
+						$('#prg{{ filter_group.filter_group_id }}').on("updateRange", function() {
+							
+							
+							if(isNaN(parseInt($(this).children('.filter_price_from').val().replace(/[^0-9-]/g, '').replace(/(?!^)-/g, '')))) {
+								$(this).children('.filter_price_from').attr('data-value',min);
+							} else {
+								$(this).children('.filter_price_from').attr('data-value',parseInt($(this).children('.filter_price_from').val().replace(/[^0-9-]/g, '').replace(/(?!^)-/g, '')));
+							}
+
+							var valfrom = parseInt($(this).children('.filter_price_from').attr("data-value"));
+							
+							if(isNaN(parseInt($(this).children('.filter_price_to').val().replace(/[^0-9-]/g, '').replace(/(?!^)-/g, '')))) {
+								$(this).children('.filter_price_to').attr('data-value',max);
+							} else {
+								$(this).children('.filter_price_to').attr('data-value',parseInt($(this).children('.filter_price_to').val().replace(/[^0-9-]/g, '').replace(/(?!^)-/g, '')));
+							}
+							
+							var valto = parseInt($(this).children('.filter_price_to').attr("data-value"));
+							
+							
+							$instance{{module_id}}.update({
+							from: valfrom,
+							to: valto
+							});
+						});
+
+						$('.filter-group-clear-price{{module_id}}').click(function() {
+							var clearid = '.'+$(this).attr('data-parent');
+							$(clearid+" #filter_price_from{{module_id}}").val('{{text_from}} {{currency.symbol_left}}'+{{min_price}}+'{{currency.symbol_right}}');
+							$(clearid+" #filter_price_to{{module_id}}").val('{{text_to}} {{currency.symbol_left}}'+{{max_price}}+'{{currency.symbol_right}}');
+							$(clearid+" #filter_price_from{{module_id}}").attr("data-value",{{min_price}}).trigger("input");
+							$(clearid+" #filter_price_to{{module_id}}").attr("data-value",{{max_price}}).trigger("input");
+							updateFilters{{module_id}}();
+						});				
+						
+						$('#filter_price_from{{module_id}}').on("focus", function() {
+							$(this).val($(this).attr('data-value'));
+						});	
+								
+						$('#filter_price_to{{module_id}}').on("focus", function() {
+							$(this).val($(this).attr('data-value'));
+						});	
+						
+						$('#filter_price_from{{module_id}}').on("focusout", function() {
+							$(this).val('{{text_from}} {{currency.symbol_left}}'+$(this).attr('data-value')+'{{currency.symbol_right}}');
+						});	
+								
+						$('#filter_price_to{{module_id}}').on("focusout", function() {
+							$(this).val('{{text_to}} {{currency.symbol_left}}'+$(this).attr('data-value')+'{{currency.symbol_right}}');
+						});	
+						</script>
+						</div>	
+					{% endif %}
+					{% if filter_group.style == 2 %}
+						<div class="{% if style=='filter-style-horizontal-dropdown' %} dropdown nav-item {% endif %} filter-group-container g{{ filter_group.filter_group_id }}">
+							{% if style == 'filter-style-vertical-list' or style == 'filter-style-horizontal-dropdown' %}
+							<div {% if style=='filter-style-horizontal-dropdown' %}data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% endif %} class="{% if style=='filter-style-horizontal-dropdown' %} dropdown-toggle nav-link {% endif %} filter-group-title-container">
+								<span class="filter-group-title">{{ filter_group.name }}</span>
+								{% if style == 'filter-style-vertical-list' %}
+								
+								{% if filter_group.clear %}
+								<span class="gc{{ filter_group.filter_group_id }} filter-group-clear" data-parent="g{{ filter_group.filter_group_id }}">{{text_clear}}</span>
+								{% endif %}
+								
+								{% endif %}
+							</div>
+							{% endif %}
+							{% if style=='filter-style-horizontal-dropdown' %}
+							<div class="dropdown-menu">{% endif %}
+								<div class="filter-group-filters-container">
+									{% if style == 'filter-style-horizontal-dropdown' %}
+									
+									{% if filter_group.clear %}
+									<span class="gc{{ filter_group.filter_group_id }} filter-group-clear" data-parent="g{{ filter_group.filter_group_id }}">{{text_clear}}</span>
+									{% endif %}
+									
+									{% endif %}
+									{% set filterCounter = 1 %}
+									{% for filter in filter_group.filter %}
+										<div class="form-check">
+											{% if filter.1 %}	
+												<label for="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" class='f{{ filter_group.filter_group_id }}{{filter.0~"-"~filter.1}} form-check-label'>
+													<input id="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" data-parent='f{{ filter_group.filter_group_id }}{{filter.0~"-"~filter.1}}' {% if filter.0~"-"~filter.1 in filter_price %}  checked {% endif %} class='fp{{filter.0~"-"~filter.1}} form-check-input form-check-price-input form-check-price-input-range' type="radio" name="filter_price[]" value="{{ filter.0 }}-{{ filter.1 }}">
+													{% if filterCounter==1 %}<span class="form-check-sub">{{text_to}}</span>{% else %}<span class="filter-check-price-from">{{currency.symbol_left}}{{ filter.0 }}{{currency.symbol_right}}</span>{% endif %}<span class="filter-check-price-to">{{currency.symbol_left}}{{ filter.1 }}{{currency.symbol_right}}</span><span class="form-check-count">(<span class="form-check-count-text">{{ filter.count }}</span>)</span>
+												</label>	
+											{% else %}
+												<label for="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" class="f{{ filter_group.filter_group_id }}{{filter.0}} form-check-label">
+													<input id="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" data-parent='f{{ filter_group.filter_group_id }}{{filter.0}}' {% if filter.0 in filter_price %}  checked {% endif %} class="fp{{filter.0}} form-check-input form-check-price-input form-check-price-input-last" type="radio" name="filter_price[]" value="{{ filter.0 }}">
+													<span class="filter-check-price-from">{{currency.symbol_left}}{{ filter.0 }}{{currency.symbol_right}}</span><span class="form-check-sub">{{text_andabove}}</span><span class="form-check-count">(<span class="form-check-count-text">{{ filter.count }}</span>)</span>
+												</label>	
+											{% endif %}
+										</div> 
+										{% set filterCounter = filterCounter + 1 %}
+									{% endfor %}
+								</div>
+							{% if style=='filter-style-horizontal-dropdown' %}
+							</div>{% endif %}
+						</div>
+					{% endif %}
+				{% endif %}
+				{% if filter_group.type =="filters" %}
+					<div class="{% if style=='filter-style-horizontal-dropdown' %} nav-item dropdown {% endif %} filter-group-container g{{ filter_group.filter_group_id }}">
+						{% if style == 'filter-style-vertical-list' or style == 'filter-style-horizontal-dropdown' %}
+						{#
+						<div {% if style=='filter-style-horizontal-dropdown' %}data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% endif %} class="{% if style=='filter-style-horizontal-dropdown' %} dropdown-toggle nav-link {% endif %} filter-group-title-container">
+							<span class="filter-group-title">{{ filter_group.name }}</span>
+							{% if style == 'filter-style-vertical-list' %}
+							
+							{% if filter_group.clear %}
+							<span class="gc{{ filter_group.filter_group_id }} filter-group-clear" data-parent="g{{ filter_group.filter_group_id }}">{{text_clear}}</span>
+							{% endif %}
+							
+							{% endif %}		
+
+							{% if filter_group.text %}
+								<span class="select-all-filters" data-originaltext="{{ filter_group.text }}">
+									{{ filter_group.text }}
+								</span>
+							{% endif %}
+							
+						</div>
+						#}
+						{% endif %}
+						{% if style=='filter-style-horizontal-dropdown' %}
+						<div class="dropdown-menu-wrap">{% endif %}
+							<div class="filter-group-filters-container {% if filter_group.has_image %} has-image {% endif %}">
+								{% if style=='filter-style-horizontal-dropdown' %}
+								
+								{% if filter_group.clear %}
+								<span class="gc{{ filter_group.filter_group_id }} filter-group-clear" data-parent="g{{ filter_group.filter_group_id }}">{{text_clear}}</span>
+								{% endif %}
+								
+								{% endif %}
+								{% for filter in filter_group.filter %}
+									{% if filter.color or filter.image %}
+										<div class="form-check {% if filter.color or filter.image %} filter-with-image {% endif %}">	
+											<label for="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" class="f{{filter_group.filter_group_id}}{{filter.filter_id}} form-check-label">
+												<input id="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" data-parent="f{{filter_group.filter_group_id}}{{filter.filter_id}}" {% if filter.filter_id in filter_filter %} checked {% endif %} class="form-check-input" type="checkbox" name="filter_filter[]" value="{{ filter.filter_id }}">
+												<span class="form-check-image-block"><img src="{{filter.image}}" alt="{{filter.name}}" {% if filter.color %} style="background:{{filter.color}};" {% endif %} /></span>
+											</label>
+										</div> 
+									{% elseif not filter_group.has_image %}
+										<div class="form-check">	
+											<label for="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" class="f{{filter_group.filter_group_id}}{{filter.filter_id}} form-check-label">
+												<input id="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" data-parent="f{{filter_group.filter_group_id}}{{filter.filter_id}}" {% if filter.filter_id in filter_filter %} checked {% endif %} class="form-check-input" type="checkbox" name="filter_filter[]" value="{{ filter.filter_id }}">
+												<span class="form-check-title">{{ filter.name }}</span>
+												<span class="form-check-count">(<span class="form-check-count-text">{{ filter.count }}</span>)</span>	
+											</label>
+										</div> 
+									{% endif %}
+								{% endfor %}
+							</div>
+						{% if style=='filter-style-horizontal-dropdown' %}
+						</div>{% endif %}
+						
+					</div>
+				{% endif %}
+				{% if filter_group.type =="options" %}
+					<div class="{% if style=='filter-style-horizontal-dropdown' %} dropdown nav-item{% endif %} filter-group-container g{{ filter_group.filter_group_id }}">
+						{% if style == 'filter-style-vertical-list' or style == 'filter-style-horizontal-dropdown' %}
+						<div {% if style=='filter-style-horizontal-dropdown' %}data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% endif %} class="{% if style=='filter-style-horizontal-dropdown' %} dropdown-toggle nav-link {% endif %} filter-group-title-container">
+							<span class="filter-group-title">{{ filter_group.name }}</span>
+							{% if style == 'filter-style-vertical-list' %}
+							
+							{% if filter_group.clear %}
+							<span class="gc{{ filter_group.filter_group_id }} filter-group-clear" data-parent="g{{ filter_group.filter_group_id }}">{{text_clear}}</span>
+							{% endif %}
+							
+							{% endif %}
+							
+							{% if filter_group.text %}
+								<span class="select-all-filters" data-originaltext="{{ filter_group.text }}">
+									{{ filter_group.text }}
+								</span>
+							{% endif %}
+							
+						</div>
+						{% endif %}
+						{% if style=='filter-style-horizontal-dropdown' %}
+						<div class="dropdown-menu">{% endif %}
+							<div class="filter-group-filters-container {% if filter_group.has_image %} has-image {% endif %}">
+								{% if style=='filter-style-horizontal-dropdown' %}
+								
+								{% if filter_group.clear %}
+								<span class="gc{{ filter_group.filter_group_id }} filter-group-clear" data-parent="g{{ filter_group.filter_group_id }}">{{text_clear}}</span>
+								{% endif %}
+								
+								{% endif %}
+								{% for filter in filter_group.filter %}
+									{% if filter.color or filter.image %}
+										<div class="form-check {% if filter.color or filter.image %} filter-with-image {% endif %}">	
+											<label for="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" class="f{{filter_group.filter_group_id}}{{filter.filter_id}} form-check-label">
+												<input id="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" data-parent="f{{filter_group.filter_group_id}}{{filter.filter_id}}" {% if filter.filter_id in filter_option %} checked {% endif %} class="form-check-input" type="checkbox" name="filter_option[]" value="{{ filter.filter_id }}">
+												<span class="form-check-image-block"><img src="{{filter.image}}" alt="{{filter.name}}" {% if filter.color %} style="background:{{filter.color}};" {% endif %} /></span>
+											</label>
+										</div> 
+									{% elseif not filter_group.has_image %}
+										<div class="form-check">	
+											<label for="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" class="f{{filter_group.filter_group_id}}{{filter.filter_id}} form-check-label">
+												<input id="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" data-parent="f{{filter_group.filter_group_id}}{{filter.filter_id}}" {% if filter.filter_id in filter_option %} checked {% endif %} class="form-check-input" type="checkbox" name="filter_option[]" value="{{ filter.filter_id }}">
+												<span class="form-check-title">{{ filter.name }}</span>
+												<span class="form-check-count">(<span class="form-check-count-text">{{ filter.count }}</span>)</span>	
+											</label>
+										</div> 
+									{% endif %}
+								{% endfor %}
+							</div>
+						{% if style=='filter-style-horizontal-dropdown' %}
+						</div>{% endif %}
+					</div>
+				{% endif %}
+				{% if filter_group.type =="manufacturers" %}
+					<div class="{% if style=='filter-style-horizontal-dropdown' %} dropdown nav-item {% endif %} filter-group-container  g{{ filter_group.filter_group_id }}">
+						{% if style == 'filter-style-vertical-list' or style == 'filter-style-horizontal-dropdown' %}
+						<div {% if style=='filter-style-horizontal-dropdown' %}data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% endif %} class="{% if style=='filter-style-horizontal-dropdown' %}nav-link dropdown-toggle {% endif %} filter-group-title-container">
+							<span class="filter-group-title">{{ filter_group.name }}</span>
+							{% if style == 'filter-style-vertical-list' %}
+							
+							{% if filter_group.clear %}
+							<span class="gc{{ filter_group.filter_group_id }} filter-group-clear" data-parent="g{{ filter_group.filter_group_id }}">{{text_clear}}</span>
+							{% endif %}
+							
+							{% endif %}
+							
+							{% if filter_group.text %}
+								<span class="select-all-filters" data-originaltext="{{ filter_group.text }}">
+									{{ filter_group.text }}
+								</span>
+							{% endif %}	
+							
+						</div>
+						{% endif %}
+						{% if style=='filter-style-horizontal-dropdown' %}
+						<div class="dropdown-menu">{% endif %}
+							<div class="filter-group-filters-container">
+								{% if style=='filter-style-horizontal-dropdown' %}
+								
+								{% if filter_group.clear %}
+								<span class="gc{{ filter_group.filter_group_id }} filter-group-clear" data-parent="g{{ filter_group.filter_group_id }}">{{text_clear}}</span>
+								{% endif %}
+								
+								{% endif %}
+								{% for filter in filter_group.filter %}
+									<div class="form-check">
+										<label for="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" class="f{{filter_group.filter_group_id}}{{filter.filter_id}} form-check-label">
+											<input id="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" data-parent="f{{filter_group.filter_group_id}}{{filter.filter_id}}" {% if filter.filter_id in filter_manufacturer %} checked {% endif %} class="form-check-input" type="checkbox" name="filter_manufacturer[]" value="{{ filter.filter_id }}">
+											<span class="form-check-title">{{ filter.name }}</span><span class="form-check-count">(<span class="form-check-count-text">{{ filter.count }}</span>)</span>
+										</label>
+									</div> 
+								{% endfor %}
+							</div>
+						{% if style=='filter-style-horizontal-dropdown' %}
+						</div>{% endif %}		
+						
+					</div>
+				{% endif %}
+				{% if filter_group.type =="categories" %}
+					<div class="{% if style=='filter-style-horizontal-dropdown' %} dropdown nav-item {% endif %} filter-group-container  g{{ filter_group.filter_group_id }}">
+						{% if style == 'filter-style-vertical-list' or style == 'filter-style-horizontal-dropdown' %}
+						<div {% if style=='filter-style-horizontal-dropdown' %}data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% endif %} class="{% if style=='filter-style-horizontal-dropdown' %} dropdown-toggle nav-link {% endif %} filter-group-title-container">
+							<span class="filter-group-title">{{ filter_group.name }}</span>
+							{% if style=='filter-style-vertical-list' %}
+							
+							{% if filter_group.clear %}
+							<span class="gc{{ filter_group.filter_group_id }} filter-group-clear" data-parent="g{{ filter_group.filter_group_id }}">{{text_clear}}</span>
+							{% endif %}
+							
+							{% endif %}
+							
+						</div>
+						{% endif %}
+						{% if style=='filter-style-horizontal-dropdown' %}
+						<div class="dropdown-menu">{% endif %}
+							<div class="filter-group-filters-container">
+								{% if style=='filter-style-horizontal-dropdown' %}
+								
+								{% if filter_group.clear %}
+								<span class="gc{{ filter_group.filter_group_id }} filter-group-clear" data-parent="g{{ filter_group.filter_group_id }}">{{text_clear}}</span>
+								{% endif %}
+								
+								{% endif %}
+								{% for filter in filter_group.filter %}
+									<div class="form-check">
+										<label for="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" class="f{{filter_group.filter_group_id}}{{filter.filter_id}} form-check-label">
+											<input id="f{{module_id}}{{filter_group.filter_group_id}}{{filter.filter_id}}" data-parent="f{{filter_group.filter_group_id}}{{filter.filter_id}}" {% if filter.filter_id in filter_category %} checked {% endif %} class="form-check-input" type="checkbox" name="filter_category[]" value="{{ filter.filter_id }}">
+											<span class="form-check-title">{{ filter.name }}</span><span class="form-check-count">(<span class="form-check-count-text">{{ filter.count }}</span>)</span>
+										</label>
+									</div> 
+								{% endfor %}
+							</div>
+						{% if style=='filter-style-horizontal-dropdown' %}
+						</div>{% endif %}
+					</div>
+				{% endif %}
+			{% endfor %}
+			</div>
+			{% if style=='filter-style-vertical-list' %}
+			<div class="filters-responsive-bottom" >
+				<div class="btn btn-primary filters-responsive-results" data-wrapper="ho-filter-block{{module_id}}">{{text_viewproducts}} (<span class="filter-view-results">{{total}}</span>)</div>
+			</div>
+			{% endif %}
+		{% if style=='filter-style-vertical-list' %}		
+		</div>
+		{% endif %}
+	</div>
+</div>
+</div>
+
+
+<script type="text/javascript">
+
+	function updateURLParameter(url, param, paramVal){
+		var newAdditionalURL = "";
+		var tempArray = url.split("?");
+		var baseURL = tempArray[0];
+		var additionalURL = tempArray[1];
+		var temp = "";
+		if (additionalURL) {
+			tempArray = additionalURL.split("&");
+
+			for (var i=0; i < tempArray.length; i++){
+				if(tempArray[i].split('=')[0] != param){
+					newAdditionalURL += temp + tempArray[i];
+					temp = "&";
+				}
+			}
+		}
+		
+		if (paramVal) {
+			var rows_txt = temp + "" + param + "=" + paramVal;
+		} else {
+			var rows_txt = '';
+		}
+		baseURL = baseURL.replace(/^.*\/\/[^\/]+/, '')
+		return baseURL + "?" + newAdditionalURL + rows_txt;
+	}
+	
+	$('#clear_all{{module_id}}').click(function() {
+		$('.ho-filters-wrapper input:radio').each(function() {
+			$(this).prop('checked',false);
+		});
+		$('.ho-filters-wrapper input:checkbox').each(function() {
+			$(this).prop('checked',false);
+		});
+		
+		{% if min_price %}
+		
+		$('.ho-filters-wrapper .filter_price_from').each(function() {
+			$(this).val('{{text_from}} {{currency.symbol_left}}'+{{min_price}}+'{{currency.symbol_right}}');
+			$(this).attr("data-value",{{min_price}}).trigger("input");
+		});
+		
+		{% endif %}
+		
+		{% if max_price %}
+		
+		$('.ho-filters-wrapper .filter_price_to').each(function() {
+			$(this).val('{{text_to}} {{currency.symbol_left}}'+{{max_price}}+'{{currency.symbol_right}}');
+			$(this).attr("data-value",{{max_price}}).trigger("input");
+		});
+		
+		{% endif %}
+		
+		updateFilters{{module_id}}();
+	});
+	
+	$('.filter-group-clear').click(function() {
+		var clearid = '.'+$(this).attr('data-parent');
+		$(clearid+" input").each(function() {
+			$(this).prop('checked',false);
+		});
+		updateFilters{{module_id}}();
+	});
+	
+	$('#ho-filter-block{{module_id}} .form-check-input').on('click', function() {
+		clickid = $(this).attr("data-parent");
+		if ($(this).prop('checked')) {
+			$("."+clickid+" input").prop('checked',true);
+		} else {
+			$("."+clickid+" input").prop('checked',false);
+		}
+		updateFilters{{module_id}}();
+	});
+	
+	function updateFilters{{module_id}}() {
+	
+		if ($('#temp-ajax-container').attr('data-href')) {
+			var check_url = $('#temp-ajax-container').attr('data-href');
+		} else {
+			var check_url = "{{sef_route}}{{url_route}}";
+		}
+		filter = [];
+		$('#ho-filter-block{{module_id}} input[name^=\'filter_filter\']:checked').each(function(element) {
+			filter.push(this.value);
+		});
+		
+		option = [];
+		$('#ho-filter-block{{module_id}} input[name^=\'filter_option\']:checked').each(function(element) {
+			option.push(this.value);
+		});
+		
+		price = [];
+		
+		if($("#filter_price_from{{module_id}}").length) {
+			price_temp = [];
+
+			if (parseInt($("#filter_price_from{{module_id}}").attr('data-value')) != parseInt("{{min_price}}") || parseInt($("#filter_price_to{{module_id}}").attr('data-value')) != parseInt("{{max_price}}")) {
+				if($("#filter_price_from{{module_id}}").attr('data-value')) {
+					price_temp.push($("#filter_price_from{{module_id}}").attr('data-value'));
+				} 
+				if($("#filter_price_to{{module_id}}").attr('data-value')) {
+					if($("#filter_price_from{{module_id}}").attr('data-value')) {
+						price_temp.push($("#filter_price_to{{module_id}}").attr('data-value'));
+					} else {
+						price_temp.push("{{min_price}}");
+						price_temp.push($("#filter_price_to{{module_id}}").attr('data-value'));
+					}
+				} 		
+			}
+			price.push(price_temp.join('-'));
+		
+		} else {
+			$('#ho-filter-block{{module_id}} input[name^=\'filter_price\']:checked').each(function(element) {
+				price.push(this.value);
+			});
+			
+		}
+
+		manufacturer = [];
+		$('#ho-filter-block{{module_id}} input[name^=\'filter_manufacturer\']:checked').each(function(element) {
+			manufacturer.push(this.value);
+		});
+		
+		category = [];
+		$('#ho-filter-block{{module_id}} input[name^=\'filter_category\']:checked').each(function(element) {
+			category.push(this.value);
+		});
+		
+		limit = [];
+		$('#input-limit:selected').each(function(element) {
+			limit.push(this.value);
+		});
+		
+		sort = [];
+		$('#input-sort:selected').each(function(element) {
+			sort.push(this.value);
+		});
+		
+		check_url = updateURLParameter(check_url,'filter',filter.join(','));
+		
+		check_url = updateURLParameter(check_url,'filter_option',option.join(','));
+		
+		check_url = updateURLParameter(check_url,'filter_price',price.join(','));
+		
+		check_url = updateURLParameter(check_url,'filter_manufacturer',manufacturer.join(','));
+		
+		check_url = updateURLParameter(check_url,'filter_category',category.join(','));
+		
+		check_url = updateURLParameter(check_url,'sort',sort.join(','));
+		
+		check_url = updateURLParameter(check_url,'limit',limit.join(','));
+		
+		check_url = updateURLParameter(check_url,'page','');	
+		
+		$('#ajax-wrapper').addClass("loading");
+		
+		$('#pagination-top').load(check_url+" #pagination");
+		
+		$('#temp-ajax-container').load(check_url.replace("&amp;", "&").replace(" ", "%20")+"&clean=1"+" #ajax-container", function() {
+			//$('#temp-ajax-container').imagesLoaded( function() {
+				$('#ajax-wrapper').html($('#temp-ajax-container').html());
+				$('#temp-ajax-container').html('').attr('data-href',check_url);
+				$('#ajax-wrapper').removeClass("loading");
+			//});
+		});
+	
+		//window.location.href = check_url;
+
+		var minurl = check_url.replace("{{base_route}}", "");
+		
+		window.history.pushState("", "", check_url);
+
+		$.ajax({
+			url: 'index.php?route=extension/module/ho_filter/getFilterTotals'+minurl+'&module_id={{module_id}}',
+			type: 'GET',
+			dataType: 'json',
+			beforeSend: function() {
+
+			},
+			success: function(data) {
+				$.each( data['values'], function( key, value ) {
+					if(value > 0) {
+						$('.'+key).removeClass('disabled');
+						$('.'+key+' input').removeAttr('disabled');
+						$('.'+key+' .form-check-count-text').html(value);
+					} else {
+						$('.'+key).addClass('disabled');
+						$('.'+key+' input').attr('disabled','disabled');
+						$('.'+key+' .form-check-count-text').html(value);
+					}
+					$('.filter-view-results').html(data['total']);
+				});
+				$.each( data['clear'], function( key, value ) {
+					if(value == 1) {
+						$('.'+key).text('{{text_clear}}');
+					} else {
+						$('.'+key).text("");
+					}
+				});
+				if(data['clear_all']) {
+					$('.filter-clear-all').text("{{text_clear_all}}");
+				} else {
+					$('.filter-clear-all').text("");
+				}
+				
+				$('.form-check-price-input').prop("checked",false);
+				$('.fp'+data['price']).prop("checked",true);
+				
+				$('.filter_price_from').val(data['min_price_value']);
+				$('.filter_price_from').val('{{text_from}} {{currency.symbol_left}}'+data['min_price_value']+'{{currency.symbol_right}}');
+				$('.filter_price_to').val(data['max_price_value']);
+				$('.filter_price_to').val('{{text_to}} {{currency.symbol_left}}'+data['max_price_value']+'{{currency.symbol_right}}');
+				$('.price-range-group').trigger('updateRange');
+				
+			}
+		});
+		updateText( $('.filters-wrapper .nav-item') );
+	}
+	
+	$(document).ready(function(){
+		updateText( $('.filters-wrapper .nav-item') );
+	});
+	
+	function updateText( element ) {	
+		element.each(function(){
+			
+			var parent 		= $(this);
+			var statusText 	= '';
+			
+			if( $(this).find('.select-all-filters').length ) {
+				
+				statusText 	= $(this).find('.select-all-filters');
+			
+				var selectedFilters = [];
+				parent.find('input:checked').each(function(){
+					
+					if( $(this).siblings('.form-check-title').length ) {
+						selectedFilters.push( $(this).siblings('.form-check-title').text() );
+					};
+					if( $(this).siblings('.form-check-image-block').length ) {
+						selectedFilters.push( $(this).siblings('.form-check-image-block').find('img').attr('ALT') );
+					};
+				});
+			};
+			
+			if( selectedFilters.length ) {
+				statusText.text(selectedFilters);
+			} else {
+				statusText.text( statusText.data('originaltext') );
+			};
+		});	
+	};
+	
+	
+//--></script> 
+</script>
+{% endif %}

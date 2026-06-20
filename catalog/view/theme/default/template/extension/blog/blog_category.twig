@@ -1,0 +1,123 @@
+{{ header }}
+<div class="col-12 page-header">
+	{% if not thumb %}
+	<div class="full-container">	
+		<nav aria-label="breadcrumb" class="full-row">
+		<ol class="breadcrumb">
+		  {% for breadcrumb in breadcrumbs %}
+		  <li class="breadcrumb-item"{% if loop.last %} aria-current="page"{% endif %}><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		  {% endfor %}
+		</ol>
+		</nav>
+		<div class="row">
+		  <div class="col-12">
+			  <div class="main-content-title-container">
+				<h1 class="{% if description %} has-description {% endif %} main-content-title">{{ heading_title }}</h1>
+			  </div>
+			 {% if description %} 
+			 <div class="main-description">
+				{{ description }}
+			 </div>
+			 {% endif %} 
+		  </div>
+		</div>  
+	</div>
+	{% else %}
+	<div class="full-container page-background-container">	
+		<div class="page-background parallax-image">
+			<img src="{{thumb}}" alt="{{heading}}" />
+		</div>
+		<div class="container">
+		<div class="row">
+		  <div class="col-12">
+			  <div class="main-content-title-container">
+				<h1 class="has-background main-content-title">{{ heading_title }}</h1>
+				<nav aria-label="breadcrumb" class="full-row">
+				<ol class="breadcrumb">
+				  {% for breadcrumb in breadcrumbs %}
+				  <li class="breadcrumb-item"{% if loop.last %} aria-current="page"{% endif %}><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				  {% endfor %}
+				</ol>
+				</nav>
+			  </div>
+			 {% if description %}
+				 <div class="main-description">
+					{{ description }}
+				 </div>
+			 {% endif %} 
+		  </div>
+		</div>  
+		</div>
+		
+	</div>
+	{% endif %}
+</div>
+
+<div class="container">
+	<div class="row justify-content-md-center">
+	   {% if column_left and column_right %}
+	   {% set class = 'col-12 col-sm-6' %}
+	   {% elseif column_left or column_right %}
+	   {% set class = 'col-12 col-sm-9' %}
+	   {% else %}
+		   {% if list_columns == 1 %}
+				{% set class = 'col-md-9 col-12' %}
+		   {% else %}
+				{% set class = 'col-12' %}
+		   {% endif %}
+	   {% endif %}
+	   {{ column_left }}
+	   <div id="content" class="{{ class }}">
+		  {{ content_top }}
+		  <div class="blog">
+			 {% if blogs%} 
+			 <div class="blog_grid_home blog_grip-wrapper column-{{ list_columns }}">
+				<div class="blog_grip-container">
+					{% for blog in blogs %} 
+					<div class="blog_item">
+					   <div class="summary">
+						  <h2 class="blog_title"><a href="{{ blog.href }}">{{ blog.title }}</a></h2>
+						  <div class="blog_stats">
+							 {% if author_status %}
+							 <span><i class="fal fa-user"></i>{{ blog.author }}</span>
+							 {% endif %} 
+							 {% if date_added_status %}
+							 <span><i class="fal fa-clock"></i>{{ blog.date_added_full }}</span>
+							 {% endif %} 
+							 {% if page_view_status %}
+							 <span><i class="fal fa-eye"></i>{{ blog.count_read }}</span>
+							 {% endif %} 
+						  </div>
+						  
+						 {% if blog.image %} 
+						 <div class="image">
+							<a href="{{ blog.href }}"><img src="{{ blog.image }}" alt="{{ blog.title }}" title="{{ blog.title }}" /></a>
+						 </div>
+						 {% endif %} 
+						 {% if blog.short_description %}
+							 <div class="blog_description">
+								 {{ blog.short_description }}
+							 </div> 
+						 {% endif %} 
+						<div class="blog_read-more-container">
+							<a class="generic-button blog_read-more" href="{{ blog.href }}">{{ text_read_more }} <i class="fal fa-arrow-right"></i></a>
+						</div>
+					   </div>
+					 </div>
+					{% endfor %} 
+				</div>
+				<div class="row">
+				   <div class="col-sm-6 text-left">{{ results }}</div>
+				   <div class="col-sm-6 text-right">{{ pagination }}</div>
+				</div>
+				{% else %}  
+				<div>{{ text_no_results }}</div>
+				{% endif %} 
+			 </div>
+			 {{ content_bottom }}
+		  </div>
+		</div>
+		{{ column_right }}
+	</div>
+</div>
+{{ footer }}

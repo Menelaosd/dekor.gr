@@ -1,0 +1,200 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<div id="batch-actions">
+<br>
+<h4>{{ text_actions }}<span id="batch-results-total"></span> <span id="batch-results-selected"></span></h4>
+<hr/>
+	<ul class="nav nav-tabs navigation tabs-left1">
+		<li class="active"><a id="nav-tab_preview-filter" href="#tab_action_preview" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ button_preview_filter }}</a></li>
+		<li><a href="#tab_action_product" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_product }}</a></li>
+		<li><a href="#tab_action_option" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_option }}</a></li>
+		<li><a href="#tab_action_attribute" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_attribute }}</a></li>
+		<li><a href="#tab_action_special" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_special }}</a></li>
+		<li><a href="#tab_action_discount" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_discount }}</a></li>
+		<li><a href="#tab_action_category" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_category }}</a></li>
+		<li class="rare" style="">
+			<div class="pull-right dropdown" style="padding-top:5px;">
+				<button type="button" data-toggle="dropdown" title="{{ text_more }}" class="btn btn-default dropdown-toggle" style="padding: 5px 13px;"><i class="fa fa-ellipsis-h"></i>&nbsp;<span class="caret"></span></button>
+				<ul class="dropdown-menu">
+					{% if oc_filters %}
+					<li><a href="#tab_action_filter" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_filter }}</a></li>
+					{% endif %}
+					{% if ext_labels %}
+					<li><a href="#tab_action_label" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_label }}</a></li>
+					{% endif %}
+					<li><a href="#tab_action_store" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_store }}</a></li>
+					<li><a href="#tab_action_reward" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_reward }}</a></li>
+					<li><a href="#tab_action_layout" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_layout }}</a></li>
+					<li><a href="#tab_action_related" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_related }}</a></li>
+					<li><a href="#tab_action_seo_url" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_seo_url }}</a></li>
+					<li><a href="#tab_action_clear" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_clear }}</a></li>
+					<li><a href="#tab_action_sql" data-toggle="tab" onclick="bpe.openActionTab(this);">{{ tab_action_sql }}</a></li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="tab_action_preview">
+			<div class="row">
+				<div class="col-xs-12 text-left" id="batch-results-first">{{ text_products_first }}: </div>
+			</div>
+			<div class="form-group action-group-default">
+				<div class="batch-results table-responsive">
+				<table id="batch-results" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<td width="40px"><input type="checkbox" id="all-products" name="filter[product_ids_all]" value="1" checked="checked" /></td>
+							<td class="text-right">#</td>
+							<td class="text-left img" width="40px">{{ column_image }}</td>
+							<td class="text-left dynamic">{{ column_name }}</td>
+							<td class="text-left dynamic">{{ column_model }}</td>
+							<td class="text-right dynamic">{{ column_price }}</td>
+							<td class="text-right dynamic">{{ column_quantity }}</td>
+							<td class="text-right dynamic" data-toggle="tooltip" title="{{ column_special }}">{{ column_special_short }}</td>
+							<td class="text-right dynamic" data-toggle="tooltip" title="{{ column_discount }}">{{ column_discount_short }}</td>
+							<td class="text-right dynamic" data-toggle="tooltip" title="{{ column_option }}">{{ column_option_short }}</td>
+							<td class="text-right dynamic" data-toggle="tooltip" title="{{ column_attribute }}">{{ column_attribute_short }}</td>
+							<td class="text-right dynamic" data-toggle="tooltip" title="{{ column_filter }}">{{ column_filter_short }}</td>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane" id="tab_action_product">
+			{{ tpl_action_product }}
+		</div>
+		<div class="tab-pane" id="tab_action_option">
+			{{ tpl_action_option }}
+		</div>
+		<div class="tab-pane" id="tab_action_attribute">
+			{{ tpl_action_attribute }}
+		</div>
+		<div class="tab-pane" id="tab_action_special">
+			{{ tpl_action_special }}
+		</div>
+		<div class="tab-pane" id="tab_action_discount">
+			{{ tpl_action_discount }}
+		</div>
+		{% if oc_filters %}
+		<div class="tab-pane" id="tab_action_filter">
+			{{ tpl_action_filter }}
+		</div>
+		{% endif %}
+		<div class="tab-pane" id="tab_action_category">
+			{{ tpl_action_category }}
+		</div>
+		<div class="tab-pane" id="tab_action_store">
+			{{ tpl_action_store }}
+		</div>
+		<div class="tab-pane" id="tab_action_reward">
+			{{ tpl_action_reward }}
+		</div>
+		<div class="tab-pane" id="tab_action_layout">
+			{{ tpl_action_layout }}
+		</div>
+		{% if ext_labels %}
+		<div class="tab-pane" id="tab_action_label">
+			{{ tpl_action_label }}
+		</div>
+		{% endif %}
+		<div class="tab-pane" id="tab_action_seo_url">
+			{{ tpl_action_seo_url }}
+		</div>
+		<div class="tab-pane" id="tab_action_related">
+			{{ tpl_action_related }}
+		</div>
+		<div class="tab-pane" id="tab_action_clear">
+			{{ tpl_action_clear }}
+		</div>
+		<div class="tab-pane" id="tab_action_sql">
+			{{ tpl_action_sql }}
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+	<div class="price-settings" style="border-top:1px solid #ededed;margin-top:20px;display:none;">
+		<div class="form-group action-group-default">
+			<label class="col-sm-2 control-label" for="settings[price_tax_class_id]">1. {{ entry_tax_class }}</label>
+			<div class="col-sm-4">
+				<select name="settings[price_tax_class_id]" class="form-control">
+					<option value="">--- {{ text_not_assigned }} ---</option>
+					<option value="p">--- {{ text_from_product }} ---</option>
+					{% for tax_class in tax_classes %}
+					<option value="{{ tax_class.tax_class_id }}">{{ tax_class.title }}</option>
+					{% endfor %}
+				</select>
+			</div>
+
+			<label class="col-sm-2 control-label" for="settings[price_currency_id]">2. {{ entry_currency }}</label>
+			<div class="col-sm-4">
+				<select name="settings[price_currency_id]" class="form-control">
+					<option value="">--- {{ entry_default }} ---</option>
+					{% for currency in currencies %}
+					<option value="{{ currency.currency_id }}">{{ currency.code }} - {{ currency.title }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		<div class="form-group action-group-default">
+			<label class="col-sm-2 control-label" for="settings[price_round]">3. {{ entry_round_price }}</label>
+			<div class="col-sm-2">
+				<select name="settings[price_round_math]" class="form-control">
+					<option value="math">{{ text_round_math }}</option>
+					<option value="ceil">{{ text_round_ceil }}</option>
+					<option value="floor">{{ text_round_floor }}</option>
+				</select>
+			</div>
+			<div class="col-sm-2">
+				<input type="text" name="settings[price_round]" value="2" placeholder="{{ entry_round_price }}" id="settings[price_round]" class="form-control" />
+			</div>
+
+			<label class="col-sm-2 control-label" for="settings[price_markup]">4. {{ entry_pretty_price }}</label>
+			<div class="col-sm-2">
+				<select name="settings[price_markup_sign]" class="form-control">
+					<option value=""></option>
+					<option value="-">-</option>
+					<option value="+">+</option>
+					<option value="r">{{ text_replace_ending }}</option>
+				</select>
+			</div>
+			<div class="col-sm-2">
+				<input type="text" name="settings[price_markup]" value="0.00" placeholder="{{ entry_pretty_price }}" id="settings[price_markup]" class="form-control" />
+			</div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+	<div class="row execute-buttons" style="border-top:1px solid #ededed;margin-top:20px;display:none;">
+		<div class="col-xs-12">&nbsp;</div>
+		<div class="col-xs-8">
+			{{ info_backup }}
+		</div>
+		<div class="col-xs-4">
+			<div class="pull-right">
+				<button type="button" id="button-execute" data-toggle="tooltip" title="{{ help_execute }}" class="btn btn-danger" onclick="bpe.executeAction(this);"><i class="fa fa-play"></i> {{ button_execute }}</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="batch-settings" style="display:none;">
+	{{ tpl_action_setting }}
+</div>
+<div id="batch-help" style="display:none;">
+	{{ tpl_action_help }}
+</div>
+
+<div class="row">
+	<div class="col-xs-12 text-center">&nbsp;</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 text-left result-message"></div>
+</div>

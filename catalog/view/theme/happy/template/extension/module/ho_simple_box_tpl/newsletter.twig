@@ -1,0 +1,83 @@
+<div class="clearfix"></div>
+<div id="newsletter" class="newsletter-wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="newsletter-inner">
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"></div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+					<div class="newsletter-right">
+						<h3>Σου αρέσουν τα προϊόντα μας;</h3></h3>
+						<div class="newsletter-intro">
+						Εγγράψου στο Newsletter και θα μαθαίνεις πρώτος για όλες τις μοναδικές προσφορές, τα νέα προϊόντα και τα δώρα του {% if store_id == 0 %}Dekor{% else %}Apokrifa{% endif%}!
+						</div>
+						<div class="newsletter_form">
+							<div class="newsletter_return"></div>
+							<form id="formNewLestter" method="post" action="/index.php?route=extension/module/ho_newsletter/subscribe" class="form-inline newsletter_form newsletter-bg">
+								<div class="newsletter_email">
+									<input type="text" placeholder="Συμπλήρωσε το email σου..." name="email" id="subscribe-email">
+									<div class="newsletter_button">
+										<button type="submit" name="submitNewsletter" class="btn btn-default" id="subscribe-btn">ΕΓΓΡΑΦΗ</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						{% if store_id == 0 %}
+						<div class="newsletter-motto">
+							<img src="image/catalog/keep_in_touch.png" title="Keep in Touch" alt="Keep in Touch">
+						</div>
+						{% endif %}
+						<div class="clearfix"></div>
+
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		// $("#subscribe-email").on('change keyup keydown', function(){
+		// 	$(".newsletter_notes0").removeClass("hidden");
+		// });
+			$("#subscribe-btn").on('click', function(e) {
+				
+				e.preventDefault();
+				var email = $('#subscribe-email').val();
+				var form = $('#formNewLestter');
+				
+				$(".success_inline, .warning_inline, .error").remove();
+				if(!isValidEmailAddress(email)) {
+					$('.newsletter_return').html("<div class=\"error alert alert-danger\">Το email που έχετε πληκτρολογήσει δεν είναι αποδεκτό!<button type=\"button\" class=\"close\" data-dismiss=\"alert\"><i class=\"fa fa-times\"></i></button></div></div>");
+					$('.inputNew').focus();
+					return false;
+				}
+			
+				var url = $(form).attr('action');
+				$.ajax({
+					type: "post",
+					url: url,
+					data: $(form).serialize(),
+					dataType: 'json',
+					success: function(json)
+					{
+						$(".success_inline, .warning_inline, .error").remove();
+						if (json['error']) {
+							$('.newsletter_return').html("<div class=\"alert alert-danger\">"+json['error']+"<button type=\"button\" class=\"close\" data-dismiss=\"alert\"><i class=\"fa fa-times\"></i></button></div>");
+						}
+						if (json['success']) {
+							$('.newsletter_return').html("<div class=\"alert alert-success\">"+json['success']+"<button type=\"button\" class=\"close\" data-dismiss=\"alert\"><i class=\"fa fa-times\"></i></button></div>");
+							$('#subscribe-email').val("");
+						}
+					}
+				});
+			});
+
+	});
+		
+	function isValidEmailAddress (emailAddress) {
+		var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+		return pattern.test(emailAddress);
+	}
+</script>

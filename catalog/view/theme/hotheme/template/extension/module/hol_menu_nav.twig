@@ -1,0 +1,197 @@
+<nav class="main-nav-desktop">	
+	<div class="desktop-nav">
+		{% for nav_item in nav %}
+			{% if nav_item.children %}
+				<div class="{% if nav_item.children %} dropdown {% endif %} nav-item actives {{ nav_item.icon_class }}">
+					<a href="{{ nav_item.url }}" class="nav-link {% if nav_item.children %} dropdown-toggle {% endif %}" {% if nav_item.children %}data-toggle="dropdown"{% endif %}>{{ nav_item.title }}</a>
+					<ul class="dropdown-menu">
+						{% for child in nav_item.children %}
+							{% if child.children %}
+								<li class="dropdown-submenu">
+									<a  tabindex="-1" href="{{ child.url }}">{{ child.title }}</a>
+									<ul class="dropdown-menu">
+										{% for childer in child.children %}
+											<li><a href="{{ childer.url }}">{{ childer.title }}</a></li>
+										{% endfor %}
+									</ul>
+							{% else %}
+								<li><a href="{{ child.url }}">{{ child.title }}</a></li>
+							{% endif %}
+						{% endfor %}
+					</ul>
+				</div>
+			{% else %}
+				<div class="nav-item {{ nav_item.icon_class }} {% if nav_item.megamenu %} dropdown has-megamenu {% endif %}">
+					<a href="{{ nav_item.url }}" class="nav-link {% if nav_item.megamenu %} dropdown-toggle {% endif %}" {% if nav_item.megamenu %}data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"{% endif %}>{{ nav_item.title }}</a>
+					{% if nav_item.megamenu %}
+						{% set image_row = 0 %}
+						{% set banner_row = 0 %} 
+						{% set col_row = 0 %} 
+						<div class="dropdown-menu dropdown-menu-ca">
+							<div class="dropdown-megamenu-wrap">
+							{% for megamenu_row in nav_item.megamenu %}
+								<div class="megamenu-block-row">
+								{% set col_row = 0 %}
+								{% for megamenu_block in megamenu_row %}
+								{% set specialClass = '' %}
+								{% for megamenu in megamenu_block %}
+									{% if megamenu.specialclass %}
+										{% set specialClass = megamenu.specialclass  %}
+									{% endif %}
+								{% endfor %}
+								<div class="megamenu-block-wrap {{ specialClass }}">
+								{% for megamenu in megamenu_block %}	
+										<div class="megamenu-block {{ megamenu.type }} {{ megamenu.class }}">
+											{% set blocktitle = '' %}
+											{% if megamenu.type == 'type1' and megamenu.categories %}
+												{% set blocktitle = megamenu.categories.title %}
+											{% endif %}
+											{% if megamenu.title %}
+												{% set blocktitle = megamenu.title %}
+									 		{% endif %}
+											{% if blocktitle or megamenu.image %}
+											<h3 {% if megamenu.image %}class="has-image"{% endif %}>
+												{% if blocktitle %}
+													<span>
+														{% if megamenu.type == 'type1' and not megamenu.extended_links %}
+															<a title="{{ blocktitle }}" href="{{ megamenu.href }}">
+														{% endif %}
+														{{ blocktitle }}
+														{% if megamenu.type == 'type1' and not megamenu.extended_links %}
+															</a>
+														{% endif %}
+													</span>
+												{% endif %}
+												{% if megamenu.image %}
+													{% if (megamenu.type == 'type5' and megamenu.custom_links) %}
+														{% if megamenu.custom_links|length == 1 or megamenu.type == 'type1' %}
+															<a title="{{ megamenu.custom_links|first.title }}" href="{{ megamenu.custom_links|first.href }}">
+														{% endif %}
+													{% endif %}
+													
+													{% if megamenu.type == 'type1' %}
+														<a title="{{ blocktitle }}" href="{{ megamenu.href }}">
+													{% endif %}
+													
+													<img src="{{ megamenu.image }}" alt="{{ blocktitle }}">
+
+													{% if (megamenu.type == 'type5' and megamenu.custom_links) %}
+														{% if megamenu.custom_links|length == 1 or megamenu.type == 'type1' %}
+															</a>
+														{% endif %}
+													{% endif %}
+													{% if megamenu.type == 'type1' %}
+														</a>
+													{% endif %}
+												{% endif %}
+											</h3>
+											{% endif %}
+											<div class="megamenu-block-content">
+												{% if megamenu.type == 'type1' and megamenu.categories %}
+													<ul class="megamenu-categories">
+														{% for megamenucategory in megamenu.categories.children %}
+															<li class="megamenucategory-li {% if megamenucategory.children %}has-dropdown{% endif %}">
+																<div class="megamenucategory-block" >
+																	{% if megamenucategory.thumb %}
+																		<div class="megamenu-category-image">
+																			<a 									
+																				href="{{ megamenucategory.href }}" 
+																				title="{{ megamenucategory.name }}" >
+																				<img src="{{ megamenucategory.thumb }}" alt="{{ megamenucategory.name }}">
+																			</a>
+																		</div>
+																	{% endif %}
+																	<div class="megamenucategory-caption">
+																		<a class="megamenu-category-title-inner" href="{{ megamenucategory.href }}" title="{{ megamenucategory.name }}">
+																			{{ megamenucategory.name }}
+																		</a>
+																		<a class="megamenu-all" href="{{ megamenucategory.href }}">
+																			{{ text_see_products }}
+																		</a>
+																	</div>
+																	{% if megamenucategory.children %}
+																		<div class="dropdown-menu-block">
+																			<ul class="c_child-menu">
+																				{% for c_child in megamenucategory.children %}
+																					<li>
+																						<a title="{{ c_child.name }}" href="{{ c_child.href }}">
+																							{{ c_child.name }}
+																						</a>
+																					</li>
+																				{% endfor %}
+																			</ul>
+																		</div>
+																	{% endif %}
+																</div>
+															</li>
+														{% endfor %}
+													</ul>
+												{% endif %}
+												{% if megamenu.type == 'type2' and megamenu.brands %}
+													<div class="megamenu-brands">
+														{% for megamenubrand in megamenu.brands %}
+															<div class="megamenu-brand">
+																<a href="{{ megamenubrand.href }}" title="{{ megamenubrand.name }}">
+																	<img src="{{ megamenubrand.image }}" alt="{{ megamenubrand.name }}">
+																</a>
+															</div>
+														{% endfor %}
+													</div>
+												{% endif %}
+												{% if megamenu.type == 'type3' and megamenu.module %}
+													<div class="megamenu-module">
+														{{ megamenu.module }}
+													</div>
+												{% endif %}
+												{% if megamenu.type == 'type4' and megamenu.filters %}
+													<ul class="megamenu-filters">
+														{% for filter in megamenu.filters %}
+															<li>
+																<a title="{{ filter.name}}" href="{{ filter.href }}">
+																	<span class="megamenu-filter-image">
+																	<img src="{{ filter.image }}" alt="{{ filter.name}}">
+																	</span>
+																	{{ filter.name }}
+																</a>
+															</li>
+														{% endfor %}
+													</ul>
+												{% endif %}
+												{% if megamenu.type == 'type5' and megamenu.custom_links %}
+													{% if megamenu.custom_links|length > 1 %}
+														<ul class="megamenu-custom-links">
+															{% for custom_link in megamenu.custom_links %}
+																<li>
+																	<a title="{{ custom_link.title}}" href="{{ custom_link.href }}">
+																		{{ custom_link.title }}
+																	</a>
+																</li>
+															{% endfor %}
+														</ul>
+													{% else %}
+														{% for custom_link in megamenu.custom_links %}
+														<h3 class="custom-links-title">
+															<a title="{{ custom_link.title}}" href="{{ custom_link.href }}">
+																{{ custom_link.title }}
+															</a>
+														</h3>
+														{% endfor %}
+													{% endif %}
+												{% endif %}
+											</div>
+										</div>											
+								{% endfor %}
+								</div>
+								{% set col_row = col_row + 1 %} 
+								{% endfor %}
+								</div>
+							{% set banner_row = banner_row + 1 %}
+							{% endfor %}
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+</nav>

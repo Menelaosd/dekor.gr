@@ -1,0 +1,59 @@
+<div class="testimonials-wrapper">
+	<div class="container testimonials-container">
+		{% if module_name %}
+		<h3 class="module-title">{{module_name}}</h3>
+		{% endif %}  
+		<div class="row">
+			<div class="testimonials-blocks">
+				<div class="testimonials-carousel owl-carousel">
+					{% for testimonial in testimonials %}
+						<div class="testimonial-block-wrap">
+							<div class="testimonial-block">
+								<div class="testimonial-comments">
+									{{ testimonial.comments }}
+								</div>
+								<div class="testimonial-author">
+									{{ testimonial.author }}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="clearfix"></div>
+<script type="text/javascript">
+$('.testimonials-carousel').owlCarousel({
+	autoplay:true,
+	autoplayTimeout:2000,
+	autoplayHoverPause:true,
+    responsiveClass:true,
+	dots:true,
+	nav:true,
+	margin:0,
+	loop:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:2
+        },
+        1000:{
+            items:3
+        },
+        1000:{
+            items:3
+        },
+        1350:{
+            items:3
+        },
+        1600:{
+            items:3
+        },	
+    }
+});
+</script>

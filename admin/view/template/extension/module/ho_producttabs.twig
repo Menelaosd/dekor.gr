@@ -1,0 +1,1009 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <a onclick="$('#action').val('save_stay');$('#form-producttabs').submit();" title="{{ button_save_continue }}" class="btn btn-success">
+          <i class="fa fa-save"></i> {{ button_save_continue }}
+        </a>
+        <a onclick="$('#form-producttabs').submit();" title="{{ button_save }}" class="btn btn-primary">
+          <i class="fa fa-save"></i> {{ button_save }}
+        </a>
+        <a href="{{cancel}}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default">
+          <i class="fa fa-reply"></i> {{ button_cancel }}
+        </a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcumb in breadcrumbs %}
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+     {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-producttabs" class="form-horizontal">
+          <input type="hidden" name="action" id="action" value="">
+          <div class="form-group">
+            <label class="col-sm-1 control-label" for="input-name">{{ entry_name }}</label>
+            <div class="col-sm-11">
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+              {% if error_name %}
+              <div class="text-danger">{{ error_name }}</div>
+              {% endif %}
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label class="col-sm-1 control-label" for="input-type">{{ entry_logo }}</label>
+            <div class="col-sm-11">
+				<a href="" id="logo" data-toggle="image" class="img-thumbnail"><img src="{{ logo_thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+				<input type="hidden" name="logo" value="{{ logo }}" id="input-logo" />
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label class="col-sm-1 control-label" for="input-type">{{ entry_heading }}</label>
+            <div class="col-sm-11">
+				{% for language in languages %}
+					<div class="input-group">
+						<span class="input-group-addon">
+						<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+						<input type="text" name="main_description[{{ language.language_id }}][heading]" value="{{ main_description[language.language_id] ? main_description[language.language_id].heading }}" placeholder="{{ entry_heading}}" class="form-control" />
+					</div>
+				{% endfor %}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-1 control-label" for="tabs_layout">{{ entry_layout }}</label>
+            <div class="col-sm-11">
+				<select name="tabs_layout" id="tabs_layout" class="form-control product-type-select">
+					<option value="">{{ text_select }}</option>
+					<option value="l_left" {% if (tabs_layout) == 'l_left' %} selected {% endif %}>{{ text_layout_left}}</option>
+					<option value="l_right" {% if (tabs_layout) == 'l_right' %} selected {% endif %}>{{ text_layout_right }}</option>
+				</select>	
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <label class="col-sm-1 control-label" for="input-name">{{ entry_class }}</label>
+            <div class="col-sm-11">
+              <input type="text" name="class" value="{{ class }}" placeholder="{{ entry_class }}" id="input-class" class="form-control" />
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <div class="col-sm-12">
+				<table id="product_tabs_table" class="table table-striped table-bordered table-hover">
+				  <thead>
+					<tr>
+						<td class="text-left" style="width:10%">{{ entry_type }}</td>
+						<td class="text-left" style="width:20%">{{ entry_source }}</td>
+						<td class="text-left" style="width:15%">{{ entry_over_title }}</td>
+						<td class="text-left" style="width:15%">{{ entry_alt_title }}</td>
+						<td class="text-left" style="width:20%">{{ entry_description }}</td>
+						<td class="text-left" style="width:10%">{{ entry_background_image }}</td>
+						<td class="text-left" style="width:10%">URL</td>
+						<td class="text-right" style="width:5%">{{ entry_limit }}</td>
+						<td class="text-right" style="width:5%">Σειρά</td>
+						<td class="text-right" style="width:5%"></td>
+					</tr>
+				  </thead>
+				  <tbody>  
+				  {% set product_tab_row = 0 %}
+					{% if product_tabs is empty %}
+					  <tr id="product_tab_row{{ product_tab_row }}">
+						<td class="text-left">
+							
+							<div class="onoffswitch4">
+								<input type="checkbox" name="product_tabs[{{ product_tab_row }}][activetabs]"class="onoffswitch4-checkbox" id="input-activetabs{{ product_tab_row }}" value="1"
+								{% if product_tab.activetabs %} checked {% endif %}>
+								<label class="onoffswitch4-label" for="input-activetabs{{ product_tab_row }}">
+									<span class="onoffswitch4-inner"></span>
+									<span class="onoffswitch4-switch"></span>
+								</label>
+							</div>
+							
+							<select name="product_tabs[{{ product_tab_row }}][type]" id="input-type{{ product_tab_row }}" class="form-control product-type-select" data-row="{{ product_tab_row }}">
+								<option value="">{{ text_select }}</option>
+								<option value="1">{{ text_type1 }}</option>
+								<option value="2">{{ text_type2 }}</option>
+								<option value="3">{{ text_type3 }}</option>
+								<option value="4">{{ text_type4 }}</option>	
+								<option value="5">{{ text_type5 }}</option>	
+								<option value="6">{{ text_type6 }}</option>	
+							</select>	
+						</td>
+						<td class="text-left type-source-td">
+						</td>
+						<td class="text-left">
+						{% for language in languages %}
+							<div class="input-group">
+								<span class="input-group-addon">
+								<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+								<input type="text" name="product_tabs[{{ product_tab_row }}][product_tab_description][{{ language.language_id }}][over_title]" value="" placeholder="{{ entry_over_title }}" class="form-control" />
+							</div>
+						{% endfor %}
+						</td>
+						<td class="text-left">
+						{% for language in languages %}
+							<div class="input-group">
+								<span class="input-group-addon">
+								<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+								<input type="text" name="product_tabs[{{ product_tab_row }}][product_tab_description][{{ language.language_id }}][alt_title]" value="" placeholder="{{ entry_alt_title }}" class="form-control" />
+							</div>
+						{% endfor %}
+						</td>
+						<td class="text-left">
+						{% for language in languages %}
+							<div class="input-group">
+								<span class="input-group-addon">
+								<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+								<textarea type="text" name="product_tabs[{{ product_tab_row }}][product_tab_description][{{ language.language_id }}][description]" placeholder="{{ entry_description }}" class="form-control" /></textarea>
+							</div>
+						{% endfor %}
+						</td> 
+						<td class="text-left">
+							<a href="" id="thumb-image{{ product_tab_row }}" data-toggle="image" class="img-thumbnail"><img src="{{placeholder}}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+							<input type="hidden" name="product_tabs[{{ product_tab_row }}][background_image]" value="" id="input-image{{ product_tab_row }}" />
+						</td>
+						<td class="text-left">
+							<input type="text" name="product_tabs[{{ product_tab_row }}][all_products_link]" value="" placeholder="{{ entry_all_products_link }}" class="form-control" />
+						</td> 
+						<td class="text-left">
+							<input type="text" name="product_tabs[{{ product_tab_row }}][limit]" value="" placeholder="{{ entry_limit}}" class="form-control" />
+						</td> 
+						<td class="text-left">
+							<input type="text" name="product_tabs[{{ product_tab_row }}][sort_order]" value="0" placeholder="{{ entry_sort_order }}" class="form-control" />
+						</td> 
+						<td class="text-right"><button type="button" onclick="$('#product_tab_row{{ product_tab_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+					  </tr>
+					 {% set product_tab_row = product_tab_row + 1 %}
+					{% endif %}
+				  {% for product_tab in product_tabs %}
+					  <tr id="product_tab_row{{ product_tab_row }}">
+						<td class="text-left">
+								
+							<div class="onoffswitch4">
+								<input type="checkbox" name="product_tabs[{{ product_tab_row }}][activetabs]"class="onoffswitch4-checkbox" id="input-activetabs{{ product_tab_row }}" value="1" 
+								{% if product_tab.activetabs %} checked {% endif %}>
+								
+								<label class="onoffswitch4-label" for="input-activetabs{{ product_tab_row }}">
+									<span class="onoffswitch4-inner"></span>
+									<span class="onoffswitch4-switch"></span>
+								</label>
+							</div>
+
+							<select name="product_tabs[{{ product_tab_row }}][type]" id="input-type{{ product_tab_row }}" class="form-control product-type-select" data-row="{{ product_tab_row }}">
+								<option value="">{{ text_select }}</option>
+								<option value="1" {% if (product_tab.type) == 1 %} selected {% endif %}>{{ text_type1 }}</option>
+								<option value="2" {% if (product_tab.type) == 2 %} selected {% endif %}>{{ text_type2 }}</option>
+								<option value="3" {% if (product_tab.type) == 3 %} selected {% endif %}>{{ text_type3 }}</option>
+								<option value="4" {% if (product_tab.type) == 4 %} selected {% endif %}>{{ text_type4 }}</option>	
+								<option value="5" {% if (product_tab.type) == 5 %} selected {% endif %}>{{ text_type5 }}</option>
+								<option value="6" {% if (product_tab.type) == 6 %} selected {% endif %}>{{ text_type6 }}</option>								
+							</select>	
+						</td>
+						<td class="text-left type-source-td">
+							{% if (product_tab.type) == 1 %}
+								<input type="text" name="product_name{{ product_tab_row }}" value="" placeholder="{{ entry_product }}" id="input-product{{ product_tab_row }}" class="form-control featured-product" data-row="{{ product_tab_row }}"/>
+								<div id="featured-product{{ product_tab_row }}" class="featured-product-wrap well well-sm" style="height: 150px; overflow: auto;">
+									 {% for product in product_tab.product %} 
+										<div id="featured-product{{ product_tab_row }}_{{ product.product_id }}"><i class="fa fa-minus-circle"></i> {{ product.name }}
+										  <input type="hidden" name="product_tabs[{{ product_tab_row }}][product][]" value="{{ product.product_id }}" />
+										</div>
+									{% endfor %}
+								</div>	
+								<script type="text/javascript">
+								  // Product
+									$('input[name=\'product_name{{ product_tab_row }}\']').autocomplete({
+									source: function(request, response) {
+									  $.ajax({
+										url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+										dataType: 'json',
+										success: function(json) {
+										  response($.map(json, function(item) {
+											return {
+											  label: item['name'],
+											  value: item['product_id']
+											}
+										  }));
+										}
+									  });
+									},
+									select: function(item) {
+									  $('input[name=\'product_name{{ product_tab_row }}\']').val(''); 
+									  $('#featured-product{{ product_tab_row }}_'+item['value']).remove();     
+									  $('#featured-product{{ product_tab_row }}').append('<div id="featured-product{{ product_tab_row }}_'+item['value']+'"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_tabs[{{ product_tab_row }}][product][]" value="' + item['value'] + '" /></div>');  
+									}
+								  });
+								</script>
+							{% endif %}
+							{% if (product_tab.type) == 2 %}
+								<input type="text" name="product_tabs[{{ product_tab_row }}][path]" value="{{product_tab.path}}" placeholder="{{ entry_parent }}" id="input-parent{{ product_tab_row }}" class="form-control" />
+								<input type="hidden" name="product_tabs[{{ product_tab_row }}][parent_id]" value="{{ product_tab.tab_parent_id }}" />
+								</br>
+								<div class=checkbox">
+									<label>
+									<input type="checkbox" {% if product_tab.category_bestseller %} checked="checked" {% endif %} name="product_tabs[{{ product_tab_row }}][category_bestseller]" value="1">
+									{{ entry_category_bestseller }}
+									</label>
+								</div>
+								<div class=checkbox">
+									<label>
+									<input type="checkbox" {% if product_tab.category_featured %} checked="checked" {% endif %} name="product_tabs[{{ product_tab_row }}][category_featured]" value = "1">
+									 {{ entry_category_featured }}
+									</label>
+								</div>
+								<script type="text/javascript">
+								  // Category
+									$('input[name=\'product_tabs[{{ product_tab_row }}][path]\']').autocomplete({
+										'source': function(request, response) {
+											$.ajax({
+												url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+												dataType: 'json',
+												success: function(json) {
+													json.unshift({
+														category_id: 0,
+														name: '{{ text_none }}'
+													});
+
+													response($.map(json, function(item) {
+														return {
+															label: item['name'],
+															value: item['category_id']
+														}
+													}));
+												}
+											});
+										},
+										'select': function(item) {
+											$('input[name=\'product_tabs[{{ product_tab_row }}][path]\']').val(item['label']);
+											$('input[name=\'product_tabs[{{ product_tab_row }}][parent_id]\']').val(item['value']);
+										}
+									});
+								</script>
+							{% endif %}
+							{% if (product_tab.type) == 5 %}
+								<input type="text" class="form-control" name="product_tabs[{{ product_tab_row }}][products_price_limit]" value="{{ product_tab.tab_price_limit }}" placeholder="{{ text_type5 }}" />
+							{% endif %}
+						</td>
+						<td class="text-left">
+						{% for language in languages %}
+							<div class="input-group">
+								<span class="input-group-addon">
+								<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+								<input type="text" name="product_tabs[{{ product_tab_row }}][product_tab_description][{{ language.language_id }}][over_title]" value="{{ product_tab.product_tab_description[language.language_id] ? product_tab.product_tab_description[language.language_id].over_title }}" placeholder="{{ entry_over_title }}" class="form-control" />
+							</div>
+						{% endfor %}
+						</td>
+						<td class="text-left">
+						{% for language in languages %}
+							<div class="input-group">
+								<span class="input-group-addon">
+								<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+								<input type="text" name="product_tabs[{{ product_tab_row }}][product_tab_description][{{ language.language_id }}][alt_title]" value="{{ product_tab.product_tab_description[language.language_id] ? product_tab.product_tab_description[language.language_id].alt_title }}" placeholder="{{ entry_alt_title }}" class="form-control" />
+							</div>
+						{% endfor %}
+						</td>
+						<td class="text-left">
+						{% for language in languages %}
+							<div class="input-group">
+								<span class="input-group-addon">
+								<img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+								<textarea type="text" name="product_tabs[{{ product_tab_row }}][product_tab_description][{{ language.language_id }}][description]" placeholder="{{ entry_description }}" class="form-control" />{{ product_tab.product_tab_description[language.language_id] ? product_tab.product_tab_description[language.language_id].description }}</textarea>
+							</div>
+						{% endfor %}
+						</td> 
+						<td class="text-left">
+							<a href="" id="thumb-image{{ product_tab_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ product_tab.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+							<input type="hidden" name="product_tabs[{{ product_tab_row }}][background_image]" value="{{product_tab.background_image}}" id="input-image{{ product_tab_row }}" />
+						</td>
+						<td class="text-left">
+							<input type="text" name="product_tabs[{{ product_tab_row }}][all_products_link]" value="{{product_tab.all_products_link}}" placeholder="{{ entry_all_products_link }}" class="form-control" />
+						</td> 
+						<td class="text-left">
+							<input type="text" name="product_tabs[{{ product_tab_row }}][limit]" value="{{product_tab.limit}}" placeholder="{{ entry_limit }}" class="form-control" />
+						</td> 
+						<td class="text-left">
+							<input type="text" name="product_tabs[{{ product_tab_row }}][sort_order]" value="{{product_tab.sort_order}}" placeholder="{{ entry_sort_order }}" class="form-control" />
+						</td> 
+						<td class="text-right"><button type="button" onclick="$('#product_tab_row{{ product_tab_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+					  </tr>
+				  {% set product_tab_row = product_tab_row + 1 %}
+				  {% endfor %}
+					</tbody>
+					  <tfoot>
+						<tr>
+						  <td colspan="9"></td>
+						  <td class="text-right"><button type="button" onclick="addProductTabRow();" data-toggle="tooltip" title="{{ button_product_tab_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+						</tr>
+					  </tfoot>
+				</table>
+            </div>
+          </div> 
+
+          <div class="form-group">
+            <label class="col-sm-1 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-11">
+              <select name="status" id="input-status" class="form-control">
+                {% if status %}
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+var product_tab_row = {{ product_tab_row }};
+
+function addProductTabRow() {
+	html  = '';
+	html  += '<tr id="product_tab_row' + product_tab_row + '">';
+	html  += '<td class="text-left">';
+	
+	
+	html  += '<div class="onoffswitch4">';
+		html  += '<input type="checkbox" name="product_tabs[' + product_tab_row + '][activetabs]"class="onoffswitch4-checkbox" id="input-activetabs' + product_tab_row + '" value="1">';
+		html  += '<label class="onoffswitch4-label" for="input-activetabs' + product_tab_row + '">';
+			html  += '<span class="onoffswitch4-inner"></span>';
+			html  += '<span class="onoffswitch4-switch"></span>';
+		html  += '</label>';
+	html  += '</div>';	
+	
+	html  += '<select name="product_tabs[' + product_tab_row + '][type]" id="input-type' + product_tab_row + '" class="form-control product-type-select" data-row="' + product_tab_row + '">';
+	html  += '<option value="">{{ text_select }}</option>';
+	html  += '<option value="1">{{ text_type1 }}</option>';
+	html  += '<option value="2">{{ text_type2 }}</option>';
+	html  += '<option value="3">{{ text_type3 }}</option>';
+	html  += '<option value="4">{{ text_type4 }}</option>';
+	html  += '<option value="5">{{ text_type5 }}</option>';	
+	html  += '<option value="6">{{ text_type6 }}</option>';	
+	html  += '</select>';	
+	html  += '</td>';
+
+	html += '  <td class="text-left type-source-td"></td>';
+	
+	html += '  <td class="text-left">';
+	{% for language in languages %}	
+	html += '  <div class="input-group">';
+	html += '  <span class="input-group-addon">';
+	html += '  <img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>';
+	html += '  <input type="text" name="product_tabs[' + product_tab_row + '][product_tab_description][{{ language.language_id }}][over_title]" value="" placeholder="{{ entry_over_title }}" class="form-control" />';
+	html += '  </div>';
+	{% endfor %}
+	html += '  </td>';
+
+	html += '  <td class="text-left">';
+	{% for language in languages %}	
+	html += '  <div class="input-group">';
+	html += '  <span class="input-group-addon">';
+	html += '  <img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>';
+	html += '  <input type="text" name="product_tabs[' + product_tab_row + '][product_tab_description][{{ language.language_id }}][alt_title]" value="" placeholder="{{ entry_alt_title }}" class="form-control" />';
+	html += '  </div>';
+	{% endfor %}
+	html += '  </td>';
+	
+
+	html += '  <td class="text-left">';
+	{% for language in languages %}	
+	html += '  <div class="input-group">';
+	html += '  <span class="input-group-addon">';
+	html += '  <img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>';
+	html += '  <input type="text" name="product_tabs[' + product_tab_row + '][product_tab_description][{{ language.language_id }}][description]" value="" placeholder="{{ entry_description }}" class="form-control" />';
+	html += '  </div>';
+	{% endfor %}
+	html += '  </td>';
+
+	html += '  <td class="text-left">';
+	html += '  <a href="" id="thumb-image' + product_tab_row + '" data-toggle="image" class="img-thumbnail"><img src="{{placeholder}}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>';
+	html += '  <input type="hidden" name="product_tabs[' + product_tab_row + '][background_image]" value="" id="input-image' + product_tab_row + '" />';
+	html += '  </td>';
+
+	html += '  <td class="text-left">';
+	html += '  <input type="text" name="product_tabs[' + product_tab_row + '][all_products_link]" value="" placeholder="{{ entry_all_products_link }}" class="form-control" />';
+	html += '  </td>';
+
+	html += '  <td class="text-left">';
+	html += '  <input type="text" name="product_tabs[' + product_tab_row + '][limit]" value="4" placeholder="{{ entry_limit }}" class="form-control" />';
+	html += '  </td>';
+
+	html += '  <td class="text-left">';
+	html += '  <input type="text" name="product_tabs[' + product_tab_row + '][sort_order]" value="0" placeholder="{{ entry_sort_order }}" class="form-control" />';
+	html += '  </td>';
+
+	html += '  <td class="text-right"><button type="button" onclick="$(\'#product_tab_row' + product_tab_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+
+	$('#product_tabs_table tbody').append(html);
+
+	product_tab_row++;
+}
+//Type Switch
+	$('#product_tabs_table').on('change','.product-type-select',function(e){
+		var type = $(this).val();
+		var target = $(this).closest('tr').find('.type-source-td');
+		var row = $(this).data('row');
+		var html = '';
+		if(type && type == 1) {
+			html = ''
+			html += '<input type="text" name="product_name'+row+'" value="" placeholder="{{ entry_product }}" id="input-product'+row+'" class="form-control featured-product" data-row="'+row+'"/>';
+			html += '<div id="featured-product'+row+'" class="featured-product-wrap well well-sm" style="height: 150px; overflow: auto;">';
+			html += '</div>';	
+		};
+		if(type && type == 2) {
+			html = ''
+			html += '<input type="text" name="product_tabs['+row+'][path]" value="" placeholder="{{ entry_parent }}" id="input-parent[' + product_tab_row + '" class="form-control" />';
+			html += '<input type="hidden" name="product_tabs['+row+'][parent_id]" value="" />';
+			
+			html += '</br>';
+			html += '<div class=checkbox">';
+				html += '<label>';
+				html += '<input type="checkbox" name="product_tabs['+row+'][category_bestseller]" value="1">';
+				html += '{{ entry_category_bestseller }}';
+				html += '</label>';
+			html += '</div>';
+			html += '<div class=checkbox">';
+				html += '<label>';
+				html += '<input type="checkbox" name="product_tabs['+row+'][category_featured]" value = "1">';
+				 html += '{{ entry_category_featured }}';
+				html += '</label>';
+			html += '</div>';
+		};	
+		if(type && type == 5) {
+			html = ''
+			html += '<input type="text" name="product_tabs['+row+'][products_price_limit]" value="0" placeholder="{{ entry_limit }}" class="form-control" />';
+		};			
+		target.html(html);
+		if(type && type == 1) {
+		  // Product
+			$('input[name=\'product_name'+row+'\']').autocomplete({
+			source: function(request, response) {
+			  $.ajax({
+				url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+				dataType: 'json',
+				success: function(json) {
+				  response($.map(json, function(item) {
+					return {
+					  label: item['name'],
+					  value: item['product_id']
+					}
+				  }));
+				}
+			  });
+			},
+			select: function(item) {
+			  $('input[name=\'product_name'+row+'\']').val(''); 
+			  $('#featured-product'+row+'_'+item['value']).remove();     
+			  $('#featured-product'+row).append('<div id="featured-product'+row+'_'+item['value']+'"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_tabs['+row+'][product][]" value="' + item['value'] + '" /></div>');  
+			}
+		  });
+		};
+		if(type && type == 2) {
+		  // Category
+			$('input[name=\'product_tabs['+row+'][path]\']').autocomplete({
+				'source': function(request, response) {
+					$.ajax({
+						url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+						dataType: 'json',
+						success: function(json) {
+							json.unshift({
+								category_id: 0,
+								name: '{{ text_none }}'
+							});
+
+							response($.map(json, function(item) {
+								return {
+									label: item['name'],
+									value: item['category_id']
+								}
+							}));
+						}
+					});
+				},
+				'select': function(item) {
+					$('input[name=\'product_tabs['+row+'][path]\']').val(item['label']);
+					$('input[name=\'product_tabs['+row+'][parent_id]\']').val(item['value']);
+				}
+			});
+		}
+	});
+  $('.featured-product-wrap').delegate('.fa-minus-circle', 'click', function() {
+    $(this).parent().remove();
+  });
+    
+  $('#featured-product').delegate('.fa-minus-circle', 'click', function() {
+    $(this).parent().remove();
+  });
+</script>
+
+<style type="text/css">
+
+.onoffswitch {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+
+.onoffswitch-checkbox {
+    display: none;
+}
+
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.onoffswitch-inner:before {
+    content: "NAI";
+    padding-left: 10px;
+    background-color: #2FCCFF; color: #FFFFFF;
+}
+
+.onoffswitch-inner:after {
+    content: "ΟΧΙ";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+
+.onoffswitch-switch {
+    display: block; width: 18px; margin: 6px;
+    background: #FFFFFF;
+    border: 2px solid #999999; border-radius: 20px;
+    position: absolute; top: 0; bottom: 0; right: 56px;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+
+
+ .onoffswitch1 {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+
+.onoffswitch1-checkbox {
+    display: none;
+}
+
+.onoffswitch1-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 30px;
+}
+
+.onoffswitch1-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch1-inner:before, .onoffswitch1-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+    border-radius: 30px;
+    box-shadow: 0px 15px 0px rgba(0,0,0,0.08) inset;
+}
+
+.onoffswitch1-inner:before {
+    content: "NAI";
+    padding-left: 10px;
+    background-color: #2FCCFF; color: #FFFFFF;
+    border-radius: 30px 0 0 30px;
+}
+
+.onoffswitch1-inner:after {
+    content: "ΟΧΙ";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+    border-radius: 0 30px 30px 0;
+}
+
+.onoffswitch1-switch {
+    display: block; width: 30px; margin: 0px;
+    background: #FFFFFF;
+    border: 2px solid #999999; border-radius: 30px;
+    position: absolute; top: 0; bottom: 0; right: 56px;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+    background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%); 
+    background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%); 
+    background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%); 
+    background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+    box-shadow: 0 1px 1px white inset;
+}
+
+.onoffswitch1-checkbox:checked + .onoffswitch1-label .onoffswitch1-inner {
+    margin-left: 0;
+}
+
+.onoffswitch1-checkbox:checked + .onoffswitch1-label .onoffswitch1-switch {
+    right: 0px; 
+}
+
+.onoffswitch2 {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+
+.onoffswitch2-checkbox {
+    display: none;
+}
+
+.onoffswitch2-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 5px;
+}
+
+.onoffswitch2-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch2-inner:before, .onoffswitch2-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.onoffswitch2-inner:before {
+    content: "NAI";
+    padding-left: 10px;
+    background-color: #2FCCFF; color: #FFFFFF;
+}
+
+.onoffswitch2-inner:after {
+    content: "ΟΧΙ";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+
+.onoffswitch2-switch {
+    display: block; width: 18px; margin: 0px;
+    background: #FFFFFF;
+    border: 2px solid #999999; border-radius: 5px;
+    position: absolute; top: 0; bottom: 0; right: 68px;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+    background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+    background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+    background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+    background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+}
+
+.onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-inner {
+    margin-left: 0;
+}
+
+.onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
+    right: 0px; 
+}
+
+.onoffswitch3
+{
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+
+.onoffswitch3-checkbox {
+    display: none;
+}
+
+.onoffswitch3-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 0px solid #999999; border-radius: 0px;
+}
+
+.onoffswitch3-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch3-inner > span {
+    display: block; float: left; position: relative; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.onoffswitch3-inner .onoffswitch3-active {
+    padding-left: 10px;
+    background-color: #EEEEEE; color: #FFFFFF;
+}
+
+.onoffswitch3-inner .onoffswitch3-inactive {
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #FFFFFF;
+    text-align: right;
+}
+
+.onoffswitch3-switch {
+    display: block; width: 18px; margin: 0px; text-align: center; 
+    border: 0px solid #999999;border-radius: 0px; 
+    position: absolute; top: 0; bottom: 0;
+}
+.onoffswitch3-active .onoffswitch3-switch {
+    background: #27A1CA; left: 0;
+}
+.onoffswitch3-inactive .onoffswitch3-switch {
+    background: #A1A1A1; right: 0;
+}
+
+.onoffswitch3-active .onoffswitch3-switch:before {
+    content: " "; position: absolute; top: 0; left: 18px; 
+    border-style: solid; border-color: #27A1CA transparent transparent #27A1CA; border-width: 15px 9px;
+}
+
+
+.onoffswitch3-inactive .onoffswitch3-switch:before {
+    content: " "; position: absolute; top: 0; right: 18px; 
+    border-style: solid; border-color: transparent #A1A1A1 #A1A1A1 transparent; border-width: 15px 9px;
+}
+
+
+.onoffswitch3-checkbox:checked + .onoffswitch3-label .onoffswitch3-inner {
+    margin-left: 0;
+}
+
+.onoffswitch4 {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+
+.onoffswitch4-checkbox {
+    display: none;
+}
+
+.onoffswitch4-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #27A1CA; border-radius: 0px;
+}
+
+.onoffswitch4-inner {
+    display: block; width: 200%; margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch4-inner:before, .onoffswitch4-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 26px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+.onoffswitch4-inner:before {
+    content: "NAI";
+    padding-left: 10px;
+    background-color: #FFFFFF; color: #27A1CA;
+}
+
+.onoffswitch4-inner:after {
+    content: "ΟΧΙ";
+    padding-right: 10px;
+    background-color: #FFFFFF; color: #666666;
+    text-align: right;
+}
+
+.onoffswitch4-switch {
+    display: block; width: 25px; margin: 0px;
+    background: #27A1CA;
+    position: absolute; top: 0; bottom: 0; right: 65px;
+    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+}
+
+.onoffswitch4-checkbox:checked + .onoffswitch4-label .onoffswitch4-inner {
+    margin-left: 0;
+}
+
+.onoffswitch4-checkbox:checked + .onoffswitch4-label .onoffswitch4-switch {
+    right: 0px; 
+}
+
+.onoffswitch4 {
+	margin-bottom:1rem;
+}
+
+
+.cmn-toggle 
+{
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+
+.cmn-toggle + label 
+{
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input.cmn-toggle-round-flat + label 
+{
+  padding: 2px;
+  width: 75px;
+  height: 30px;
+  background-color: #dddddd;
+  -webkit-border-radius: 60px;
+  -moz-border-radius: 60px;
+  -ms-border-radius: 60px;
+  -o-border-radius: 60px;
+  border-radius: 60px;
+  -webkit-transition: background 0.4s;
+  -moz-transition: background 0.4s;
+  -o-transition: background 0.4s;
+  transition: background 0.4s;
+}
+
+input.cmn-toggle-round-flat + label:before, input.cmn-toggle-round-flat + label:after 
+{
+  display: block;
+  position: absolute;
+  content: "";
+}
+
+input.cmn-toggle-round-flat + label:before 
+{
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  background-color: #fff;
+  -webkit-border-radius: 60px;
+  -moz-border-radius: 60px;
+  -ms-border-radius: 60px;
+  -o-border-radius: 60px;
+  border-radius: 60px;
+  -webkit-transition: background 0.4s;
+  -moz-transition: background 0.4s;
+  -o-transition: background 0.4s;
+  transition: background 0.4s;
+}
+
+input.cmn-toggle-round-flat + label:after 
+{
+  top: 4px;
+  left: 4px;
+  bottom: 4px;
+  width: 22px;
+  background-color: #dddddd;
+  -webkit-border-radius: 52px;
+  -moz-border-radius: 52px;
+  -ms-border-radius: 52px;
+  -o-border-radius: 52px;
+  border-radius: 52px;
+  -webkit-transition: margin 0.4s, background 0.4s;
+  -moz-transition: margin 0.4s, background 0.4s;
+  -o-transition: margin 0.4s, background 0.4s;
+  transition: margin 0.4s, background 0.4s;
+}
+
+input.cmn-toggle-round-flat:checked + label 
+{
+  background-color: #27A1CA;
+}
+
+input.cmn-toggle-round-flat:checked + label:after 
+{
+  margin-left: 45px;
+  background-color: #27A1CA;
+}
+
+div.switch5 { clear: both; margin: 0px 0px; }
+div.switch5 > input.switch:empty { margin-left: -999px; }
+div.switch5 > input.switch:empty ~ label { position: relative; float: left; line-height: 1.6em; text-indent: 4em; margin: 0.2em 0px; cursor: pointer; -moz-user-select: none; }
+div.switch5 > input.switch:empty ~ label:before, input.switch:empty ~ label:after { position: absolute; display: block; top: 0px; bottom: 0px; left: 0px; content: "off"; width: 3.6em; height: 1.5em; text-indent: 2.4em; color: rgb(153, 0, 0); background-color: rgb(204, 51, 51); border-radius: 0.3em; box-shadow: 0px 0.2em 0px rgba(0, 0, 0, 0.3) inset; }
+div.switch5 > input.switch:empty ~ label:after { content: " "; width: 1.4em; height: 1.5em; top: 0.1em; bottom: 0.1em; text-align: center; text-indent: 0px; margin-left: 0.1em; color: rgb(255, 136, 136); background-color: rgb(255, 255, 255); border-radius: 0.15em; box-shadow: 0px -0.2em 0px rgba(0, 0, 0, 0.2) inset; transition: all 100ms ease-in 0s; }
+div.switch5 > input.switch:checked ~ label:before { content: "on"; text-indent: 0.5em; color: rgb(102, 255, 102); background-color: rgb(51, 153, 51); }
+div.switch5 > input.switch:checked ~ label:after { margin-left: 2.1em; color: rgb(102, 204, 102); }
+div.switch5 > input.switch:focus ~ label { color: rgb(0, 0, 0); }
+div.switch5 > input.switch:focus ~ label:before { box-shadow: 0px 0px 0px 3px rgb(153, 153, 153); }
+
+
+
+
+
+
+
+.switch6 {  max-width: 17em;  margin: 0 auto; }
+.switch6-light > span, .switch-toggle > span {  color: #000000; }
+.switch6-light span span, .switch6-light label, .switch-toggle span span, .switch-toggle label {  color: #2b2b2b; }
+
+.switch-toggle a, 
+.switch6-light span span { display: none; }
+
+.switch6-light { display: block; height: 30px; position: relative; overflow: visible; padding: 0px; margin-left:0px; }
+.switch6-light * { box-sizing: border-box; }
+.switch6-light a { display: block; transition: all 0.3s ease-out 0s; }
+
+.switch6-light label, 
+.switch6-light > span { line-height: 30px; vertical-align: middle;}
+
+.switch6-light label {font-weight: 700; margin-bottom: px; max-width: 100%;}
+
+.switch6-light input:focus ~ a, .switch6-light input:focus + label { outline: 1px dotted rgb(136, 136, 136); }
+.switch6-light input { position: absolute; opacity: 0; z-index: 5; }
+.switch6-light input:checked ~ a { right: 0%; }
+.switch6-light > span { position: absolute; left: -100px; width: 100%; margin: 0px; padding-right: 100px; text-align: left; }
+.switch6-light > span span { position: absolute; top: 0px; left: 0px; z-index: 5; display: block; width: 50%; margin-left: 100px; text-align: center; }
+.switch6-light > span span:last-child { left: 50%; }
+.switch6-light a { position: absolute; right: 50%; top: 0px; z-index: 4; display: block; width: 50%; height: 100%; padding: 0px; }
+
+
+.onoffswitch4-label {
+    border-radius: 10px;
+    border-color: #dd0000;
+    padding: 0;
+    margin: 0;
+}
+
+.onoffswitch4-switch {
+    background: #dd0000;
+}
+
+.onoffswitch4 {border-radius: 10px;overflow: hidden;width: 70px;}
+
+.onoffswitch4-switch {
+    left: 0;
+    right: auto;
+}
+
+.onoffswitch4-checkbox:checked + .onoffswitch4-label .onoffswitch4-switch {
+    right: 0;
+    left: auto;
+    background: #00dd00;
+}
+
+.onoffswitch4-checkbox:checked + .onoffswitch4-label {
+    border-color: #00dd00;
+}
+</style>
+{{ footer }}    

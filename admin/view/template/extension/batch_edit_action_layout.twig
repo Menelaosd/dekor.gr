@@ -1,0 +1,20 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<h4>{{ tab_action_layout }}</h4>
+<hr/>
+<h4>{{ text_update_existing }}</h4>
+<hr/>
+{% for store in stores %}
+<div class="form-group action-group-default">
+	<label class="col-sm-3 control-label" for="action[layout][update][{{ store.store_id }}][layout]">{{ store.name }}</label>
+	<div class="col-sm-9">
+		<input type="text" value="" placeholder="{{ entry_layout }}" id="action[layout][update][{{ store.store_id }}][layout]" data-target="action[layout][update][{{ store.store_id }}][layout_id]" class="form-control layout-select" />
+		<input type="hidden" name="action[layout][update][{{ store.store_id }}][layout_id]" value="" />
+	</div>
+</div>
+{% endfor %}

@@ -1,0 +1,468 @@
+{#
+ * Commercial Installation-Based License
+ * This extension has Installation-based license is per OpenCart installation.
+ * Support: info@clicker.com.ua
+ * https://opencart.click
+#}
+
+<h4>{{ tab_action_option }}</h4>
+<hr/>
+{% set col1 = '2' %}
+{% set col2 = '2' %}
+{% set col3 = '2' %}
+{% set col4 = '1' %}
+{% set col5 = '3' %}
+{% set col6 = '2' %}
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_update_existing }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<div class="row form-row">
+				<div class="col-sm-5">
+					<div class="row form-row ">
+						<label class="col-sm-5 control-label" for="action[option][update][---0---][option_id]"><i class="required"></i> {{ entry_option }} <span data-toggle="tooltip" title="{{ help_option }}"></span></label>
+						<div class="col-sm-7">
+							<input type="text" value="" placeholder="{{ entry_option }}" id="action[option][update][---0---][option_id]" data-target="action[option][update][---0---][option_id]" data-target-values="action[option][update][---0---][option_value_id]" class="form-control option-select" />
+							<input type="hidden" name="action[option][update][---0---][option_id]" value="" />
+						</div>
+					</div>
+
+					<div class="row form-row option-value-text option-value-file hidden">
+						<label class="col-sm-5 control-label" for="action[option][update][---0---][value_text_required]">{{ entry_required }}</label>
+						<div class="col-sm-7">
+							<select name="action[option][update][---0---][value_text_required]" class="form-control" title="{{ entry_required }}" data-toggle="tooltip">
+								<option value=""></option>
+								<option value="0">{{ entry_required }} - {{ text_no }}</option>
+								<option value="1">{{ entry_required }} - {{ text_yes }}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<!-- option_value_none -->
+				<div class="col-sm-2 option-value-none"></div>
+				<div class="col-sm-3 option-value-none"></div>
+				<!-- option_value_id -->
+				<label class="col-sm-2 control-label option-value-id hidden" for="action[option][update][---0---][option_value_id]">{{ entry_option_value }} <span data-toggle="tooltip" title="{{ help_option_value }}"></span></label>
+				<div class="col-sm-3 option-value-id hidden">
+					<select name="action[option][update][---0---][option_value_id]" id="action[option][update][---0---][option_value_id]" class="form-control">
+						<option value="">--- {{ text_all }} ---</option>
+					</select>
+				</div>
+				<!-- option_value_text -->
+				<label class="col-sm-2 control-label option-value-text hidden" for="action[option][update][---0---][option_value_text]">{{ entry_option_value }}</label>
+				<div class="col-sm-3 option-value-text hidden">
+					<textarea name="action[option][update][---0---][option_value_text]" id="action[option][update][---0---][option_value_text]" class="form-control" style="height:66px;"></textarea>
+				</div>
+
+				<div class="col-sm-2 hide-filter">
+					<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+					<button type="button" onclick="if (!$(this).closest('div.form-group').hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).closest('div.form-group').find('input, select, textarea').not('.no-clean').val(''); }" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+				</div>
+			</div>
+			<div class="row form-row option-value-id hidden">
+				<label class="col-sm-{{ col1 }} control-label">{{ entry_price }}</label>
+				<div class="col-sm-{{ col2 }}">
+					<select name="action[option][update][---0---][price][sign]" class="form-control">
+						<option value="-">-</option>
+						<option value="+">+</option>
+						<option value="*">*</option>
+						<option value="/">/</option>
+						<option value="=">=</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col3 }}">
+					<input type="text" name="action[option][update][---0---][price][value]" value="" placeholder="0.00" class="form-control" />
+				</div>
+				<div class="col-sm-{{ col4 }}">
+					<select name="action[option][update][---0---][price][prefix]" class="form-control" title="{{ entry_prefix }}" data-toggle="tooltip">
+						<option value=""></option>
+						<option value="+">+</option>
+						<option value="-">-</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col5 }}">
+					<select name="action[option][update][---0---][price][type]" class="form-control">
+						<option value="pp">{{ text_percent_product }}</option>
+						<option value="fp">{{ text_fixed_product }}</option>
+						{#<!-- calculate from custom field -->
+						<option value="pp|dis_price">Calculate Percent from option special</option>
+						<option value="fp|dis_price">Fixed number from option special</option>#}
+						<option value="p">{{ text_percent }}</option>
+						<option value="f">{{ text_fixed }}</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col6 }}">
+					<select name="action[option][update][---0---][required]" class="form-control" title="{{ entry_required }}" data-toggle="tooltip">
+						<option value=""></option>
+						<option value="0">{{ entry_required }} - {{ text_no }}</option>
+						<option value="1">{{ entry_required }} - {{ text_yes }}</option>
+					</select>
+				</div>
+			</div>
+
+			{#<!-- custom product_option_value table field example (field_type: float|text) -->
+			<div class="row form-row option-value-id hidden">
+				<input type="hidden" class="no-clean" name="action[option][update][---0---][custom_fields][dis_price][field_table]" value="product_option_value" />
+				<input type="hidden" class="no-clean" name="action[option][update][---0---][custom_fields][dis_price][field_type]" value="float" />
+				<input type="hidden" class="no-clean" name="action[option][update][---0---][custom_fields][dis_price][field_name]" value="dis_price" />
+				<input type="hidden" class="no-clean" name="action[option][update][---0---][custom_fields][dis_price][field_round]" value="1" />
+				<label class="col-sm-{{ col1 }} control-label"><i class="required-"></i> Special price</label>
+				<div class="col-sm-{{ col2 }}">
+					<select name="action[option][update][---0---][custom_fields][dis_price][sign]" class="form-control">
+						<option value="-">-</option>
+						<option value="+">+</option>
+						<option value="*">*</option>
+						<option value="/">/</option>
+						<option value="=">=</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col3 + col4 }}">
+					<input type="text" name="action[option][update][---0---][custom_fields][dis_price][value]" value="" placeholder="0.00" class="form-control" />
+				</div>
+				<div class="col-sm-{{ col5 + col6 }}">
+					<select name="action[option][update][---0---][custom_fields][dis_price][type]" class="form-control">
+						<option value="pp">{{ text_percent_product }}</option>
+						<option value="fp">{{ text_fixed_product }}</option>
+						<option value="povp">Calculate Percent from option value</option>
+						<option value="povf">Fixed number from option value</option>
+						<option value="p">{{ text_percent }}</option>
+						<option value="f">{{ text_fixed }}</option>
+					</select>
+				</div>
+			</div>#}
+
+			<div class="row form-row option-value-id hidden">
+				<label class="col-sm-{{ col1 }} control-label">{{ entry_points }}</label>
+				<div class="col-sm-{{ col2 }}">
+					<select name="action[option][update][---0---][points][sign]" class="form-control">
+						<option value="-">-</option>
+						<option value="+">+</option>
+						<option value="*">*</option>
+						<option value="/">/</option>
+						<option value="=">=</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col3 }}">
+					<input type="text" name="action[option][update][---0---][points][value]" value="" placeholder="0.00" class="form-control" />
+				</div>
+				<div class="col-sm-{{ col4 }}">
+					<select name="action[option][update][---0---][points][prefix]" class="form-control" title="{{ entry_prefix }}" data-toggle="tooltip">
+						<option value=""></option>
+						<option value="+">+</option>
+						<option value="-">-</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col5 + col6 }}">
+					<select name="action[option][update][---0---][points][type]" class="form-control">
+						<option value="pp">{{ text_percent_product }}</option>
+						<option value="fp">{{ text_fixed_product }}</option>
+						<option value="p">{{ text_percent }}</option>
+						<option value="f">{{ text_fixed }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row form-row option-value-id hidden">
+				<label class="col-sm-{{ col1 }} control-label">{{ entry_quantity }}</label>
+				<div class="col-sm-{{ col2 }}">
+					<select name="action[option][update][---0---][quantity][sign]" class="form-control">
+						<option value="-">-</option>
+						<option value="+">+</option>
+						<option value="*">*</option>
+						<option value="/">/</option>
+						<option value="=">=</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col3 }}">
+					<input type="text" name="action[option][update][---0---][quantity][value]" value="" placeholder="0.00" class="form-control" />
+				</div>
+				<div class="col-sm-{{ col4 }}">
+					<select name="action[option][update][---0---][quantity][prefix]" class="form-control" title="{{ entry_prefix }}" data-toggle="tooltip">
+						<option value=""></option>
+						<option value="+">+</option>
+						<option value="-">-</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col5 }}">
+					<select name="action[option][update][---0---][quantity][type]" class="form-control">
+						<option value="fp">{{ text_fixed_product }}</option>
+						<option value="f">{{ text_fixed }}</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col6 }}">
+					<select name="action[option][update][---0---][subtract]" class="form-control" title="{{ entry_subtract }}" data-toggle="tooltip">
+						<option value=""></option>
+						<option value="0">{{ entry_subtract }} - {{ text_no }}</option>
+						<option value="1">{{ entry_subtract }} - {{ text_yes }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row form-row option-value-id hidden">
+				<label class="col-sm-{{ col1 }} control-label">{{ entry_weight }}</label>
+				<div class="col-sm-{{ col2 }}">
+					<select name="action[option][update][---0---][weight][sign]" class="form-control">
+						<option value="-">-</option>
+						<option value="+">+</option>
+						<option value="*">*</option>
+						<option value="/">/</option>
+						<option value="=">=</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col3 }}">
+					<input type="text" name="action[option][update][---0---][weight][value]" value="" placeholder="0.00" class="form-control" />
+				</div>
+				<div class="col-sm-{{ col4 }}">
+					<select name="action[option][update][---0---][weight][prefix]" class="form-control" title="{{ entry_prefix }}" data-toggle="tooltip">
+						<option value=""></option>
+						<option value="+">+</option>
+						<option value="-">-</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col5 + col6 }}">
+					<select name="action[option][update][---0---][weight][type]" class="form-control">
+						<option value="pp">{{ text_percent_product }}</option>
+						<option value="fp">{{ text_fixed_product }}</option>
+						<option value="p">{{ text_percent }}</option>
+						<option value="f">{{ text_fixed }}</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_add_new }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<div class="row form-row">
+				<div class="col-sm-5">
+					<div class="row form-row ">
+						<label class="col-sm-5 control-label" for="action[option][insert][---0---][option_id]"><i class="required"></i> {{ entry_option }} <span data-toggle="tooltip" title="{{ help_option }}"></span></label>
+						<div class="col-sm-7">
+							<input type="text" value="" placeholder="{{ entry_option }}" id="action[option][insert][---0---][option_id]" data-target="action[option][insert][---0---][option_id]" data-target-values="action[option][insert][---0---][option_value_id]" class="form-control option-select" />
+							<input type="hidden" name="action[option][insert][---0---][option_id]" value="" />
+						</div>
+					</div>
+
+					<div class="row form-row option-value-text option-value-file hidden">
+						<label class="col-sm-5 control-label" for="action[option][insert][---0---][value_text_required]">{{ entry_required }}</label>
+						<div class="col-sm-7">
+							<select name="action[option][insert][---0---][value_text_required]" class="form-control" title="{{ entry_required }}" data-toggle="tooltip">
+								<option value=""></option>
+								<option value="0">{{ entry_required }} - {{ text_no }}</option>
+								<option value="1">{{ entry_required }} - {{ text_yes }}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<!-- option_value_none -->
+				<div class="col-sm-2 option-value-none"></div>
+				<div class="col-sm-3 option-value-none"></div>
+				<!-- option_value_id -->
+				<label class="col-sm-2 control-label option-value-id hidden" for="action[option][insert][---0---][option_value_id]">{{ entry_option_value }} <span data-toggle="tooltip" title="{{ help_option_value }}"></span></label>
+				<div class="col-sm-3 option-value-id hidden">
+					<select name="action[option][insert][---0---][option_value_id]" id="action[option][insert][---0---][option_value_id]" class="form-control">
+						<option value="">--- {{ text_all }} ---</option>
+					</select>
+				</div>
+				<!-- option_value_text -->
+				<label class="col-sm-2 control-label option-value-text hidden" for="action[option][insert][---0---][option_value_text]">{{ entry_option_value }}</label>
+				<div class="col-sm-3 option-value-text hidden">
+					<textarea name="action[option][insert][---0---][option_value_text]" id="action[option][insert][---0---][option_value_text]" class="form-control" style="height:66px;"></textarea>
+				</div>
+
+				<div class="col-sm-2 hide-filter">
+					<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+					<button type="button" onclick="if (!$(this).closest('div.form-group').hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).closest('div.form-group').find('input, select, textarea').not('.no-clean').val(''); }" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+				</div>
+			</div>
+			<div class="row form-row option-value-id hidden">
+				<label class="col-sm-{{ col1 }} control-label"><i class="required"></i> {{ entry_price }}</label>
+				<div class="col-sm-{{ col2 }}">
+					<select name="action[option][insert][---0---][price][sign]" class="form-control">
+						<option value="-">-</option>
+						<option value="+">+</option>
+						<option value="*">*</option>
+						<option value="/">/</option>
+						<option value="=">=</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col3 }}">
+					<input type="text" name="action[option][insert][---0---][price][value]" value="" placeholder="0.00" class="form-control" />
+				</div>
+				<div class="col-sm-{{ col4 }}">
+					<select name="action[option][insert][---0---][price][prefix]" class="form-control" title="{{ entry_prefix }}" data-toggle="tooltip">
+						<option value="+">+</option>
+						<option value="-">-</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col5 }}">
+					<select name="action[option][insert][---0---][price][type]" class="form-control">
+						<option value="pp">{{ text_percent_product }}</option>
+						<option value="fp">{{ text_fixed_product }}</option>
+						<!-- <option value="p">{{ text_percent }}</option> -->
+						<option value="f">{{ text_fixed }}</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col6 }}">
+					<select name="action[option][insert][---0---][required]" class="form-control" title="{{ entry_required }}" data-toggle="tooltip">
+						<option value="0">{{ entry_required }} - {{ text_no }}</option>
+						<option value="1">{{ entry_required }} - {{ text_yes }}</option>
+					</select>
+				</div>
+			</div>
+
+			{#<!-- custom product_option_value table field example (field_type: float|text) -->
+			<div class="row form-row option-value-id hidden">
+				<input type="hidden" class="no-clean" name="action[option][insert][---0---][custom_fields][dis_price][field_table]" value="product_option_value" />
+				<input type="hidden" class="no-clean" name="action[option][insert][---0---][custom_fields][dis_price][field_type]" value="float" />
+				<input type="hidden" class="no-clean" name="action[option][insert][---0---][custom_fields][dis_price][field_name]" value="dis_price" />
+				<input type="hidden" class="no-clean" name="action[option][insert][---0---][custom_fields][dis_price][field_round]" value="1" />
+				<label class="col-sm-{{ col1 }} control-label"><i class="required-"></i> Special price</label>
+				<div class="col-sm-{{ col2 }}">
+					<select name="action[option][insert][---0---][custom_fields][dis_price][sign]" class="form-control">
+						<option value="-">-</option>
+						<option value="+">+</option>
+						<option value="*">*</option>
+						<option value="/">/</option>
+						<option value="=">=</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col3 + col4 }}">
+					<input type="text" name="action[option][insert][---0---][custom_fields][dis_price][value]" value="" placeholder="0.00" class="form-control" />
+				</div>
+				<div class="col-sm-{{ col5 + col6 }}">
+					<select name="action[option][insert][---0---][custom_fields][dis_price][type]" class="form-control">
+						<option value="pp">{{ text_percent_product }}</option>
+						<option value="fp">{{ text_fixed_product }}</option>
+						<!-- <option value="povp">Calculate Percent from option value</option>
+						<option value="povf">Fixed number from option value</option>
+						<option value="p">{{ text_percent }}</option> -->
+						<option value="f">{{ text_fixed }}</option>
+					</select>
+				</div>
+			</div>#}
+
+			<div class="row form-row option-value-id hidden">
+				<label class="col-sm-{{ col1 }} control-label">{{ entry_points }}</label>
+				<div class="col-sm-{{ col2 }}">
+					<select name="action[option][insert][---0---][points][sign]" class="form-control">
+						<option value="-">-</option>
+						<option value="+">+</option>
+						<option value="*">*</option>
+						<option value="/">/</option>
+						<option value="=">=</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col3 }}">
+					<input type="text" name="action[option][insert][---0---][points][value]" value="" placeholder="0.00" class="form-control" />
+				</div>
+				<div class="col-sm-{{ col4 }}">
+					<select name="action[option][insert][---0---][points][prefix]" class="form-control" title="{{ entry_prefix }}" data-toggle="tooltip">
+						<option value="+">+</option>
+						<option value="-">-</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col5 + col6 }}">
+					<select name="action[option][insert][---0---][points][type]" class="form-control">
+						<option value="pp">{{ text_percent_product }}</option>
+						<option value="fp">{{ text_fixed_product }}</option>
+						<!-- <option value="p">{{ text_percent }}</option> -->
+						<option value="f">{{ text_fixed }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row form-row option-value-id hidden">
+				<label class="col-sm-{{ col1 }} control-label">{{ entry_quantity }}</label>
+				<div class="col-sm-{{ col2 }}">
+					<select name="action[option][insert][---0---][quantity][sign]" class="form-control">
+						<option value="-">-</option>
+						<option value="+">+</option>
+						<option value="*">*</option>
+						<option value="/">/</option>
+						<option value="=">=</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col3 }}">
+					<input type="text" name="action[option][insert][---0---][quantity][value]" value="" placeholder="0.00" class="form-control" />
+				</div>
+				<div class="col-sm-{{ col4 }}">
+					<select name="action[option][insert][---0---][quantity][prefix]" class="form-control" title="{{ entry_prefix }}" data-toggle="tooltip">
+						<option value="+">+</option>
+						<option value="-">-</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col5 }}">
+					<select name="action[option][insert][---0---][quantity][type]" class="form-control">
+						<option value="fp">{{ text_fixed_product }}</option>
+						<option value="f">{{ text_fixed }}</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col6 }}">
+					<select name="action[option][insert][---0---][subtract]" class="form-control" title="{{ entry_subtract }}" data-toggle="tooltip">
+						<option value="0">{{ entry_subtract }} - {{ text_no }}</option>
+						<option value="1">{{ entry_subtract }} - {{ text_yes }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row form-row option-value-id hidden">
+				<label class="col-sm-{{ col1 }} control-label">{{ entry_weight }}</label>
+				<div class="col-sm-{{ col2 }}">
+					<select name="action[option][insert][---0---][weight][sign]" class="form-control">
+						<option value="-">-</option>
+						<option value="+">+</option>
+						<option value="*">*</option>
+						<option value="/">/</option>
+						<option value="=">=</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col3 }}">
+					<input type="text" name="action[option][insert][---0---][weight][value]" value="" placeholder="0.00" class="form-control" />
+				</div>
+				<div class="col-sm-{{ col4 }}">
+					<select name="action[option][insert][---0---][weight][prefix]" class="form-control" title="{{ entry_prefix }}" data-toggle="tooltip">
+						<option value="+">+</option>
+						<option value="-">-</option>
+					</select>
+				</div>
+				<div class="col-sm-{{ col5 + col6 }}">
+					<select name="action[option][insert][---0---][weight][type]" class="form-control">
+						<option value="pp">{{ text_percent_product }}</option>
+						<option value="fp">{{ text_fixed_product }}</option>
+						<!-- <option value="p">{{ text_percent }}</option> -->
+						<option value="f">{{ text_fixed }}</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row form-row">
+	<div class="toggle-caption"><h4>{{ text_remove_existing }}</h4><button type="button" onclick="" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger btn-clone-clear"><i class="fa fa-trash-o"></i></button></div>
+</div>
+<div class="toggle">
+	<div class="clone-wr">
+		<div class="form-group action-group-default clone-master">
+			<label class="col-sm-2 control-label" for="action[option][delete][---0---][option_id]"><i class="required"></i> {{ entry_option }}</label>
+			<div class="col-sm-3">
+				<input type="text" value="" placeholder="{{ entry_option }}" id="action[option][delete][---0---][option_id]" data-target="action[option][delete][---0---][option_id]" data-target-values="action[option][delete][---0---][option_value_id]" class="form-control option-select" />
+				<input type="hidden" name="action[option][delete][---0---][option_id]" value="" />
+			</div>
+			<label class="col-sm-2 control-label" for="action[option][delete][---0---][option_value_id]">{{ entry_option_value }}</label>
+			<div class="col-sm-3">
+				<select name="action[option][delete][---0---][option_value_id]" id="action[option][delete][---0---][option_value_id]" class="form-control">
+					<option value="">--- {{ text_all }} ---</option>
+				</select>
+			</div>
+			<div class="col-sm-2 hide-filter">
+				<button type="button" onclick="bpe.cloneFilter(this);" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary btn-clone"><i class="fa fa-plus-circle"></i></button>
+				<button type="button" onclick="if (!$(this).parent().parent().hasClass('clone-master')) { bpe.hideFilter(this); } else { $(this).parent().parent().find('input, select, textarea').not('.no-clean').val(''); }" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-clone-delete"><i class="fa fa-minus-circle"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
