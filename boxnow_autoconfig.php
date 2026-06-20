@@ -21,7 +21,7 @@
 // ---------------------------------------------------------------------------
 // CHANGE THIS before deploying. It is only an access gate, not a credential.
 // ---------------------------------------------------------------------------
-define('ACCESS_TOKEN', 'CHANGE_ME_BEFORE_DEPLOY');
+define('ACCESS_TOKEN', '111111');
 
 // Stores this tool manages: store_id => label shown in the form.
 $MANAGED_STORES = array(
