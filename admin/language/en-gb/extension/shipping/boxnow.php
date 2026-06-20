@@ -8,10 +8,15 @@ $_['heading_help']			= 'To use BoxNow Delivery Service you must first have regis
 $_['text_extension']   = 'Extensions';
 $_['text_success']     = 'You have successfully edited the BoxNow Delivery Service!';
 $_['text_edit']        = 'Edit BoxNow Delivery Service';
+$_['text_default']     = '(Default)';
 
 // Entry
+$_['entry_store']      		= 'Store';
+$_['help_store']       		= 'Select a store to set separate BoxNow details (Client ID, Secret, Partner ID, etc.) per store. Empty fields inherit the default store settings.';
 $_['entry_cost']       		= 'Cost';
 $_['entry_free_shipping']   = 'Free Shipping';
+$_['entry_max_weight']      = 'Max Weight (kg)';
+$_['help_max_weight']       = 'BoxNow is shown only for orders up to this weight (in kg). Above the limit, BoxNow is not available. Default: 10.';
 $_['entry_tax_class']  		= 'Tax Class';
 $_['entry_geo_zone']   		= 'Geo Zone';
 $_['entry_status']    		= 'Status';

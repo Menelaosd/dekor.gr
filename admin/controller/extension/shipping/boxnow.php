@@ -6,18 +6,53 @@ class ControllerExtensionShippingBoxnow extends Controller {
 		$this->load->language('extension/shipping/boxnow');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$data['heading_title'] 	= $this->language->get('heading_title');
 		$data['text_edit'] 		= $this->language->get('text_edit');
 
 		$this->load->model('setting/setting');
+		$this->load->model('setting/store');
+
+		// Multistore: which store are we editing? (0 = default)
+		$store_id = isset($this->request->get['store_id']) ? (int)$this->request->get['store_id'] : 0;
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('shipping_boxnow', $this->request->post);
+			$this->model_setting_setting->editSetting('shipping_boxnow', $this->request->post, $store_id);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true));
+			$this->response->redirect($this->url->link('extension/shipping/boxnow', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store_id, true));
+		}
+
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+
+		// Effective settings for the selected store: default (0) overridden by store-specific
+		$boxnow_setting = $this->model_setting_setting->getSetting('shipping_boxnow', 0);
+
+		if ($store_id) {
+			$boxnow_setting = array_merge($boxnow_setting, $this->model_setting_setting->getSetting('shipping_boxnow', $store_id));
+		}
+
+		// Store selector
+		$data['store_id'] = $store_id;
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['stores'] = array();
+		$data['stores'][] = array(
+			'store_id' => 0,
+			'name'     => $this->config->get('config_name') . ' ' . $this->language->get('text_default')
+		);
+
+		foreach ($this->model_setting_store->getStores() as $store) {
+			$data['stores'][] = array(
+				'store_id' => $store['store_id'],
+				'name'     => $store['name']
+			);
 		}
 
 		if (isset($this->error['warning'])) {
@@ -43,89 +78,48 @@ class ControllerExtensionShippingBoxnow extends Controller {
 			'href' => $this->url->link('extension/shipping/boxnow', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/shipping/boxnow', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/shipping/boxnow', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store_id, true);
 
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping', true);
 
-		if (isset($this->request->post['shipping_boxnow_api_url'])) {
-			$data['shipping_boxnow_api_url'] = $this->request->post['shipping_boxnow_api_url'];
-		} else {
-			$data['shipping_boxnow_api_url'] = $this->config->get('shipping_boxnow_api_url');
-		}
-		
-		if (isset($this->request->post['shipping_boxnow_client_id'])) {
-			$data['shipping_boxnow_client_id'] = $this->request->post['shipping_boxnow_client_id'];
-		} else {
-			$data['shipping_boxnow_client_id'] = $this->config->get('shipping_boxnow_client_id');
-		}		
-		
-		if (isset($this->request->post['shipping_boxnow_client_secret'])) {
-			$data['shipping_boxnow_client_secret'] = $this->request->post['shipping_boxnow_client_secret'];
-		} else {
-			$data['shipping_boxnow_client_secret'] = $this->config->get('shipping_boxnow_client_secret');
-		}
-		
-		if (isset($this->request->post['shipping_boxnow_warehouse_number'])) {
-			$data['shipping_boxnow_warehouse_number'] = $this->request->post['shipping_boxnow_warehouse_number'];
-		} else {
-			$data['shipping_boxnow_warehouse_number'] = $this->config->get('shipping_boxnow_warehouse_number');
+		$fields = array(
+			'shipping_boxnow_api_url',
+			'shipping_boxnow_client_id',
+			'shipping_boxnow_client_secret',
+			'shipping_boxnow_warehouse_number',
+			'shipping_boxnow_partner_id',
+			'shipping_boxnow_cost',
+			'shipping_boxnow_free_shipping',
+			'shipping_boxnow_max_weight',
+			'shipping_boxnow_tax_class_id',
+			'shipping_boxnow_geo_zone_id',
+			'shipping_boxnow_status',
+			'shipping_boxnow_sort_order',
+			'shipping_boxnow_payment_modules'
+		);
+
+		foreach ($fields as $field) {
+			if (isset($this->request->post[$field])) {
+				$data[$field] = $this->request->post[$field];
+			} elseif (isset($boxnow_setting[$field])) {
+				$data[$field] = $boxnow_setting[$field];
+			} else {
+				$data[$field] = '';
+			}
 		}
 
-		if (isset($this->request->post['shipping_boxnow_partner_id'])) {
-			$data['shipping_boxnow_partner_id'] = $this->request->post['shipping_boxnow_partner_id'];
-		} else {
-			$data['shipping_boxnow_partner_id'] = $this->config->get('shipping_boxnow_partner_id');
-		}
-
-		if (isset($this->request->post['shipping_boxnow_cost'])) {
-			$data['shipping_boxnow_cost'] = $this->request->post['shipping_boxnow_cost'];
-		} else {
-			$data['shipping_boxnow_cost'] = $this->config->get('shipping_boxnow_cost');
-		}
-
-		if (isset($this->request->post['shipping_boxnow_free_shipping'])) {
-			$data['shipping_boxnow_free_shipping'] = $this->request->post['shipping_boxnow_free_shipping'];
-		} else {
-			$data['shipping_boxnow_free_shipping'] = $this->config->get('shipping_boxnow_free_shipping');
-		}
-
-		if (isset($this->request->post['shipping_boxnow_tax_class_id'])) {
-			$data['shipping_boxnow_tax_class_id'] = $this->request->post['shipping_boxnow_tax_class_id'];
-		} else {
-			$data['shipping_boxnow_tax_class_id'] = $this->config->get('shipping_boxnow_tax_class_id');
+		// Default max weight (kg) when not configured yet
+		if ($data['shipping_boxnow_max_weight'] === '' || $data['shipping_boxnow_max_weight'] === null) {
+			$data['shipping_boxnow_max_weight'] = 10;
 		}
 
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
 
-		if (isset($this->request->post['shipping_boxnow_geo_zone_id'])) {
-			$data['shipping_boxnow_geo_zone_id'] = $this->request->post['shipping_boxnow_geo_zone_id'];
-		} else {
-			$data['shipping_boxnow_geo_zone_id'] = $this->config->get('shipping_boxnow_geo_zone_id');
-		}
-
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-
-		if (isset($this->request->post['shipping_boxnow_status'])) {
-			$data['shipping_boxnow_status'] = $this->request->post['shipping_boxnow_status'];
-		} else {
-			$data['shipping_boxnow_status'] = $this->config->get('shipping_boxnow_status');
-		}
-
-		if (isset($this->request->post['shipping_boxnow_sort_order'])) {
-			$data['shipping_boxnow_sort_order'] = $this->request->post['shipping_boxnow_sort_order'];
-		} else {
-			$data['shipping_boxnow_sort_order'] = $this->config->get('shipping_boxnow_sort_order');
-		}
-		
-		if (isset($this->request->post['shipping_boxnow_payment_modules'])) {
-			$data['shipping_boxnow_payment_modules'] = $this->request->post['shipping_boxnow_payment_modules'];
-		} else {
-			$data['shipping_boxnow_payment_modules'] = $this->config->get('shipping_boxnow_payment_modules');
-		}
 		
 		$this->load->model('setting/extension');
 		
@@ -212,12 +206,16 @@ class ControllerExtensionShippingBoxnow extends Controller {
 				$boxnow_parcels 		= json_decode($boxnow_info['parcels'],TRUE);
 				$boxnow_status_message	= $boxnow_info['status_message'];
 				$boxnow_locker_id		= $boxnow_info['locker_id'];
+				$boxnow_locker_address	= isset($boxnow_info['locker_address']) ? $boxnow_info['locker_address'] : '';
+				$boxnow_locker_name		= isset($boxnow_info['locker_name']) ? $boxnow_info['locker_name'] : '';
 				$boxnow_status			= $boxnow_info['status'];
 			} else {
 				$boxnow_request_id 		= '';
 				$boxnow_parcels 		= '';
 				$boxnow_status_message	= '';
 				$boxnow_locker_id		= '';
+				$boxnow_locker_address	= '';
+				$boxnow_locker_name		= '';
 				$boxnow_status			= '';
 			}
 			
@@ -241,6 +239,8 @@ class ControllerExtensionShippingBoxnow extends Controller {
 				'boxnow_parcels' 		=> $boxnow_parcels,
 				'boxnow_status_message' => $boxnow_status_message,
 				'boxnow_locker_id' 		=> $boxnow_locker_id,
+				'boxnow_locker_address' => $boxnow_locker_address,
+				'boxnow_locker_name' 	=> $boxnow_locker_name,
 				'boxnow_status' 		=> $boxnow_status,
 				'$boxnow_status_message'=> $boxnow_status_message,
 				'boxnow_submit' 		=>  $this->url->link('extension/shipping/boxnow/deliveryRequests', 'user_token=' . $this->session->data['user_token'].'&order_id='.$result['order_id'], true),
@@ -258,13 +258,8 @@ class ControllerExtensionShippingBoxnow extends Controller {
 		}
 		$data['warehouse_number'] = $warehouse_number_array;
 
-		$data['partner_id'] = $this->config->get('shipping_boxnow_partner_id');
-		
-		$boxnow_partner_id = $this->config->get('shipping_boxnow_partner_id');
-		if ((int)$this->config->get('config_store_id') === 2) {
-			$boxnow_partner_id = '9019';
-		}
-		$data['partner_id'] = $boxnow_partner_id;		
+		// Manual locker-reselect widget uses the default store's partner id
+		$data['partner_id'] = $this->getStoreSettingValue('shipping_boxnow_partner_id', 0);
 		
 		$url = '';
 		
@@ -325,32 +320,31 @@ class ControllerExtensionShippingBoxnow extends Controller {
 				$quantity = $this->request->get['quantity'];
 			};
 
+			// Multistore: load BoxNow credentials for the order's store
+			$store_id      = (int)$order['store_id'];
+			$client_id     = $this->getStoreSettingValue('shipping_boxnow_client_id', $store_id);
+			$client_secret = $this->getStoreSettingValue('shipping_boxnow_client_secret', $store_id);
+			$api_url       = $this->getStoreSettingValue('shipping_boxnow_api_url', $store_id);
+
 			$locker_id =$this->request->get['locker_id'];
 			if (!$locker_id) $locker_id = $boxnow_data['locker_id'];
 			$warehouse_number = $this->request->get['warehouse_number'];
 			if (!$warehouse_number) {
-				$warehouse_number = $this->config->get('shipping_boxnow_warehouse_number');
+				$warehouse_number = $this->getStoreSettingValue('shipping_boxnow_warehouse_number', $store_id);
 				$warehouse_number = array_filter(array_map('trim', explode(PHP_EOL, $warehouse_number)));
 				$warehouse_number_array = [];
 				foreach($warehouse_number as $row) {
 					$parts = array_map('trim', explode(':', $row));
 					$warehouse_number_array[$parts[0]] = isset($parts[1]) ? $parts[1] : 'Warehouse #'.$parts[0];
 				}
-				$warehouse_number = reset(array_keys($warehouse_number_array));
+				$warehouse_keys = array_keys($warehouse_number_array);
+				$warehouse_number = reset($warehouse_keys);
 			}
-			
-			$curl = curl_init();		
 
-			$client_id = $this->config->get('shipping_boxnow_client_id');
-			$client_secret = $this->config->get('shipping_boxnow_client_secret');
-
-			if ($order['store_id'] == 2 ) {
-				$client_id = '944d5fd2-80e4-46fa-90ed-c2ceff2e9792';
-				$client_secret = '33ebbcb73c3dc8f98f4cf489ce762af345f0fe1fbd9be0ad166626a4f921a01e';
-			}
+			$curl = curl_init();
 
 			curl_setopt_array($curl, array(
-				CURLOPT_URL => $this->config->get('shipping_boxnow_api_url').'/api/v1/auth-sessions',
+				CURLOPT_URL => $api_url.'/api/v1/auth-sessions',
 				CURLOPT_RETURNTRANSFER => true,
 				CURLOPT_ENCODING => '',
 				CURLOPT_MAXREDIRS => 10,
@@ -406,12 +400,11 @@ class ControllerExtensionShippingBoxnow extends Controller {
 
 			// Create a JSON with all necessary fields
 			
-			$email = $this->config->get('config_email');
-			
-			if ((int)$this->config->get('config_store_id') === 2) {
-				$email = 'info@apokrifa.gr';
+			$email = $this->getStoreSettingValue('config_email', $store_id);
+			if (!$email) {
+				$email = $this->config->get('config_email');
 			}
-			
+
 			$data = array(
 				"orderNumber" 			=> $order['order_id'],
 				"invoiceValue" 			=> number_format($order['total'], 2, '.', ''),
@@ -436,7 +429,7 @@ class ControllerExtensionShippingBoxnow extends Controller {
 			 
 			// Prepare CURL for delivery request
 			curl_setopt_array($post, array(
-				CURLOPT_URL => $this->config->get('shipping_boxnow_api_url').'/api/v1/delivery-requests',
+				CURLOPT_URL => $api_url.'/api/v1/delivery-requests',
 				CURLOPT_RETURNTRANSFER => true,
 				CURLOPT_ENCODING => '',
 				CURLOPT_MAXREDIRS => 10,
@@ -498,18 +491,25 @@ class ControllerExtensionShippingBoxnow extends Controller {
 	}
 	
 	public function getParcel() {
-		
-		$client_id = $this->config->get('shipping_boxnow_client_id');
-		$client_secret = $this->config->get('shipping_boxnow_client_secret');
-		
-		if ((int)$this->config->get('config_store_id') === 2) {
-			$client_id = '944d5fd2-80e4-46fa-90ed-c2ceff2e9792';
-			$client_secret = '33ebbcb73c3dc8f98f4cf489ce762af345f0fe1fbd9be0ad166626a4f921a01e';
-		}	
-		$curl = curl_init();		
-				
+
+		// Multistore: resolve the store from the order so we use the right credentials
+		$store_id = 0;
+		if (isset($this->request->get['order_id']) && (int)$this->request->get['order_id']) {
+			$this->load->model('sale/order');
+			$order = $this->model_sale_order->getOrder((int)$this->request->get['order_id']);
+			if ($order) {
+				$store_id = (int)$order['store_id'];
+			}
+		}
+
+		$client_id     = $this->getStoreSettingValue('shipping_boxnow_client_id', $store_id);
+		$client_secret = $this->getStoreSettingValue('shipping_boxnow_client_secret', $store_id);
+		$api_url       = $this->getStoreSettingValue('shipping_boxnow_api_url', $store_id);
+
+		$curl = curl_init();
+
 		curl_setopt_array($curl, array(
-			CURLOPT_URL => $this->config->get('shipping_boxnow_api_url').'/api/v1/auth-sessions',
+			CURLOPT_URL => $api_url.'/api/v1/auth-sessions',
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING => '',
 			CURLOPT_MAXREDIRS => 10,
@@ -552,7 +552,7 @@ class ControllerExtensionShippingBoxnow extends Controller {
 		$curl = curl_init();
 
 		curl_setopt_array($curl, array(
-			CURLOPT_URL => $this->config->get('shipping_boxnow_api_url').'/api/v1/parcels/'.$parcel_id.'/label.pdf',
+			CURLOPT_URL => $api_url.'/api/v1/parcels/'.$parcel_id.'/label.pdf',
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING => '',
 			CURLOPT_MAXREDIRS => 10,
@@ -590,5 +590,16 @@ class ControllerExtensionShippingBoxnow extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	// Multistore helper: returns the store-specific setting value, falling back to the default store (0).
+	private function getStoreSettingValue($key, $store_id = 0) {
+		$query = $this->db->query("SELECT value, store_id FROM `" . DB_PREFIX . "setting` WHERE `key` = '" . $this->db->escape($key) . "' AND store_id IN ('0', '" . (int)$store_id . "') ORDER BY store_id DESC");
+
+		if ($query->num_rows) {
+			return $query->row['value'];
+		}
+
+		return '';
 	}
 }

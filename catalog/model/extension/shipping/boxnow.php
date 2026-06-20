@@ -3,6 +3,17 @@ class ModelExtensionShippingBoxnow extends Model {
 	function getQuote($address) {
 		$this->load->language('extension/shipping/boxnow');
 
+		// Weight gate: BoxNow is only available up to the configured max weight (kg).
+		// Store default weight class is Kilogram, so getWeight() already returns kg.
+		$max_weight = $this->config->get('shipping_boxnow_max_weight');
+		if ($max_weight === null || $max_weight === '') {
+			$max_weight = 10;
+		}
+
+		if ((float)$max_weight > 0 && (float)$this->cart->getWeight() > (float)$max_weight) {
+			return array();
+		}
+
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('shipping_boxnow_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
 		if (!$this->config->get('shipping_boxnow_geo_zone_id')) {
@@ -57,9 +68,12 @@ class ModelExtensionShippingBoxnow extends Model {
 		return $method_data;
 	}
 	
-	function setRequest($order = array(), $request =  array()) {		
+	function setRequest($order = array(), $request =  array()) {
 		if($order && isset($request['locker_id'])) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "boxnow_requests SET order_id = '" . (int)$order['order_id'] . "',locker_id='".(int)$request['locker_id']."', status='2' ");
+			$locker_address = isset($request['locker_address']) ? $this->db->escape($request['locker_address']) : '';
+			$locker_name    = isset($request['locker_name']) ? $this->db->escape($request['locker_name']) : '';
+
+			$this->db->query("INSERT INTO " . DB_PREFIX . "boxnow_requests SET order_id = '" . (int)$order['order_id'] . "', locker_id = '" . (int)$request['locker_id'] . "', locker_address = '" . $locker_address . "', locker_name = '" . $locker_name . "', status = '2' ");
 		};
 	}
 	

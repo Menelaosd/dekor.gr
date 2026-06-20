@@ -9,6 +9,8 @@ class ModelExtensionShippingBoxnow extends Model {
 			  `request_id` int(11) NOT NULL,
 			  `parcels` text NOT NULL,
 			  `locker_id` int(11) NOT NULL,
+			  `locker_address` varchar(255) NOT NULL DEFAULT '',
+			  `locker_name` varchar(255) NOT NULL DEFAULT '',
 			  `status_message` text DEFAULT NULL,
 			  `status` int(11) NOT NULL
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci

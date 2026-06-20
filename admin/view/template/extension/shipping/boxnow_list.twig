@@ -75,19 +75,22 @@
 						{{ order.boxnow_status_message }}
 						{% if order.boxnow_parcels %}
 							{% for boxnow_parcel in order.boxnow_parcels %}
-								<a href="index.php?route=extension/shipping/boxnow/getParcel&parcel_id={{ boxnow_parcel.id }}&user_token={{ user_token }}" target="_blank">
+								<a href="index.php?route=extension/shipping/boxnow/getParcel&parcel_id={{ boxnow_parcel.id }}&order_id={{ order.order_id }}&user_token={{ user_token }}" target="_blank">
 									<i class="fa fa-file"></i> {{ boxnow_parcel.id }}
 								</a>
 							{% endfor %}
 						{% else %}
 						{% endif %}		
 					</td>
-					<td class="text-center">						
+					<td class="text-center">
 						{% if order.boxnow_locker_id %}
 							<button title="Locker Id" type="button" class="btn btn-info locker_id_button" onclick="window['selectedOrderId'] = {{ order.order_id }}; document.getElementsByClassName('boxnow-map-widget-button')[0].click();">{{ order.boxnow_locker_id }}</button><input type="hidden" class="locker_id" value="{{ order.boxnow_locker_id }}" />
+							{% if order.boxnow_locker_address or order.boxnow_locker_name %}
+								<div style="margin-top:5px;font-size:12px;">{{ order.boxnow_locker_address }}{% if order.boxnow_locker_name %} [{{ order.boxnow_locker_name }}]{% endif %}</div>
+							{% endif %}
 						{% else %}
 							-
-						{% endif %}						
+						{% endif %}
 					</td>
 					<td class="text-center">
 						{% if order.boxnow_status == 1 %}

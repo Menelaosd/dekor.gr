@@ -24,11 +24,34 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
+    {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
       </div>
       <div class="panel-body">
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
+          <div class="col-sm-10">
+            <select id="input-store" class="form-control"
+              onchange="location = 'index.php?route=extension/shipping/boxnow&user_token={{ user_token }}&store_id=' + this.value;">
+              {% for store in stores %}
+              {% if store.store_id == store_id %}
+              <option value="{{ store.store_id }}" selected="selected">{{ store.name }}</option>
+              {% else %}
+              <option value="{{ store.store_id }}">{{ store.name }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+            <span class="help-block">{{ help_store }}</span>
+          </div>
+        </div>
+
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-shipping"
           class="form-horizontal">
 
@@ -51,6 +74,15 @@
             <div class="col-sm-10">
               <input type="text" name="shipping_boxnow_free_shipping" value="{{ shipping_boxnow_free_shipping }}"
                 placeholder="{{ entry_free_shipping }}" id="input-free_shipping" class="form-control" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-max-weight">{{ entry_max_weight }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="shipping_boxnow_max_weight" value="{{ shipping_boxnow_max_weight }}"
+                placeholder="{{ entry_max_weight }}" id="input-max-weight" class="form-control" />
+              <span class="help-block">{{ help_max_weight }}</span>
             </div>
           </div>
 

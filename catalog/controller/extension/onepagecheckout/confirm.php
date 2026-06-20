@@ -356,9 +356,29 @@ $this->load->model('account/customer');
 				}
 
 				$order_data['comment'] = $this->session->data['comment'];
-				
+
 				if(!empty($this->session->data['delivery_date'])){
 					$order_data['comment'] .= '<br/> <br/><h4>Estimate Shipping Date: '.date('d/m/Y',strtotime($this->session->data['delivery_date'])). '</h4>';
+				}
+
+				// BOXNOW: record the chosen locker on the order so it shows in the order details
+				if (
+					isset($this->session->data['shipping_method']['code']) &&
+					$this->session->data['shipping_method']['code'] === 'boxnow.boxnow' &&
+					!empty($this->session->data['boxnow_locker_id'])
+				) {
+					$this->load->language('extension/shipping/boxnow');
+
+					$locker_line = $this->language->get('selected_boxnow') . ' ';
+					if (!empty($this->session->data['boxnow_address'])) {
+						$locker_line .= $this->session->data['boxnow_address'] . ' ';
+					}
+					if (!empty($this->session->data['boxnow_name'])) {
+						$locker_line .= '[' . $this->session->data['boxnow_name'] . '] ';
+					}
+					$locker_line .= '(Locker ID: ' . $this->session->data['boxnow_locker_id'] . ')';
+
+					$order_data['comment'] = !empty($order_data['comment']) ? $order_data['comment'] . '<br/>' . $locker_line : $locker_line;
 				}
 				
 				$data['payment_trigger_button'] = $this->config->get('onepagecheckout_payment_trigger_button');
@@ -445,6 +465,12 @@ $this->load->model('account/customer');
 
 					if (!empty($this->session->data['boxnow_locker_id'])) {
 						$boxnow_data['locker_id'] = $this->session->data['boxnow_locker_id'];
+					}
+					if (!empty($this->session->data['boxnow_address'])) {
+						$boxnow_data['locker_address'] = $this->session->data['boxnow_address'];
+					}
+					if (!empty($this->session->data['boxnow_name'])) {
+						$boxnow_data['locker_name'] = $this->session->data['boxnow_name'];
 					}
 
 					$this->model_extension_shipping_boxnow->setRequest(
