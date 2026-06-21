@@ -1234,3 +1234,14 @@ a.burger-box::after, .burger-box::after, .dk-mobToggle::after { display: none !i
 /* ROUND 19 — remove the redundant "Εγγραφή | Είσοδος" util link (breaks mobile;
    account icon in the header row already covers it) — both sites */
 .dk-util-reg { display: none !important; }
+
+/* ROUND 20 — checkout .extcontainer matches the site container width (both sites) */
+.extcontainer {
+  max-width: 1660px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 32px;
+  padding-right: 32px;
+  box-sizing: border-box;
+}
+@media (max-width: 767px) { .extcontainer { padding-left: 14px; padding-right: 14px; } }
