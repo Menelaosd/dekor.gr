@@ -469,3 +469,8 @@ footer h1, footer h2, footer h3, footer h4, footer h5, footer h6, footer .footer
 .category-description, .category-description-c, .category-description-c * {
   color: var(--rz-ink) !important;
 }
+
+/* APOKRIFA DESKTOP — extrow top padding */
+@media (min-width: 768px) {
+  .extrow { padding-top: 1rem !important; }
+}

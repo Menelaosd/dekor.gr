@@ -1225,3 +1225,12 @@ a.burger-box::after, .burger-box::after, .dk-mobToggle::after { display: none !i
 #content .readall-button, #content .readall-button * {
   color: #fff !important; -webkit-text-fill-color: #fff !important;
 }
+
+/* ROUND 18 — checkout: extpanel-body no padding on DESKTOP (both sites) */
+@media (min-width: 768px) {
+  .extpanel-body { padding: 0 !important; overflow: auto !important; }
+}
+
+/* ROUND 19 — remove the redundant "Εγγραφή | Είσοδος" util link (breaks mobile;
+   account icon in the header row already covers it) — both sites */
+.dk-util-reg { display: none !important; }
