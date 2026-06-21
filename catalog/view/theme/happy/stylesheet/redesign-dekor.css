@@ -28,3 +28,8 @@
 @media (min-width: 992px) {
   footer .footer-block-2, footer .footer-block-3, footer .footer-block-4 { border-left: 1px solid var(--rz-footer-sep) !important; }
 }
+
+/* desktop: top divider above the nav menu (dekor only) */
+@media (min-width: 992px) {
+  #desk-menu, .dk-navrow { border-top: 1px solid var(--rz-border) !important; }
+}

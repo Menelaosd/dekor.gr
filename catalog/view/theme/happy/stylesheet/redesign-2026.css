@@ -992,8 +992,8 @@ footer .footer-block { margin-bottom: 18px; }
 .category-description-c h2, .category-description-c h3,
 .category-caption-box h2 *, .category-description-c h2 * { color: var(--rz-ink) !important; -webkit-text-fill-color: var(--rz-ink) !important; }
 
-/* 4c. remove the nav-row top border (the "terrible-ass border from the menu") */
-.dk-navrow, #desk-menu, #desk-menu.dk-navrow { border-top: none !important; }
+/* 4c. desktop nav-row top divider (visible hairline above the horizontal menu) */
+.dk-navrow, #desk-menu, #desk-menu.dk-navrow { border-top: 1px solid var(--rz-border-2) !important; }
 
 /* 4e. kill the black focus/active OUTLINE on menu items + header actions + mmenu */
 .main-menu a:focus, .main-menu a:active, .main-menu .nav > li.open > a,
@@ -1253,4 +1253,10 @@ a.burger-box::after, .burger-box::after, .dk-mobToggle::after { display: none !i
   max-width: 1660px !important;
   margin-left: auto !important;
   margin-right: auto !important;
+}
+
+/* ROUND 21 — desktop nav font sizes: menu a bit bigger, dropdowns a lot bigger */
+@media (min-width: 992px) {
+  .main-menu .nav.navbar-nav > li > a { font-size: 15px !important; }
+  .main-menu .dropdown-menu > li > a { font-size: 16.5px !important; line-height: 1.5 !important; padding: 10px 16px !important; }
 }

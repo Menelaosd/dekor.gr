@@ -474,3 +474,9 @@ footer h1, footer h2, footer h3, footer h4, footer h5, footer h6, footer .footer
 @media (min-width: 768px) {
   .extrow { padding-top: 1rem !important; }
 }
+
+/* desktop: bigger horizontal menu font (apokrifa rule was forcing 12.5px) */
+@media (min-width: 992px) {
+  .main-menu .nav.navbar-nav > li > a { font-size: 15px !important; }
+  .main-menu .dropdown-menu > li > a { font-size: 16.5px !important; line-height: 1.5 !important; padding: 10px 16px !important; }
+}
