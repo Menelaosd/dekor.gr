@@ -1219,3 +1219,9 @@ a.burger-box::after, .burger-box::after, .dk-mobToggle::after { display: none !i
 @media (max-width: 1199px) { .products-row { grid-template-columns: repeat(3, 1fr) !important; } }
 @media (max-width: 900px)  { .products-row { grid-template-columns: repeat(2, 1fr) !important; } }
 @media (max-width: 767px)  { .products-row { grid-template-columns: 1fr 1fr !important; gap: 12px !important; } }
+
+/* ROUND 17 — read-more (readall) button: white text (both sites) */
+.readall-button, .readall-button:hover, .readall-button *,
+#content .readall-button, #content .readall-button * {
+  color: #fff !important; -webkit-text-fill-color: #fff !important;
+}
