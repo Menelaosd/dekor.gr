@@ -1245,3 +1245,12 @@ a.burger-box::after, .burger-box::after, .dk-mobToggle::after { display: none !i
   box-sizing: border-box;
 }
 @media (max-width: 767px) { .extcontainer { padding-left: 14px; padding-right: 14px; } }
+
+/* ROUND 20b — base.css forces .extcontainer width:1170px at >=1200px; override
+   so the 1660 max-width actually applies */
+.extcontainer, .extcontainer-fluid {
+  width: auto !important;
+  max-width: 1660px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
