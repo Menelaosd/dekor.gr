@@ -1,0 +1,1200 @@
+/* ============================================================================
+   2026 REDESIGN — clean, coherent design system (rewritten from scratch)
+   Flat (no shadows). SOFT borders only (never black). Inter type.
+   Palette + apokrifa white-inversion live in redesign-dekor / redesign-apokrifa.
+   ============================================================================ */
+
+:root {
+  /* accent set per store (dekor green / apokrifa purple) */
+  /* client-chosen elegant sage green */
+  --rz-accent:        #618764;   /* chosen green */
+  --rz-accent-2:      #8AA17F;   /* muted sage */
+  --rz-accent-deep:   #4C6B50;   /* hover / deep shade of #618764 */
+  --rz-accent-ink:    #ffffff;
+  --rz-avail:         #618764;   /* availability green */
+  --rz-bg:            #ffffff;
+  --rz-surface:       #ffffff;
+  --rz-surface-2:     #F3F4F8;   /* surface gray */
+  --rz-ink:           #111111;
+  --rz-muted:         #5B5E68;
+  --rz-faint:         #9396a3;
+  --rz-border:        #ECEEF3;   /* border light */
+  --rz-border-2:      #CCCEDC;   /* border gray */
+  --rz-radius:        20px;      /* cards */
+  --rz-radius-sm:     12px;      /* inputs / chips */
+  --rz-btn:           12px;
+  --rz-ui:            "Geologica", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --rz-mono:          "Roboto Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --rz-serif:         var(--rz-mono);   /* titles / eyebrows / prices use mono */
+  --rz-ease:          ease-out;
+}
+body, .ho_wrapper, #content, input, select, textarea, button, .product-name a { font-family: var(--rz-ui); }
+.breadcrumb, .product-block-code, .product-block-price, #cart .cartprice, .telephone, .price { font-family: var(--rz-mono); }
+
+/* ---------- base ------------------------------------------------------- */
+*,*::before,*::after { box-shadow: none !important; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body { background: var(--rz-bg); color: var(--rz-ink); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+a { transition: color .2s var(--rz-ease); }
+a:hover { color: var(--rz-accent); }
+:focus-visible { outline: 2px solid var(--rz-accent); outline-offset: 2px; }
+img { max-width: 100%; }
+
+/* ---------- typography ------------------------------------------------- */
+#content h1, #content h2, #content h3,
+.category-caption-box h1, .product-right h1, .product-content h1,
+.module-title, .blog_title, .blog_post h1, .page-header h1 {
+  font-family: var(--rz-serif); font-weight: 700; letter-spacing: -.02em; color: var(--rz-ink);
+}
+#content h1, .category-caption-box h1, .product-right h1, .product-content h1 { font-size: clamp(26px, 3vw, 40px); line-height: 1.12; }
+#content h2, .module-title {
+  font-size: clamp(22px, 2.4vw, 30px); text-align: center; position: relative; margin: 6px auto 26px; padding-bottom: 14px;
+}
+#content h2::after, .module-title::after {
+  content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 42px; height: 2px; background: var(--rz-accent);
+}
+
+/* ---------- buttons (soft, never black borders) ----------------------- */
+.btn-primary, .show-cart-button, .button-cart, #button-cart, .btn-secondary, .btn-info, a.btn.all {
+  background: var(--rz-accent-deep) !important; color: #fff !important; border: none !important;
+  border-radius: var(--rz-btn) !important; text-transform: uppercase; letter-spacing: .1em;
+  font-size: 11.5px !important; font-weight: 700 !important; transition: background .25s var(--rz-ease) !important;
+}
+.btn-primary:hover, .show-cart-button:hover, .button-cart:hover, #button-cart:hover,
+.btn-secondary:hover, .btn-info:hover, a.btn.all:hover { background: var(--rz-ink) !important; color: #fff !important; }
+.btn-default {
+  background: var(--rz-surface) !important; color: var(--rz-ink) !important;
+  border: 1px solid var(--rz-border-2) !important; border-radius: var(--rz-btn) !important;
+  text-transform: none; font-weight: 600; transition: border-color .2s var(--rz-ease), color .2s var(--rz-ease) !important;
+}
+.btn-default:hover { border-color: var(--rz-accent) !important; color: var(--rz-accent) !important; background: var(--rz-surface) !important; }
+#content a.btn, #content a.btn:hover { color: #fff; }
+#content a.btn-default, #content a.btn-default:hover { color: var(--rz-ink); }
+
+/* ============================================================================
+   GRID PRODUCT CARDS (category / search) — airy, square cover tiles
+   ============================================================================ */
+.products-row .product-block, .product-grid .product-block, .product-list .product-block {
+  position: relative; display: flex; flex-direction: column; height: 100%;
+  background: var(--rz-surface); border: 1px solid var(--rz-border); border-radius: var(--rz-radius);
+  padding: 12px 12px 14px; overflow: visible; transition: border-color .25s var(--rz-ease);
+}
+.products-row .product-block:hover, .product-grid .product-block:hover { border-color: var(--rz-border-2); }
+.products-row .product-block-image, .product-grid .product-block-image {
+  position: relative; background: var(--rz-surface-2); border-radius: var(--rz-radius-sm);
+  overflow: hidden; aspect-ratio: 1/1; margin-bottom: 12px;
+}
+.products-row .product-block-image img, .product-grid .product-block-image img,
+.products-row .product-block-image img.current, .products-row .product-block-image img.second-image {
+  width: 100% !important; height: 100% !important; object-fit: cover; transition: transform .6s var(--rz-ease);
+}
+.products-row .product-block:hover .product-block-image img.current { transform: scale(1.04); }
+.products-row .product-block-actions .product-wishlist, .product-grid .product-block-actions .product-wishlist {
+  position: absolute; top: 12px; right: 12px; z-index: 3; width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(255,255,255,.93); border: 1px solid var(--rz-border); color: var(--rz-ink);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.products-row .product-block-actions, .product-grid .product-block-actions { margin-top: 10px; }
+.products-row .product-quick-view, .product-grid .product-quick-view {
+  width: 100%; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--rz-ink) !important; color: #fff !important; border: 1px solid var(--rz-ink) !important;
+  border-radius: var(--rz-btn) !important; text-transform: none !important; letter-spacing: .01em !important; font-weight: 600 !important; font-size: 13px !important;
+  transition: background .16s var(--rz-ease), border-color .16s var(--rz-ease) !important;
+}
+.products-row .product-quick-view:hover, .product-grid .product-quick-view:hover {
+  background: var(--rz-accent) !important; color: #fff !important; border-color: var(--rz-accent) !important;
+}
+
+/* NOTE: the homepage product-tabs SLIDER (.swiper-slide cards + tabs + side
+   description) is left ENTIRELY to the theme's original layout — we do NOT
+   restyle its structure (that was breaking the slider). Only the global text
+   styling below applies. */
+
+/* shared card text */
+.product-name a, .product-block-title h3 a { color: var(--rz-ink); font-weight: 500; font-size: 14px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.product-name a:hover { color: var(--rz-accent); }
+.product-block-avail .prod-avail { font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--rz-muted); display: inline-flex; align-items: center; gap: 6px; }
+.product-block-avail .prod-avail::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--rz-accent); display: inline-block; }
+.product-block-code { font-size: 11px; color: var(--rz-muted); }
+.product-block-price { padding-top: 4px; margin-top: auto; }
+.product-block-price .amount { font-family: var(--rz-mono); font-weight: 700; font-size: 20px; color: var(--rz-accent); letter-spacing: -.01em; }
+
+/* wholesale / package dual-price — COMPACT (was huge) */
+.list-prices-package, .list-price-block { font-size: 11.5px !important; }
+.list-prices-package *, .list-price-block * { line-height: 1.25 !important; }
+.list-prices-package .priceRef, .list-price-block .priceRef, .product-block-price .priceRef { font-size: 15px !important; font-weight: 700 !important; color: var(--rz-ink) !important; }
+.list-prices-package .package-label, .list-prices-package .label, .list-price-block .label { font-size: 10px !important; text-transform: uppercase; letter-spacing: .04em; color: var(--rz-muted) !important; font-weight: 600 !important; }
+
+/* ============================================================================
+   MEGA MENU — keep the bar; hover stays open (no gap); balanced dropdowns
+   ============================================================================ */
+.main-menu .nav.navbar-nav > li > a { text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 14px; position: relative; }
+.main-menu .nav.navbar-nav > li > a:hover, .main-menu .nav.navbar-nav > li.open > a { color: var(--rz-accent) !important; }
+.main-menu .nav.navbar-nav > li > ul.dropdown-menu { display: none !important; }
+.main-menu .nav.navbar-nav > li:hover > ul.dropdown-menu, .main-menu .nav.navbar-nav > li.open > ul.dropdown-menu { display: block !important; }
+.main-menu .dropdown-menu {
+  margin-top: 0 !important; border: 1px solid var(--rz-border-2) !important; border-radius: 12px !important;
+  padding: 10px !important; width: 270px !important; column-count: 1 !important; column-gap: 22px !important;
+}
+.main-menu .dropdown-menu:has(> li:nth-child(8))  { width: 540px !important; column-count: 2 !important; }
+.main-menu .dropdown-menu:has(> li:nth-child(15)) { width: 800px !important; column-count: 3 !important; }
+.main-menu .dropdown-menu > li { float: none !important; width: auto !important; min-width: 0 !important; max-width: 100% !important; box-sizing: border-box !important; break-inside: avoid; -webkit-column-break-inside: avoid; }
+.main-menu .dropdown-menu > li > a { min-width: 0 !important; max-width: 100% !important; box-sizing: border-box !important; }
+.main-menu .dropdown-menu > li > a {
+  display: block; white-space: normal !important; overflow-wrap: break-word !important; word-break: break-word !important; hyphens: none !important;
+  line-height: 1.35 !important; padding: 8px 12px !important; border-radius: 8px; font-size: 13px;
+}
+.main-menu .dropdown-menu > li > a:hover { background: var(--rz-surface-2) !important; color: var(--rz-accent) !important; }
+.main-menu .nav.navbar-nav > li:nth-last-child(-n+4) > ul.dropdown-menu { left: auto !important; right: 0 !important; }
+
+/* (Homepage product-tabs module layout intentionally NOT overridden — theme handles tabs+slider+description.) */
+
+/* ============================================================================
+   HEADER — sticky condensed, cart pill, language switch
+   ============================================================================ */
+header { position: sticky; top: 0; z-index: 1030; }
+.ho_wrapper { overflow: visible; }
+.top-bar { overflow: hidden; max-height: 70px; transition: max-height .35s var(--rz-ease), padding .35s var(--rz-ease), opacity .25s var(--rz-ease); }
+body.rz-stuck .top-bar { max-height: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; opacity: 0; }
+.header-wrapper { transition: padding .35s var(--rz-ease); }
+body.rz-stuck .header-wrapper { padding-top: 8px !important; padding-bottom: 8px !important; }
+.header-logo img { transition: max-height .35s var(--rz-ease); }
+body.rz-stuck .header-logo img { max-height: 42px !important; width: auto !important; }
+body.rz-stuck header { border-bottom: 1px solid var(--rz-border); }
+.header-search input, .header-search .form-control, #search input.form-control { border-radius: 999px !important; border: 1px solid var(--rz-border-2) !important; height: 46px; padding-left: 20px; }
+.header-search .btn, #search .btn { border-radius: 999px !important; }
+.language-dropdown .btn.btn-default, .header-langs .btn.btn-default {
+  border: none !important; background: transparent !important; text-transform: none !important; letter-spacing: 0 !important;
+  font-weight: 600 !important; padding: 7px 10px !important; color: var(--rz-ink) !important; display: inline-flex !important; align-items: center; gap: 7px; font-size: 13px; border-radius: 999px !important;
+}
+.language-dropdown .btn.btn-default:hover { background: var(--rz-surface-2) !important; color: var(--rz-accent) !important; }
+.language-dropdown .language-flag { width: 20px; height: 14px; object-fit: cover; border-radius: 3px; }
+.language-dropdown .dropdown-menu, #language-menu { background: #fff !important; border: 1px solid var(--rz-border-2) !important; border-radius: 12px !important; padding: 6px !important; min-width: 170px !important; margin-top: 8px !important; box-shadow: 0 12px 32px rgba(0,0,0,.16) !important; }
+.language-dropdown .dropdown-menu a, #language-menu a { display: flex !important; align-items: center; gap: 9px; padding: 9px 12px !important; border-radius: 8px; }
+.language-dropdown .dropdown-menu a:hover, #language-menu a:hover { background: var(--rz-surface-2) !important; color: var(--rz-accent) !important; }
+#cart > a.menu-cart-icon { display: inline-flex !important; align-items: center; gap: 9px; padding: 9px 18px !important; border-radius: 999px !important; background: var(--rz-accent-deep) !important; color: #fff !important; font-weight: 700 !important; transition: background .2s var(--rz-ease); }
+#cart > a.menu-cart-icon:hover { background: var(--rz-ink) !important; color: #fff !important; }
+#cart .menu-cart-icon img { display: none !important; }
+#cart .menu-cart-icon .fa-shopping-cart { display: inline-block !important; font-size: 16px; color: #fff; }
+#cart .cartprice, #cart #cart-total, #cart #cart-total b { color: #fff !important; font-weight: 700 !important; }
+#cart .cart-quantity, #cart .badge, #cart b.notif { background: #fff !important; color: var(--rz-accent-deep) !important; border-radius: 999px; min-width: 18px; height: 18px; font-size: 11px; font-weight: 800; }
+
+/* ============================================================================
+   FORMS / PANELS / TABLES / NAV  (soft borders)
+   ============================================================================ */
+.form-control, input[type=text], input[type=email], input[type=password], input[type=tel],
+input[type=number], input[type=search], select, textarea {
+  background: var(--rz-surface); color: var(--rz-ink); border: 1px solid var(--rz-border-2); border-radius: var(--rz-radius-sm); transition: border-color .2s var(--rz-ease);
+}
+.form-control:focus, input:focus, select:focus, textarea:focus { border-color: var(--rz-accent); outline: none; }
+.form-control::placeholder { color: color-mix(in srgb, var(--rz-muted) 80%, transparent); }
+label, .control-label { color: var(--rz-ink); font-weight: 600; }
+.input-group-addon { border-radius: var(--rz-radius-sm); border: 1px solid var(--rz-border-2); background: var(--rz-surface-2); color: var(--rz-muted); }
+.panel, .well, .product-search-wrapper { background: var(--rz-surface); border: 1px solid var(--rz-border); border-radius: var(--rz-radius); color: var(--rz-ink); }
+.panel-heading { border-radius: var(--rz-radius) var(--rz-radius) 0 0; border-bottom: 1px solid var(--rz-border); font-weight: 700; }
+.table { border-color: var(--rz-border); }
+.table > thead > tr > th { background: var(--rz-surface-2); color: var(--rz-ink); border-bottom: 1px solid var(--rz-border-2) !important; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; font-size: 12px; }
+.table-hover > tbody > tr:hover { background: color-mix(in srgb, var(--rz-accent) 5%, transparent); }
+.table > tbody > tr > td { border-color: var(--rz-border); vertical-align: middle; }
+.breadcrumb { background: transparent; padding-left: 0; font-size: 12px; letter-spacing: .03em; text-transform: uppercase; }
+.breadcrumb a, .breadcrumb > li + li::before { color: var(--rz-muted); }
+.breadcrumb a:hover { color: var(--rz-accent); }
+.pagination > li > a, .pagination > li > span { border: 1px solid var(--rz-border-2); color: var(--rz-ink); margin: 0 3px; border-radius: var(--rz-btn) !important; min-width: 40px; text-align: center; }
+.pagination > li > a:hover { border-color: var(--rz-accent); color: var(--rz-accent); }
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover { background: var(--rz-accent-deep) !important; border-color: transparent !important; color: #fff !important; }
+.alert { border-radius: var(--rz-radius-sm); border: 1px solid var(--rz-border); }
+.alert-success { border-left: 3px solid #2ea66b; } .alert-danger { border-left: 3px solid #d9534f; } .alert-info { border-left: 3px solid var(--rz-accent); }
+.list-group-item { border-color: var(--rz-border); transition: background .15s var(--rz-ease), color .15s var(--rz-ease), padding-left .18s var(--rz-ease); }
+.list-group-item a, .list-group-item { color: var(--rz-ink); }
+.list-group-item:hover { background: var(--rz-surface-2); padding-left: 18px; color: var(--rz-accent); }
+.nav-tabs { border-bottom: 1px solid var(--rz-border-2); gap: 6px; }
+.nav-tabs > li > a { border: none !important; border-radius: 0 !important; text-transform: uppercase; letter-spacing: .06em; font-size: 12px; font-weight: 700; color: var(--rz-muted) !important; }
+.nav-tabs > li.active > a, .nav-tabs > li > a:hover { color: var(--rz-ink) !important; background: transparent !important; border-bottom: 2px solid var(--rz-accent) !important; }
+.category-refine-image, .category-refine a { border-radius: var(--rz-radius-sm) !important; border: 1px solid var(--rz-border) !important; background: var(--rz-surface) !important; transition: border-color .25s var(--rz-ease) !important; }
+.category-refine-image:hover, .category-refine a:hover { border-color: var(--rz-border-2) !important; }
+
+/* category caption tighter (SEO text now at bottom) */
+.caption-container { padding-top: 22px !important; padding-bottom: 6px !important; }
+.category-caption-box h1 { text-align: left; margin: 0; }
+.category-caption-box h1 span { color: var(--rz-ink); }
+.category-seo-bottom { margin: 40px auto; padding-top: 26px; border-top: 1px solid var(--rz-border); color: var(--rz-muted); font-size: 13.5px; line-height: 1.7; }
+.category-seo-bottom h1, .category-seo-bottom h2, .category-seo-bottom h3 { font-size: 18px; }
+
+/* blog cards */
+.blog_item, .blog-module .blog_item { border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; overflow: hidden; background: var(--rz-surface) !important; transition: border-color .25s var(--rz-ease) !important; }
+.blog_item:hover { border-color: var(--rz-border-2) !important; transform: none !important; }
+.blog_title { font-size: 16px; line-height: 1.3; }
+.blog_caption { padding: 16px 18px 20px; }
+
+/* FOOTER — intentionally left as the store's ORIGINAL (per client: keep footer & logo as-is, no white logo). */
+
+/* ============================================================================
+   404 — oversized gradient number + emoji
+   ============================================================================ */
+.error_not_found #content { max-width: 720px; margin: 70px auto 96px; text-align: center; padding: 0 20px; }
+.error_not_found #content::before { content: "404"; display: block; font-family: var(--rz-serif); font-weight: 800; font-size: clamp(96px, 22vw, 200px); line-height: .85; letter-spacing: -.05em; background: linear-gradient(135deg, var(--rz-accent), var(--rz-accent-deep)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.error_not_found #content h1 { font-size: clamp(26px, 4vw, 40px); margin: 8px 0 6px; }
+.error_not_found #content h1::before { content: "🕯️"; display: block; font-size: clamp(48px, 9vw, 80px); line-height: 1; margin-bottom: 10px; }
+.error_not_found #content p { font-size: 17px; color: var(--rz-muted); margin: 0 0 30px; }
+.error_not_found #content .buttons .pull-right { float: none !important; }
+.error_not_found #content .btn-primary { padding: 16px 44px !important; }
+
+.product-left.product__images img { border-radius: var(--rz-radius); }
+
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
+@media (max-width: 767px) {
+  .error_not_found #content { margin: 40px auto 60px; }
+  .header-search input, .header-search .form-control { height: 42px; }
+}
+
+/* ============================================================================
+   SKROUTZ-STYLE HEADER — big prominent rounded search, clean actions
+   ============================================================================ */
+.header-top { align-items: center; }
+.header-mid { flex: 1 1 auto !important; padding: 0 28px !important; }
+#search { position: relative !important; max-width: 720px; margin: 0 auto; display: block; }
+#search input.form-control, #search input.input-lg {
+  height: 52px !important; border-radius: 999px !important; border: 2px solid var(--rz-border-2) !important;
+  background: var(--rz-surface) !important; color: var(--rz-ink) !important; font-size: 15px !important;
+  padding: 0 66px 0 24px !important; box-sizing: border-box; transition: border-color .2s var(--rz-ease) !important; width: 100% !important;
+}
+#search input.form-control:focus { border-color: var(--rz-accent) !important; }
+#search input.form-control::placeholder { color: var(--rz-muted); }
+#search button.header-search {
+  position: absolute !important; top: 5px !important; right: 5px !important; bottom: auto !important; left: auto !important;
+  width: 42px !important; height: 42px !important; padding: 0 !important; border-radius: 999px !important;
+  background: var(--rz-accent) !important; border: none !important; color: #fff !important;
+  display: inline-flex !important; align-items: center; justify-content: center; font-size: 16px;
+  transition: background .2s var(--rz-ease) !important;
+}
+#search button.header-search:hover { background: var(--rz-accent-deep) !important; }
+#search button.header-search i { color: #fff !important; }
+#search .dropdown-menu, #search .live-search { border-radius: 14px !important; border: 1px solid var(--rz-border-2) !important; margin-top: 10px !important; padding: 6px !important; }
+
+/* ============================================================================
+   HOMEPAGE PRODUCT-TABS MODULE — fix absolute-overlap + contain slider + arrows
+   (description was position:absolute h=3454 overlapping products)
+   ============================================================================ */
+.tabs-container-flex { display: flex !important; gap: 28px !important; align-items: flex-start !important; position: relative !important; }
+.products_carousel_outter { order: 1 !important; position: static !important; flex: 1 1 auto !important; min-width: 0 !important; max-width: 100% !important; overflow: hidden !important; }
+.tab-description-wrapper { order: 2 !important; position: static !important; flex: 0 0 300px !important; width: 300px !important; max-width: 300px !important; height: auto !important; }
+.tab-description-content { position: static !important; height: auto !important; }
+.tab-description-content h4 { font-family: var(--rz-serif); font-size: 19px; font-weight: 700; line-height: 1.3; margin: 0 0 12px; }
+.tab-text { color: var(--rz-muted); line-height: 1.6; font-size: 13px; }
+/* only the active tab pane shows (guard against the malformed tab-paneactive class) */
+.tab-content > .tab-pane:not(.active):not(.tab-paneactive) { display: none !important; }
+/* clean swiper nav arrows */
+.products_carousel_outter .swiper-button-prev, .products_carousel_outter .swiper-button-next,
+.ho_product_tabs-wrap .swiper-button-prev, .ho_product_tabs-wrap .swiper-button-next {
+  width: 38px !important; height: 38px !important; border-radius: 50% !important; background: var(--rz-surface) !important;
+  border: 1px solid var(--rz-border-2) !important; margin-top: -19px !important;
+}
+.swiper-button-prev::after, .swiper-button-next::after { font-size: 13px !important; color: var(--rz-ink) !important; font-weight: 700; }
+@media (max-width: 991px) { .tabs-container-flex { flex-direction: column !important; } .tab-description-wrapper, .products_carousel_outter { flex: 1 1 100% !important; width: 100% !important; max-width: 100% !important; } }
+
+/* FIX tab-switch overlap: the first pane has malformed class "tab-paneactive"
+   (no space) so Bootstrap can't hide it. Once a real .tab-pane.active exists
+   (user switched tabs), hide the stuck malformed pane. */
+.tab-content:has(> .tab-pane.active) > .tab-paneactive,
+.tab-content:has(> .tab-pane.active) > [class="tab-paneactive"] { display: none !important; }
+
+/* ============================================================================
+   HEADER REBUILD — matches the design export (util bar + header row + nav)
+   ============================================================================ */
+/* utility bar (dark) */
+.dk-util { background: #111111; color: #fff; font-family: var(--rz-mono); }
+.dk-util-in { max-width: 1660px; margin: 0 auto; padding: 0 32px; min-height: 40px; display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; flex-wrap: wrap; }
+.dk-util-left, .dk-util-right { display: flex; align-items: center; gap: 14px; }
+.dk-util a, .dk-util span { color: #fff; }
+/* language dropdown MENU is on a white surface -> keep its text dark (both stores) */
+.dk-util #language-menu a, .dk-util #language-menu span, #language-menu, #language-menu *, .language-dropdown .dropdown-menu * { color: var(--rz-ink) !important; }
+.dk-util #language-menu a:hover, .dk-util #language-menu a:hover * { color: var(--rz-accent) !important; }
+.dk-util-reg i, .dk-util-tel i { margin-right: 7px; }
+.dk-util-reg { display: inline-flex; align-items: center; gap: 7px; }
+.dk-util-tel i { color: var(--rz-accent-2); margin-right: 6px; }
+.dk-util-sep { color: #3a3a44; }
+.dk-util-right .language-dropdown .btn.btn-default { color: #fff !important; background: transparent !important; border: none !important; padding: 6px 8px !important; }
+.dk-util-right .language-dropdown .btn.btn-default:hover { background: rgba(255,255,255,.12) !important; color: #fff !important; }
+
+/* header row (white) */
+.header-wrapper { background: #fff; border-bottom: 1px solid var(--rz-border); }
+.dk-hd { max-width: 1660px; margin: 0 auto; padding: 18px 32px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
+.dk-logo img { height: 46px !important; width: auto !important; display: block; }
+.dk-mobToggle { display: none; }
+.dk-search { flex: 1 1 0; max-width: 560px; padding: 0 !important; }
+
+/* green-bordered search with green square button (design spec) */
+#search { display: flex !important; align-items: stretch; position: relative !important; border: 1.5px solid var(--rz-accent) !important; border-radius: 12px !important; height: 48px; overflow: hidden; background: #fff; max-width: none; margin: 0; }
+#search input.form-control, #search input.input-lg { flex: 1 1 auto !important; border: none !important; height: 46px !important; border-radius: 0 !important; padding: 0 16px !important; background: #fff !important; font-family: var(--rz-ui) !important; box-shadow: none !important; }
+#search input.form-control:focus { border: none !important; }
+#search button.header-search { position: static !important; flex: 0 0 56px !important; width: 56px !important; height: 46px !important; border-radius: 0 !important; background: var(--rz-accent) !important; color: #fff !important; border: none !important; display: inline-flex !important; align-items: center; justify-content: center; }
+#search button.header-search:hover { background: var(--rz-accent-deep) !important; }
+#search button.header-search i { color: #fff !important; }
+
+/* right actions */
+.dk-actions { display: flex !important; align-items: center; gap: 22px; margin-left: auto; }
+.dk-acct, .dk-wish { color: var(--rz-ink) !important; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; }
+.dk-acct:hover, .dk-wish:hover { color: var(--rz-accent) !important; }
+.dk-acct .fas, .dk-wish .fas { font-size: 18px; }
+.dk-acct-lbl { max-width: 92px; line-height: 1.15; }
+
+/* cart chip (gray, green icon, per design) */
+#cart > a.menu-cart-icon { background: var(--rz-surface-2) !important; color: var(--rz-ink) !important; border-radius: 12px !important; padding: 9px 14px !important; display: inline-flex !important; align-items: center; gap: 9px; font-weight: 600 !important; }
+#cart > a.menu-cart-icon:hover { background: #e9ebf2 !important; color: var(--rz-ink) !important; }
+#cart .menu-cart-icon img { display: none !important; }
+#cart .menu-cart-icon .fa-shopping-cart { display: inline-block !important; color: var(--rz-accent) !important; font-size: 18px; }
+#cart .cartprice, #cart #cart-total, #cart #cart-total b { color: var(--rz-ink) !important; font-family: var(--rz-mono) !important; font-weight: 700 !important; }
+
+/* nav row */
+.dk-navrow { max-width: 1660px; margin: 0 auto; padding: 0 36px; border-top: 1px solid var(--rz-border); }
+
+/* sticky condense targets the new util bar */
+.dk-util { overflow: hidden; max-height: 60px; transition: max-height .3s var(--rz-ease), opacity .25s var(--rz-ease); }
+body.rz-stuck .dk-util { max-height: 0 !important; opacity: 0; padding: 0 !important; }
+body.rz-stuck .dk-hd { padding-top: 10px !important; padding-bottom: 10px !important; }
+
+@media (max-width: 991px) {
+  .dk-mobToggle { display: inline-flex !important; align-items: center; justify-content: center; width: 46px; height: 46px; border: 1.5px solid var(--rz-border); border-radius: 11px; }
+  .dk-hd { gap: 16px; }
+  .dk-search { order: 3; flex-basis: 100% !important; max-width: none !important; }
+  .dk-acct-lbl { display: none; }
+  .dk-util-sec { display: none; }
+}
+
+/* ============================================================================
+   PUNCH-LIST FIXES (client feedback)
+   ============================================================================ */
+/* 1. header NOT sticky */
+header { position: static !important; }
+.dk-util { max-height: none !important; opacity: 1 !important; }
+
+/* 2. account = icon only */
+.dk-acct-lbl { display: none !important; }
+.dk-acct { gap: 0 !important; }
+
+/* 3. wishlist: hide the word, keep just the count badge on the heart */
+.dk-wish { position: relative; }
+.dk-wishtext { font-size: 0 !important; }
+.dk-wishtext .notif, .dk-wish .notif {
+  font-size: 10px !important; font-weight: 700; background: var(--rz-ink); color: #fff;
+  border-radius: 999px; min-width: 16px; height: 16px; line-height: 16px; display: inline-block; text-align: center;
+  position: absolute; top: -6px; right: -8px; padding: 0 4px;
+}
+
+/* 4. cart icon (FA4 class is dead in FA5) -> reliable masked cart icon */
+#cart .menu-cart-icon img, #cart .menu-cart-icon .fa-shopping-cart { display: none !important; }
+#cart .menu-cart-icon::before {
+  content: ""; width: 20px; height: 20px; display: inline-block; flex: 0 0 20px;
+  background: var(--rz-accent);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='21' r='1'/%3E%3Ccircle cx='20' cy='21' r='1'/%3E%3Cpath d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='21' r='1'/%3E%3Ccircle cx='20' cy='21' r='1'/%3E%3Cpath d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* 5. menu font smaller */
+.main-menu .nav.navbar-nav > li > a { font-size: 13px !important; font-weight: 500 !important; padding: 13px 11px !important; }
+/* 6. dropdown font smaller & not bold */
+.main-menu .dropdown-menu > li > a { font-size: 12.5px !important; font-weight: 400 !important; }
+
+/* 7. "Αποστολή και στην Κύπρο" — fancier with a truck glyph + spacing */
+.dk-util-sec:not(.dk-util-sep) { letter-spacing: .04em; font-style: italic; opacity: .92; }
+.dk-util-sec:not(.dk-util-sep)::before { content: "\1F69A"; font-style: normal; margin-right: 7px; }
+
+/* 8. blog text links -> store accent (green / purple) */
+.blog_item a, .blog-module a, .blog_caption a, .blog_post a, .blog-content a, .blog_description a { color: var(--rz-accent) !important; }
+.blog_item a:hover, .blog-module a:hover, .blog_post a:hover { color: var(--rz-accent-deep) !important; }
+
+/* 9. minicart: correct Bootstrap-modal stacking (modal ABOVE backdrop) */
+#cart-container.modal, #cart-container { z-index: 1060 !important; }
+.modal-backdrop, .modal-backdrop.in { z-index: 1050 !important; }
+#cart-container .modal-dialog, #cart-container .modal-content { z-index: 1061 !important; position: relative; }
+
+/* 10. PRODUCT PAGE — green availability chip + soften borders */
+.product-right .stock, .product-stock, .product-right .availability, .product-content .stock {
+  background: #eaf1ec !important; color: var(--rz-avail) !important; border: none !important;
+  border-radius: 999px !important; padding: 5px 12px !important; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
+}
+.product-left img, .product__images img, .product-right .price, .product-info, #tab-description, .product-thumb { border-color: var(--rz-border) !important; }
+.product-left.product__images img, .product__images .image-additional img { border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; }
+
+/* 11. PDP add-to-cart CTA — full, solid accent, clean */
+#button-cart, .show-cart-button {
+  background: var(--rz-accent) !important; color: #fff !important; border: none !important;
+  border-radius: var(--rz-btn) !important; min-height: 52px; font-size: 14px !important; letter-spacing: .02em; text-transform: none !important;
+}
+#button-cart:hover, .show-cart-button:hover { background: var(--rz-accent-deep) !important; }
+
+/* ============================================================================
+   PRODUCT CARD — no-image tile, discount badge, CTA icon+text (shared card)
+   ============================================================================ */
+.products-row .product-thumbnail:has(img[src*="noimage"]),
+.product-grid .product-thumbnail:has(img[src*="noimage"]),
+.product-block-image:has(img[src*="noimage"]) {
+  background: var(--rz-surface-2)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b9c0c6' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.6'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E")
+    center / 38% auto no-repeat !important;
+}
+.product-thumbnail:has(img[src*="noimage"]) img { opacity: 0 !important; }
+
+/* discount badge (leaf green, top-left over image) */
+.product-block { position: relative; }
+.product-sale { position: absolute; top: 12px; left: 12px; z-index: 4; background: var(--rz-accent-2); color: #0a3d18; font-family: var(--rz-mono); font-weight: 700; font-size: 11px; padding: 4px 9px; border-radius: 999px; }
+.product-sale .per-span { font-size: 11px; }
+
+/* CTA shows icon + text */
+.products-row .product-quick-view i, .product-grid .product-quick-view i { font-size: 14px; display: inline-block; }
+.products-row .product-quick-view span, .product-grid .product-quick-view span { display: inline !important; }
+/* package price labels compact + clean */
+.list-prices-package { display: flex; gap: 14px; }
+.list-prices-package .list-price-block { flex: 1; }
+.list-prices-package .priceRef { display: block; font-size: 9.5px !important; text-transform: uppercase; letter-spacing: .04em; color: var(--rz-muted) !important; font-family: var(--rz-ui) !important; font-weight: 600 !important; margin-bottom: 2px; }
+/* package "Η συσκευασία περιέχει …" — darker & bigger (everywhere) */
+.packageRef, .product-block-price .packageRef, .list-prices-package .packageRef {
+  display: block; font-size: 12.5px !important; line-height: 1.4; color: var(--rz-ink) !important; font-weight: 500 !important; margin-top: 6px; letter-spacing: 0; }
+.packageRef b { font-weight: 700 !important; color: var(--rz-ink) !important; }
+
+/* ============================================================================
+   FINAL: unified card everywhere + homepage tabs (design) + PLP container
+   ============================================================================ */
+/* PLP / page containers respect 1660 max-width (was full-screen) */
+.container-max-width, #product-category, .ho_product_tabs-wrap .container, #common-home #content > .container {
+  max-width: 1660px !important; margin-left: auto !important; margin-right: auto !important;
+  padding-left: 32px !important; padding-right: 32px !important; box-sizing: border-box;
+}
+.content-row { max-width: none; }
+
+/* UNIFIED PRODUCT CARD — identical in category, homepage tabs, search, related */
+.product-block, .dk-grid-item .product-block, .products-row .product-block, .product-grid .product-block {
+  position: relative; display: flex; flex-direction: column; height: 100%;
+  background: var(--rz-surface); border: 1px solid var(--rz-border); border-radius: var(--rz-radius);
+  padding: 12px 12px 14px; overflow: visible; transition: border-color .16s var(--rz-ease);
+}
+.product-block:hover { border-color: var(--rz-border-2); }
+.product-block .product-block-image {
+  position: relative; background: var(--rz-surface-2); border-radius: var(--rz-radius-sm);
+  overflow: hidden; aspect-ratio: 1 / 1; margin-bottom: 12px;
+}
+.product-block .product-block-image img, .product-block .product-block-image img.current, .product-block .product-block-image img.second-image {
+  width: 100% !important; height: 100% !important; object-fit: cover;
+}
+.product-block .product-block-actions .product-wishlist {
+  position: absolute; top: 12px; right: 12px; z-index: 3; width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(255,255,255,.93); border: 1px solid var(--rz-border); color: var(--rz-ink);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.product-block .product-block-actions { margin-top: auto; padding-top: 10px; display: block; }
+.product-block .product-block-actions .product-quick-view {
+  width: 100% !important; min-height: 44px; display: inline-flex !important; align-items: center; justify-content: center; gap: 8px;
+  background: var(--rz-ink) !important; color: #fff !important; border: none !important;
+  border-radius: var(--rz-btn) !important; font-weight: 600 !important; font-size: 13px !important; text-transform: none !important; letter-spacing: 0 !important;
+}
+.product-block .product-block-actions .product-quick-view:hover { background: var(--rz-accent) !important; }
+.product-block .product-block-actions .product-quick-view span { display: inline !important; }
+.product-block .product-block-actions .product-quick-view i { font-size: 14px; }
+/* megamenu carousel cards ONLY: don't force square (1 slide = full width) */
+.mega-products-carousel .swiper-slide .product-block .product-block-image { aspect-ratio: auto; }
+.mega-products-carousel .swiper-slide .product-block .product-block-image img { height: auto !important; object-fit: contain; }
+
+/* HOMEPAGE TABS (design): pill tabs -> gray info panel -> FUNCTIONING swiper slider */
+.dk-tabs { padding: 8px 0 8px; }
+.dk-tabs .module-title { text-align: center; }
+.dk-tabnav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; border-bottom: 1px solid var(--rz-border); padding-bottom: 18px; margin: 0 0 24px; }
+.dk-tabnav > li { float: none; margin: 0; }
+.dk-tabnav > li > a { border: 1px solid var(--rz-border-2) !important; border-radius: 999px !important; padding: 9px 18px !important; font-size: 13px !important; font-weight: 600 !important; color: var(--rz-ink) !important; background: #fff !important; margin: 0 !important; text-transform: none !important; letter-spacing: 0 !important; transition: background .16s var(--rz-ease), color .16s var(--rz-ease), border-color .16s var(--rz-ease); }
+.dk-tabnav > li.active > a, .dk-tabnav > li > a:hover, .dk-tabnav > li.active > a:focus { background: var(--rz-accent) !important; color: #fff !important; border-color: var(--rz-accent) !important; border-bottom: 1px solid var(--rz-accent) !important; }
+.dk-tab-info { background: var(--rz-surface-2); border-radius: var(--rz-radius); padding: 20px 26px; margin-bottom: 22px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.dk-tab-info-text { min-width: 0; }
+.dk-tab-info h4 { font-family: var(--rz-serif); font-size: 18px; font-weight: 700; margin: 0 0 4px; color: var(--rz-ink); }
+.dk-tab-info .tab-text { color: var(--rz-muted); font-size: 13.5px; line-height: 1.55; margin: 0; }
+.dk-tab-all { white-space: nowrap; color: var(--rz-accent); font-weight: 600; font-size: 13.5px; display: inline-flex; align-items: center; gap: 7px; }
+.dk-tab-all i { font-size: 11px; transition: transform .2s var(--rz-ease); }
+.dk-tab-all:hover { color: var(--rz-accent-deep); } .dk-tab-all:hover i { transform: translateX(3px); }
+
+/* slider mechanics */
+.dk-tabcontent > .tab-pane { display: none; }
+.dk-tabcontent > .tab-pane.active { display: block; }
+.dk-tab-slider { position: relative; padding: 0 0 40px; }
+.dk-tab-slider .products_carousel.swiper-container { overflow: hidden; }
+.dk-tab-slider .swiper-wrapper { box-sizing: border-box; }
+.dk-tab-slider .swiper-slide { height: auto; box-sizing: border-box; display: flex; }
+.dk-tab-slider .swiper-slide .product-block { width: 100%; }
+/* nav arrows (round, soft) */
+.dk-slider-btn { position: absolute; top: 38%; transform: translateY(-50%); z-index: 5; width: 42px; height: 42px; border-radius: 50%; background: #fff; border: 1px solid var(--rz-border-2); color: var(--rz-ink); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: background .18s var(--rz-ease), color .18s var(--rz-ease), border-color .18s var(--rz-ease), opacity .18s; }
+.dk-slider-btn:hover { background: var(--rz-accent); color: #fff; border-color: var(--rz-accent); }
+.dk-slider-btn.swiper-button-disabled { opacity: .35; pointer-events: none; }
+.dk-slider-prev { left: -8px; } .dk-slider-next { right: -8px; }
+.dk-slider-btn i { font-size: 14px; }
+/* pagination bullets */
+.dk-tab-slider .products-pagination { position: absolute; bottom: 6px; left: 0; right: 0; text-align: center; }
+.dk-tab-slider .swiper-pagination-bullet { width: 8px; height: 8px; background: var(--rz-border-2); opacity: 1; margin: 0 4px !important; transition: width .2s, background .2s; }
+.dk-tab-slider .swiper-pagination-bullet-active { width: 22px; border-radius: 5px; background: var(--rz-accent); }
+@media (max-width: 1300px) { .dk-slider-prev { left: 2px; } .dk-slider-next { right: 2px; } }
+@media (max-width: 900px) { .dk-tab-info { flex-direction: column; align-items: flex-start; gap: 12px; } }
+@media (max-width: 560px) { .dk-slider-btn { display: none; } }
+
+/* ============================================================================
+   PUNCH-LIST ROUND 2 — PLP description, filter sidebar, footer, badges, alerts
+   ============================================================================ */
+
+/* ---- category description at TOP: spacing + readable + FULL WIDTH ------ */
+.caption-container { padding-top: 24px !important; padding-bottom: 10px !important; }
+.category-caption-box { max-width: none !important; }
+.category-caption-box h1 { text-align: left; margin: 0 0 14px; }
+.category-description { position: relative; max-width: none !important; margin: 0 0 26px; color: var(--rz-muted); font-size: 14px; line-height: 1.75; }
+.category-description-c { max-width: none !important; }
+.category-description-c p { margin: 0 0 10px; }
+.category-description-c h2, .category-description-c h3 { text-align: left !important; font-size: 18px; margin: 16px 0 8px; padding-bottom: 0 !important; }
+.category-description-c h2::after, .category-description-c h3::after { display: none !important; }
+.category-description .readall-button { margin-top: 10px; padding: 9px 20px !important; }
+.learn-more-category { display: inline-block; margin: 4px 0 10px; padding: 11px 20px; border: 1px solid var(--rz-border-2); border-radius: var(--rz-btn); color: var(--rz-ink) !important; font-weight: 600; font-size: 13.5px; transition: border-color .2s var(--rz-ease), color .2s var(--rz-ease); }
+.learn-more-category:hover { border-color: var(--rz-accent); color: var(--rz-accent) !important; }
+
+/* ---- FILTER SIDEBAR (brainyfilter) — clean card, grouped, soft --------- */
+#column-left { padding-right: 14px; }
+.bf-panel-wrapper .box, #column-left .box {
+  background: var(--rz-surface) !important; border: 1px solid var(--rz-border) !important;
+  border-radius: var(--rz-radius) !important; padding: 6px 18px 14px !important; overflow: hidden;
+}
+.bf-panel-wrapper .box-heading, #column-left .box-heading {
+  background: transparent !important; border: none !important; padding: 14px 0 10px !important; margin: 0 0 4px !important;
+}
+.bf-panel-wrapper .box-heading h3, #column-left .box-heading h3 {
+  font-family: var(--rz-serif) !important; font-size: 16px !important; font-weight: 700 !important; margin: 0 !important; color: var(--rz-ink) !important; text-align: left !important; padding: 0 !important;
+}
+.bf-panel-wrapper .box-heading h3::after { display: none !important; }
+/* kill the theme's BLACK #111 box border on each group; keep one subtle divider */
+.bf-attr-block { border: none !important; border-top: 1px solid var(--rz-border) !important; border-radius: 0 !important; padding: 6px 0; margin: 0 !important; }
+.bf-attr-block:first-of-type { border-top: none !important; }
+.brainyfilter-panel, .bf-form, .box-content { border: none !important; padding: 0 !important; }
+.bf-attr-header {
+  background: transparent !important; color: var(--rz-ink) !important; font-family: var(--rz-ui) !important;
+  font-size: 12px !important; font-weight: 700 !important; text-transform: uppercase; letter-spacing: .05em;
+  padding: 12px 2px !important; margin: 0 !important; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border: none !important;
+}
+.bf-attr-header .bf-arrow { width: 9px; height: 9px; border-right: 2px solid var(--rz-muted); border-bottom: 2px solid var(--rz-muted); transform: rotate(45deg); transition: transform .2s var(--rz-ease); margin-right: 4px; }
+.bf-attr-header.bf-collapse .bf-arrow { transform: rotate(-45deg); }
+.bf-attr-block-cont { padding: 2px 0 8px; }
+.bf-row, .bf-attr-filter.bf-row { display: flex !important; align-items: center; gap: 9px; padding: 7px 6px !important; margin: 0 !important; border-radius: 9px; transition: background .15s var(--rz-ease); border: none !important; }
+.bf-row:hover { background: var(--rz-surface-2); }
+.bf-row.bf-disabled { opacity: .4; }
+.bf-cell { background: transparent !important; border: none !important; padding: 0 !important; }
+.bf-c-1 { flex: 0 0 auto; }
+.bf-c-2 { flex: 1 1 auto; min-width: 0; }
+.bf-c-2 label { font-size: 13px !important; color: var(--rz-ink) !important; font-weight: 500 !important; cursor: pointer; margin: 0 !important; line-height: 1.3; }
+.bf-c-3 { flex: 0 0 auto; }
+.bf-count { background: var(--rz-surface-2) !important; color: var(--rz-muted) !important; font-size: 11px !important; font-weight: 700; border-radius: 999px; padding: 2px 8px !important; min-width: 22px; text-align: center; display: inline-block; }
+.bf-form input[type=checkbox], .bf-form input[type=radio] { width: 17px; height: 17px; accent-color: var(--rz-accent); margin: 0 !important; cursor: pointer; }
+.bf-form .bf-search, .bf-form .bf-range-min, .bf-form .bf-range-max { border: 1px solid var(--rz-border-2) !important; border-radius: var(--rz-radius-sm) !important; padding: 7px 10px !important; background: #fff !important; }
+.bf-slider-range, .ui-slider { background: var(--rz-border-2) !important; border: none !important; border-radius: 999px; height: 5px !important; }
+.ui-slider .ui-slider-range, .ui-widget-header { background: var(--rz-accent) !important; }
+.ui-slider .ui-slider-handle, .ui-state-default { background: #fff !important; border: 2px solid var(--rz-accent) !important; border-radius: 50% !important; width: 16px !important; height: 16px !important; top: -6px !important; }
+.bf-btn-show, .bf-btn-reset { background: var(--rz-accent) !important; color: #fff !important; border-radius: var(--rz-btn) !important; font-weight: 700 !important; border: none !important; }
+
+/* mobile filter/sort bar */
+.category-filters-mobile { gap: 12px; }
+.category-filters-mobile .filters-toggle { display: inline-flex !important; align-items: center; gap: 8px; padding: 11px 18px; border: 1px solid var(--rz-border-2); border-radius: var(--rz-btn); font-weight: 600; color: var(--rz-ink); }
+.category-filters-mobile .filters-toggle i { color: var(--rz-accent); }
+
+/* desktop sort/limit bar -> clean gray toolbar (no empty bordered void) */
+.category-filters.hidden-xs { display: flex; gap: 20px; align-items: center; justify-content: flex-end; margin-bottom: 22px; padding: 12px 18px; border: none !important; background: var(--rz-surface-2); border-radius: var(--rz-radius-sm); }
+.category-filters .input-sort, .category-filters .input-limit { display: flex; align-items: center; gap: 9px; }
+.category-filters label { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--rz-muted); margin: 0; white-space: nowrap; }
+.category-filters select { height: 40px; min-width: 140px; background: #fff; }
+
+/* ---- CART icon vertical centering ------------------------------------- */
+#cart { display: flex; align-items: center; }
+#cart > a.menu-cart-icon { align-items: center !important; }
+#cart .menu-cart-icon::before { vertical-align: middle; align-self: center; }
+
+/* ---- ALERTS / SUCCESS MESSAGES — clean cards w/ icon ------------------ */
+.alert { display: flex; align-items: center; gap: 12px; border-radius: var(--rz-radius-sm); padding: 14px 18px; font-size: 14px; font-weight: 500; border: 1px solid var(--rz-border); }
+.alert::before { font-family: "Font Awesome 5 Free"; font-weight: 900; font-size: 16px; flex: 0 0 auto; }
+.alert .close { opacity: .5; }
+.alert-success { background: #eef7f1 !important; color: #1c6b40 !important; border-color: #c8e6d3 !important; border-left: 4px solid #2ea66b !important; }
+.alert-success::before { content: "\f058"; color: #2ea66b; }
+.alert-danger { background: #fbecec !important; color: #a02a26 !important; border-color: #f1cfce !important; border-left: 4px solid #d9534f !important; }
+.alert-danger::before { content: "\f06a"; color: #d9534f; }
+.alert-info, .alert-warning { background: var(--rz-surface-2) !important; color: var(--rz-ink) !important; border-left: 4px solid var(--rz-accent) !important; }
+.alert-info::before, .alert-warning::before { content: "\f05a"; color: var(--rz-accent); }
+
+/* ---- ROUND BADGES content visible (incl. .cartnotif — was black/black) -- */
+.badge, b.notif, .cart-quantity, #cart .cart-quantity,
+.cartnotif, b.cartnotif, #cart .cartnotif, #cart b.cartnotif {
+  display: inline-flex !important; align-items: center; justify-content: center;
+  min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; font-size: 11px; font-weight: 800; line-height: 1; overflow: visible;
+}
+/* cart count badge: accent fill, WHITE text (was invisible black-on-black) */
+/* high specificity to beat #cart #cart-total b { color:ink } */
+.cartnotif, b.cartnotif, #cart .cartnotif, #cart b.cartnotif,
+#cart #cart-total b.cartnotif, #cart #cart-total .cartnotif {
+  background: var(--rz-accent) !important; color: #fff !important; margin-left: 6px;
+}
+
+/* ---- MINICART buttons + layout --------------------------------------- */
+#cart-container .modal-content, #cart-container .modal-inner { border-radius: var(--rz-radius) !important; border: 1px solid var(--rz-border) !important; }
+#cart-container .btn, .cart-content .btn { border-radius: var(--rz-btn) !important; min-height: 46px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+#cart-container .btn-primary, .cart-content .btn-primary { background: var(--rz-accent) !important; color: #fff !important; border: none !important; }
+#cart-container .btn-primary:hover { background: var(--rz-accent-deep) !important; }
+#cart-container .btn-default, .cart-content .btn-default { border: 1px solid var(--rz-border-2) !important; background: #fff !important; color: var(--rz-ink) !important; }
+#cart-container .table > tbody > tr > td { vertical-align: middle; }
+
+/* ---- FOOTER separators + Κύπρο banner richer -------------------------- */
+/* separator color is store-aware (--rz-footer-sep set in dekor/apokrifa css) */
+.footer-sep { border-top: 1px solid var(--rz-footer-sep, rgba(0,0,0,.10)); margin: 40px 0 0; }
+footer .footer-bottom { border-top: 1px solid var(--rz-footer-sep, rgba(0,0,0,.10)); margin-top: 26px; padding-top: 20px; }
+footer .footer-block .footer-title { position: relative; padding-bottom: 12px; margin-bottom: 16px; }
+footer .footer-block .footer-title::after { content: ""; position: absolute; left: 0; bottom: 0; width: 32px; height: 2px; background: var(--rz-accent); }
+/* "Αποστολή και στην Κύπρο" banner -> richer accent strip with truck */
+.footer-category-header { background: var(--rz-accent-deep) !important; }
+.footer-category-header .category-caption-box h3 { text-align: center; margin: 0; }
+.footer-category-header .category-caption-box h3 span { display: inline-flex; align-items: center; gap: 12px; color: #fff !important; font-family: var(--rz-serif); font-weight: 700; font-size: clamp(18px,2vw,24px); letter-spacing: .01em; }
+.footer-category-header .category-caption-box h3 span::before { content: "\1F69A"; font-size: 1.1em; }
+.footer-category-header .caption-container { padding: 22px 0 !important; }
+
+/* ---- SLIDESHOW caption -> premium gradient overlay -------------------- */
+.slideshowwrapper { position: relative; }
+.swiper-viewport .swiper-slide-wrapper { position: relative; }
+.slideshowwrapper h3.banner-caption {
+  background: linear-gradient(to top, rgba(0,0,0,.82), rgba(0,0,0,.30) 55%, transparent) !important;
+  border-top: none !important; padding: 70px 28px 30px !important;
+  font-family: var(--rz-serif) !important; font-size: clamp(18px, 2.6vw, 32px) !important;
+  font-weight: 700 !important; letter-spacing: .005em; color: #fff !important;
+  text-shadow: 0 2px 14px rgba(0,0,0,.5);
+}
+@media (max-width: 767px) {
+  .slideshowwrapper h3.banner-caption { background: var(--rz-accent-deep) !important; padding: 14px 16px !important; font-size: 15px !important; text-shadow: none; }
+}
+
+/* ---- PDP availability pill (was ugly icon) --------------------------- */
+.stock-status { display: inline-flex !important; align-items: center; gap: 9px; background: #eaf1ec; color: var(--rz-avail); border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 13px; line-height: 1; }
+.stock-status i { font-size: 14px; }
+.stock-status.storeonly { background: var(--rz-surface-2); color: var(--rz-muted); }
+.stock-status.prod-noavail { background: #fbecec; color: #a02a26; }
+
+/* ---- PDP "Περιγραφή" as a real tab + soft borders -------------------- */
+.product-tabs { margin-top: 40px; }
+.product-tabs .nav-tabs { border-bottom: 1px solid var(--rz-border-2); gap: 0; }
+.product-tabs .nav-tabs > li > a { padding: 13px 2px !important; margin: 0 26px 0 0 !important; font-size: 13px; }
+.product-tabs .nav-tabs > li.active > a, .product-tabs .nav-tabs > li > a:hover { border-bottom: 2px solid var(--rz-accent) !important; color: var(--rz-ink) !important; }
+.product-tabs .tab-content { padding: 24px 2px; line-height: 1.75; color: var(--rz-ink); border: none; }
+.product-tabs .tab-content img { border-radius: var(--rz-radius); }
+/* PDP right column: kill theme's BLACK #111 border -> subtle light card */
+.product-right.product-content { border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; padding: 26px 30px !important; }
+@media (max-width: 991px){ .product-right.product-content { padding: 20px 18px !important; } }
+/* fewer, subtle dividers: ONE light top line above prices */
+.product-right .product-stats, .product-right .list-unstyled, .product-content .product-stats { border: none; }
+.product-right .price, .product-content .price { border-top: 1px solid var(--rz-border); border-bottom: none; padding: 14px 0 0; margin: 6px 0 12px; }
+.small-description { border-top: 1px solid var(--rz-border); padding-top: 14px; margin-top: 14px; color: var(--rz-muted); line-height: 1.65; }
+
+/* ---- FOOTER vertical separators between columns ---------------------- */
+@media (min-width: 992px) {
+  footer .footer-top { display: flex; flex-wrap: wrap; }
+  footer .footer-block-2, footer .footer-block-3, footer .footer-block-4 { border-left: 1px solid rgba(255,255,255,.12); }
+  footer .footer-block-2, footer .footer-block-3, footer .footer-block-4 { padding-left: 34px !important; }
+}
+
+/* ---- Κύπρο banner (dekor): clean solid green strip, no inner box ------ */
+.footer-category-header, .footer-category-header .caption-container, .footer-category-header .container, .footer-category-header .category-caption-box { background: transparent !important; border: none !important; max-width: none; }
+.footer-category-header { background: var(--rz-accent-deep) !important; }
+.footer-category-header .caption-container { padding: 26px 0 !important; }
+.footer-category-header .category-caption-box { padding: 0 !important; margin: 0 auto !important; text-align: center; }
+
+/* ============================================================================
+   PUNCH-LIST ROUND 4 — card spacing, wishlist, cart-chip align, checkout tabs,
+   homepage tab arrows, PDP left border, category band alignment
+   ============================================================================ */
+
+/* 1. package "Η συσκευασία περιέχει…" — breathing room before the CTA */
+.packageRef { padding-bottom: 2px; }
+.product-block .product-block-price { padding-bottom: 12px; }
+.product-block .product-block-actions { padding-top: 12px; }
+
+/* 2. wishlist heart on card — cleaner inset, centered glyph */
+.products-row .product-block-actions .product-wishlist, .product-grid .product-block-actions .product-wishlist,
+.product-block .product-block-actions .product-wishlist {
+  top: 16px !important; right: 16px !important; width: 36px; height: 36px;
+}
+.product-block-actions .product-wishlist i { line-height: 1; display: inline-flex; align-items: center; justify-content: center; }
+
+/* 3. WISHLIST badge -> accent (green dekor / purple apokrifa), cart chip vertical center */
+.dk-wish .notif, .dk-wishtext .notif, #wishlist-total .notif {
+  background: var(--rz-accent) !important; color: #fff !important;
+}
+#cart { display: flex !important; align-items: center !important; }
+#cart > a.menu-cart-icon { display: inline-flex !important; align-items: center !important; }
+#cart #cart-total { display: inline-flex !important; align-items: center !important; gap: 0; }
+#cart .menu-cart-icon::before { align-self: center; margin-top: 0; }
+
+/* 4. CHECKOUT account-type tabs (Εγγραφή / Επισκέπτης / Είσοδος) */
+#onepagecheckout .button-account-type, #onepagecheckout label.button-account-type, .button-account-type {
+  background: #fff !important; color: var(--rz-ink) !important; border: 1px solid var(--rz-border-2) !important;
+  border-radius: var(--rz-btn) !important; font-weight: 600 !important; text-transform: none !important;
+  letter-spacing: 0 !important; padding: 12px 18px !important; box-shadow: none !important;
+}
+#onepagecheckout .button-account-type:hover, .button-account-type:hover { border-color: var(--rz-accent) !important; color: var(--rz-accent) !important; }
+#onepagecheckout .button-account-type.active, #onepagecheckout .button-account-type.btn-primary, .button-account-type.active {
+  background: var(--rz-accent) !important; color: #fff !important; border-color: var(--rz-accent) !important;
+}
+#onepagecheckout .button-account-type.active *, .button-account-type.active * { color: #fff !important; }
+
+/* 5. HOMEPAGE tab arrows — cleaner, centered on the card images, premium */
+.dk-tab-slider { padding: 0 52px 40px; }
+.dk-slider-btn { top: 42%; width: 40px; height: 40px; background: #fff; border: 1px solid var(--rz-border); color: var(--rz-ink); box-shadow: 0 2px 10px rgba(0,0,0,.06) !important; }
+.dk-slider-btn:hover { background: var(--rz-accent); color: #fff; border-color: var(--rz-accent); }
+.dk-slider-prev { left: 0; } .dk-slider-next { right: 0; }
+.dk-tabnav > li > a { padding: 9px 20px !important; }
+@media (max-width: 560px) { .dk-tab-slider { padding: 0 0 36px; } }
+
+/* 6. PDP LEFT image column — subtle light border (was heavy/black) */
+.product-left.product__images, .product-left { border: none !important; }
+.product-left img, .product-left.product__images img, .product__images img, #product_img_gallery {
+  border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; box-shadow: none !important;
+}
+
+/* 7. CATEGORY description band — remove the misaligned gray box, align w/ grid */
+.category-header.no-image:not(.footer-category-header) { background: transparent !important; }
+.category-header.no-image:not(.footer-category-header) .caption-container { background: transparent !important; }
+
+/* ============================================================================
+   PUNCH-LIST ROUND 5 — tab triangle, success toast, modal scroll, Κύπρο,
+   mobile tabs, PDP borders (each verified against the theme's own rules)
+   ============================================================================ */
+
+/* 1. kill the theme's down-pointing "stupid icon" triangle under active tab */
+.ho_product_tabs .nav-tabs > li a:after, .dk-tabnav > li > a:after,
+.dk-tabnav > li.active > a:after, .dk-tabnav > li > a:hover:after { content: none !important; display: none !important; }
+/* pills: no underline border on active/hover (they're pills, not underline tabs) */
+.dk-tabnav > li.active > a, .dk-tabnav > li > a:hover, .dk-tabnav > li.active > a:focus { border-bottom: 1px solid var(--rz-accent) !important; }
+
+/* 2. SUCCESS message — was a full-width MAROON bar (#972b23 !important, spec 0,3,0).
+   Match its specificity + !important to win, restyle as a clean green toast. */
+.alert.alert-success.alert-dismissible {
+  background: #eef7f1 !important; color: #1c6b40 !important; border: 1px solid #c8e6d3 !important;
+  left: 50% !important; right: auto !important; transform: translateX(-50%); top: 16px !important;
+  width: calc(100% - 32px) !important; max-width: 560px !important; padding: 16px 44px 16px 20px !important; border-radius: 14px !important;
+  box-shadow: 0 10px 34px rgba(0,0,0,.16) !important; z-index: 999999; display: block !important;
+  font-weight: 600; line-height: 1.5; position: fixed !important; text-align: left !important;
+}
+.alert.alert-success.alert-dismissible, .alert.alert-success.alert-dismissible * { color: #1c6b40 !important; }
+.alert.alert-success.alert-dismissible a { color: #14532d !important; font-weight: 700; text-decoration: underline; }
+.alert.alert-success.alert-dismissible i { color: #2ea66b !important; margin-right: 8px; }
+.alert.alert-success.alert-dismissible .close { position: absolute; top: 12px; right: 14px; opacity: .55; font-size: 20px; }
+@media (max-width: 767px){ .alert.alert-success.alert-dismissible { top: 10px !important; padding: 13px 40px 13px 16px !important; font-size: 13px; } }
+
+/* 3. MINICART modal: theme forces display:block always — make sure the closed
+   modal never blocks page scroll/clicks (only the .in modal is interactive) */
+div#cart-container:not(.in) { pointer-events: none !important; }
+div#cart-container.in { pointer-events: auto !important; }
+
+/* 4. Κύπρο banner — simpler & more elegant (thinner, uppercase, line icon) */
+.footer-category-header .caption-container { padding: 16px 0 !important; }
+.footer-category-header .category-caption-box h3 span { font-size: 14.5px !important; font-weight: 600 !important; letter-spacing: .14em !important; text-transform: uppercase; gap: 11px !important; font-family: var(--rz-ui) !important; }
+.footer-category-header .category-caption-box h3 span::before { content: none !important; }
+.footer-category-header .category-caption-box h3 span i { font-size: 1.05em; opacity: .95; margin-right: 4px; }
+
+/* 5. MOBILE: homepage tab pills scroll horizontally (no ugly wrap) */
+@media (max-width: 767px) {
+  .dk-tabnav { flex-wrap: nowrap !important; overflow-x: auto; overflow-y: hidden; justify-content: flex-start !important; -webkit-overflow-scrolling: touch; padding-bottom: 14px; margin-bottom: 18px; scrollbar-width: none; }
+  .dk-tabnav::-webkit-scrollbar { display: none; }
+  .dk-tabnav > li { flex: 0 0 auto; }
+  .dk-tabnav > li > a { white-space: nowrap !important; }
+  .dk-tab-info { padding: 16px 18px; }
+}
+
+/* 6. PDP — fewer borders: drop the price top line, keep only subtle container */
+.product-right .price, .product-content .price { border-top: none !important; border-bottom: none !important; padding: 6px 0 0 !important; margin: 2px 0 10px !important; }
+.product-right.product-content { border: 1px solid var(--rz-border) !important; }
+.small-description { border-top: none !important; padding-top: 6px; }
+
+/* ============================================================================
+   PUNCH-LIST ROUND 6 — menu full-height/centered/edge, minicart buttons,
+   sale badge, PDP description padding
+   ============================================================================ */
+
+/* 1. MENU items full-height, vertically centered, span edge-to-edge (no side gaps) */
+.main-menu .nav.navbar-nav { display: flex !important; align-items: stretch !important; justify-content: space-between !important; width: 100% !important; float: none !important; }
+.main-menu .nav.navbar-nav > li { float: none !important; display: flex !important; align-items: stretch !important; }
+.main-menu .nav.navbar-nav > li > a { display: flex !important; align-items: center !important; height: 100% !important; }
+.dk-navrow .main-menu, #desk-menu .main-menu { width: 100%; }
+
+/* 2. MINICART buttons differentiated & always readable:
+   view-cart = soft gray w/ dark text, checkout = filled accent w/ white text */
+#cart-container .modal-footer .show-cart-button,
+#cart-container .modal-footer .show-cart-button:link,
+.modal-footer a.show-cart-button {
+  background: var(--rz-surface-2) !important; color: var(--rz-ink) !important; border: 1px solid var(--rz-border-2) !important;
+}
+#cart-container .modal-footer .show-cart-button *, .modal-footer a.show-cart-button * { color: var(--rz-ink) !important; }
+#cart-container .modal-footer .show-cart-button:hover { background: #e7e9f0 !important; color: var(--rz-ink) !important; border-color: var(--rz-border-2) !important; }
+#cart-container .modal-footer .buy-now-button,
+#cart-container .modal-footer .buy-now-button:link,
+.modal-footer a.buy-now-button {
+  background: var(--rz-accent) !important; color: #fff !important; border: 1px solid var(--rz-accent) !important; margin-top: 10px !important;
+}
+#cart-container .modal-footer .buy-now-button *, .modal-footer a.buy-now-button * { color: #fff !important; }
+#cart-container .modal-footer .buy-now-button:hover { background: var(--rz-accent-deep) !important; border-color: var(--rz-accent-deep) !important; }
+
+/* 3. SALE badge — clean, elegant pill (was ugly circle) */
+.product-sale { background: var(--rz-accent) !important; color: #fff !important; font-family: var(--rz-ui) !important; font-weight: 700 !important; font-size: 11px !important; padding: 5px 10px !important; border-radius: 999px !important; top: 14px !important; left: 14px !important; letter-spacing: .01em; }
+.product-sale .per-span { font-size: 11px !important; }
+
+/* 4. PDP description — give it breathing room (top + side padding, no box) */
+.product-tabs .tab-content { padding: 24px 26px !important; }
+@media (max-width: 767px){ .product-tabs .tab-content { padding: 18px 4px !important; } }
+
+/* 4b. FOOTER busier — social icons + payment row */
+.footer-social { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+.footer-social a { width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--rz-footer-sep, rgba(0,0,0,.12)); color: inherit; transition: background .2s var(--rz-ease), color .2s var(--rz-ease), border-color .2s var(--rz-ease); }
+.footer-social a:hover { background: var(--rz-accent); color: #fff; border-color: var(--rz-accent); }
+.footer-bottom-2 img { max-width: 210px; }
+footer .footer-block { margin-bottom: 18px; }
+
+/* 5. LANGUAGE switcher dropdown was CLIPPED by .dk-util overflow:hidden */
+.dk-util, .dk-util-in, .dk-util-right, .header-langs, .language-dropdown { overflow: visible !important; }
+.language-dropdown .dropdown-menu, #language-menu { z-index: 100000 !important; min-width: 170px !important; }
+#language-menu .language-label { font-size: 13px; }
+
+/* 6. BLOG related ("Περισσότερα Άρθρα") — grid fallback when swiper not inited
+   (loop+few-slides breaks swiper; show a clean grid instead of 1 card + void) */
+.blog-related .carousel-related:not(.swiper-container-initialized) .swiper-wrapper {
+  display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 20px; transform: none !important;
+}
+.blog-related .carousel-related:not(.swiper-container-initialized) .swiper-slide { width: auto !important; margin: 0 !important; }
+@media (max-width: 900px){ .blog-related .carousel-related:not(.swiper-container-initialized) .swiper-wrapper { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px){ .blog-related .carousel-related:not(.swiper-container-initialized) .swiper-wrapper { grid-template-columns: 1fr; } }
+.blog-related .swiper-slide { height: auto; }
+
+/* ============================================================================
+   PUNCH-LIST ROUND 7 — thumbnail line, double-actions padding, menu container,
+   cart centering, CTA busier, sale/avail
+   ============================================================================ */
+
+/* 1. PDP THUMBNAILS only (not the main image): clean frame, active = accent */
+.product__images .thumb .swiper-slide, .image-additional .swiper-slide, .product-left .thumbnails .swiper-slide {
+  border: 1px solid var(--rz-border) !important; border-radius: 12px !important; overflow: hidden;
+}
+.product__images .thumb .swiper-slide.active, .image-additional .swiper-slide.active, .product-left .thumbnails .swiper-slide.active {
+  border: 2px solid var(--rz-accent) !important; border-bottom-width: 2px !important; border-color: var(--rz-accent) !important;
+}
+
+/* 2. double-nested .product-block-actions -> remove the duplicate spacing (bottom padding) */
+.product-block-actions .product-block-actions { padding-top: 0 !important; margin-top: 0 !important; }
+.product-block .product-block-price { padding-bottom: 10px; }
+
+/* 3. suppress any awe-button injected ripple/overlay child (the stray green blob) */
+.awe-button > *:not(i):not(span) { display: none !important; }
+.awe-button { overflow: hidden; }
+
+/* 4. MENU must not exceed its container — reset Bootstrap navbar-nav margins */
+.dk-navrow, #desk-menu .dk-navrow { box-sizing: border-box; }
+.main-menu .nav.navbar-nav { margin: 0 !important; padding: 0 !important; max-width: 100% !important; }
+.main-menu { max-width: 100%; overflow: visible; }
+
+/* 5. CART chip — truly vertically centered (icon + price + badge on one line) */
+#cart > a.menu-cart-icon { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
+#cart #cart-total { display: inline-flex !important; align-items: center !important; line-height: 1 !important; }
+#cart #cart-total b, #cart .cartprice, #cart .cartnotif { display: inline-flex !important; align-items: center; line-height: 1 !important; vertical-align: middle; }
+#cart .menu-cart-icon::before { align-self: center !important; margin: 0 !important; }
+
+/* 6. CTA "Στο Καλάθι" — a bit busier: icon chip + text + arrow on hover */
+.product-block .product-block-actions .product-quick-view, .products-row .product-quick-view, .product-grid .product-quick-view {
+  gap: 9px !important; font-weight: 700 !important; letter-spacing: .01em !important;
+}
+.product-quick-view i.fa-shopping-cart { background: none !important; width: auto !important; height: auto !important; border-radius: 0 !important; font-size: 14px !important; }
+
+/* ============================================================================
+   PUNCH-LIST ROUND 8 — PDP white bg + single border + rounded; checkout pad;
+   cart page card; account icon; blog related centered/contained
+   ============================================================================ */
+
+/* 1. PDP right column: WHITE card, ONE subtle border, rounded (no double border) */
+.product-right.product-content {
+  background: var(--rz-surface) !important; border: 1px solid var(--rz-border) !important;
+  border-radius: var(--rz-radius) !important; padding: 26px 30px !important;
+}
+.product-right.product-content .row, .product-right .product-stats, .product-right .small-description,
+.product-right ul.list-unstyled, .product-right .price { border: none !important; }
+@media (max-width: 991px){ .product-right.product-content { padding: 18px 16px !important; } }
+
+/* 2. PDP left gallery: ONE rounded subtle border on the outer viewport only */
+.product-left.product__images, #product_img_gallery, .product-left .swiper-container {
+  border-radius: var(--rz-radius) !important; overflow: hidden; background: var(--rz-surface) !important; box-shadow: none !important; border: none !important;
+}
+.product-left .swiper-viewport { border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; overflow: hidden; background: #fff !important; }
+/* main image slide: NO border (prevents double border with the viewport) */
+.product-left .swiper-viewport .swiper-slide, .product-left .swiper-viewport .swiper-slide img { border: none !important; border-radius: 0 !important; }
+.product-left .swiper-slide img, #product_img_gallery img { border: none !important; border-radius: 0 !important; }
+
+/* 3. CHECKOUT: padding inside panels, no leftover empty bordered boxes */
+#onepagecheckout .panel-body, #onepagecheckout .extpanel, #onepagecheckout .account-content,
+#onepagecheckout .opc-content, #onepagecheckout .checkout-content { padding: 20px !important; }
+#onepagecheckout .panel, #onepagecheckout .extpanel { border-radius: var(--rz-radius) !important; overflow: hidden; }
+#onepagecheckout .panel:empty, #onepagecheckout .extpanel:empty, #onepagecheckout .well:empty { display: none !important; }
+#onepagecheckout textarea, #onepagecheckout .form-control { border-radius: var(--rz-radius-sm) !important; }
+
+/* 4. CART page: white cards for items + totals, row separators */
+.checkout_cart .cart-products { background: var(--rz-surface) !important; border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; overflow: hidden; }
+.checkout_cart .cart-product { background: var(--rz-surface) !important; padding: 18px 22px !important; border-bottom: 1px solid var(--rz-border) !important; margin: 0 !important; }
+.checkout_cart .cart-product:last-of-type { border-bottom: none !important; }
+.checkout_cart .cart-products-total, .checkout_cart .cart-products-totals {
+  background: var(--rz-surface) !important; border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; padding: 18px 22px !important; margin-top: 16px !important;
+}
+.checkout_cart .cart-totalsub_total, .checkout_cart .cart-totaltax { border-bottom: 1px solid var(--rz-border) !important; padding-bottom: 8px !important; margin-bottom: 8px !important; }
+/* legacy table-based cart fallback */
+#checkout-cart .cart-info, #checkout-cart .table-responsive, .cart-info {
+  background: var(--rz-surface) !important; border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; padding: 8px 18px !important;
+}
+#checkout-cart .cart_row + .cart_row { border-top: 1px solid var(--rz-border) !important; }
+#checkout-cart .cart_row, .cart-info .cart_row { padding: 16px 0 !important; }
+
+/* 5. ACCOUNT icon — properly centered, not "stuck" */
+.dk-actions { display: flex !important; align-items: center !important; }
+.dk-acct, .dk-wish, #cart { display: inline-flex !important; align-items: center !important; }
+.dk-acct .fas, .dk-wish .fas { line-height: 1; display: inline-flex; align-items: center; }
+
+/* 6. BLOG related ("More Articles") — centered, contained, no distorted images */
+.blog-related, .module-wrapper.blog-related { max-width: 1660px; margin-left: auto; margin-right: auto; }
+.blog-related .carousel-related:not(.swiper-container-initialized) .swiper-wrapper {
+  display: grid !important; grid-template-columns: repeat(auto-fit, minmax(280px, 360px)) !important; gap: 22px; justify-content: center !important;
+}
+.blog-related .blog_item { width: 100%; }
+.blog-related .blog_item .image img, .blog-related .blog_item img { width: 100% !important; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--rz-radius-sm); }
+
+/* ============================================================================
+   PUNCH-LIST ROUND 9 — cart padding, checkout space, PDP gap, Κύπρο, + MOBILE
+   ============================================================================ */
+
+/* DESKTOP -------------------------------------------------------------- */
+/* 1. CART page items: generous padding all around */
+.checkout_cart .cart-products { padding: 6px 8px !important; }
+.checkout_cart .cart-product { padding: 22px 24px !important; }
+.checkout_cart .cart-products-total, .checkout_cart .cart-products-totals { padding: 20px 24px !important; }
+
+/* 2. CHECKOUT: trim wasted side space, remove stray empty bordered boxes */
+#onepagecheckout .panel:empty, #onepagecheckout .extpanel:empty, #onepagecheckout .well:empty,
+#onepagecheckout .extrow:empty, #onepagecheckout > div:empty { display: none !important; border: none !important; }
+#onepagecheckout .extrow { border: none !important; }
+#onepagecheckout #confirm_order_wrap, #onepagecheckout .confirm-wrap { border: none !important; }
+
+/* 3. PDP: clear gap between left gallery and right info; tidy left padding */
+@media (min-width: 992px) {
+  .product-left.product__images { padding-right: 26px !important; }
+  .product-right.product-content { margin-left: 0 !important; }
+}
+.product-left .swiper-viewport { padding: 14px !important; }
+
+/* 4. ΠΕΡΙΓΡΑΦΗ description: top breathing room, aligned with the tab (not inset) */
+.product-tabs .tab-content { padding: 22px 4px !important; }
+.product-tabs .tab-content > .tab-pane { padding: 0 !important; }
+
+/* 4b. category description headings were WHITE (invisible) — force readable ink */
+.category-caption-box h2, .category-caption-box h3,
+.category-description h2, .category-description h3,
+.category-description-c h2, .category-description-c h3,
+.category-caption-box h2 *, .category-description-c h2 * { color: var(--rz-ink) !important; -webkit-text-fill-color: var(--rz-ink) !important; }
+
+/* 4c. remove the nav-row top border (the "terrible-ass border from the menu") */
+.dk-navrow, #desk-menu, #desk-menu.dk-navrow { border-top: none !important; }
+
+/* 4e. kill the black focus/active OUTLINE on menu items + header actions + mmenu */
+.main-menu a:focus, .main-menu a:active, .main-menu .nav > li.open > a,
+#cart a:focus, .dk-acct:focus, .dk-wish:focus, .burger-box:focus, .mmenu_opener:focus,
+#mmenu a:focus, .mm-listview a:focus, .language-dropdown .btn:focus, #languageDropdown:focus,
+.mm-navbar a:focus, .filters-toggle:focus {
+  outline: none !important; box-shadow: none !important;
+}
+
+/* 4f. LANGUAGE dropdown: must stand out on the white header (real border + shadow;
+   override the global *{box-shadow:none}) */
+.language-dropdown .dropdown-menu, #language-menu {
+  background: #fff !important; border: 1px solid #c9ccd8 !important; border-radius: 12px !important;
+  box-shadow: 0 14px 36px rgba(20,20,30,.22) !important; padding: 6px !important; min-width: 175px !important;
+}
+
+/* 4d. PDP columns: keep the theme's native 2-column (block/float) layout —
+   do NOT force flex (that collapsed them to one stacked column). */
+
+/* 4g. KILL the equal-heights JS inline heights on card sections (the wasted
+   white space: title/avail/code/price/actions get fixed inline heights) */
+.product-block-image, .product-block-title, .product-block-avail, .product-block-code,
+.product-block-price, .product-block-actions, .product-block-stats, .product-block .caption {
+  height: auto !important; min-height: 0 !important;
+}
+
+/* 4h. PDP image: ONE border only (theme nested viewport+container+gallery = 3 borders) */
+.product-left .swiper-container, .product-left #product_img_gallery, #product_img_gallery,
+.product-left .swiper-slide, .product-left .swiper-slide img, .product-left img, .product__images img {
+  border: none !important;
+}
+.product-left .swiper-viewport { border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; padding: 6px !important; background: #fff !important; }
+
+/* 4i. LANGUAGE dropdown: unmistakable floating card; UL was collapsed to 14px
+   (equal-heights JS) so items overflowed with no bg -> force auto height */
+.language-dropdown .dropdown-menu, #language-menu {
+  background: #ffffff !important; border: 1.5px solid #9aa0b0 !important; border-radius: 12px !important;
+  box-shadow: 0 16px 42px rgba(15,15,25,.30) !important; padding: 6px !important;
+  height: auto !important; min-height: 0 !important; max-height: none !important;
+}
+
+/* 4j. BURGER button -> store accent (dekor green / apokrifa purple), white lines */
+.dk-mobToggle, .burger-box.mmenu_opener, a.burger-box {
+  background: var(--rz-accent) !important; border: none !important;
+}
+.dk-mobToggle .burgers, .dk-mobToggle .burgers::before, .dk-mobToggle .burgers::after,
+.burger-box .burgers, .burger-box .burgers::before, .burger-box .burgers::after {
+  background: #fff !important;
+}
+
+/* 4k. FOOTER: kill double separator lines (theme per-block border + my bottom border) */
+footer .footer-block { border-bottom: none !important; border-top: none !important; }
+footer .footer-top { border-bottom: none !important; }
+
+/* 5. Κύπρο banner — slim balanced accent strip (kill the theme's 30px padding!) */
+.footer-category-header { background: var(--rz-accent-deep) !important; padding: 0 !important; }
+.footer-category-header .caption-container { padding: 14px 0 !important; }
+.footer-category-header .category-caption-box { display: flex !important; justify-content: center; padding: 0 !important; margin: 0 !important; }
+.footer-category-header .category-caption-box h3 { margin: 0 !important; padding: 0 !important; }
+.footer-category-header h3, .footer-category-header h3 span, .footer-category-header h3 i, .footer-category-header h3 span * {
+  color: #fff !important; -webkit-text-fill-color: #fff !important;
+}
+.footer-category-header .category-caption-box h3 span {
+  display: inline-flex !important; align-items: center; gap: 12px;
+  font-size: 14px !important; font-weight: 600 !important; letter-spacing: .1em !important;
+  text-transform: uppercase; font-family: var(--rz-ui) !important; line-height: 1;
+}
+.footer-category-header .category-caption-box h3 span i { font-size: 16px; opacity: .9; }
+
+/* MOBILE ============================================================== */
+@media (max-width: 767px) {
+  /* A. stop horizontal overflow + the stray top-right sliver: fully hide the
+     closed minicart on mobile (theme forces display:block always) */
+  html, body { overflow-x: hidden !important; max-width: 100vw; }
+  div#cart-container:not(.in) { display: none !important; }
+  div#cart-container.in { display: block !important; width: 100% !important; max-width: 100% !important; }
+  div#cart-container.in .modal-dialog { width: 100% !important; max-width: 100% !important; }
+
+  /* PDP image section on mobile: ONE subtle border, minimal padding (no double) */
+  .product-left.product__images { padding-right: 0 !important; }
+  .product-left .swiper-viewport { padding: 8px !important; border: 1px solid var(--rz-border) !important; }
+  .product-left .swiper-viewport .swiper-slide, .product-left .swiper-viewport .swiper-slide img { border: none !important; }
+  .product-right.product-content { margin-top: 14px !important; }
+
+  /* B. reclaim wasted side space (was 32px each side) */
+  .container-max-width, #product-category, .ho_product_tabs-wrap .container, #common-home #content > .container,
+  .dk-util-in, .dk-hd, .dk-navrow { padding-left: 14px !important; padding-right: 14px !important; }
+
+  /* C. PLP: clean 2-up 50/50 grid */
+  .products-row { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+  /* Bootstrap clearfix ::before/::after become GRID ITEMS in a grid container and
+     steal the first cell (pushing product #1 to column 2) — kill them */
+  .products-row::before, .products-row::after { content: none !important; display: none !important; }
+  .products-row .product-grid, .products-row .product { width: auto !important; float: none !important; padding: 0 !important; margin: 0 !important; }
+  .product-block { padding: 8px 8px 10px !important; }
+  .product-name a, .product-block-title h3 a { font-size: 12.5px !important; }
+  .product-quick-view span { font-size: 12px !important; }
+
+  /* D. cart chip on mobile: icon ONLY; the price/badge were peeking at the
+     top-right corner (#cart-total positioned top:-15 → the stray "green" badge) */
+  #cart { position: relative; }
+  #cart > a.menu-cart-icon { position: relative !important; padding: 9px 12px !important; }
+  #cart #cart-total { position: static !important; display: inline !important; }
+  #cart #cart-total b.cartprice, #cart #cart-total .cartprice, #cart .cartprice { display: none !important; }
+  #cart .cartnotif, #cart #cart-total b.cartnotif {
+    position: absolute !important; top: 2px !important; right: 2px !important; left: auto !important;
+    width: 16px; height: 16px; min-width: 16px; padding: 0 !important; font-size: 9px !important;
+  }
+
+  /* E. footer stacks -> center everything, drop vertical separators */
+  footer .footer-block { text-align: center; border-left: none !important; padding-left: 0 !important; }
+  footer .footer-block .footer-title::after { left: 50% !important; transform: translateX(-50%); }
+  .footer-social { justify-content: center; }
+  footer .footer-contact-nav li, footer .footer-nav li { justify-content: center; }
+  .footer-bottom-1, .footer-bottom-2, .footer-bottom-3 { text-align: center !important; }
+
+}
+/* F. language switcher: theme floats it position:fixed bottom-left (≤991px) -> put
+   it back inline in the top util bar (the floating pill looked terrible) */
+@media (max-width: 991px) {
+  .header-langs { position: static !important; left: auto !important; bottom: auto !important; z-index: auto !important; margin: 0 0 0 6px !important; }
+  .dk-util-in { flex-wrap: wrap; row-gap: 6px; }
+  .dk-util-right { gap: 10px; }
+  .language-dropdown .dropdown-menu, #language-menu { position: absolute !important; right: 0 !important; left: auto !important; top: 100% !important; }
+}
+@media (max-width: 575px) {
+  .products-row { gap: 10px !important; }
+}
+
+/* ============================================================================
+   ROUND 11 — mmenu readable text, smaller mobile card fonts
+   ============================================================================ */
+/* mobile burger menu (mmenu) — dark readable text on the white panel + accent */
+#mmenu, #mmenu .mm-panel { background: #fff !important; }
+#mmenu .mm-listview > li > a, #mmenu .mm-listview > li > span, #mmenu a.mm-navbar__title,
+#mmenu .mm-listitem__text, #mmenu .mm-navbar a, #mmenu li a { color: var(--rz-ink) !important; }
+#mmenu .mm-navbar { background: var(--rz-accent) !important; }
+#mmenu .mm-navbar, #mmenu .mm-navbar * { color: #fff !important; }
+#mmenu .menu-separator a.mm-navbar__title, #mmenu li.menu-separator a { color: var(--rz-muted) !important; }
+.mmenu_opener.mm-page__blocker, #mmenu .mm-listitem:after { border-color: var(--rz-border) !important; }
+
+@media (max-width: 767px) {
+  /* smaller, tighter card typography on mobile */
+  .product-name a, .product-block-title h3 a { font-size: 12px !important; line-height: 1.35 !important; }
+  .product-block-price .amount, .product-block-price .priceRef, .list-prices-package .priceRef { font-size: 14px !important; }
+  .product-block-avail .prod-avail { font-size: 9.5px !important; }
+  .product-block-code { font-size: 10px !important; }
+  .packageRef { font-size: 11px !important; }
+  .list-prices-package .priceRef { font-size: 8.5px !important; }
+  .product-quick-view span { font-size: 11.5px !important; }
+}
+
+/* ============================================================================
+   ROUND 12 — align card sections across a row via CSS (replaces the JS matchHeight)
+   so adjacent cards line up WITHOUT forced JS inline heights
+   ============================================================================ */
+.product-block { display: flex; flex-direction: column; height: 100%; }
+.product-block-title { min-height: 2.8em; }            /* up to 2 title lines */
+.product-block-avail { min-height: 1.4em; }
+.product-block-actions { margin-top: auto; }            /* CTA pinned to bottom */
+@media (max-width: 767px) {
+  .product-block-title { min-height: 3em; }
+}
+
+/* ============================================================================
+   ROUND 13 — lang menu guaranteed height, mmenu separator readable
+   ============================================================================ */
+/* language dropdown: force it to fit its items (UL kept collapsing to 14px) */
+ul#language-menu.dropdown-menu, .language-dropdown .dropdown-menu#language-menu {
+  height: auto !important; min-height: 92px !important; max-height: none !important; overflow: visible !important;
+  background: #fff !important; border: 1.5px solid #9aa0b0 !important; box-shadow: 0 16px 42px rgba(15,15,25,.30) !important;
+}
+ul#language-menu.dropdown-menu > li { display: block !important; width: 100% !important; height: auto !important; }
+
+/* mmenu ΛΟΓΑΡΙΑΣΜΟΣ separator sits on the accent bar -> white, readable */
+#mmenu .menu-separator a.mm-navbar__title, #mmenu li.menu-separator a, #mmenu li.menu-separator,
+#mmenu .menu-separator .mm-navbar__title { color: #fff !important; opacity: 1 !important; font-weight: 600 !important; }
+#mmenu li.menu-separator { background: var(--rz-accent) !important; }
+
+/* ============================================================================
+   ROUND 14 — client-pinpointed fixes
+   ============================================================================ */
+/* kill the GRAY circle behind the burger (the "2nd colour") */
+a.burger-box::after, .burger-box::after, .dk-mobToggle::after { display: none !important; content: none !important; background: none !important; }
+/* grid was constrained -> full width */
+.content-row { max-width: none !important; }
+/* mmenu navbar titles (NAVIGATION / ΛΟΓΑΡΙΑΣΜΟΣ) always white */
+#mmenu a.mm-navbar__title, #mmenu .mm-navbar__title { color: #fff !important; }
+/* mobile: breathing room on category caption */
+@media (max-width: 767px) { .category-caption-box { padding: 1rem !important; } }
+
+/* ROUND 14b — PDP image tight on mobile (client-pinpointed) */
+@media (max-width: 767px) {
+  .product-left.product__images { padding: 0 !important; }
+}
+#product_img_gallery { margin-bottom: 0 !important; }
+
+/* ROUND 15 — checkout panel padding 0 on mobile (client-requested, both sites) */
+@media (max-width: 767px) {
+  #onepagecheckout .panel-body, #onepagecheckout .extpanel, #onepagecheckout .account-content,
+  #onepagecheckout .opc-content, #onepagecheckout .checkout-content {
+    padding: 0 !important;
+  }
+}

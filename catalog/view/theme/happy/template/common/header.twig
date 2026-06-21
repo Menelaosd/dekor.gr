@@ -9,6 +9,9 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>{{ title }}</title>
     <base href="{{ base }}" />
     {% if description %}
@@ -58,7 +61,16 @@
 	 {% else %}
 		<link href="catalog/view/theme/happy/stylesheet/custom.css?v=10098040010.134" rel="stylesheet">
 	 {% endif %}
-	 
+
+	 {# ===== 2026 REDESIGN (layered, revertible — remove these 4 lines to roll back) ===== #}
+	 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+	 <link href="catalog/view/theme/happy/stylesheet/redesign-2026.css?v=65" rel="stylesheet">
+	 {% if store_id == 2 %}
+		<link href="catalog/view/theme/happy/stylesheet/redesign-apokrifa.css?v=65" rel="stylesheet">
+	 {% else %}
+		<link href="catalog/view/theme/happy/stylesheet/redesign-dekor.css?v=65" rel="stylesheet">
+	 {% endif %}
+
     {% for script in scripts %}
         <script src="{{ script }}" type="text/javascript"></script>
     {% endfor %}
@@ -73,174 +85,62 @@
 <body class="{{ page_class }}">
 	<div class="ho_wrapper">   
 		<header>
-			<div class="top-bar">
-				<div class="container">
-					<div class="row">
-						<div class="col-xs-12">
-							<div class="top-bar-content">
-								<div class="top-left-menu">
-									{% if store_id != 2 %}
-										<i class="fas fa-phone"></i><a href="tel:{{ telephone }}"><span>{{ telephone }}</span></a>
-									{% else %}
-										<i class="fas fa-phone"></i><a href="tel:{{ telephone }}"><span>{{ telephone }}</span></a>
-									{% endif %}
-								</div>
-								<div class="top-right-menu">
-									<ul class="right-menu">                     
-										<li class="shop">
-											{% if logged %}
-												<a href="index.php?route=account/login" title="Login / Register"><i class="fas fa-user"></i> Ο Λογαριασμός μου</a>
-											{% else %}
-												<a href="index.php?route=account/login" title="Login / Register"><i class="fas fa-user"></i> Εγγραφή | Είσοδος</a>
-											{% endif %}
-										</li>
-										<li class="shop">
-											<a id="wishlist-total" href="{{ wishlist }}"><i class="fas fa-heart"></i> <span>{{ text_wishlist }}</span></a>
-										</li>
-									</ul>
-								</div>
+			<!-- UTILITY BAR -->
+			<div class="dk-util">
+				<div class="dk-util-in">
+					<div class="dk-util-left">
+						<a href="tel:{{ telephone }}" class="dk-util-tel"><i class="fas fa-phone"></i> {{ telephone }}</a>
+						<span class="dk-util-sep dk-util-sec">|</span>
+						<span class="dk-util-sec">Αποστολή και στην Κύπρο</span>
+					</div>
+					<div class="dk-util-right">
+						<a href="index.php?route=account/login" class="dk-util-reg"><i class="fas fa-user"></i> {% if logged %}Ο Λογαριασμός μου{% else %}Εγγραφή | Είσοδος{% endif %}</a>
+						<div class="header-langs">
+							<div class="dropdown language-dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+									<img id="active-flag" src="https://flagcdn.com/w20/gr.png" alt="Greek" class="language-flag">
+									<span id="active-label" class="language-label">ΕΛ</span>
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="languageDropdown" id="language-menu"></ul>
 							</div>
+							<div id="google_translate_element"></div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="header-wrapper">				
-				<div class="container">
-					<div class="header-top">
-						<div class="header-mobile-left visible-xs visible-sm">
-							<a class="burger-box mmenu_opener" href="#mmenu" title="Menu">
-								<div class="burgers">
-								</div>
-							</a>
-							<a href="#" class="trigger-search search-icon-mobile visible-xs visible-sm" title="Αναζήτηση">
-								<i class="fas fa-search"></i>
-							</a>
-						</div>
-						<div class="header-left">
-							<div class="header-logo">
-								<a href="{{ home }}" class="logo">
-									{% if store_id == 2 %}
-										<img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" width="120" height="112"/>
-									{% else %}
-										<img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" width="116" height="60"/>
-									{% endif %}
-								</a>
-								{#
-								<a href="{{ home }}" class="mob-logo">  
-									<img src="image/logo.png" title="{{ name }}" alt="{{ name }}" class="mob-logo"/>
-								</a> 
-								#}
-							</div>
-						</div>
-						<div class="header-mid">
-							{{search}}
-						</div>
-						 <div class="header-right">				 
-						 
-						    {#
-							<div class="header-right-start header-right-block">
-								<ul class="mobile-custom-submenu">
-									<li>
-										<a class="dropdown-toggle toggle-dropdown" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-gift"></i>{{ menu_filters.17.name }}</a>
-										<ul class="dropdoenis">
-											{% for menu_filter in menu_filters.17.filters %}
-												<li>
-													<a title="{{ menu_filter.name }}" href="{{ menu_filter.href }}">
-														<span class="fmenu-image">
-															<img src="{{ menu_filter.image }}" alt="{{ menu_filter.name }}">
-														</span>
-														<span class="fmenu-text">
-															{{ menu_filter.name }}
-														</span>
-													</a>
-												</li>
-											{% endfor %}
-										</ul>
-									</li>
-								</ul>
-							</div>
-							<div class="header-right-center header-right-block">
-	
-							
-								<ul class="mobile-custom-submenu">
-									<li>
-										<a class="dropdown-toggle toggle-dropdown" data-toggle="dropdown" aria-expanded="false"><i class="far fa-bullseye"></i>{{ menu_filters.18.name }}</a>
-										<ul class="dropdoenis">
-											{% for menu_filter in menu_filters.18.filters %}
-												<li>
-													<a title="{{ menu_filter.name }}" href="{{ menu_filter.href }}">
-														<span class="fmenu-image">
-															<img src="{{ menu_filter.image }}" alt="{{ menu_filter.name }}">
-														</span>
-														<span class="fmenu-text">
-															{{ menu_filter.name }}
-														</span>
-													</a>
-												</li>
-											{% endfor %}
-										</ul>
-									</li>
-								</ul>
-							</div>
-							#}
-							<div class="header-right-end header-right-block">
-							
-								<div class="header-langs">
-									<div class="dropdown language-dropdown">
-									  <button class="btn btn-default dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-										<img id="active-flag" src="https://flagcdn.com/w20/gr.png" alt="Greek" class="language-flag">
-										<span id="active-label" class="language-label">ΕΛ</span>
-										<span class="caret"></span>
-									  </button>
-									  <ul class="dropdown-menu" aria-labelledby="languageDropdown" id="language-menu">
-										<!-- Dropdown items inserted here -->
-									  </ul>
-									</div>
-
-								  <div id="google_translate_element"></div>
-								</div>								
-							
-							<a href="index.php?route=account/login" class="user-icon-mobile visible-xs visible-sm" title="Είσοδος / Λογαριασμός">
-								<i class="fas fa-user"></i>
-							</a>
-							{{ cart }}
-							</div>
-						</div>
+			<!-- HEADER ROW -->
+			<div class="header-wrapper">
+				<div class="dk-hd">
+					<a class="burger-box mmenu_opener dk-mobToggle" href="#mmenu" title="Menu"><div class="burgers"></div></a>
+					<a href="{{ home }}" class="logo dk-logo" title="{{ name }}"><img src="{{ logo }}" alt="{{ name }}"></a>
+					<div class="header-mid dk-search">{{ search }}</div>
+					<div class="header-right dk-actions">
+						<a href="index.php?route=account/login" class="dk-acct" title="Ο Λογαριασμός μου"><i class="fas fa-user"></i><span class="dk-acct-lbl">Ο Λογαριασμός μου</span></a>
+						<a id="wishlist-total" href="{{ wishlist }}" class="dk-wish" title="Αγαπημένα"><i class="fas fa-heart"></i><span class="dk-wishtext">{{ text_wishlist }}</span></a>
+						{{ cart }}
 					</div>
 				</div>
-				<div class="clearfix"></div>
 				{% if not mobile %}
-					<div id="desk-menu" class="col-md-12 visible-lg visible-md">
-						<nav class="main-menu ">
-							{{ menu }}
-						</nav>		
+					<div id="desk-menu" class="dk-navrow visible-lg visible-md">
+						<nav class="main-menu">{{ menu }}</nav>
 					</div>
 				{% endif %}
 			</div>
-			<div class="clearfix"></div>
 			{% if mobile %}
-				<div class="mmenuparent" style="display:none;">
-					<div id="mmenu">
-						{{ menu }}
-					</div>
-				</div>
+				<div class="mmenuparent" style="display:none;"><div id="mmenu">{{ menu }}</div></div>
 			{% endif %}
-			<script type="text/javascript">
-				$('.header-mobile-left .trigger-search').on('click',function(e){
-					e.preventDefault();
-					$('.header-mid').fadeToggle(300);
-				});
-			</script>
 			<div class="hidden">
 				<ul class="mobile-custom-submenu">
 					<li class="menu-separator mm-navbar"><a class="mm-navbar__title">ΛΟΓΑΡΙΑΣΜΟΣ</a></li>
-					<li><a href="index.php?route=account/login" title="{{ text_account}}<"><i class="fas fa-user"></i>{{ text_account}}</a></li>
-					<li><a href="index.php?route=checkout/cart" title="{{ text_cart }}"><i class="fa fa-shopping-cart"></i>{{ text_cart }}</a></li>
-					<li><a href="{{ wishlist}}"><i class="fas fa-heart"></i>{{ text_wishlist }}</a></li>
-					<li><a href="{{ contact }}"><i class="fas fa-envelope"></i>{{ text_contact}}</a></li>
+					<li><a href="index.php?route=account/login"><i class="fas fa-user"></i>{{ text_account }}</a></li>
+					<li><a href="index.php?route=checkout/cart"><i class="fa fa-shopping-cart"></i>{{ text_cart }}</a></li>
+					<li><a href="{{ wishlist }}"><i class="fas fa-heart"></i>{{ text_wishlist }}</a></li>
+					<li><a href="{{ contact }}"><i class="fas fa-envelope"></i>{{ text_contact }}</a></li>
 				</ul>
 			</div>
 		</header>
+<script>(function(){function s(){if(window.pageYOffset>90){document.body.classList.add("rz-stuck");}else{document.body.classList.remove("rz-stuck");}}window.addEventListener("scroll",s,{passive:true});s();})();</script>
 
 	   <script>
 			$(document).ready(function() {
@@ -251,13 +151,6 @@
 					],
 					"navbar": {
 						"title": "NAVIGATION"
-					},
-					"iconbar": {
-						"add": true,
-						"top": [
-							"<a href='#' target='_blank'><i class='fab fa-facebook-f'></i></a>",
-							"<a href='#/' target='_blank'><i class='fab fa-instagram'></i></a>"
-						]
 					}
 				});
 				var API = $("#mmenu").data( "mmenu" );

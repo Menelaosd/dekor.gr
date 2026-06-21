@@ -5,7 +5,7 @@
 		<div class="container container-max-width">
 			<div class="category-caption-box">
 				<h3>
-					{% if store_id != 2 %}<span>Αποστολή και στην Κύπρο</span>{% endif %}
+					{% if store_id != 2 %}<span><i class="fas fa-truck"></i> Αποστολή και στην Κύπρο</span>{% endif %}
 				</h3>
 			</div>
 		</div>
@@ -80,9 +80,9 @@
 <script>
   // Language data
   const languages = {
-    el: { flag: "https://flagcdn.com/w20/gr.png", label: "ΕΛ" },
-    en: { flag: "https://flagcdn.com/w20/gb.png", label: "EN" },
-    bg: { flag: "https://flagcdn.com/w20/bg.png", label: "BG" }
+    el: { flag: "https://flagcdn.com/w20/gr.png", label: "ΕΛ", name: "Ελληνικά" },
+    en: { flag: "https://flagcdn.com/w20/gb.png", label: "EN", name: "English" },
+    bg: { flag: "https://flagcdn.com/w20/bg.png", label: "BG", name: "Български" }
   };
 
   // Cookie helpers
@@ -115,10 +115,13 @@
     rebuildDropdown();
 
     if (lang === 'el') {
-      // Reset Google Translate cookie and reload
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname + ";";
-      location.reload();
+      // Reset Google Translate -> clear googtrans on EVERY domain suffix (Google sets
+      // it on the parent domain too, e.g. .gr.test / .dekor.gr) then reload to Greek
+      var host = window.location.hostname, parts = host.split('.'), domains = [''];
+      for (var i = 0; i < parts.length - 1; i++) { var d = parts.slice(i).join('.'); domains.push('; domain=' + d); domains.push('; domain=.' + d); }
+      domains.push('; domain=' + host);
+      domains.forEach(function (d) { document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/' + d; });
+      window.location.reload();
     } else {
       // Trigger Google Translate widget select change
       const interval = setInterval(() => {
@@ -141,7 +144,7 @@
         const item = `<li>
           <a href="#" onclick="changeLanguage('${lang}', event)">
             <img src="${languages[lang].flag}" alt="${lang}" class="language-flag">
-            <span class="language-label">${languages[lang].label}</span>
+            <span class="language-label">${languages[lang].name}</span>
           </a>
         </li>`;
         menu.append(item);
@@ -199,6 +202,12 @@
 							Στο dekor.gr θα βρείτε, κεριά όλων των ειδών για χονδρική πώληση, πασχαλινές λαμπάδες, λαμπάδες γάμου, λαμπάδες βάπτισης, διακοσμητικά κεριά, κεριά εκδηλώσεων, εκκλησιαστικά κεριά, υλικά κατασκευής κεριών, αποστολή και στην Κύπρο.
 							{% endif %}
 						</div>
+						<div class="footer-social">
+							<a href="https://www.facebook.com/" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+							<a href="https://www.instagram.com/" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram"></i></a>
+							<a href="tel:{{ telephone }}" title="{{ telephone }}"><i class="fas fa-phone"></i></a>
+							<a href="{{ contact }}" title="{{ text_contact }}"><i class="fas fa-envelope"></i></a>
+						</div>
 					</div>
 				</div>
 				<div class="footer-block-2 footer-block col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -249,10 +258,7 @@
 				© {{ year }} {% if store_id == 2 %}apokrifa.gr {% else %}dekor.gr {% endif %} All Rights Reserved
 				</div>
 				<div class="footer-bottom-2 col-lg-4 col-md-4 col-sm-12 col-xs-12 text-center">
-					{% if store_id == 2 %}
-					{% else %}
-						<img src="image/catalog/cards.png" alt="Τρόποι Πληρωμής">
-					{% endif %}
+					<img src="image/catalog/cards.png" alt="Τρόποι Πληρωμής">
 				</div>
 				<div class="footer-bottom-3 col-lg-4 col-md-4 col-sm-12 col-xs-12 text-right">
 				</div>
@@ -320,11 +326,7 @@
 	   createCookie(name,"",-1);
 	}
 	$(document).ready(function(e){	
-		$('.product-block .product-block-title').matchHeight( { byRow: false } );
-		$('.product-block .product-block-avail').matchHeight({ byRow: false });
-		$('.product-block .product-block-code').matchHeight({ byRow: false });
-		$('.product-block .product-block-price').matchHeight({ byRow: false });
-		$('.product-block .product-block-actions').matchHeight({ byRow: false });
+		/* product-card matchHeight removed (2026 redesign) */
 		
 		$('.testimonial-comments').matchHeight();
 		$('.recipe-block-right').matchHeight();

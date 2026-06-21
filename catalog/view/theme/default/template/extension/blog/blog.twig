@@ -137,7 +137,8 @@
 					mode: 'horizontal',
 					observer: true,
 					observeParents: true,
-					loop:true,
+					watchOverflow: true,
+					loop:false,
 					{% if not mobile %}
 					pagination: {
 						el: '.blogrelated-pagination-{{module}}',

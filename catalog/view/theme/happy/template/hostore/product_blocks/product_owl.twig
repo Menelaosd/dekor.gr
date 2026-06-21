@@ -93,17 +93,15 @@
 		{% endif %}
 	</div>
 	<div class="product-block-actions">
-        <div class="product-block-actions">
-			{% if not product.disablecart and not global_disable_cart %}
-				<a onclick="wishlist.add('{{ product.product_id }}');" title="{{ button_wishlist }}" class="awe-button product-wishlist"><i class="fa fa-heart"></i></a>
-				{% if product.quantity > 0 and product.working %}
-					<a onclick="cart.add('{{ product.product_id }}');" title="{{ button_cart }}" class="awe-button product-quick-view"><i class="fa fa-shopping-cart"></i><span>{{button_cart}}</span></a>
-				{% else %}
-					<a href="#" onclick="return false;" title="{{ button_cart }}" class="awe-button product-quick-view not-enabled"><i class="fa fa-shopping-cart"></i><span>Μη Διαθέσιμο</span></a>
-				{% endif %}
+		{% if not product.disablecart and not global_disable_cart %}
+			<a onclick="wishlist.add('{{ product.product_id }}');" title="{{ button_wishlist }}" class="awe-button product-wishlist"><i class="fas fa-heart"></i></a>
+			{% if product.quantity > 0 and product.working %}
+				<a onclick="cart.add('{{ product.product_id }}');" title="{{ button_cart }}" class="awe-button product-quick-view"><i class="fas fa-shopping-cart"></i><span>{{button_cart}}</span></a>
 			{% else %}
-				<a href="{{ product.href }}" title="{{ product.name }}" class="disablecart awe-button product-quick-view"><i class="fa fa-eye"></i><span>Δείτε το</span></a>
+				<a href="#" onclick="return false;" title="{{ button_cart }}" class="awe-button product-quick-view not-enabled"><i class="fas fa-shopping-cart"></i><span>Μη Διαθέσιμο</span></a>
 			{% endif %}
-        </div>
+		{% else %}
+			<a href="{{ product.href }}" title="{{ product.name }}" class="disablecart awe-button product-quick-view"><i class="fas fa-eye"></i><span>Δείτε το</span></a>
+		{% endif %}
 	</div>
 </div>

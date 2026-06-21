@@ -1,0 +1,30 @@
+/* ============================================================================
+   DEKOR palette — handoff "dead forest green" (#2E7D50). Neutrals/fonts/radii
+   come from the shared system. Dropdowns kept GREEN per client.
+   ============================================================================ */
+:root {
+  --rz-accent:      #618764;   /* client-chosen elegant sage green */
+  --rz-accent-2:    #8AA17F;   /* muted sage */
+  --rz-accent-deep: #4C6B50;   /* hover / deep shade */
+  --rz-accent-ink:  #ffffff;
+  --rz-avail:       #618764;
+}
+
+/* keep the mega-menu dropdowns on a GREEN background (client request),
+   with readable light items + leaf-green bullet dots */
+.main-menu .dropdown-menu {
+  background: var(--rz-accent-deep) !important;
+  border-color: var(--rz-accent-deep) !important;
+}
+.main-menu .dropdown-menu > li > a { color: #fff !important; }
+.main-menu .dropdown-menu > li > a::before {
+  content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--rz-accent-2); margin-right: 9px; vertical-align: middle;
+}
+.main-menu .dropdown-menu > li > a:hover { background: rgba(255,255,255,.12) !important; color: #fff !important; }
+
+/* footer separator color for the LIGHT dekor footer */
+:root { --rz-footer-sep: rgba(0,0,0,.10); }
+@media (min-width: 992px) {
+  footer .footer-block-2, footer .footer-block-3, footer .footer-block-4 { border-left: 1px solid var(--rz-footer-sep) !important; }
+}

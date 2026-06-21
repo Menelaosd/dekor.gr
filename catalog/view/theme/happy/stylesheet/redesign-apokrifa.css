@@ -1,0 +1,456 @@
+/* ============================================================================
+   2026 REDESIGN — APOKRIFA palette (esoteric / mystical)
+   White canvas, amethyst-purple accents, dark chrome (header/hero/footer) kept
+   for mystical contrast. Loads after apokrifa.css.
+   ============================================================================ */
+:root {
+  --rz-accent:      #9b59b6;   /* amethyst */
+  --rz-accent-2:    #b07cc6;
+  --rz-accent-deep: #5e356f;   /* deep purple */
+  --rz-accent-ink:  #ffffff;
+  --rz-gold:        #c9a24b;   /* mystical gold for fine accents */
+
+  --rz-bg:        #ffffff;
+  --rz-surface:   #ffffff;
+  --rz-surface-2: #f6f1fa;     /* faint purple tint */
+  --rz-ink:       #241a2b;     /* deep purple-black */
+  --rz-muted:     #7a6c84;
+  --rz-border:        rgba(94,53,111,.16);
+  --rz-border-strong: rgba(94,53,111,.30);
+}
+
+/* ---- 1. White canvas + dark default ink ------------------------------- */
+body,
+body.common_home,
+#common-home,
+.rower,
+#content {
+  background-color: var(--rz-bg) !important;
+  color: var(--rz-ink) !important;
+}
+body { background-image:
+  radial-gradient(900px 500px at 110% -5%, color-mix(in srgb, var(--rz-accent) 8%, transparent), transparent 60%),
+  radial-gradient(700px 460px at -10% 4%, color-mix(in srgb, var(--rz-gold) 6%, transparent), transparent 55%) !important;
+}
+
+/* headings / text on the white canvas become dark */
+#content h1, #content h2, #content h3, #content h4,
+#content p, #content li, #content span, #content label, #content td {
+  color: var(--rz-ink);
+}
+#content a { color: var(--rz-accent-deep); }
+#content a:hover { color: var(--rz-accent); }
+
+/* ---- 2. Keep header / hero / footer DARK (brand chrome) --------------- */
+/* (Do NOT lighten these — their light text must stay readable.) */
+header, .header-wrapper, .header-top, .header-mid,
+.swiper-viewport, .slideshowwrapper, #slideshow0,
+footer, .footer, .footer-category-header {
+  /* intentionally untouched background */
+}
+/* but the breadcrumb bar that sat on black -> make it a light, subtle strip */
+.category-header.no-image:not(.footer-category-header) {
+  background: var(--rz-surface-2) !important;
+}
+.category-header.no-image:not(.footer-category-header) .breadcrumb a,
+.category-header.no-image:not(.footer-category-header) .breadcrumb li { color: var(--rz-muted) !important; }
+
+/* ---- 3. Blog cards -> white surfaces with dark text ------------------- */
+.blog_item {
+  background: var(--rz-surface) !important;
+  border: 1px solid var(--rz-border) !important;
+  border-radius: var(--rz-radius) !important;
+  box-shadow: var(--rz-shadow) !important;
+  overflow: hidden;
+  transition: transform .35s var(--rz-ease), box-shadow .35s var(--rz-ease) !important;
+}
+.blog_item:hover { transform: translateY(-6px); box-shadow: var(--rz-shadow-lg) !important; }
+.blog_item .blog_caption, .blog_item h2, .blog_item h3, .blog_item p, .blog_item span, .blog_item a:not(.btn) {
+  color: var(--rz-ink) !important;
+}
+.blog_item a.btn, .blog_item .btn {
+  background: linear-gradient(135deg, var(--rz-accent), var(--rz-accent-deep)) !important;
+  color: #fff !important; border: none !important; border-radius: var(--rz-radius-pill) !important;
+}
+
+/* ---- 4. Purple accent details ---------------------------------------- */
+.category-caption-box h1 span { /* gradient title in accent */
+  background: linear-gradient(135deg, var(--rz-accent), var(--rz-accent-deep));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+/* section heading "Apokrifa Blog" etc. */
+#content h2 { color: var(--rz-accent-deep); }
+
+/* ---- 5. PRODUCT CARDS: force light surface + dark text ---------------- */
+.product-block,
+.product-layout .product-block {
+  background: var(--rz-surface) !important;
+  color: var(--rz-ink) !important;
+}
+.product-block .product-name a,
+.product-block-title h3 a,
+.product-block-price .amount,
+.product-block-price .priceRef,
+.product-block-code,
+.product-block .amount {
+  color: var(--rz-ink) !important;
+}
+.product-block-price del, .product-block-price .price-old { color: var(--rz-muted) !important; }
+
+/* image / no-image placeholder -> light tile, readable label */
+.product-block-image,
+.product-block-image .product-thumbnail,
+.product-block-image .no-image,
+.product-block-image .image-noimage,
+.product-thumbnail { background: var(--rz-surface-2) !important; }
+.product-block-image, .product-block-image * { color: var(--rz-muted) !important; }
+.product-block-image img { color: transparent !important; }
+
+/* availability pill stays purple-on-tint */
+.product-block-avail .prod-avail { color: var(--rz-accent-deep) !important; background: color-mix(in srgb, var(--rz-accent) 12%, #fff) !important; }
+
+/* ---- 6. PRODUCT PAGE: lighten info column, gallery & description ------- */
+.product-right.product-content { background: var(--rz-surface) !important; color: var(--rz-ink) !important; border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; }
+.product-right.product-content h1,
+.product-right.product-content h2,
+.product-right.product-content span,
+.product-right.product-content label,
+.product-right.product-content li,
+.product-right.product-content div { color: var(--rz-ink); }
+
+/* product gallery (scoped so the HOME hero slideshow stays dark) */
+.product-left .swiper-viewport,
+.product__images .swiper-viewport,
+.product-left .swiper-container,
+.product__images .image-additional,
+.product__images .thumbnails { background: var(--rz-surface) !important; }
+
+/* description / tabs block */
+.tab-content,
+#tab-description, .tab-pane {
+  background: var(--rz-surface) !important;
+  color: var(--rz-ink) !important;
+  border: 1px solid var(--rz-border);
+  border-radius: var(--rz-radius);
+}
+.tab-content h1, .tab-content h2, .tab-content h3, .tab-content h4,
+.tab-content p, .tab-content li, .tab-content span, .tab-content td, .tab-content strong { color: var(--rz-ink) !important; }
+
+/* ---- 7. Account / checkout / search / contact: lighten dark panels --- */
+.well, .product-search-wrapper, .panel, .panel-body {
+  background: var(--rz-surface) !important;
+  color: var(--rz-ink) !important;
+  border: 1px solid var(--rz-border) !important;
+}
+.well *, .product-search-wrapper *, .panel-body * { color: var(--rz-ink); }
+.well a:not(.btn), .panel-body a:not(.btn), .product-search-wrapper a:not(.btn) { color: var(--rz-accent-deep) !important; }
+/* never purple text on buttons — keep white on filled, purple only on outline */
+.well .btn-primary, .panel-body .btn-primary, .btn-primary, .show-cart-button, #button-cart,
+.well .btn, .panel-body .btn { color: #fff !important; }
+.btn-default, .well .btn-default, .panel-body .btn-default { color: var(--rz-accent-deep) !important; }
+
+.form-control, input[type=text], input[type=email], input[type=password],
+input[type=tel], input[type=number], input[type=search], select, textarea {
+  background: var(--rz-surface) !important;
+  color: var(--rz-ink) !important;
+  border: 1.5px solid var(--rz-border) !important;
+}
+.form-control::placeholder { color: var(--rz-muted) !important; }
+
+/* checkout (onepagecheckout) panels & headings on white */
+.checkout-content, .delivery-method-content, #payment-existing, .onepagecheckout,
+.opc-block, .opc-content { background: var(--rz-surface) !important; color: var(--rz-ink) !important; }
+.opc-block *, .checkout-content label, .checkout-content span, .checkout-content td { color: var(--rz-ink); }
+
+/* ---- 8. Brand consistency: green accents -> purple -------------------- */
+/* page-title underline bars (were green #4b7354) */
+.information_information #content h1:after, .information_information #content h2:after,
+#account-account h1:after, #account-account h2:after,
+#content > h2:after, #information-contact h1:after, #content > h1:after,
+div#checkout-cart h1:after,
+.category-caption-box h1:after {
+  background: linear-gradient(90deg, var(--rz-accent), var(--rz-accent-deep)) !important;
+}
+/* guarantee those titles read dark on the white canvas */
+.information_information #content h1, .information_information #content h2,
+#account-account h1, #account-account h2,
+#content > h1, #content > h2, #information-contact h1,
+div#checkout-cart h1 { color: var(--rz-ink) !important; }
+
+/* count badges (cart / notifications) -> amethyst */
+b.notif, .cartnotif, .cart-quantity, .badge {
+  background: var(--rz-accent) !important; color: #fff !important;
+}
+
+/* 404 mystical emoji for apokrifa */
+.error_not_found #content h1::before { content: "🔮"; }
+
+/* language switch sits on the DARK header → light label */
+.language-dropdown .btn.btn-default, .header-langs .btn.btn-default { color: #fff !important; }
+.language-dropdown .btn.btn-default:hover { background: rgba(255,255,255,.12) !important; color:#fff !important; }
+
+/* ---- handoff style adapted to APOKRIFA purple ---- */
+:root { --rz-accent: #9b59b6 !important; --rz-accent-2: #b07cc6 !important; --rz-accent-deep: #5e356f !important; --rz-avail: #7a4b8c !important; }
+/* dropdowns purple (apokrifa brand) — parallel to dekor's green dropdowns */
+.main-menu .dropdown-menu { background: #5e356f !important; border-color: #5e356f !important; }
+.main-menu .dropdown-menu > li > a { color: #fff !important; }
+.main-menu .dropdown-menu > li > a::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--rz-gold, #c9a24b); margin-right: 9px; vertical-align: middle; }
+.main-menu .dropdown-menu > li > a:hover { background: rgba(255,255,255,.12) !important; color: #fff !important; }
+/* prices/accents purple already via var(--rz-accent) */
+
+/* ============================================================================
+   APOKRIFA punch-list fixes
+   ============================================================================ */
+/* bigger logo */
+.dk-logo img { height: 60px !important; }
+/* full-width purple nav bar, contained content, discreet text */
+#desk-menu, .dk-navrow { background: #5e356f !important; }
+#desk-menu { padding: 0 !important; }
+.dk-navrow { max-width: 1660px !important; margin: 0 auto !important; padding: 0 36px !important; }
+.main-menu .nav.navbar-nav > li > a { color: #fff !important; font-weight: 400 !important; font-size: 12.5px !important; letter-spacing: .01em; }
+.main-menu .nav.navbar-nav > li > a:hover { color: #fff !important; background: rgba(255,255,255,.12) !important; }
+/* buttons: never black text on purple — force white; card stays black w/ white */
+.btn-primary, .show-cart-button, .button-cart, #button-cart, .btn-secondary, .btn-info,
+.product-quick-view, a.btn.all { color: #fff !important; }
+.products-row .product-quick-view, .product-grid .product-quick-view { background: var(--rz-ink) !important; color: #fff !important; border-color: var(--rz-ink) !important; }
+.products-row .product-quick-view:hover, .product-grid .product-quick-view:hover { background: var(--rz-accent) !important; border-color: var(--rz-accent) !important; }
+/* containers: respect max width, no overflow on PLP/footer */
+.container, .container-max-width { box-sizing: border-box; }
+#product-category, .category-seo-bottom, .content-row, .products-row { max-width: none !important; box-sizing: border-box; }
+.products-row { overflow: visible; }
+/* PDP availability chip purple-tinted */
+.product-right .stock, .product-stock, .product-right .availability { background: color-mix(in srgb, var(--rz-accent) 12%, #fff) !important; color: var(--rz-accent-deep) !important; }
+
+/* ---- APOKRIFA: hide the empty black band above footer ----------------- */
+/* (the "Αποστολή και στην Κύπρο" caption only renders for dekor; on apokrifa
+   the .footer-category-header is an empty strip → hide it entirely) */
+.footer-category-header { display: none !important; }
+
+/* ---- APOKRIFA PDP: generic spacing + soft purple borders ------------- */
+/* (container card border/padding handled by shared rule — keep subtle) */
+.product-right.product-content > .row { margin-bottom: 8px; }
+.product-right .price, .product-content .price { padding: 14px 0 0; border-top: 1px solid var(--rz-border); border-bottom: none; margin: 6px 0 12px; }
+.product-left img, .product__images img, .product__images .image-additional img { border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; }
+#tab-description, .tab-content, .product-tabs, .product-info { border-color: var(--rz-border) !important; }
+/* all PDP buttons: filled purple, white text; qty box soft border */
+.product-right .btn-primary, #button-cart, .show-cart-button { background: linear-gradient(135deg, var(--rz-accent), var(--rz-accent-deep)) !important; color: #fff !important; border: none !important; border-radius: var(--rz-btn) !important; }
+.product-right .btn-default, .product-right .btn-info { border: 1px solid var(--rz-border-strong) !important; }
+.product-right input[type=text], .product-right input[type=number], .product-right select { border: 1px solid var(--rz-border-strong) !important; border-radius: var(--rz-radius-sm) !important; }
+
+/* ---- APOKRIFA: separator under footer titles (purple-on-dark) -------- */
+footer .footer-block .footer-title::after { background: var(--rz-accent) !important; }
+
+/* availability pill purple-tinted */
+.stock-status { background: color-mix(in srgb, var(--rz-accent) 12%, #fff) !important; color: var(--rz-accent-deep) !important; }
+.stock-status.prod-noavail { background: #fbecec !important; color: #a02a26 !important; }
+
+/* ============================================================================
+   APOKRIFA PDP — clean subtle borders, padding, badges, logo, footer margin
+   (client feedback round 3)
+   ============================================================================ */
+/* 1. clean subtle borders on containers + photos (consistent light purple) */
+.product-left img, .product__images img, .product__images .image-additional img,
+#product_img_gallery, .product-thumb img {
+  border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; background: #fff !important;
+}
+#product_img_gallery { box-shadow: none !important; }
+.product-tabs .tab-content, #tab-description, .tab-content {
+  border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; background: #fff !important;
+}
+/* 2. PADDING inside the description container (was touching the border) */
+.product-tabs .tab-content { padding: 26px 30px !important; }
+.product-tabs .tab-content .tab-pane { padding: 0 !important; }
+@media (max-width: 767px){ .product-tabs .tab-content { padding: 20px 18px !important; } }
+
+/* 3. CTA TEXT — every filled button white, readable (no purple-on-purple) */
+.product-right .btn-primary, .product-right .btn, #button-cart, .show-cart-button,
+button#button-cart, .product-right button[type=submit], .btn-primary, .button-cart {
+  color: #fff !important;
+}
+.product-right .btn-primary *, #button-cart *, .show-cart-button * { color: #fff !important; }
+/* outline / wishlist link stays purple (it's not a filled CTA) */
+.product-right .btn-default, .product-wishlist, a.wishlist-add { color: var(--rz-accent-deep) !important; }
+
+/* 4. BIGGER logo + WHITE text on count badges */
+.dk-logo img { height: 74px !important; }
+#cart .cart-quantity, #cart .badge, #cart b.notif, #cart .cartnotif, #cart b.cartnotif,
+.cartnotif, b.cartnotif,
+#wishlist-total .notif, .dk-wish .notif, .dk-wishtext .notif,
+b.notif, .cart-quantity, .badge {
+  background: var(--rz-accent) !important; color: #fff !important;
+}
+
+/* 5. TOP MARGIN above footer (apokrifa hides the Κύπρο banner) */
+footer { margin-top: 56px !important; }
+.footer-sep { margin-top: 56px !important; }
+
+/* ============================================================================
+   APOKRIFA — ROUND 4 fixes (minicart, CTA text, readall gradient, checkout,
+   cart page, flush description, footer separators)
+   ============================================================================ */
+
+/* footer separator color for the DARK purple apokrifa footer */
+:root { --rz-footer-sep: rgba(255,255,255,.14); }
+@media (min-width: 992px) {
+  footer .footer-block-2, footer .footer-block-3, footer .footer-block-4 { border-left: 1px solid var(--rz-footer-sep) !important; }
+}
+
+/* 1. readall fade -> white (was a BLACK gradient) */
+.readall-hide:after { background: linear-gradient(to bottom, rgba(255,255,255,0), #fff 92%) !important; }
+
+/* 2. product-card CTA: purple fill + WHITE text (was dark-on-dark = invisible) */
+.products-row .product-quick-view, .product-grid .product-quick-view,
+.product-block .product-block-actions .product-quick-view {
+  background: var(--rz-accent) !important; border-color: var(--rz-accent) !important;
+}
+.products-row .product-quick-view, .products-row .product-quick-view *,
+.product-grid .product-quick-view, .product-grid .product-quick-view *,
+.product-block .product-block-actions .product-quick-view,
+.product-block .product-block-actions .product-quick-view * { color: #fff !important; }
+.products-row .product-quick-view:hover, .product-grid .product-quick-view:hover,
+.product-block .product-block-actions .product-quick-view:hover { background: var(--rz-accent-deep) !important; border-color: var(--rz-accent-deep) !important; }
+
+/* 3. MINICART -> white surface, dark text, purple buttons (was transparent->purple bleed) */
+#cart-container .modal-dialog, #cart-container .modal-inner, #cart-container .cart-content,
+#cart-container .modal-body, #cart-container .modal-heading, #cart-container .modal-footer {
+  background: #fff !important; color: var(--rz-ink) !important;
+}
+#cart-container .modal-inner *:not(.btn):not(.btn *):not(.close):not(.close *) { color: var(--rz-ink) !important; }
+#cart-container .modal-heading { border-bottom: 1px solid var(--rz-border) !important; }
+#cart-container .modal-heading, #cart-container .modal-heading * { color: var(--rz-accent-deep) !important; font-weight: 700; }
+#cart-container .cart_totals { background: var(--rz-surface-2) !important; border-radius: var(--rz-radius-sm) !important; padding: 14px 16px !important; }
+#cart-container .btn-primary, #cart-container .show-cart-button { background: linear-gradient(135deg, var(--rz-accent), var(--rz-accent-deep)) !important; border: none !important; }
+#cart-container .btn-primary, #cart-container .btn-primary *, #cart-container .show-cart-button, #cart-container .show-cart-button * { color: #fff !important; }
+#cart-container .modal-content { border: 1px solid var(--rz-border) !important; }
+
+/* 4. PDP description tab -> NO box, NO inner padding, flush text (remove double border) */
+.product-tabs .tab-content, .product-tabs #tab-description, #tab-description {
+  border: none !important; background: transparent !important; border-radius: 0 !important; padding: 22px 0 0 !important;
+}
+.product-tabs .tab-content .tab-pane { padding: 0 !important; border: none !important; }
+
+/* 5. CHECKOUT -> white/light panels (was dark & terrible) */
+#onepagecheckout, #onepagecheckout .panel, #onepagecheckout .panel-body, #onepagecheckout .extpanel,
+#onepagecheckout .account-content, #onepagecheckout .extrow, #onepagecheckout .well,
+#onepagecheckout table, #onepagecheckout td, #onepagecheckout .table-responsive,
+#onepagecheckout .cart-info, #onepagecheckout .cart-totals, #onepagecheckout #confirm_order_wrap {
+  background: #fff !important; color: var(--rz-ink) !important;
+}
+#onepagecheckout .extpanel-title, #onepagecheckout .panel-heading { background: var(--rz-surface-2) !important; color: var(--rz-accent-deep) !important; border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius-sm) var(--rz-radius-sm) 0 0 !important; }
+#onepagecheckout .panel, #onepagecheckout .extpanel { border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; }
+#onepagecheckout label, #onepagecheckout span, #onepagecheckout td, #onepagecheckout div, #onepagecheckout h4 { color: var(--rz-ink); }
+#onepagecheckout .btn-primary, #onepagecheckout .btn-primary * { color: #fff !important; }
+
+/* 6. CART PAGE -> structure so it isn't "too much white" */
+#checkout-cart .table, .cart-info table, #content table.table { border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; overflow: hidden; }
+#checkout-cart .table thead, .cart-info table thead { background: var(--rz-surface-2) !important; }
+#checkout-cart .well, .cart-module .well, #content .row .well { background: var(--rz-surface-2) !important; border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; }
+
+/* ============================================================================
+   APOKRIFA — ROUND 5 (light bg, readable text, checkout, card borders, menu)
+   ============================================================================ */
+
+/* 2. light gray page background so white cards/panels stand out (cards stay #fff) */
+:root { --rz-bg: #f4f3f7; }
+body, body.common_home, #common-home, .rower { background-color: var(--rz-bg) !important; }
+#content { background-color: transparent !important; }
+
+/* 1. readable text everywhere on the white canvas (force dark, never white-on-white) */
+#content, #content p, #content li, #content span:not(.label):not(.badge), #content div:not(.btn),
+#content td, #content h1, #content h2, #content h3, #content h4, #content h5, #content label,
+.information-information #content, .information-information #content *,
+.well, .well *:not(.btn):not(.btn *) { color: var(--rz-ink) !important; }
+#content a:not(.btn):not(.product-quick-view) { color: var(--rz-accent-deep) !important; }
+/* keep light text where the background is dark (header util bar, footer, hero) */
+.dk-util, .dk-util *, footer, footer *:not(.btn):not(.footer-title), .banner-caption, #desk-menu .main-menu a { color: #fff !important; }
+/* but the language dropdown MENU sits on a white surface -> keep its text dark */
+#language-menu, #language-menu *, .language-dropdown .dropdown-menu, .language-dropdown .dropdown-menu * { color: var(--rz-ink) !important; }
+.language-dropdown .dropdown-menu a:hover, .language-dropdown .dropdown-menu a:hover * { color: var(--rz-accent-deep) !important; }
+footer .footer-title { color: #fff !important; }
+
+/* 3. CHECKOUT page body was pure BLACK behind panels -> light gray */
+body.checkout_checkout, body.checkout_cart, body.checkout_checkout #content, body.checkout_cart #content { background-color: var(--rz-bg) !important; }
+
+/* 4. PRODUCT CARDS: visible subtle purple border like dekor */
+.product-block, .products-row .product-block, .product-grid .product-block, .product-layout .product-block {
+  border: 1px solid rgba(94,53,111,.20) !important; background: #fff !important;
+}
+.product-block:hover { border-color: rgba(94,53,111,.38) !important; }
+
+/* 5. PURPLE MENU bar -> contained rounded pill (#desk-menu IS .dk-navrow) */
+#desk-menu, #desk-menu.dk-navrow {
+  background: #5e356f !important; border-radius: 14px !important; border-top: none !important;
+  max-width: 1660px !important; margin: 0 auto 6px !important; padding: 4px 24px !important;
+}
+
+/* 6. CART page separation borders between rows/sections */
+#checkout-cart .table > tbody > tr > td, .cart-info table td { border-top: 1px solid var(--rz-border) !important; }
+#checkout-cart .table, .cart-info table { border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; }
+#checkout-cart .row > div, .cart-module .well { border-radius: var(--rz-radius); }
+
+/* 7. PDP description: give breathing room (padding) but no heavy box */
+.product-tabs .tab-content, .product-tabs #tab-description { padding: 24px 26px !important; }
+
+/* card CTA package text dark+bigger already shared; ensure dark on apokrifa */
+.packageRef, .packageRef b { color: var(--rz-ink) !important; }
+
+/* ---- APOKRIFA ROUND 6: description box, mobile button text -------------- */
+/* description: clean white card with proper inner padding (shared sets 4px which is too tight for the bordered apokrifa box) */
+.product-tabs .tab-content { border: 1px solid var(--rz-border) !important; border-radius: var(--rz-radius) !important; background: #fff !important; padding: 24px 28px !important; }
+.product-tabs .tab-content > .tab-pane { padding: 0 !important; }
+@media (max-width: 767px){ .product-tabs .tab-content { padding: 18px 16px !important; } }
+/* product-card CTA stays purple + WHITE text on mobile too */
+@media (max-width: 767px){
+  .products-row .product-quick-view, .product-grid .product-quick-view, .product-block .product-quick-view,
+  .products-row .product-quick-view *, .product-grid .product-quick-view *, .product-block .product-quick-view * {
+    background-color: var(--rz-accent) !important; color: #fff !important;
+  }
+  .products-row .product-quick-view i, .product-grid .product-quick-view i { color: #fff !important; }
+}
+/* description inner pane: no nested border/bg (avoid double border with .tab-content) */
+.product-tabs .tab-content .tab-pane { border: none !important; background: transparent !important; }
+
+/* ---- APOKRIFA: PDP title must be readable (was faint/white on mobile) ---- */
+.product-content h1.title, .product-right h1, .product-right .product-content h1, .product-wrap h1.title, h1.title {
+  color: var(--rz-ink) !important; -webkit-text-fill-color: var(--rz-ink) !important; background: none !important;
+}
+
+/* ---- APOKRIFA: card CTA white text — out-specify #content span:not():not() (1,2,1) */
+#content .product-block .product-block-actions .product-quick-view,
+#content .product-block .product-block-actions .product-quick-view span,
+#content .product-block .product-block-actions .product-quick-view i {
+  color: #fff !important; -webkit-text-fill-color: #fff !important;
+}
+
+/* ---- APOKRIFA: remove social icons from footer (per client) ------------- */
+.footer-social { display: none !important; }
+
+/* ============================================================================
+   APOKRIFA ROUND 7 — card dividers EXACTLY like dekor (subtle line above the
+   package text; remove the purple line-below-price and the invisible white ones)
+   ============================================================================ */
+.product-block .product-block-code { border-bottom: none !important; }
+.product-block .product-block-price { border-bottom: none !important; border-top: none !important; }
+.product-block .packageRef { border-top: 1px solid rgba(94,53,111,.16) !important; padding-top: 10px !important; margin-top: 10px !important; }
+/* full-width containers (kill the constraint) */
+#product-category, .content-row, .products-row, .category-seo-bottom { max-width: none !important; }
+
+/* dual-price vertical divider was WHITE (invisible) -> subtle purple like dekor */
+.product-block .list-prices-package .list-price-block { border-left-color: rgba(94,53,111,.14) !important; }
+.product-block .list-prices-package .list-price-block:first-child { border-left: none !important; }
+
+/* ============================================================================
+   APOKRIFA — kill the global white headings (h1-h6 {color:#fff}); dark on content,
+   white only where the background is dark (footer / hero caption / mmenu navbar)
+   ============================================================================ */
+h1, h2, h3, h4, h5, h6,
+#content h1, #content h2, #content h3, #content h4, #content h5, #content h6,
+.product-right h1, .product-content h1, .product-tabs h1, .product-tabs h2, .product-tabs h3 {
+  color: var(--rz-ink) !important;
+}
+/* keep light on the dark chrome */
+footer h1, footer h2, footer h3, footer h4, footer h5, footer h6, footer .footer-title,
+.banner-caption, .footer-category-header h3, .footer-category-header h3 span,
+#mmenu .mm-navbar__title, #mmenu .mm-navbar a, .dk-util h1, .dk-util h2 {
+  color: #fff !important;
+}
