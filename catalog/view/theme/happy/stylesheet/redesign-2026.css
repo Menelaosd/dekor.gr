@@ -1198,3 +1198,24 @@ a.burger-box::after, .burger-box::after, .dk-mobToggle::after { display: none !i
     padding: 0 !important;
   }
 }
+
+/* ============================================================================
+   ROUND 16 — PRODUCT GRID as CSS GRID at ALL breakpoints (both stores)
+   Float-based col-lg-3 + uneven card heights (after removing matchHeight) caused
+   cards to "catch" and leave gaps. CSS grid lays clean rows regardless of height.
+   ============================================================================ */
+.products-row {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 22px !important;
+  align-items: stretch;
+}
+.products-row::before, .products-row::after { content: none !important; display: none !important; }
+.products-row .product-grid, .products-row .product {
+  width: auto !important; max-width: none !important; float: none !important;
+  padding: 0 !important; margin: 0 !important; clear: none !important;
+}
+.products-row .product-block { height: 100%; }
+@media (max-width: 1199px) { .products-row { grid-template-columns: repeat(3, 1fr) !important; } }
+@media (max-width: 900px)  { .products-row { grid-template-columns: repeat(2, 1fr) !important; } }
+@media (max-width: 767px)  { .products-row { grid-template-columns: 1fr 1fr !important; gap: 12px !important; } }

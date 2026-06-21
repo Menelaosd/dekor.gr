@@ -454,3 +454,18 @@ footer h1, footer h2, footer h3, footer h4, footer h5, footer h6, footer .footer
 #mmenu .mm-navbar__title, #mmenu .mm-navbar a, .dk-util h1, .dk-util h2 {
   color: #fff !important;
 }
+
+/* ============================================================================
+   APOKRIFA ROUND 8 — restore desktop container limit (I over-removed it) +
+   kill the white category description text
+   ============================================================================ */
+/* container limit on desktop (was removed -> full-bleed); full width on mobile */
+@media (min-width: 768px) {
+  #product-category { max-width: 1660px !important; margin-left: auto !important; margin-right: auto !important; }
+}
+.content-row, .products-row { max-width: none !important; }
+/* category description was WHITE (color:#fff) -> readable dark, contained */
+.category-header .category-description, .category-header .category-description *,
+.category-description, .category-description-c, .category-description-c * {
+  color: var(--rz-ink) !important;
+}
