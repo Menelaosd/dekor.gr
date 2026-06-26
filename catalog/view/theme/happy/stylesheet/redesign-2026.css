@@ -270,10 +270,12 @@ label, .control-label { color: var(--rz-ink); font-weight: 600; }
 #search button.header-search:hover { background: var(--rz-accent-deep) !important; }
 #search button.header-search i { color: #fff !important; }
 #search .dropdown-menu, #search .live-search { border-radius: 14px !important; border: 1px solid var(--rz-border-2) !important; padding: 6px !important; }
-/* live-search dropdown: sits BELOW the bar and aligned to it (same width, flush).
-   override base theme's left:50%/translateX(-50%)/min-width:600 centering that
-   otherwise shoves it off to the left under the redesigned bar. */
+/* live-search dropdown: sits BELOW the bar (mobile = full-width inline, flush). */
 #search .live-search { top: calc(100% + 8px) !important; left: 0 !important; right: auto !important; width: 100% !important; min-width: 0 !important; transform: none !important; -webkit-transform: none !important; margin-top: 0 !important; }
+/* desktop: fixed-width panel, bigger than the bar, centered on the bar's center. */
+@media (min-width: 992px) {
+  #search .live-search { left: 50% !important; right: auto !important; width: 640px !important; min-width: 640px !important; transform: translateX(-50%) !important; -webkit-transform: translateX(-50%) !important; }
+}
 
 /* ============================================================================
    HOMEPAGE PRODUCT-TABS MODULE — fix absolute-overlap + contain slider + arrows
@@ -622,6 +624,10 @@ header { position: static !important; }
 .alert-danger::before { content: "\f06a"; color: #d9534f; }
 .alert-info, .alert-warning { background: var(--rz-surface-2) !important; color: var(--rz-ink) !important; border-left: 4px solid var(--rz-accent) !important; }
 .alert-info::before, .alert-warning::before { content: "\f05a"; color: var(--rz-accent); }
+/* if the alert markup already carries its own icon (e.g. cart toast
+   <i class="fa fa-check-circle">), drop our pseudo-icon so it doesn't render a
+   duplicate / tofu square next to it. close button uses &times; (no <i>). */
+.alert:has(> i)::before { content: none !important; }
 
 /* ---- ROUND BADGES content visible (incl. .cartnotif — was black/black) -- */
 .badge, b.notif, .cart-quantity, #cart .cart-quantity,

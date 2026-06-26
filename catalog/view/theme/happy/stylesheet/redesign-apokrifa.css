@@ -480,3 +480,19 @@ footer h1, footer h2, footer h3, footer h4, footer h5, footer h6, footer .footer
   .main-menu .nav.navbar-nav > li > a { font-size: 15px !important; }
   .main-menu .dropdown-menu > li > a { font-size: 16.5px !important; line-height: 1.5 !important; padding: 10px 16px !important; }
 }
+
+/* live-search dropdown: light opaque panel (base apokrifa.css made it
+   black + transparent: background rgba(0,0,0,.8) with white text). Mirror the
+   DEKOR look in the purple palette. */
+#search .live-search { background: #fff !important; }
+#search .live-search ul li { background: #fff !important; }
+#search .live-search ul li:nth-child(even) { background: var(--rz-surface-2) !important; }
+#search .live-search ul li:hover { background: var(--rz-surface-2) !important; }
+#search .live-search .product-name,
+#search .live-search .product-name a { color: var(--rz-ink) !important; }
+#search .live-search .product-name p { color: var(--rz-muted) !important; }
+#search .live-search .product-name { border-right-color: rgba(0,0,0,.08) !important; }
+#search .live-search .product-price,
+#search .live-search .product-price .price { color: var(--rz-accent-deep) !important; }
+#search .live-search .product-price .special { color: var(--rz-muted) !important; }
+#search .live-search .no-results { color: var(--rz-muted) !important; }
