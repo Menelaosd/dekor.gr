@@ -269,7 +269,11 @@ label, .control-label { color: var(--rz-ink); font-weight: 600; }
 }
 #search button.header-search:hover { background: var(--rz-accent-deep) !important; }
 #search button.header-search i { color: #fff !important; }
-#search .dropdown-menu, #search .live-search { border-radius: 14px !important; border: 1px solid var(--rz-border-2) !important; margin-top: 10px !important; padding: 6px !important; }
+#search .dropdown-menu, #search .live-search { border-radius: 14px !important; border: 1px solid var(--rz-border-2) !important; padding: 6px !important; }
+/* live-search dropdown: sits BELOW the bar and aligned to it (same width, flush).
+   override base theme's left:50%/translateX(-50%)/min-width:600 centering that
+   otherwise shoves it off to the left under the redesigned bar. */
+#search .live-search { top: calc(100% + 8px) !important; left: 0 !important; right: auto !important; width: 100% !important; min-width: 0 !important; transform: none !important; -webkit-transform: none !important; margin-top: 0 !important; }
 
 /* ============================================================================
    HOMEPAGE PRODUCT-TABS MODULE — fix absolute-overlap + contain slider + arrows
@@ -324,10 +328,10 @@ label, .control-label { color: var(--rz-ink); font-weight: 600; }
 .dk-search { flex: 1 1 0; max-width: 560px; padding: 0 !important; }
 
 /* green-bordered search with green square button (design spec) */
-#search { display: flex !important; align-items: stretch; position: relative !important; border: 1.5px solid var(--rz-accent) !important; border-radius: 12px !important; height: 48px; overflow: hidden; background: #fff; max-width: none; margin: 0; }
-#search input.form-control, #search input.input-lg { flex: 1 1 auto !important; border: none !important; height: 46px !important; border-radius: 0 !important; padding: 0 16px !important; background: #fff !important; font-family: var(--rz-ui) !important; box-shadow: none !important; }
+#search { display: flex !important; align-items: stretch; position: relative !important; border: 1.5px solid var(--rz-accent) !important; border-radius: 12px !important; height: 48px; overflow: visible; background: #fff; max-width: none; margin: 0; }
+#search input.form-control, #search input.input-lg { flex: 1 1 auto !important; border: none !important; height: 46px !important; border-radius: 11px 0 0 11px !important; padding: 0 16px !important; background: #fff !important; font-family: var(--rz-ui) !important; box-shadow: none !important; }
 #search input.form-control:focus { border: none !important; }
-#search button.header-search { position: static !important; flex: 0 0 56px !important; width: 56px !important; height: 46px !important; border-radius: 0 !important; background: var(--rz-accent) !important; color: #fff !important; border: none !important; display: inline-flex !important; align-items: center; justify-content: center; }
+#search button.header-search { position: static !important; flex: 0 0 56px !important; width: 56px !important; height: 46px !important; border-radius: 0 11px 11px 0 !important; background: var(--rz-accent) !important; color: #fff !important; border: none !important; display: inline-flex !important; align-items: center; justify-content: center; }
 #search button.header-search:hover { background: var(--rz-accent-deep) !important; }
 #search button.header-search i { color: #fff !important; }
 
@@ -356,6 +360,9 @@ body.rz-stuck .dk-hd { padding-top: 10px !important; padding-bottom: 10px !impor
 @media (max-width: 991px) {
   .dk-mobToggle { display: inline-flex !important; align-items: center; justify-content: center; width: 46px; height: 46px; border: 1.5px solid var(--rz-border); border-radius: 11px; }
   .dk-hd { gap: 16px; }
+  /* mobile search: show as inline full-width bar (override base theme's hidden dark
+     pop-down panel — there is no toggle icon in the redesign header to reveal it) */
+  .dk-search, .header-mid { display: block !important; position: static !important; top: auto !important; left: auto !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; z-index: auto !important; }
   .dk-search { order: 3; flex-basis: 100% !important; max-width: none !important; }
   .dk-acct-lbl { display: none; }
   .dk-util-sec { display: none; }
