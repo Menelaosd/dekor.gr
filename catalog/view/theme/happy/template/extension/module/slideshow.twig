@@ -6,8 +6,19 @@
                     <div class="swiper-slide">
                         <div class="swiper-slide-wrapper">
                             <a title="{{ banner.title }}" href="{{ banner.link }}" class="swiper-slide-link">
-                                <img src="{{ banner.image }}" alt="{{ banner.title }}" 
-                                     rel="preload" fetchpriority="high" decoding="async" loading="eager">
+                                {% if "apokrifa-pc-2048-1260" in banner.image %}
+                                    <picture>
+                                        <source media="(max-width: 679px)" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==">
+                                        <img src="{{ banner.image }}" alt="{{ banner.title }}" fetchpriority="high" decoding="async" loading="eager" width="1800" height="1107">
+                                    </picture>
+                                {% elseif "apokrifa-mb-1536-945" in banner.image %}
+                                    <picture>
+                                        <source media="(min-width: 680px)" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==">
+                                        <img src="{{ banner.image }}" alt="{{ banner.title }}" fetchpriority="high" decoding="async" loading="eager" width="416" height="256">
+                                    </picture>
+                                {% else %}
+                                    <img src="{{ banner.image }}" alt="{{ banner.title }}" fetchpriority="high" decoding="async" loading="eager">
+                                {% endif %}
                             </a>
                             {% if banner.subtitle and not hide_cap %}
                                 <h3 class="banner-caption">{{ banner.subtitle }}</h3>

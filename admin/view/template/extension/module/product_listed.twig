@@ -63,7 +63,8 @@ $(document).ready(function() {
             <div class="form-group col-sm-3">
               <label class="control-label" for="input-name">Κατηγορία</label>
               <select name="filter_category" id="input-status" class="form-control">
-              <option value="*"></option>
+             <option value="*" {% if filter_category == '*' or filter_category == '' %}selected="selected"{% endif %}>Όλες οι κατηγορίες</option>
+<option value="-1" {% if filter_category == '-1' %}selected="selected"{% endif %}>Χωρίς κατηγορία</option>
       			  {% for category in categories %}
       			  {% if category.product_count >= '1' %}			  
       			  {% if category.category_id == filter_category %}

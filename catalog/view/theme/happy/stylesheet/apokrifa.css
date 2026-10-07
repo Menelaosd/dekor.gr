@@ -185,7 +185,7 @@ body.common_home {
 
 body,body.common_home {
 	background: #000;
-	background-image:url('../image/back2.jpg');
+	background-image:url('/catalog/view/theme/happy/image/back2.webp');
 	background-repeat:no-repeat;
 	background-size:cover;
 	background-attachment:fixed;
@@ -7042,7 +7042,7 @@ div#text_content_text h2:before {
 }
 
 h3.category-refine-title a {
-    color: #fff;
+    color: #9b59b6;
     font-size: 17px;
     line-height: 25px;
     font-weight: normal;

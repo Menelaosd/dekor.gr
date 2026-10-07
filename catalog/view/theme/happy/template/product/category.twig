@@ -22,11 +22,16 @@
 			<h1>
 				<span>{{ heading_title }}</span>
 			</h1>
-			{% if main_description %}
-			<div class="category-description">
-				<div class="category-description-c">{{ main_description }}</div>
-			</div>
-			{% endif %}
+{% set description_marker = '<div id="dekor-category-split"></div>' %}
+{% set description_parts = description ? description|split(description_marker) : [] %}
+{% set description_top = description_parts[0]|default('') %}
+{% set description_bottom = description_parts[1]|default('') %}
+
+{% if description_top %}
+<div class="category-description">
+        <div class="category-description-c">{{ description_top }}</div>
+</div>
+{% endif %}
 			{% if store_id != 2 %}
 				<a href="https://dekor.gr/paragogi-kerion-xondriki-lianiki" title="«Μάθετε περισσότερα για την Παραγωγή Κεριών – Χονδρική & Λιανική" class="learn-more-category">👉 «Μάθετε περισσότερα για την Παραγωγή Κεριών – Χονδρική & Λιανική</a>
 			{% endif %}
@@ -142,7 +147,11 @@
         {% endfor %} </div>
         <div class="pagination-wrap">{{ pagination }}</div>
       {% endif %}
-
+{% if description_bottom %}
+<div class="category-description-bottom">
+    {{ description_bottom }}
+</div>
+{% endif %}
       {% if not categories and not products %}
       <p>{{ text_empty_categories }}</p>
       <div class="buttons">
@@ -164,14 +173,16 @@
 </div>
  {% endif %}
 
- <script type="text/javascript">
+{% if not description_bottom %}
+<script type="text/javascript">
 $('.category-description .category-description-c').readall({
   showheight: 230,
-   btnTextShowmore: 'Διαβάστε Περισσότερα',
+  btnTextShowmore: 'Διαβάστε Περισσότερα',
   btnTextShowless: 'Διαβάστε λιγότερα',
   btnClassShowmore: 'readall-button btn btn-primary',
   btnClassShowless: 'readall-button btn btn-primary'
 });
 </script>
+{% endif %}
  
 {{ footer }} 

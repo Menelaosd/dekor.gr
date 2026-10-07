@@ -31,7 +31,8 @@ RewriteRule ^ https://%1%{REQUEST_URI} [L,NE,R=301]
 # If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/
 
 RewriteBase /
-
+RewriteRule ^aromatiko-keri-trimma-vanilla-1kg-fytillia/?$ /xeiropoihta-diakosmhtika-keria/aromatiko-keri-trimma/aromatiko-keri-trimma-vanilla-1kg-10-fytillia-gemisma-liosimo [R=301,L]
+RewriteRule ^keria-ekdiloseis-events/?$ /keria-ekdiloseon-epaggelmatikoi-xoroi [R=301,L]
 RewriteRule ^sitemap.xml$ index.php?route=extension/feed/google_sitemap [L]
 RewriteRule ^googlebase.xml$ index.php?route=extension/feed/google_base [L]
 

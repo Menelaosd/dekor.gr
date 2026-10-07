@@ -4,9 +4,6 @@ class ControllerProductCategory extends Controller {
 			$data['lang'] = $this->language->get('code');
 			
 			$data['store_id'] = $this->config->get('config_store_id');
-			
-		$this->document->addScript('catalog/view/javascript/jquery.readall.min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery.readall.min.css');
 		
 		$data['lang_id'] = (int)$this->config->get('config_language_id'); 
 		
@@ -98,7 +95,10 @@ class ControllerProductCategory extends Controller {
 		}
 		
 		$category_info_ignore = $this->model_catalog_category->getCategory($category_id);
-		
+if (!in_array((int)$category_id, array(438, 653, 369, 446))) {
+    $this->document->addScript('catalog/view/javascript/jquery.readall.min.js');
+    $this->document->addStyle('catalog/view/javascript/jquery.readall.min.css');
+}
 		if($category_info_ignore['ignore_order']) {
 			$sort = 'p2c.sort_order_ppc';
 		}
@@ -111,7 +111,7 @@ class ControllerProductCategory extends Controller {
 			$this->document->setKeywords($category_info['meta_keyword']);
 
 			$data['heading_title'] = $category_info['name'];
-
+$data['category_id'] = (int)$category_id;
 
 			$data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
 

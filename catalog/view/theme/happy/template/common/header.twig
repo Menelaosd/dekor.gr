@@ -14,6 +14,9 @@
     <meta http-equiv="Expires" content="0">
     <title>{{ title }}</title>
     <base href="{{ base }}" />
+    {% if store_id == 0 and (page_class == '' or page_class == 'common_home') %}
+    <link href="https://dekor.gr/" rel="canonical" />
+{% endif %}
     {% if description %}
         <meta name="description" content="{{ description }}" />
     {% endif %}

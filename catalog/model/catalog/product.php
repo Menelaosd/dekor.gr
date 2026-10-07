@@ -320,7 +320,11 @@ class ModelCatalogProduct extends Model {
 		$query = $this->db->query($sql);
 
 		foreach ($query->rows as $result) {
-			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+                        $product_info = $this->getProduct($result["product_id"]);
+
+                        if ($product_info && !empty($product_info["product_id"]) && !empty(trim($product_info["name"]))) {
+                                $product_data[$result["product_id"]] = $product_info;
+                        }
 		}
 
 		return $product_data;
