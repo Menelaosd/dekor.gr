@@ -74,7 +74,7 @@
 		<link href="catalog/view/theme/happy/stylesheet/redesign-dekor.css?v=84" rel="stylesheet">
 	 {% endif %}
 	 <link href="catalog/view/theme/happy/stylesheet/redesign-cards.css?v=2" rel="stylesheet">{# product + blog cards polish (remove to roll back) #}
-	 <link href="catalog/view/theme/happy/stylesheet/redesign-header.css?v=4" rel="stylesheet">{# header / icons / cart / nav polish (remove to roll back) #}
+	 <link href="catalog/view/theme/happy/stylesheet/redesign-header.css?v=5" rel="stylesheet">{# header / icons / cart / nav polish (remove to roll back) #}
 
     {% for script in scripts %}
         <script src="{{ script }}" type="text/javascript"></script>
@@ -145,12 +145,18 @@
 				</ul>
 			</div>
 		</header>
-<script>(function(){function s(){if(window.pageYOffset>90){document.body.classList.add("rz-stuck");}else{document.body.classList.remove("rz-stuck");}}window.addEventListener("scroll",s,{passive:true});s();})();</script>
+{# dekor: the old "rz-stuck" condense script is gone — the header is not sticky, so shrinking it at 90px only made the page jump #}
 <script>/* dekor: dock the desktop menu row at the top once it scrolls out of view; keep its slot so nothing jumps */
-(function(){var m=document.getElementById('desk-menu');if(!m)return;var b=document.body,top=0,h=0;
-function measure(){var was=b.classList.contains('dk-menu-docked');b.classList.remove('dk-menu-docked');h=m.offsetHeight;top=m.getBoundingClientRect().top+window.pageYOffset;document.documentElement.style.setProperty('--dk-menu-h',h+'px');if(was)b.classList.add('dk-menu-docked');}
-function onScroll(){if(window.innerWidth<992){b.classList.remove('dk-menu-docked');return;}if(window.pageYOffset>=top){b.classList.add('dk-menu-docked');}else{b.classList.remove('dk-menu-docked');}}
-measure();onScroll();window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',function(){measure();onScroll();});window.addEventListener('load',function(){measure();onScroll();});})();</script>
+(function(){var m=document.getElementById('desk-menu');if(!m)return;var b=document.body,c='dk-menu-docked';
+/* a slot right after the menu takes its exact outer height (margins included) at the moment it docks */
+var slot=document.createElement('div');slot.id='dk-menu-slot';slot.style.height='0px';m.parentNode.insertBefore(slot,m.nextSibling);
+function outerTop(){return m.getBoundingClientRect().top-parseFloat(getComputedStyle(m).marginTop||0);}
+function outerH(){var s=getComputedStyle(m);return m.getBoundingClientRect().height+parseFloat(s.marginTop||0)+parseFloat(s.marginBottom||0);}
+function undock(){b.classList.remove(c);slot.style.height='0px';}
+function onScroll(){if(window.innerWidth<992){undock();return;}var docked=b.classList.contains(c);
+ if(!docked&&outerTop()<=0){slot.style.height=outerH()+'px';b.classList.add(c);}
+ else if(docked&&slot.getBoundingClientRect().top>0){undock();}}
+onScroll();window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',function(){undock();onScroll();});})();</script>
 
 	   <script>
 			$(document).ready(function() {

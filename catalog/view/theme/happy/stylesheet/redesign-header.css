@@ -46,7 +46,6 @@ html, body { overflow-x: clip; } /* the 100vw divider must never cause a side sc
 	}
 	body.dk-menu-docked #desk-menu { padding: 0 !important; }
 	body.dk-menu-docked #desk-menu > .main-menu { max-width: 1660px; margin: 0 auto; padding: 0 36px; box-sizing: border-box; }
-	body.dk-menu-docked .header-wrapper { padding-bottom: var(--dk-menu-h, 0px) !important; }
 }
 
 /* ---------- 404 page: one centred column (col-sm-12 float broke margin:auto) ------ */
