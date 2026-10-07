@@ -75,6 +75,15 @@ if ($config->has('action_event')) {
 $document = new Document();
 $registry->set('document', $document);
 
+// The Google Tag Manager OCMOD calls $this->gtm->saveOrderID() inside addOrderHistory(). It needs a browser
+// session and only matters on the checkout success page, so the cron gets a do-nothing stand-in
+// (without it the script crashed on the first order and never cancelled anything).
+$registry->set('gtm', new class {
+	public function __call($name, $args) {
+		return false;
+	}
+});
+
 //GET OPENCART ORDER DATA
 $loader->model('checkout/order');
 $orderModel = $registry->get('model_checkout_order');
@@ -87,12 +96,20 @@ $registry->set('language', $language);
 $language->load('el-gr');
 $language->load('mail/order_edit');
 
-// Settings
-$orders = $db->query("SELECT * FROM " . DB_PREFIX . "order WHERE order_status_id = '1' AND DATE(date_added) < DATE_SUB(CURDATE(), INTERVAL 10 DAY) ORDER BY date_added ASC")->rows;
+// Only orders placed after the first run of this fixed script are auto-cancelled: the script was broken for
+// months, and the old pending orders must not be cancelled / emailed in one go now that it works again.
+$since = $db->query("SELECT `value` FROM " . DB_PREFIX . "setting WHERE store_id = '0' AND `key` = 'dekor_check_orders_since' LIMIT 1");
 
-echo '<pre>';
-print_r($orders);
-echo '</pre>';
+if (!$since->num_rows) {
+	$db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'dekor_check_orders', `key` = 'dekor_check_orders_since', `value` = NOW(), serialized = '0'");
+	echo 'First run: only orders placed from now on will be auto-cancelled.';
+	exit;
+}
+
+$orders = $db->query("SELECT * FROM " . DB_PREFIX . "order WHERE order_status_id = '1' AND date_added >= '" . $db->escape($since->row['value']) . "' AND DATE(date_added) < DATE_SUB(CURDATE(), INTERVAL 10 DAY) ORDER BY date_added ASC")->rows;
+
+// no customer data in the output: the script is reachable over the web
+echo count($orders) . ' order(s) auto-cancelled';
 
 $comment 			= 'Η Παραγγελία σας ακυρώθηκε αυτόματα μετά το πέρας των 10 ημερών';
 
