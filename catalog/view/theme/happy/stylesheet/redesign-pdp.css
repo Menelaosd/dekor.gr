@@ -205,6 +205,8 @@ body.product_product .product-right .product-buttons {
 body.product_product .product-right .product-quantity { flex: 0 0 auto; margin: 0 !important; float: none; width: auto; }
 body.product_product .product-right .product-quantity-label {
 	font: 600 11px/1.2 var(--pdp-ui) !important; text-transform: uppercase; letter-spacing: .06em; color: var(--pdp-muted) !important; margin: 0 0 6px !important; text-align: left;
+	/* the theme hangs it 30px above the spinner (absolute): with no options above it landed on the price box */
+	position: static !important; top: auto !important; height: auto !important; line-height: 1.2 !important; width: auto !important;
 }
 body.product_product .product-right .number-spinner {
 	display: flex !important; align-items: center; height: 54px; width: 140px;
