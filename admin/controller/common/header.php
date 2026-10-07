@@ -64,7 +64,7 @@ class ControllerCommonHeader extends Controller {
 				if (is_file(DIR_IMAGE . $user_info['image'])) {
 					$data['image'] = $this->model_tool_image->resize($user_info['image'], 45, 45);
 				} else {
-					$data['image'] = $this->model_tool_image->resize('profile.png', 45, 45);
+					$data['image'] = ''; // dekor: no uploaded picture -> user icon in the template (image/profile.png does not exist)
 				}
 			} else {
 				$data['firstname'] = '';
