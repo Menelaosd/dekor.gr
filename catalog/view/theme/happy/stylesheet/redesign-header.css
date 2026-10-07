@@ -30,7 +30,8 @@
 	border-top: 1px solid var(--hd-line); pointer-events: none;
 }
 /* soft full-width bottom edge instead of a hard cut into the banner */
-header .header-wrapper { border-bottom: 1px solid var(--hd-line) !important; box-shadow: 0 6px 18px -12px rgba(17, 17, 17, .18); position: relative; z-index: 3; }
+header .header-wrapper { border-bottom: 1px solid var(--hd-line) !important; box-shadow: 0 6px 18px -12px rgba(17, 17, 17, .18); position: relative; z-index: 1020; }
+/* stacking order: page content (caption boxes z 10, filters z 2) < header + its menus (1020, docked 1030) < Bootstrap modal backdrop (1040) / side cart (1060) < phone search sheet (5000) */
 /* the cart modal lives inside .header-wrapper: drop its stacking context while a modal is open so the cart sits above the backdrop */
 body.modal-open header .header-wrapper { z-index: auto; }
 header { box-shadow: none !important; }
