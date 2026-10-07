@@ -577,3 +577,14 @@ $(document).delegate('.agree', 'click', function(e) {
 	}
 })(window.jQuery);
 
+
+// dekor: the green "added to cart / wishlist / compare" message fades out by itself after 4s (it used to stay until closed)
+$(document).ajaxComplete(function () {
+	var $alerts = $('.alert-success.alert-dismissible').not('.dk-timed').addClass('dk-timed');
+
+	if ($alerts.length) {
+		setTimeout(function () {
+			$alerts.fadeOut(400, function () { $(this).remove(); });
+		}, 4000);
+	}
+});

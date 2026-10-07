@@ -93,7 +93,7 @@
 		{% endif %}
 	</div>
 	<div class="product-block-actions">
-		{% if not product.disablecart and not global_disable_cart %}
+		{% if not product.disablecart and not global_disable_cart and not product.storeonly %}
 			<a onclick="wishlist.add('{{ product.product_id }}');" title="{{ button_wishlist }}" class="awe-button product-wishlist"><i class="fas fa-heart"></i></a>
 			{% if product.quantity > 0 and product.working %}
 				<a onclick="cart.add('{{ product.product_id }}');" title="{{ button_cart }}" class="awe-button product-quick-view"><i class="fas fa-shopping-cart"></i><span>{{button_cart}}</span></a>

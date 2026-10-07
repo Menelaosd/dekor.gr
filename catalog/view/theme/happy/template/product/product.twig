@@ -378,14 +378,14 @@
 					</div>
 					<div class="product-cart">
 								
-						{% if quantity > 0 and working %}
+						{% if quantity > 0 and working and not storeonly %}
 							<input type="hidden" name="product_id" value="{{ product_id }}" />
 							<button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="product-cart-button">
 								<i class="fa fa-shopping-bag"></i> <span>{{ button_cart}}</span>
 							</button>
 						{% else %}
 							<button type="button" id="button-cart-disabled" class="product-cart-button">
-								<i class="fa fa-shopping-bag"></i> <span>Μη Διαθέσιμο</span>
+								<i class="fa fa-shopping-bag"></i> <span>{{ storeonly ? 'Μόνο στο Κατάστημα' : 'Μη Διαθέσιμο' }}</span>
 							</button>
 						{% endif %}
 

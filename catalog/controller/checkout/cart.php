@@ -302,6 +302,11 @@ class ControllerCheckoutCart extends Controller {
 				}
 			}
 
+			// dekor: store-only products are removed by the cart, so never report them as added
+			if (!empty($product_info['storeonly'])) {
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $product_info['product_id']));
+			}
+
 			if (isset($this->request->post['recurring_id'])) {
 				$recurring_id = $this->request->post['recurring_id'];
 			} else {
