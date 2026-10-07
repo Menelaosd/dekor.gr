@@ -1,0 +1,65 @@
+/* ============================================================================
+   HEADER polish — action icons, full-width edges, sticky menu row, 404 page.
+   Both stores (accent from --rz-accent). NO font-size changes anywhere in here.
+   Cart button, search bar and menu separators are deliberately left as the
+   theme draws them (client preferred those). Remove the <link> to roll back.
+   ========================================================================== */
+
+:root { --hd-surface: #F6F7F9; --hd-line: var(--rz-border, #ECEEF3); }
+
+/* ---------- account + wishlist as round icon buttons ------------------------- */
+.dk-acct, .dk-wish {
+	position: relative; display: inline-flex !important; align-items: center; justify-content: center;
+	width: 46px; height: 46px; border-radius: 50%; background: var(--hd-surface);
+	color: var(--rz-ink, #111) !important; transition: background .15s ease, color .15s ease;
+}
+.dk-acct:hover, .dk-wish:hover { background: color-mix(in srgb, var(--rz-accent) 12%, #fff); color: var(--rz-accent) !important; }
+.dk-wish .notif, .dk-wishtext .notif {
+	position: absolute !important; top: 2px !important; right: 0 !important; left: auto !important;
+	min-width: 18px; height: 18px; padding: 0 5px !important; border-radius: 999px !important;
+	display: inline-flex !important; align-items: center; justify-content: center;
+	background: var(--rz-accent) !important; color: #fff !important; border: 2px solid #fff;
+}
+@media (max-width: 991px) { .dk-acct, .dk-wish { width: 42px; height: 42px; } }
+
+/* ---------- edges: nothing stops abruptly ---------------------------------------- */
+/* the divider above the menu ran only across the 1660px box; draw it edge to edge */
+#desk-menu, .dk-navrow, #desk-menu.dk-navrow { border-top: none !important; position: relative; }
+#desk-menu::before {
+	content: ""; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%);
+	border-top: 1px solid var(--hd-line); pointer-events: none;
+}
+/* soft full-width bottom edge instead of a hard cut into the banner */
+header .header-wrapper { border-bottom: 1px solid var(--hd-line) !important; box-shadow: 0 6px 18px -12px rgba(17, 17, 17, .18); position: relative; z-index: 3; }
+header { box-shadow: none !important; }
+html, body { overflow-x: clip; } /* the 100vw divider must never cause a side scroll */
+
+/* ---------- sticky menu row (desktop). The header itself stays non-sticky (client
+   rule); only the menu row docks at the top. JS in header.twig keeps its slot height
+   so the page does not jump when it docks. ---------------------------------------- */
+@media (min-width: 992px) {
+	#desk-menu { background: #fff; }
+	body.dk-menu-docked #desk-menu {
+		position: fixed !important; top: 0; left: 0; right: 0; z-index: 1030;
+		max-width: none !important; width: 100% !important; margin: 0 !important;
+		box-shadow: 0 8px 22px -14px rgba(17, 17, 17, .28);
+	}
+	body.dk-menu-docked #desk-menu { padding: 0 !important; }
+	body.dk-menu-docked #desk-menu > .main-menu { max-width: 1660px; margin: 0 auto; padding: 0 36px; box-sizing: border-box; }
+	body.dk-menu-docked .header-wrapper { padding-bottom: var(--dk-menu-h, 0px) !important; }
+}
+
+/* ---------- 404 page: one centred column (col-sm-12 float broke margin:auto) ------ */
+.error_not_found #error-not-found .row { display: flex; justify-content: center; margin: 0; }
+.error_not_found #error-not-found #content {
+	float: none !important; width: 100% !important; max-width: 720px; margin: 56px auto 88px !important;
+	display: flex; flex-direction: column; align-items: center; text-align: center !important; padding: 0 20px;
+}
+.error_not_found #content::before { display: block; width: 100%; text-align: center !important; letter-spacing: 0 !important; text-indent: 0 !important; margin: 0 auto; }
+.error_not_found #content h1,
+.error_not_found #content p { width: 100%; text-align: center !important; margin-left: auto !important; margin-right: auto !important; }
+.error_not_found #content h1::before { margin-left: auto; margin-right: auto; }
+.error_not_found #content h1::after { margin-left: auto !important; margin-right: auto !important; left: 0; right: 0; }
+.error_not_found #content .buttons { display: flex; justify-content: center; width: 100%; }
+.error_not_found #content .buttons .pull-right { float: none !important; }
+.error_not_found #error-not-found .breadcrumb { display: flex; justify-content: center; max-width: 720px; margin: 0 auto; float: none; }
