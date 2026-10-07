@@ -4,6 +4,8 @@ final class Tax {
 	private $tax_rates = array();
 	private $customer;
 	protected $session;
+	private $config;
+	private $db;
 
 	public function __construct($registry) {
 		$this->session = $registry->get('session'); // Add this line

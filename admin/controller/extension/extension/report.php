@@ -41,6 +41,9 @@ class ControllerExtensionExtensionReport extends Controller {
 
 			$this->load->controller('extension/report/' . $this->request->get['extension'] . '/uninstall');
 
+			$this->load->model('user/user_group');
+			$this->model_user_user_group->removePermissions('extension/report/' . $this->request->get['extension']);
+
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
@@ -96,6 +99,8 @@ class ControllerExtensionExtensionReport extends Controller {
 				);
 			}
 		}
+
+		$data['promotion'] = $this->load->controller('extension/extension/promotion');
 
 		$this->response->setOutput($this->load->view('extension/extension/report', $data));
 	}

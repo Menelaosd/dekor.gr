@@ -73,7 +73,11 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 
 		$response = curl_exec($curl);
 
-		curl_close($curl);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($curl);
+		} else {
+			curl_close($curl);
+		}
 
 		$risk_score = 0;
 
@@ -148,15 +152,16 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 		}
 
 		if ($json->fraudlabspro_status == 'REJECT') {
-			return $this->config->get('fraudlabspro_reject_status_id');
+			return $this->config->get('fraud_fraudlabspro_reject_status_id');
 		}
 	}
 
 	private function hashIt($s) {
 		$hash = 'fraudlabspro_' . $s;
 
-		for ($i = 0; $i < 65536; $i++)
+		for ($i = 0; $i < 65536; $i++) {
 			$hash = sha1('fraudlabspro_' . $hash);
+		}
 
 		return $hash;
 	}

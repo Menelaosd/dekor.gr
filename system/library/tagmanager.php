@@ -1220,7 +1220,7 @@ class Tagmanager extends Controller
 
     /* outputs */
 
-    public function getDataLayerSettings($setting_tags = array() , $tagmanager, $dimemsion = array())
+    public function getDataLayerSettings($setting_tags, $tagmanager, $dimemsion = array()) // dekor: PHP 8, default before a required param was ignored anyway
     {
 
         if (isset($tagmanager['custom_dimension']) && $tagmanager['custom_dimension'])

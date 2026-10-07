@@ -130,10 +130,10 @@ final class Loader {
 		$trigger = $route;
 		
 		// Template contents. Not the output!
-		$template = '';
+		$code = '';
 		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$template));
+		$result = $this->registry->get('event')->trigger('view/' . $trigger . '/before', array(&$route, &$data, &$code));
 		
 		// Make sure its only the last event that returns an output if required.
 		if ($result && !$result instanceof Exception) {
@@ -145,7 +145,7 @@ final class Loader {
 				$template->set($key, $value);
 			}
 
-			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $this->registry->get('config')->get('template_cache'));		
+			$output = $template->render($this->registry->get('config')->get('template_directory') . $route, $code);
 		}
 		
 		// Trigger the post events

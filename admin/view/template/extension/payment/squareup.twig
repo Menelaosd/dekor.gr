@@ -30,7 +30,7 @@
                     <input type="hidden" name="payment_squareup_card" value="1" />
                     <ul class="nav nav-tabs">
                         <li><a href="#tab-setting" data-toggle="tab"><i class="fa fa-gear"></i>&nbsp;{{ tab_setting }}</a></li>
-                        <li><a href="#tab-transaction" data-toggle="tab"><i class="fa fa-list"></i>&nbsp;{{ tab_transaction }}</a></li>
+                        <li><a href="#tab-payment" data-toggle="tab"><i class="fa fa-list"></i>&nbsp;{{ tab_payment }}</a></li>
                         <li><a href="#tab-cron" data-toggle="tab"><i class="fa fa-clock-o"></i>&nbsp;{{ tab_cron }}</a></li>
                         <li><a href="#tab-recurring" data-toggle="tab"><i class="fa fa-hourglass-half"></i>&nbsp;{{ tab_recurring }}</a></li>
                     </ul>
@@ -42,14 +42,12 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <span data-toggle="tooltip" title="{{ text_disabled_connect_help_text }}">
-                                                <a id="reconnect-button" href="{{ payment_squareup_auth_link }}" class="btn btn-primary btn-lg btn-connect" >{{ button_reconnect}}</a>
+                                                <a id="reconnect-button" href="{{ payment_squareup_auth_link }}" class="btn btn-primary btn-lg btn-connect" >{{ button_reconnect }}</a>
                                             </span>
-                                            
                                             <span data-toggle="tooltip" title="{{ text_disabled_connect_help_text }}">
                                                 <a id="refresh-button" href="{{ payment_squareup_refresh_link }}" class="btn btn-primary btn-lg btn-connect" >{{ button_refresh }}</a>
                                             </span>
-                                            
-                                            <p>{{ text_connected_info}}</p>
+                                            <p>{{ text_connected_info }}</p>
                                         </div>
                                     </div>
                                 {% else %}
@@ -119,11 +117,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="dropdown_payment_squareup_delay_capture"><span data-toggle="tooltip" title="{{ text_delay_capture_help }}">{{ text_delay_capture_label }}</span></label>
+                                    <label class="col-sm-2 control-label" for="dropdown_payment_squareup_quick_pay"><span data-toggle="tooltip" title="{{ text_quick_pay_help }}">{{ text_quick_pay_label }}</span></label>
                                     <div class="col-sm-10">
-                                        <select name="payment_squareup_delay_capture" id="dropdown_payment_squareup_delay_capture" class="form-control">
-                                            <option value="1" {% if payment_squareup_delay_capture == 1 %} selected {% endif %}>{{ text_authorize_label }}</option>
-                                            <option value="0" {% if payment_squareup_delay_capture == 0 %} selected {% endif %}>{{ text_sale_label }}</option>
+                                        <select name="payment_squareup_quick_pay" id="dropdown_payment_squareup_quick_pay" class="form-control">
+                                            <option value="1" {% if payment_squareup_quick_pay == 1 %} selected {% endif %}>{{ text_quick_pay_yes }}</option>
+                                            <option value="0" {% if payment_squareup_quick_pay == 0 %} selected {% endif %}>{{ text_quick_pay_no }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -198,6 +196,27 @@
                                     </div>
                                 </div>
                             </fieldset>
+                            <fieldset id="capture_settings" {% if not payment_squareup_quick_pay %} style="display: none;" {% endif %}> 
+                                <legend>{{ text_capture_section_heading }}</legend>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="dropdown_payment_squareup_delay_capture"><span data-toggle="tooltip" title="{{ text_delay_capture_help }}">{{ text_delay_capture_label }}</span></label>
+                                    <div class="col-sm-10">
+                                        <select name="payment_squareup_delay_capture" id="dropdown_payment_squareup_delay_capture" class="form-control">
+                                            <option value="1" {% if payment_squareup_delay_capture == 1 %} selected {% endif %}>{{ text_authorize_label }}</option>
+                                            <option value="0" {% if payment_squareup_delay_capture == 0 %} selected {% endif %}>{{ text_sale_label }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <label class="col-sm-2 control-label" for="input_payment_squareup_content_security"><span data-toggle="tooltip" title="{{ text_content_security_help }}">{{ text_content_security_label }}</span></label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" name="payment_squareup_content_security" id="input_payment_squareup_content_security" rows="8" style="white-space:pre;overflow-x:auto;">{{ payment_squareup_content_security }}</textarea>
+                                        <p>{{ text_content_security_advice }}</p>
+                                        <button type="button" data-toggle="tooltip" title="{{ button_default_csp }}" class="btn btn-primary" onclick="confirm('{{ text_confirm }}') ? $('#input_payment_squareup_content_security').val('{{ payment_square_default_csp|e('js') }}') : false;">{{ text_reset }}</button>
+                                        <button type="button" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-primary" onclick="confirm('{{ text_confirm }}') ? $('#input_payment_squareup_content_security').val('') : false;">{{ text_clear }}</button>
+                                    </div>
+                                </div>
+                            </fieldset>
                             <fieldset>
                                 <legend>{{ text_merchant_info_section_heading }}</legend>  
                                 <div class="form-group">
@@ -236,9 +255,9 @@
                                 </div>
                             </fieldset>
                             <fieldset>
-                                <legend>{{ text_transaction_statuses }}</legend>
+                                <legend>{{ text_payment_statuses }}</legend>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="dropdown_payment_squareup_status_authorized"><span data-toggle="tooltip" title="{{ payment_squareup_status_comment_authorized }}">{{ entry_status_authorized }}</span></label>
+                                    <label class="col-sm-2 control-label" for="dropdown_payment_squareup_status_authorized"><span data-toggle="tooltip" title="{{ squareup_status_comment_authorized }}">{{ entry_status_authorized }}</span></label>
                                     <div class="col-sm-10">
                                         <select name="payment_squareup_status_authorized" id="dropdown_payment_squareup_status_authorized" class="form-control">
                                             {% for order_status in order_statuses %}
@@ -248,7 +267,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="dropdown_payment_squareup_status_captured"><span data-toggle="tooltip" title="{{ payment_squareup_status_comment_captured }}">{{ entry_status_captured }}</span></label>
+                                    <label class="col-sm-2 control-label" for="dropdown_payment_squareup_status_captured"><span data-toggle="tooltip" title="{{ squareup_status_comment_captured }}">{{ entry_status_captured }}</span></label>
                                     <div class="col-sm-10">
                                         <select name="payment_squareup_status_captured" id="dropdown_payment_squareup_status_captured" class="form-control">
                                             {% for order_status in order_statuses %}
@@ -258,7 +277,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="dropdown_payment_squareup_status_voided"><span data-toggle="tooltip" title="{{ payment_squareup_status_comment_voided }}">{{ entry_status_voided }}</span></label>
+                                    <label class="col-sm-2 control-label" for="dropdown_payment_squareup_status_voided"><span data-toggle="tooltip" title="{{ squareup_status_comment_voided }}">{{ entry_status_voided }}</span></label>
                                     <div class="col-sm-10">
                                         <select name="payment_squareup_status_voided" id="dropdown_payment_squareup_status_voided" class="form-control">
                                             {% for order_status in order_statuses %}
@@ -268,7 +287,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="dropdown_payment_squareup_status_failed"><span data-toggle="tooltip" title="{{ payment_squareup_status_comment_failed }}">{{ entry_status_failed }}</span></label>
+                                    <label class="col-sm-2 control-label" for="dropdown_payment_squareup_status_failed"><span data-toggle="tooltip" title="{{ squareup_status_comment_failed }}">{{ entry_status_failed }}</span></label>
                                     <div class="col-sm-10">
                                         <select name="payment_squareup_status_failed" id="dropdown_payment_squareup_status_failed" class="form-control">
                                             {% for order_status in order_statuses %}
@@ -279,29 +298,29 @@
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="tab-pane" id="tab-transaction">
-                            <div id="transaction-alert" data-message="{{ text_loading }}"></div>
+                        <div class="tab-pane" id="tab-payment">
+                            <div id="payment-alert" data-message="{{ text_loading }}"></div>
                             <div class="text-right margin-bottom">
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th class="text-left hidden-xs">{{ column_transaction_id }}</th> 
+                                            <th class="text-left hidden-xs">{{ column_payment_id }}</th> 
                                             <th class="text-left">{{ column_customer }}</th>
                                             <th class="text-left hidden-xs">{{ column_order_id }}</th>
-                                            <th class="text-left hidden-xs">{{ column_type }}</th>
+                                            <th class="text-left hidden-xs">{{ column_source_type }}</th>
                                             <th class="text-left hidden-xs">{{ column_amount }}</th>
                                             <th class="text-left hidden-xs">{{ column_refunds }}</th>
-                                            <th class="text-left hidden-xs hidden-sm">{{ column_ip }}</th>
-                                            <th class="text-left">{{ column_date_created }}</th>
+                                            <th class="text-left hidden-xs hidden-sm">{{ column_status }}</th>
+                                            <th class="text-left">{{ column_date_updated }}</th>
                                             <th class="text-right">{{ column_action }}</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="transactions">
+                                    <tbody id="payments">
                                     </tbody>
                                 </table>
-                                <div id="transactions_pagination"></div>
+                                <div id="payments_pagination"></div>
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-cron">
@@ -469,41 +488,41 @@ $(document).ready(function() {
         }
     }
 
-    var listTransactions = function(page) {
+    var listPayments = function(page) {
         $.ajax({
-          url : '{{ url_list_transactions }}'.replace('{PAGE}', page ? page : transactionListPage),
+          url : '{{ url_list_payments }}'.replace('{PAGE}', page ? page : paymentListPage),
           dataType : 'json',
           beforeSend : function() {
-            $('#refresh_transactions').button('loading');
-            $('#transactions_pagination').empty();
-            $('#transactions').html('<tr><td colspan="9" class="text-center"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</td></tr>');
+            $('#refresh_payments').button('loading');
+            $('#payments_pagination').empty();
+            $('#payments').html('<tr><td colspan="9" class="text-center"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;{{ text_loading }}</td></tr>');
           },
           success : function(data) {
             var html = '';
 
-            if (data.transactions.length) {
-              for (var i in data.transactions) {
-                var row = data.transactions[i];
+            if (data.payments.length) {
+              for (var i in data.payments) {
+                var row = data.payments[i];
 
                 html += '<tr>';
-                html += '<td class="text-left hidden-xs">' + row.transaction_id + '</td>';
+                html += '<td class="text-left hidden-xs">' + row.payment_id + '</td>';
                 html += '<td class="text-left hidden-xs">' + row.customer + '</td>';
                 html += '<td class="text-left"><a target="_blank" href="' + row.url_order + '">' + row.order_id + '</td>';
-                html += '<td class="text-left hidden-xs">' + row.type + '</td>';
+                html += '<td class="text-left hidden-xs">' + row.source_type + '</td>';
                 html += '<td class="text-left hidden-xs">' + row.amount + '</td>';
-                html += '<td class="text-left hidden-xs">' + row.num_refunds + '</td>';
-                html += '<td class="text-left hidden-xs hidden-sm">' + row.ip + '</td>';
-                html += '<td class="text-left">' + row.date_created + '</td>';
+                html += '<td class="text-left hidden-xs">' + row.refunded_amount + '</td>';
+                html += '<td class="text-left hidden-xs hidden-sm">' + row.status + '</td>';
+                html += '<td class="text-left">' + row.date_updated + '</td>';
                 html += '<td class="text-right">';
 
                 switch (row.type) {
                     case "AUTHORIZED" : {
-                        html += '<a class="btn btn-success" data-url-transaction-capture="' + row.url_capture + '" data-confirm-capture="' + row.confirm_capture + '">{{ text_capture }}</a> ';
-                        html += '<a class="btn btn-warning" data-url-transaction-void="' + row.url_void + '" data-confirm-void="' + row.confirm_void + '">{{ text_void }}</a> ';
+                        html += '<a class="btn btn-success" data-url-payment-capture="' + row.url_capture + '" data-confirm-capture="' + row.confirm_capture + '">{{ text_capture }}</a> ';
+                        html += '<a class="btn btn-warning" data-url-payment-void="' + row.url_void + '" data-confirm-void="' + row.confirm_void + '">{{ text_void }}</a> ';
                     } break;
 
                     case "CAPTURED" : {
-                        html += '<a class="btn btn-danger" data-url-transaction-refund="' + row.url_refund + '" data-confirm-refund="' + row.confirm_refund + '" data-insert-amount="' + row.insert_amount + '">{{ text_refund }}</a> ';
+                        html += '<a class="btn btn-danger" data-url-payment-refund="' + row.url_refund + '" data-confirm-refund="' + row.confirm_refund + '" data-insert-amount="' + row.insert_amount + '">{{ text_refund }}</a> ';
                     } break;
                 }
 
@@ -513,40 +532,40 @@ $(document).ready(function() {
               }
             } else {
               html += '<tr>';
-              html += '<td class="text-center" colspan="9">{{ text_no_transactions }}</td>';
+              html += '<td class="text-center" colspan="9">{{ text_no_payments }}</td>';
               html += '</tr>';
             }
 
-            $('#transactions').html(html);
+            $('#payments').html(html);
             
-            $('#transactions_pagination').html(data.pagination).find('a[href]').each(function(index,element) {
+            $('#payments_pagination').html(data.pagination).find('a[href]').each(function(index,element) {
               $(this).click(function(e) {
                 e.preventDefault();
 
-                transactionListPage = isNaN($(this).attr('href')) ? 1 : $(this).attr('href');
+                paymentListPage = isNaN($(this).attr('href')) ? 1 : $(this).attr('href');
 
-                listTransactions();
+                listPayments();
               })
             });
           },
           complete : function() {
-            $('#refresh_transactions').button('reset');
+            $('#refresh_payments').button('reset');
           }
         });
     }
 
-    var transactionLoading = function() {
-        var message = $('#transaction-alert').attr('data-message');
+    var paymentLoading = function() {
+        var message = $('#payment-alert').attr('data-message');
 
-        $('#transaction-alert').html('<div class="text-center alert alert-info"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;' + message + '</div>');
+        $('#payment-alert').html('<div class="text-center alert alert-info"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;' + message + '</div>');
     }
 
-    var transactionError = function(message) {
-        $('#transaction-alert').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fa fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
+    var paymentError = function(message) {
+        $('#payment-alert').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fa fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
     }
 
-    var transactionSuccess = function(message) {
-        $('#transaction-alert').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fa fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
+    var paymentSuccess = function(message) {
+        $('#payment-alert').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-label="X"><span aria-hidden="true">&times;</span></button><i class="fa fa-exclamation-circle"></i>&nbsp;' + message + '</div>');
     }
 
     var addOrderHistory = function(data, success_callback) {
@@ -557,8 +576,8 @@ $(document).ready(function() {
             data: data,
             success: function(json) {
                 if (json['error']) {
-                    transactionError(json['error']);
-                    enableTransactionButtons();
+                    paymentError(json['error']);
+                    enablePaymentButtons();
                 }
 
                 if (json['success']) {
@@ -566,45 +585,45 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                transactionError(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                enableTransactionButtons();
+                paymentError(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                enablePaymentButtons();
             }
         });
     }
 
-    var transactionRequest = function(type, url, data) {
+    var paymentRequest = function(type, url, data) {
         $.ajax({
             url : url,
             dataType : 'json',
             type : type,
             data : data,
-            beforeSend : transactionLoading,
+            beforeSend : paymentLoading,
             success : function(json) {
                 if (json.error) {
-                    transactionError(json.error);
-                    enableTransactionButtons();
+                    paymentError(json.error);
+                    enablePaymentButtons();
                 }
 
                 if (json.success && json.order_history_data) {
                     addOrderHistory(json.order_history_data, function() {
-                        transactionSuccess(json.success);
-                        listTransactions();
+                        paymentSuccess(json.success);
+                        listPayments();
                     });
                 }
             },
             error : function(xhr, ajaxSettings, thrownError) {
-                transactionError(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                enableTransactionButtons();
+                paymentError(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                enablePaymentButtons();
             }
         });
     }
 
-    var disableTransactionButtons = function() {
-        $('*[data-url-transaction-capture], *[data-url-transaction-void], *[data-url-transaction-refund]').attr('disabled', true);
+    var disablePaymentButtons = function() {
+        $('*[data-url-payment-capture], *[data-url-payment-void], *[data-url-payment-refund]').attr('disabled', true);
     }
 
-    var enableTransactionButtons = function() {
-        $('*[data-url-transaction-capture], *[data-url-transaction-void], *[data-url-transaction-refund]').attr('disabled', false);
+    var enablePaymentButtons = function() {
+        $('*[data-url-payment-capture], *[data-url-payment-void], *[data-url-payment-refund]').attr('disabled', false);
     }
 
     var modalConfirm = function(url, text) {
@@ -614,11 +633,11 @@ $(document).ready(function() {
 
         $(content).html(text);
         $(button).unbind().click(function() {
-            disableTransactionButtons();
+            disablePaymentButtons();
 
             $(modal).modal('hide');
 
-            transactionRequest('GET', url);
+            paymentRequest('GET', url);
         });
         
         $(modal).modal('show');
@@ -663,11 +682,11 @@ $(document).ready(function() {
                 return;
             }
 
-            disableTransactionButtons();
+            disablePaymentButtons();
 
             $(modal).modal('hide');
 
-            transactionRequest('POST', url, {
+            paymentRequest('POST', url, {
                 reason : $(reason_input).val(),
                 amount : $(amount_input).val()
             });
@@ -676,9 +695,21 @@ $(document).ready(function() {
         $(modal).modal('show');
     }
 
-    var transactionListPage = 1;
+    var paymentListPage = 1;
 
     $('.nav-tabs a[href="#{{ tab }}"]').tab('show');
+
+    $('#dropdown_payment_squareup_quick_pay')
+        .change(function() {
+            if ($(this).val() == '0') {
+                $('#capture_settings').slideDown();
+                $('#dropdown_payment_squareup_delay_capture').show();
+            } else {
+                $('#capture_settings').slideUp();
+                $('#dropdown_payment_squareup_delay_capture').hide();
+            }
+        })
+        .trigger('change');
 
     $('#dropdown_payment_squareup_enable_sandbox')
         .change(function() {
@@ -708,29 +739,29 @@ $(document).ready(function() {
     
     $('#reconnect-button').click(onConnectClick);
 
-    $(document).on('click', '*[data-url-transaction-capture]', function() {
+    $(document).on('click', '*[data-url-payment-capture]', function() {
         if ($(this).attr('disabled')) return;
 
         modalConfirm(
-            $(this).attr('data-url-transaction-capture'),
+            $(this).attr('data-url-payment-capture'),
             $(this).attr('data-confirm-capture')
         );
     });
         
-    $(document).on('click', '*[data-url-transaction-void]', function() {
+    $(document).on('click', '*[data-url-payment-void]', function() {
         if ($(this).attr('disabled')) return;
 
         modalConfirm(
-            $(this).attr('data-url-transaction-void'),
+            $(this).attr('data-url-payment-void'),
             $(this).attr('data-confirm-void')
         );
     });
 
-    $(document).on('click', '*[data-url-transaction-refund]', function() {
+    $(document).on('click', '*[data-url-payment-refund]', function() {
         if ($(this).attr('disabled')) return;
 
         modalRefund(
-            $(this).attr('data-url-transaction-refund'),
+            $(this).attr('data-url-payment-refund'),
             $(this).attr('data-confirm-refund'),
             $(this).attr('data-insert-amount')
         );
@@ -738,7 +769,7 @@ $(document).ready(function() {
     
     setCronUrl();
 
-    listTransactions();
+    listPayments();
 });
 </script>
 {{ footer }}

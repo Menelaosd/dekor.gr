@@ -17,7 +17,7 @@ class ModelExtensionPaymentEway extends Model {
 			  `void_status` INT(1) DEFAULT NULL,
 			  `refund_status` INT(1) DEFAULT NULL,
 			  PRIMARY KEY (`eway_order_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "eway_transactions` (
@@ -28,7 +28,7 @@ class ModelExtensionPaymentEway extends Model {
 			  `type` ENUM('auth', 'payment', 'refund', 'void') DEFAULT NULL,
 			  `amount` DECIMAL( 10, 2 ) NOT NULL,
 			  PRIMARY KEY (`eway_order_transaction_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "eway_card` (
@@ -40,7 +40,7 @@ class ModelExtensionPaymentEway extends Model {
 			  `expiry` VARCHAR(5) NOT NULL,
 			  `type` VARCHAR(50) NOT NULL,
 			  PRIMARY KEY (`card_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 	}
 
 	public function uninstall() {
@@ -72,7 +72,7 @@ class ModelExtensionPaymentEway extends Model {
 		}
 		$order['refund_transaction_id'] .= $transaction_id;
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "eway_order` SET `modified` = NOW(), refund_amount = '" . (double)$refund_amount . "', `refund_transaction_id` = '" . $this->db->escape($order['refund_transaction_id']) . "' WHERE eway_order_id = '" . $order['eway_order_id'] . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "eway_order` SET `modified` = NOW(), refund_amount = '" . (float)$refund_amount . "', `refund_transaction_id` = '" . $this->db->escape($order['refund_transaction_id']) . "' WHERE eway_order_id = '" . $order['eway_order_id'] . "'");
 	}
 
 	public function capture($order_id, $capture_amount, $currency) {
@@ -82,7 +82,7 @@ class ModelExtensionPaymentEway extends Model {
 
 			$capture_data = new stdClass();
 			$capture_data->Payment = new stdClass();
-			$capture_data->Payment->TotalAmount = (int)number_format($capture_amount, 2, '.', '') * 100;
+			$capture_data->Payment->TotalAmount = (int)(number_format($capture_amount, 2, '.', '') * 100);
 			$capture_data->Payment->CurrencyCode = $currency;
 			$capture_data->TransactionID = $eway_order['transaction_id'];
 
@@ -142,8 +142,9 @@ class ModelExtensionPaymentEway extends Model {
 
 			$refund_data = new stdClass();
 			$refund_data->Refund = new stdClass();
-			$refund_data->Refund->TotalAmount = (int)number_format($refund_amount, 2, '.', '') * 100;
+			$refund_data->Refund->TotalAmount = (int)(number_format($refund_amount, 2, '.', '') * 100);
 			$refund_data->Refund->TransactionID = $eway_order['transaction_id'];
+                        $refund_data->Refund->CurrencyCode = $eway_order['currency_code'];
 
 			if ($this->config->get('payment_eway_test')) {
 				$url = 'https://api.sandbox.ewaypayments.com/Transaction/' . $eway_order['transaction_id'] . '/Refund';
@@ -192,7 +193,11 @@ class ModelExtensionPaymentEway extends Model {
 			}
 		}
 
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		return $response;
 	}
@@ -214,13 +219,13 @@ class ModelExtensionPaymentEway extends Model {
 	public function getTotalCaptured($eway_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "eway_transactions` WHERE `eway_order_id` = '" . (int)$eway_order_id . "' AND `type` = 'payment' ");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function getTotalRefunded($eway_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "eway_transactions` WHERE `eway_order_id` = '" . (int)$eway_order_id . "' AND `type` = 'refund'");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 }

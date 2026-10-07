@@ -13,7 +13,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 			  `expiry` VARCHAR(4) NOT NULL DEFAULT '',
 			  `date_added` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
 			  PRIMARY KEY (`cardconnect_card_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "cardconnect_order` (
@@ -27,7 +27,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 			  `total` DECIMAL(10, 2) NOT NULL DEFAULT '0.00',
 			  `date_added` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
 			  PRIMARY KEY (`cardconnect_order_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "cardconnect_order_transaction` (
@@ -40,7 +40,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 			  `date_modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
 			  `date_added` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
 			  PRIMARY KEY (`cardconnect_order_transaction_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 	}
 
 	public function uninstall() {
@@ -108,7 +108,11 @@ class ModelExtensionPaymentCardConnect extends Model {
 		if (curl_errno($ch)) {
 			$this->model_extension_payment_cardconnect->log('cURL error: ' . curl_errno($ch));
 		}
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		$response_data = json_decode($response_data, true);
 
@@ -203,7 +207,11 @@ class ModelExtensionPaymentCardConnect extends Model {
 		if (curl_errno($ch)) {
 			$this->model_extension_payment_cardconnect->log('cURL error: ' . curl_errno($ch));
 		}
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		$response_data = json_decode($response_data, true);
 
@@ -252,7 +260,11 @@ class ModelExtensionPaymentCardConnect extends Model {
 		if (curl_errno($ch)) {
 			$this->model_extension_payment_cardconnect->log('cURL error: ' . curl_errno($ch));
 		}
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		$response_data = json_decode($response_data, true);
 
@@ -301,7 +313,11 @@ class ModelExtensionPaymentCardConnect extends Model {
 		if (curl_errno($ch)) {
 			$this->model_extension_payment_cardconnect->log('cURL error: ' . curl_errno($ch));
 		}
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		$response_data = json_decode($response_data, true);
 

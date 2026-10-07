@@ -42,14 +42,14 @@ class ControllerExtensionModuleLatest extends Controller {
 					$price_net = false;
 				}
 
-				if ((float)$result['special']) {
+				if (!is_null($result['special']) && (float)$result['special'] >= 0) {
 					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 					$special_net = $result['special'];
 				} else {
 					$special = false;
 					$special_net = false;
 				}
-
+	
 				if ($this->config->get('config_tax')) {
 					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
 				} else {

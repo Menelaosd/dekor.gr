@@ -251,9 +251,10 @@
                             <label class="col-sm-3 control-label col-form-label" for="input-group"><span data-toggle="tooltip" title="{{ tip_grouping }}">{{ text_group_shipping_mode }}</span></label>
                             <div class="col-sm-9">
                               <select name="shipping_xshippingpro_group" id="input-group" class="form-control shipping_xshippingpro_group">
-                                {% for type, name in group_options if type !='and' %}
+                                {# dekor: Twig 3 removed "for ... if", same filter as an inner if #}
+                                {% for type, name in group_options %}{% if type !='and' %}
                                   <option value="{{ type }}" {% if shipping_xshippingpro_group == type %} selected {% endif %}>{{ name }}</option>
-                                {% endfor %}
+                                {% endif %}{% endfor %}
                               </select>
                             </div>
                           </div>

@@ -64,6 +64,7 @@ class ControllerCommonFooter extends Controller {
 		}
 
 		$data['scripts'] = $this->document->getScripts('footer');
+		$data['styles'] = $this->document->getStyles('footer');
 		
 
 		$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';

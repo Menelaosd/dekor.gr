@@ -19,7 +19,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 			  `account` VARCHAR(30) NOT NULL,
 			  `total` DECIMAL( 10, 2 ) NOT NULL,
 			  PRIMARY KEY (`firstdata_order_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "firstdata_order_transaction` (
@@ -29,7 +29,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 			  `type` ENUM('auth', 'payment', 'void') DEFAULT NULL,
 			  `amount` DECIMAL( 10, 2 ) NOT NULL,
 			  PRIMARY KEY (`firstdata_order_transaction_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "firstdata_card` (
@@ -41,7 +41,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 			  `expire_year` INT(2) NOT NULL,
 			  `token` CHAR(64) NOT NULL,
 			  PRIMARY KEY (`firstdata_card_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 	}
 
 	public function uninstall() {
@@ -54,7 +54,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 		$firstdata_order = $this->getOrder($order_id);
 
 		if (!empty($firstdata_order)) {
-			$timestamp = strftime("%Y%m%d%H%M%S");
+			$timestamp = date("YmdHis");
 			$merchant_id = $this->config->get('payment_firstdata_merchant_id');
 			$secret = $this->config->get('payment_firstdata_secret');
 
@@ -85,7 +85,11 @@ class ModelExtensionPaymentFirstdata extends Model {
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 			$response = curl_exec ($ch);
-			curl_close ($ch);
+			if (version_compare(phpversion(), '8.0.', '>=')) {
+				unset($ch);
+			} else {
+				curl_close($ch);
+			}
 
 			return simplexml_load_string($response);
 		} else {
@@ -101,7 +105,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 		$firstdata_order = $this->getOrder($order_id);
 
 		if (!empty($firstdata_order) && $firstdata_order['capture_status'] == 0) {
-			$timestamp = strftime("%Y%m%d%H%M%S");
+			$timestamp = date("YmdHis");
 			$merchant_id = $this->config->get('payment_firstdata_merchant_id');
 			$secret = $this->config->get('payment_firstdata_secret');
 

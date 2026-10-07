@@ -15,7 +15,7 @@ class ModelExtensionPaymentG2aPay extends Model {
 				`total` DECIMAL( 10, 2 ) NOT NULL,
 				KEY `g2apay_transaction_id` (`g2apay_transaction_id`),
 				PRIMARY KEY `g2apay_order_id` (`g2apay_order_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 		");
 
 		$this->db->query("
@@ -26,7 +26,7 @@ class ModelExtensionPaymentG2aPay extends Model {
 			  `type` ENUM('payment', 'refund') DEFAULT NULL,
 			  `amount` DECIMAL( 10, 2 ) NOT NULL,
 			  PRIMARY KEY (`g2apay_order_transaction_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			");
 	}
 
@@ -51,7 +51,7 @@ class ModelExtensionPaymentG2aPay extends Model {
 	public function getTotalReleased($g2apay_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "g2apay_order_transaction` WHERE `g2apay_order_id` = '" . (int)$g2apay_order_id . "' AND (`type` = 'payment' OR `type` = 'refund')");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function refund($g2apay_order, $amount) {
@@ -99,13 +99,13 @@ class ModelExtensionPaymentG2aPay extends Model {
 	}
 
 	public function addTransaction($g2apay_order_id, $type, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "g2apay_order_transaction` SET `g2apay_order_id` = '" . (int)$g2apay_order_id . "',`date_added` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (double)$total . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "g2apay_order_transaction` SET `g2apay_order_id` = '" . (int)$g2apay_order_id . "',`date_added` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$total . "'");
 	}
 
 	public function getTotalRefunded($g2apay_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "g2apay_order_transaction` WHERE `g2apay_order_id` = '" . (int)$g2apay_order_id . "' AND 'refund'");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function sendCurl($url, $fields) {
@@ -125,7 +125,12 @@ class ModelExtensionPaymentG2aPay extends Model {
 
 		$response = json_decode(curl_exec($curl));
 
-		curl_close($curl);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($curl);
+		} else {
+			curl_close($curl);
+		}
+
 		if (is_object($response)) {
 			return (string)$response->status;
 		} else {

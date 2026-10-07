@@ -23,7 +23,7 @@ final class DB {
 		if ($query->num_rows) {
 			return json_decode($query->row['data'], true);
 		} else {
-			return false;
+			return array(); // dekor: PHP 8.1, avoid «false to array» deprecation
 		}
 	}
 	

@@ -3,12 +3,16 @@ class ControllerApiLogin extends Controller {
 	public function index() {
 		$this->load->language('api/login');
 
-		$json = array();
+		$json = $api_info = array();
 
 		$this->load->model('account/api');
 
 		// Login with API Key
-		$api_info = $this->model_account_api->login($this->request->post['username'], $this->request->post['key']);
+		if (isset($this->request->post['username']) && isset($this->request->post['key'])) {
+			$api_info = $this->model_account_api->login($this->request->post['username'], $this->request->post['key']);
+		} elseif (isset($this->request->post['key'])) {
+			$api_info = $this->model_account_api->login('Default', $this->request->post['key']);
+		}
 
 		if ($api_info) {
 			// Check if IP is allowed
@@ -27,7 +31,8 @@ class ControllerApiLogin extends Controller {
 			if (!$json) {
 				$json['success'] = $this->language->get('text_success');
 				
-				$session = new Session($config->get('session_engine'), $registry);
+				$session = new Session($this->config->get('session_engine'), $this->registry);
+				
 				$session->start();
 				
 				$this->model_account_api->addApiSession($api_info['api_id'], $session->getId(), $this->request->server['REMOTE_ADDR']);

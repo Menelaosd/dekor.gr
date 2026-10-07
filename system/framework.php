@@ -16,7 +16,7 @@ date_default_timezone_set($config->get('date_timezone'));
 
 set_error_handler(function($code, $message, $file, $line) use($log, $config) {
 	// error suppressed with @
-	if (error_reporting() === 0) {
+	if (!(error_reporting() & $code)) {
 		return false;
 	}
 
@@ -72,12 +72,25 @@ $registry->set('request', new Request());
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
+// dekor: 3.0.5.1 no-cache headers left out, 3.0.2.0 did not send them
 $response->setCompression($config->get('config_compression'));
 $registry->set('response', $response);
 
 // Database
 if ($config->get('db_autostart')) {
-	$registry->set('db', new DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port')));
+	$db = new DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'));
+	$registry->set('db', $db);
+
+	// Set time zone
+	$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE `key` = 'config_timezone' AND store_id = '0'");
+
+	if ($query->num_rows) {
+		date_default_timezone_set($query->row['value']);
+
+		// Sync PHP and DB time zones
+		// dekor: DB session time zone left as in 3.0.2.0 (never changed)
+		// $db->query("SET time_zone = '" . $db->escape(date('P')) . "'");
+	}
 }
 
 // Session
@@ -105,7 +118,7 @@ if ($config->get('session_autostart')) {
 
 	$session->start($session_id);
 
-	setcookie($config->get('session_name'), $session->getId(), ini_get('session.cookie_lifetime'), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
+	setcookie($config->get('session_name'), $session->getId(), (ini_get('session.cookie_lifetime') ? time() + ini_get('session.cookie_lifetime') : 0), ini_get('session.cookie_path'), ini_get('session.cookie_domain'));
 }
 
 // Cache
@@ -119,9 +132,6 @@ if ($config->get('url_autostart')) {
 // Language
 $language = new Language($config->get('language_directory'));
 $registry->set('language', $language);
-
-// OpenBay Pro
-$registry->set('openbay', new Openbay($registry));
 
 // Document
 $registry->set('document', new Document());

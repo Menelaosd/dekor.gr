@@ -7,6 +7,10 @@ class ControllerExtensionPaymentNochex extends Controller {
 
 		$this->load->model('checkout/order');
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$data['action'] = 'https://secure.nochex.com/';
@@ -110,7 +114,11 @@ class ControllerExtensionPaymentNochex extends Controller {
 
 		$response = curl_exec($curl);
 
-		curl_close($curl);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($curl);
+		} else {
+			curl_close($curl);
+		}
 
 		if (strcmp($response, 'AUTHORISED') == 0) {
 			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('payment_nochex_order_status_id'));

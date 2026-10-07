@@ -43,6 +43,9 @@ class ControllerExtensionExtensionPayment extends Controller {
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/payment/' . $this->request->get['extension'] . '/uninstall');
 
+			$this->load->model('user/user_group');
+			$this->model_user_user_group->removePermissions('extension/payment/' . $this->request->get['extension']);
+
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
@@ -108,8 +111,7 @@ class ControllerExtensionExtensionPayment extends Controller {
 			}
 		}
 
-		$data['promoted_solution_1'] = $this->load->controller('extension/payment/pp_express/preferredSolution');
-		$data['promoted_solution_2'] = $this->load->controller('extension/payment/pp_braintree/preferredSolution');
+		$data['promotion'] = $this->load->controller('extension/extension/promotion');
 
 		$this->response->setOutput($this->load->view('extension/extension/payment', $data));
 	}

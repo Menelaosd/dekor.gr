@@ -24,7 +24,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -45,7 +45,7 @@ class ControllerCommonFileManager extends Controller {
 			}
 
 			// Get files
-			$files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
+			$files = safe_glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP}', GLOB_BRACE);
 
 			if (!$files) {
 				$files = array();
@@ -62,7 +62,7 @@ class ControllerCommonFileManager extends Controller {
 		$images = array_splice($images, ($page - 1) * 16, 16);
 
 		foreach ($images as $image) {
-			$name = str_split(basename($image), 14);
+			$name = basename($image);
 
 			if (is_dir($image)) {
 				$url = '';
@@ -77,7 +77,7 @@ class ControllerCommonFileManager extends Controller {
 
 				$data['images'][] = array(
 					'thumb' => '',
-					'name'  => implode(' ', $name),
+					'name'  => $name,
 					'type'  => 'directory',
 					'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
 					'href'  => $this->url->link('common/filemanager', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url, true)
@@ -85,7 +85,7 @@ class ControllerCommonFileManager extends Controller {
 			} elseif (is_file($image)) {
 				$data['images'][] = array(
 					'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 100, 100),
-					'name'  => implode(' ', $name),
+					'name'  => $name,
 					'type'  => 'image',
 					'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
 					'href'  => $server . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
@@ -241,7 +241,8 @@ class ControllerCommonFileManager extends Controller {
 						'jpg',
 						'jpeg',
 						'gif',
-						'png'
+						'png',
+						'webp'
 					);
 
 					if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
@@ -254,11 +255,16 @@ class ControllerCommonFileManager extends Controller {
 						'image/pjpeg',
 						'image/png',
 						'image/x-png',
-						'image/gif'
+						'image/gif',
+						'image/webp'
 					);
 
 					if (!in_array($file['type'], $allowed)) {
 						$json['error'] = $this->language->get('error_filetype');
+					}
+
+					if ($file['size'] > $this->config->get('config_file_max_size')) {
+						$json['error'] = $this->language->get('error_filesize');
 					}
 
 					// Return any upload error
@@ -351,7 +357,7 @@ class ControllerCommonFileManager extends Controller {
 
 		// Loop through each path to run validations
 		foreach ($paths as $path) {
-			// Check path exsists
+			// Check path exists
 			if ($path == DIR_IMAGE . 'catalog' || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $path)), 0, strlen(DIR_IMAGE . 'catalog')) != str_replace('\\', '/', DIR_IMAGE . 'catalog')) {
 				$json['error'] = $this->language->get('error_delete');
 

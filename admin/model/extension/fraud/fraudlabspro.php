@@ -51,7 +51,7 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 				`fraudlabspro_credits` VARCHAR(10) NOT NULL,
 				`api_key` CHAR(32) NOT NULL,
 				PRIMARY KEY (`order_id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 		");
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_status` (`language_id`, `name`) VALUES (1, 'Fraud');");
@@ -117,7 +117,11 @@ class ModelExtensionFraudFraudLabsPro extends Model {
 
 			$json = curl_exec($curl);
 
-			curl_close($curl);
+			if (version_compare(phpversion(), '8.0.', '>=')) {
+				unset($curl);
+			} else {
+				curl_close($curl);
+			}
 		}
 
 		return $json;

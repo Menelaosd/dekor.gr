@@ -30,7 +30,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 	}
 
 	public function checkEnrollment($account, $amount, $currency, $order_ref) {
-		$timestamp = strftime("%Y%m%d%H%M%S");
+		$timestamp = date("YmdHis");
 		$merchant_id = $this->config->get('payment_realex_remote_merchant_id');
 		$secret = $this->config->get('payment_realex_remote_secret');
 
@@ -66,7 +66,11 @@ class ModelExtensionPaymentRealexRemote extends Model {
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		$response = curl_exec ($ch);
-		curl_close ($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		$this->logger('checkEnrollment xml response');
 		$this->logger($response);
@@ -77,7 +81,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 	public function enrollmentSignature($account, $amount, $currency, $order_ref, $card_number, $card_expire, $card_type, $card_name, $pares) {
 		$this->load->model('checkout/order');
 
-		$timestamp = strftime("%Y%m%d%H%M%S");
+		$timestamp = date("YmdHis");
 		$merchant_id = $this->config->get('payment_realex_remote_merchant_id');
 		$secret = $this->config->get('payment_realex_remote_secret');
 
@@ -114,7 +118,11 @@ class ModelExtensionPaymentRealexRemote extends Model {
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		$response = curl_exec ($ch);
-		curl_close ($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		$this->logger('enrollmentSignature xml response');
 		$this->logger($response);
@@ -125,7 +133,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 	public function capturePayment($account, $amount, $currency, $order_id, $order_ref, $card_number, $expire, $name, $type, $cvv, $issue, $eci_ref, $eci = '', $cavv = '', $xid = '') {
 		$this->load->model('checkout/order');
 
-		$timestamp = strftime("%Y%m%d%H%M%S");
+		$timestamp = date("YmdHis");
 		$merchant_id = $this->config->get('payment_realex_remote_merchant_id');
 		$secret = $this->config->get('payment_realex_remote_secret');
 
@@ -228,7 +236,11 @@ class ModelExtensionPaymentRealexRemote extends Model {
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		$response = curl_exec ($ch);
-		curl_close ($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		$this->logger('capturePayment xml response');
 		$this->logger($response);

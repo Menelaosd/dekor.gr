@@ -54,12 +54,12 @@ class ControllerProductSearch extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
 
-		if (isset($this->request->get['limit'])) {
+		if (isset($this->request->get['limit']) && (int)$this->request->get['limit'] > 0) {
 			$limit = (int)$this->request->get['limit'];
 		} else {
 			$limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');
@@ -87,7 +87,7 @@ class ControllerProductSearch extends Controller {
 		}
 
 		if (isset($this->request->get['tag'])) {
-			$url .= '&tag=' . urlencode(html_entity_decode($this->request->get['tag'], ENT_QUOTES, 'UTF-8'));
+			$url .= '&tag=' . urlencode(html_entity_decode(trim($this->request->get['tag']), ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['description'])) {
@@ -132,8 +132,6 @@ class ControllerProductSearch extends Controller {
 		$data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
 
 		$data['compare'] = $this->url->link('product/compare');
-
-		$this->load->model('catalog/category');
 
 		// 3 Level Category Search
 		$data['categories'] = array();
@@ -218,7 +216,7 @@ class ControllerProductSearch extends Controller {
 					$price_net = false;
 				}
 
-				if ((float)$result['special']) {
+				if (!is_null($result['special']) && (float)$result['special'] >= 0) {
 					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 					$special_net = $result['special'];
 					
@@ -229,7 +227,7 @@ class ControllerProductSearch extends Controller {
 					$special = false;
 					$special_net = false;
 				}
-
+	
 				if ($this->config->get('config_tax')) {
 					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price'], $this->session->data['currency']);
 					

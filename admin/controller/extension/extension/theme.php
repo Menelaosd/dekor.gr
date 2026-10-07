@@ -11,7 +11,7 @@ class ControllerExtensionExtensionTheme extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/extension/feed');
+		$this->load->language('extension/extension/theme');
 
 		$this->load->model('setting/extension');
 
@@ -42,6 +42,9 @@ class ControllerExtensionExtensionTheme extends Controller {
 
 			// Call uninstall method if it exsits
 			$this->load->controller('extension/theme/' . $this->request->get['extension'] . '/uninstall');
+
+			$this->load->model('user/user_group');
+			$this->model_user_user_group->removePermissions('extension/theme/' . $this->request->get['extension']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
@@ -115,6 +118,8 @@ class ControllerExtensionExtensionTheme extends Controller {
 				);
 			}
 		}
+
+		$data['promotion'] = $this->load->controller('extension/extension/promotion');
 
 		$this->response->setOutput($this->load->view('extension/extension/theme', $data));
 	}

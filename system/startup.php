@@ -1,10 +1,10 @@
 <?php
 // Error Reporting
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED); // dekor: PHP 8.1 deprecations (none existed on PHP 7) must not print into pages/JSON
 
 // Check Version
-if (version_compare(phpversion(), '5.4.0', '<') == true) {
-	exit('PHP5.4+ Required');
+if (version_compare(phpversion(), '8.1.0', '<') == true) {
+	exit('PHP8.1+ Required');
 }
 
 if (!ini_get('date.timezone')) {
@@ -25,7 +25,7 @@ if (!isset($_SERVER['DOCUMENT_ROOT'])) {
 }
 
 if (!isset($_SERVER['REQUEST_URI'])) {
-	$_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
+	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
 
 	if (isset($_SERVER['QUERY_STRING'])) {
 		$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
@@ -67,7 +67,7 @@ function modification($filename) {
 }
 
 // Autoloader
-if (is_file(DIR_STORAGE . 'vendor/autoload.php')) {
+if (defined('DIR_STORAGE') && is_file(DIR_STORAGE . 'vendor/autoload.php')) {
 	require_once(DIR_STORAGE . 'vendor/autoload.php');
 }
 

@@ -11,7 +11,8 @@
 /image/
 
 # OpenCart runtime storage (ignore whether internal or moved outside root)
-/system/storage/
+/system/storage/*
+!/system/storage/vendor/
 /storage/
 
 # Legacy / custom download locations

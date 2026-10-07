@@ -7,7 +7,7 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 
 		for ($i = 1; $i <= 12; $i++) {
 			$data['months'][] = array(
-				'text'  => strftime('%B', mktime(0, 0, 0, $i, 1, 2000)),
+				'text'  => sprintf('%02d', $i),
 				'value' => sprintf('%02d', $i)
 			);
 		}
@@ -18,8 +18,8 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 
 		for ($i = $today['year']; $i < $today['year'] + 11; $i++) {
 			$data['year_expire'][] = array(
-				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)),
-				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i))
+				'text'  => sprintf('%02d', $i % 100),
+				'value' => sprintf('%04d', $i)
 			);
 		}
 
@@ -37,6 +37,10 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 
 		$this->load->model('checkout/order');
 
+		if(!isset($this->session->data['order_id'])) {
+			return false;
+		}
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$data = array();
@@ -48,14 +52,14 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 		$data['x_delim_char'] = '|';
 		$data['x_encap_char'] = '"';
 		$data['x_relay_response'] = 'false';
-		$data['x_first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
-		$data['x_last_name'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
-		$data['x_company'] = html_entity_decode($order_info['payment_company'], ENT_QUOTES, 'UTF-8');
-		$data['x_address'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');
-		$data['x_city'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');
-		$data['x_state'] = html_entity_decode($order_info['payment_zone'], ENT_QUOTES, 'UTF-8');
-		$data['x_zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
-		$data['x_country'] = html_entity_decode($order_info['payment_country'], ENT_QUOTES, 'UTF-8');
+		$data['x_first_name'] = $order_info['payment_firstname'];
+		$data['x_last_name'] = $order_info['payment_lastname'];
+		$data['x_company'] = $order_info['payment_company'];
+		$data['x_address'] = $order_info['payment_address_1'];
+		$data['x_city'] = $order_info['payment_city'];
+		$data['x_state'] = $order_info['payment_zone'];
+		$data['x_zip'] = $order_info['payment_postcode'];
+		$data['x_country'] = $order_info['payment_country'];
 		$data['x_phone'] = $order_info['telephone'];
 		$data['x_customer_ip'] = $this->request->server['REMOTE_ADDR'];
 		$data['x_email'] = $order_info['email'];
@@ -72,23 +76,23 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 
 		/* Customer Shipping Address Fields */
 		if ($order_info['shipping_method']) {
-			$data['x_ship_to_first_name'] = html_entity_decode($order_info['shipping_firstname'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_last_name'] = html_entity_decode($order_info['shipping_lastname'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_company'] = html_entity_decode($order_info['shipping_company'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_address'] = html_entity_decode($order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_city'] = html_entity_decode($order_info['shipping_city'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_state'] = html_entity_decode($order_info['shipping_zone'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_zip'] = html_entity_decode($order_info['shipping_postcode'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_country'] = html_entity_decode($order_info['shipping_country'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_first_name'] = $order_info['shipping_firstname'];
+			$data['x_ship_to_last_name'] = $order_info['shipping_lastname'];
+			$data['x_ship_to_company'] = $order_info['shipping_company'];
+			$data['x_ship_to_address'] = $order_info['shipping_address_1'] . ' ' . $order_info['shipping_address_2'];
+			$data['x_ship_to_city'] = $order_info['shipping_city'];
+			$data['x_ship_to_state'] = $order_info['shipping_zone'];
+			$data['x_ship_to_zip'] = $order_info['shipping_postcode'];
+			$data['x_ship_to_country'] = $order_info['shipping_country'];
 		} else {
-			$data['x_ship_to_first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_last_name'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_company'] = html_entity_decode($order_info['payment_company'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_address'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_city'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_state'] = html_entity_decode($order_info['payment_zone'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
-			$data['x_ship_to_country'] = html_entity_decode($order_info['payment_country'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_first_name'] = $order_info['payment_firstname'];
+			$data['x_ship_to_last_name'] = $order_info['payment_lastname'];
+			$data['x_ship_to_company'] = $order_info['payment_company'];
+			$data['x_ship_to_address'] = $order_info['payment_address_1'] . ' ' . $order_info['payment_address_2'];
+			$data['x_ship_to_city'] = $order_info['payment_city'];
+			$data['x_ship_to_state'] = $order_info['payment_zone'];
+			$data['x_ship_to_zip'] = $order_info['payment_postcode'];
+			$data['x_ship_to_country'] = $order_info['payment_country'];
 		}
 
 		if ($this->config->get('payment_authorizenet_aim_mode') == 'test') {
@@ -168,7 +172,11 @@ class ControllerExtensionPaymentAuthorizeNetAim extends Controller {
 			$this->log->write('AUTHNET AIM CURL ERROR: Empty Gateway Response');
 		}
 
-		curl_close($curl);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($curl);
+		} else {
+			curl_close($curl);
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

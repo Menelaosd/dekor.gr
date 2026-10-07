@@ -1,4 +1,10 @@
 <?php
+// dekor: PHP 8 — reset() on a non-array (empty tab list) is a TypeError; PHP 7 returned null with a warning
+if (!function_exists('dsm_reset')) {
+	function dsm_reset($value) {
+		return is_array($value) ? reset($value) : null;
+	}
+}
 class ControllerExtensionModuleDSEOModule extends Controller {
 	private $codename = 'd_seo_module';
 	private $route = 'extension/module/d_seo_module';
@@ -2522,7 +2528,7 @@ class ControllerExtensionModuleDSEOModule extends Controller {
 				$html_dom->find('#tab-general', 0)->innertext .= $html_tab_general;
 			}
 			
-			if (reset($html_tab_general_language)) {
+			if (dsm_reset($html_tab_general_language)) {
 				$html_languages = '<ul class="nav nav-tabs" id="language">';
 				
 				foreach ($languages as $language) {
@@ -2639,7 +2645,7 @@ class ControllerExtensionModuleDSEOModule extends Controller {
 				$html_dom->find('#tab-general', 0)->innertext .= $html_tab_general;
 			}
 			
-			if (reset($html_tab_general_language)) {
+			if (dsm_reset($html_tab_general_language)) {
 				$html_languages = '<ul class="nav nav-tabs" id="language">';
 				
 				foreach ($languages as $language) {
@@ -2804,15 +2810,15 @@ class ControllerExtensionModuleDSEOModule extends Controller {
 				$html_dom->find('#tab-general', 0)->innertext .= $html_tab_general;
 			}
 			
-			if (reset($html_tab_general_language)) {
+			if (dsm_reset($html_tab_general_language)) {
 				foreach ($languages as $language) {
 					$html_dom->find('#tab-general #language' . $language['language_id'], 0)->innertext .= $html_tab_general_language[$language['language_id']];
 				}
 			}
 			
-			$html_tab_general_language = reset($html_tab_general_store_language);
+			$html_tab_general_language = dsm_reset($html_tab_general_store_language);
 			
-			if ((count($stores)) && (reset($html_tab_general_store) || reset($html_tab_general_language))) {
+			if ((count($stores)) && (dsm_reset($html_tab_general_store) || dsm_reset($html_tab_general_language))) {
 				$html_stores = '<ul class="nav nav-tabs" id="store">';
 								
 				foreach ($stores as $store) {
@@ -2825,7 +2831,7 @@ class ControllerExtensionModuleDSEOModule extends Controller {
 				foreach ($stores as $store) {
 					$html_store_languages = '';
 						
-					if (reset($html_tab_general_store_language[$store['store_id']])) {
+					if (dsm_reset($html_tab_general_store_language[$store['store_id']])) {
 						$html_store_languages = '<ul class="nav nav-tabs" id="store_' . $store['store_id'] . '_language">';
 				
 						foreach ($languages as $language) {
@@ -2986,15 +2992,15 @@ class ControllerExtensionModuleDSEOModule extends Controller {
 				$html_dom->find('#tab-general', 0)->innertext .= $html_tab_general;
 			}
 			
-			if (reset($html_tab_general_language)) {
+			if (dsm_reset($html_tab_general_language)) {
 				foreach ($languages as $language) {
 					$html_dom->find('#tab-general #language' . $language['language_id'], 0)->innertext .= $html_tab_general_language[$language['language_id']];
 				}
 			}
 			
-			$html_tab_general_language = reset($html_tab_general_store_language);
+			$html_tab_general_language = dsm_reset($html_tab_general_store_language);
 			
-			if ((count($stores)) && (reset($html_tab_general_store) || reset($html_tab_general_language))) {
+			if ((count($stores)) && (dsm_reset($html_tab_general_store) || dsm_reset($html_tab_general_language))) {
 				$html_stores = '<ul class="nav nav-tabs" id="store">';
 								
 				foreach ($stores as $store) {
@@ -3007,7 +3013,7 @@ class ControllerExtensionModuleDSEOModule extends Controller {
 				foreach ($stores as $store) {
 					$html_store_languages = '';
 						
-					if (reset($html_tab_general_store_language[$store['store_id']])) {
+					if (dsm_reset($html_tab_general_store_language[$store['store_id']])) {
 						$html_store_languages = '<ul class="nav nav-tabs" id="store_' . $store['store_id'] . '_language">';
 				
 						foreach ($languages as $language) {
@@ -3186,7 +3192,7 @@ class ControllerExtensionModuleDSEOModule extends Controller {
 				$html_dom->find('#tab-general', 0)->innertext .= $html_tab_general;
 			}
 			
-			if (reset($html_tab_general_language)) {
+			if (dsm_reset($html_tab_general_language)) {
 				$html_languages = '<ul class="nav nav-tabs" id="language">';
 				
 				foreach ($languages as $language) {
@@ -3210,9 +3216,9 @@ class ControllerExtensionModuleDSEOModule extends Controller {
 				}
 			}
 			
-			$html_tab_general_language = reset($html_tab_general_store_language);
+			$html_tab_general_language = dsm_reset($html_tab_general_store_language);
 			
-			if ((count($stores)) && (reset($html_tab_general_store) || reset($html_tab_general_language))) {
+			if ((count($stores)) && (dsm_reset($html_tab_general_store) || dsm_reset($html_tab_general_language))) {
 				$html_stores = '<ul class="nav nav-tabs" id="store">';
 								
 				foreach ($stores as $store) {
@@ -3225,7 +3231,7 @@ class ControllerExtensionModuleDSEOModule extends Controller {
 				foreach ($stores as $store) {
 					$html_store_languages = '';
 						
-					if (reset($html_tab_general_store_language[$store['store_id']])) {
+					if (dsm_reset($html_tab_general_store_language[$store['store_id']])) {
 						$html_store_languages = '<ul class="nav nav-tabs" id="store_' . $store['store_id'] . '_language">';
 				
 						foreach ($languages as $language) {
@@ -3384,15 +3390,15 @@ class ControllerExtensionModuleDSEOModule extends Controller {
 				$html_dom->find('#tab-general', 0)->innertext .= $html_tab_general;
 			}
 			
-			if (reset($html_tab_general_language)) {
+			if (dsm_reset($html_tab_general_language)) {
 				foreach ($languages as $language) {
 					$html_dom->find('#tab-general #language' . $language['language_id'], 0)->innertext .= $html_tab_general_language[$language['language_id']];
 				}
 			}
 			
-			$html_tab_general_language = reset($html_tab_general_store_language);
+			$html_tab_general_language = dsm_reset($html_tab_general_store_language);
 			
-			if ((count($stores)) && (reset($html_tab_general_store) || reset($html_tab_general_language))) {
+			if ((count($stores)) && (dsm_reset($html_tab_general_store) || dsm_reset($html_tab_general_language))) {
 				$html_stores = '<ul class="nav nav-tabs" id="store">';
 								
 				foreach ($stores as $store) {
@@ -3405,7 +3411,7 @@ class ControllerExtensionModuleDSEOModule extends Controller {
 				foreach ($stores as $store) {
 					$html_store_languages = '';
 						
-					if (reset($html_tab_general_store_language[$store['store_id']])) {
+					if (dsm_reset($html_tab_general_store_language[$store['store_id']])) {
 						$html_store_languages = '<ul class="nav nav-tabs" id="store_' . $store['store_id'] . '_language">';
 				
 						foreach ($languages as $language) {

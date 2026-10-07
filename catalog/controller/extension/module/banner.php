@@ -8,7 +8,7 @@ class ControllerExtensionModuleBanner extends Controller {
 
 		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/swiper.min.css');
 		$this->document->addStyle('catalog/view/javascript/jquery/swiper/css/opencart.css');
-		$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js');
+		$this->document->addScript('catalog/view/javascript/jquery/swiper/js/swiper.jquery.js'); // dekor: same file as 3.0.2.0 / theme header (avoid loading swiper twice)
 
 		$data['banners'] = array();
 $data['module_name'] = $setting['name'];

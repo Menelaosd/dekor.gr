@@ -20,7 +20,7 @@ class ControllerProductSpecial extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -31,7 +31,7 @@ class ControllerProductSpecial extends Controller {
 			$above = false;
 		}
 
-		if (isset($this->request->get['limit'])) {
+		if (isset($this->request->get['limit']) && (int)$this->request->get['limit'] > 0) {
 			$limit = (int)$this->request->get['limit'];
 		} else {
 			$limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');

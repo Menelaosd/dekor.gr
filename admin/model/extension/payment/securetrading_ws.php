@@ -16,7 +16,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 			  `currency_code` CHAR(3) NOT NULL,
 			  `total` DECIMAL( 10, 2 ) NOT NULL,
 			  PRIMARY KEY (`securetrading_ws_order_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "securetrading_ws_order_transaction` (
@@ -26,7 +26,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 			  `type` ENUM('auth', 'payment', 'rebate', 'reversed') DEFAULT NULL,
 			  `amount` DECIMAL( 10, 2 ) NOT NULL,
 			  PRIMARY KEY (`securetrading_ws_order_transaction_id`)
-			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 	}
 
 	public function uninstall() {
@@ -150,23 +150,23 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 	}
 
 	public function addTransaction($securetrading_ws_order_id, $type, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_ws_order_transaction` SET `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order_id . "', `created` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (double)$total . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_ws_order_transaction` SET `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order_id . "', `created` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$total . "'");
 	}
 
 	public function getTotalReleased($securetrading_ws_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "securetrading_ws_order_transaction` WHERE `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order_id . "' AND (`type` = 'payment' OR `type` = 'rebate')");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function getTotalRebated($securetrading_ws_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "securetrading_ws_order_transaction` WHERE `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order_id . "' AND 'rebate'");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function increaseRefundedAmount($order_id, $amount) {
-		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_ws_order SET refunded = refunded + " . (double)$amount . " WHERE order_id = " . (int)$order_id);
+		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_ws_order SET refunded = refunded + " . (float)$amount . " WHERE order_id = " . (int)$order_id);
 	}
 
 	public function getCsv($data) {
@@ -282,7 +282,11 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 			$this->log->write('Secure Trading WS CURL Error: (' . curl_errno($ch) . ') ' . curl_error($ch));
 		}
 
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		if (empty($response) || $response === 'No records found for search') {
 			return false;
@@ -339,7 +343,11 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 			$this->log->write('Secure Trading WS CURL Error: (' . curl_errno($ch) . ') ' . curl_error($ch));
 		}
 
-		curl_close($ch);
+		if (version_compare(phpversion(), '8.0.', '>=')) {
+			unset($ch);
+		} else {
+			curl_close($ch);
+		}
 
 		return $response;
 	}

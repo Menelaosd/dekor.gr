@@ -9,7 +9,9 @@ class ControllerExtensionCaptchaBasic extends Controller {
 			$data['error_captcha'] = '';
 		}
 
-		$data['route'] = $this->request->get['route']; 
+		$data['route'] = $this->request->get['route'];
+
+		$this->session->data['captcha'] = substr(sha1(mt_rand()), 17, 6); 
 
 		return $this->load->view('extension/captcha/basic', $data);
 	}
@@ -23,7 +25,9 @@ class ControllerExtensionCaptchaBasic extends Controller {
 	}
 
 	public function captcha() {
-		$this->session->data['captcha'] = substr(sha1(mt_rand()), 17, 6);
+		if (!isset($this->session->data['captcha'])) {
+			exit();
+		}
 
 		$image = imagecreatetruecolor(150, 35);
 
@@ -51,7 +55,6 @@ class ControllerExtensionCaptchaBasic extends Controller {
 
 		imagejpeg($image);
 
-		imagedestroy($image);
 		exit();
 	}
 }
