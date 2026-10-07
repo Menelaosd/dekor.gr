@@ -36,3 +36,10 @@
 #common-home #slideshow0 .banner-caption {
 	font-size: 24px !important;
 }
+/* category SEO text under the products: breathing room left/right (it ran edge to edge on phones; APOKRIFA already has its own padding) */
+.category-description-bottom { padding: 0 16px; box-sizing: border-box; }
+.category-description-bottom ul, .category-description-bottom ol { padding-left: 22px; }
+.category-description-bottom img { max-width: 100%; height: auto; }
+@media (max-width: 767px) {
+	.category-description-bottom { padding: 0 18px; margin-top: 24px; }
+}
