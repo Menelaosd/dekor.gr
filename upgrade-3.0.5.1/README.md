@@ -30,6 +30,7 @@
    (check `DIR_STORAGE` in the live `config.php`; if storage lives outside `public_html`, copy it there).
 3. Do not upload `install/` (not included).
 4. `php upgrade-3.0.5.1/apply_db.php` (dry run), then `php upgrade-3.0.5.1/apply_db.php --apply`.
+   Optional, independent of the upgrade: `php upgrade-3.0.5.1/fix_seo_slugs.php` (dry run) then `--apply` — fixes the 47 product SEO URLs that contain spaces/commas (meta keywords pasted into the SEO URL field) and adds 301s from the old URLs via the iSenseLabs 404-redirect table.
    The stock upgrade wizard is not used: it drops every non-stock index, adds Google Ads events
    and converts collations.
 5. Admin → Extensions → Modifications → **Refresh** (twice: the 2nd run uses the refreshed
