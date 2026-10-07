@@ -24,7 +24,8 @@ class File {
 	public function get($key) {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
-		if ($files) {
+		// dekor: PHP 8 — fread() with length 0 is a fatal ValueError; an empty cache file is just a miss
+		if ($files && filesize($files[0]) > 0) {
 			$handle = fopen($files[0], 'r');
 
 			flock($handle, LOCK_SH);
