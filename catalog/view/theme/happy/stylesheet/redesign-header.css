@@ -36,20 +36,36 @@ body.modal-open header .header-wrapper { z-index: auto; }
 header { box-shadow: none !important; }
 html, body { overflow-x: clip; } /* the 100vw divider must never cause a side scroll */
 
-/* ---------- sticky menu row (desktop). The header itself stays non-sticky (client
-   rule); only the menu row docks at the top. JS in header.twig keeps its slot height
-   so the page does not jump when it docks. ---------------------------------------- */
+/* ---------- sticky header. Desktop: the whole header row (logo, search, cart + menu)
+   docks at the top unchanged the moment it reaches it. Phones/tablets: a compact bar
+   slides in once the header has scrolled away. JS in header.twig keeps a slot with the
+   header's height, so the page never jumps. --------------------------------------- */
+.dk-sticky-search { display: none; }
+body.dk-hd-docked header .header-wrapper {
+	position: fixed !important; top: 0; left: 0; right: 0; z-index: 1030;
+	width: 100% !important; max-width: none !important; margin: 0 !important;
+	box-shadow: 0 8px 22px -14px rgba(17, 17, 17, .28);
+}
 @media (min-width: 992px) {
 	#desk-menu { background: #fff; }
-	body.dk-menu-docked #desk-menu {
-		position: fixed !important; top: 0; left: 0; right: 0; z-index: 1030;
-		max-width: none !important; width: 100% !important; margin: 0 !important;
-		box-shadow: 0 8px 22px -14px rgba(17, 17, 17, .28);
-	}
-	body.dk-menu-docked #desk-menu { padding: 0 !important; }
-	body.dk-menu-docked #desk-menu > .main-menu { max-width: 1660px; margin: 0 auto; padding: 0 36px; box-sizing: border-box; }
 }
-
+@media (max-width: 991px) {
+	body.dk-hd-compact header .header-wrapper { animation: dk-hd-in .22s ease-out; }
+	@keyframes dk-hd-in { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+}
+@media (max-width: 991px) and (prefers-reduced-motion: reduce) {
+	body.dk-hd-compact header .header-wrapper { animation: none; }
+}
+/* phones: the compact bar is one row; search opens from the icon (full-screen sheet) */
+@media (max-width: 767px) {
+	body.dk-hd-compact header .header-wrapper .dk-search,
+	body.dk-hd-compact header .header-wrapper .dk-acct,
+	body.dk-hd-compact header .header-wrapper .dk-wish { display: none !important; } /* account + wishlist stay in the burger menu */
+	body.dk-hd-compact .dk-sticky-search {
+		display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px;
+		border: 0; border-radius: 50%; background: var(--hd-surface); color: #111; padding: 0; cursor: pointer;
+	}
+}
 /* ---------- 404 page: one centred column (col-sm-12 float broke margin:auto) ------ */
 .error_not_found #error-not-found .row { display: flex; justify-content: center; margin: 0; }
 .error_not_found #error-not-found #content {
@@ -67,3 +83,4 @@ html, body { overflow-x: clip; } /* the 100vw divider must never cause a side sc
 
 /* ---------- cart button: text was pushed 5px down by an old `#cart-total { position:relative; top:5px }` ---- */
 #cart #cart-total { top: 0 !important; }
+header #cart { margin-bottom: 0 !important; } /* stock OC margin pushed the cart 5px above the other header icons */

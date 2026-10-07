@@ -74,7 +74,7 @@
 		<link href="catalog/view/theme/happy/stylesheet/redesign-dekor.css?v=85" rel="stylesheet">
 	 {% endif %}
 	 <link href="catalog/view/theme/happy/stylesheet/redesign-cards.css?v=3" rel="stylesheet">{# product + blog cards polish (remove to roll back) #}
-	 <link href="catalog/view/theme/happy/stylesheet/redesign-header.css?v=7" rel="stylesheet">{# header / icons / cart / nav polish (remove to roll back) #}
+	 <link href="catalog/view/theme/happy/stylesheet/redesign-header.css?v=10" rel="stylesheet">{# header / icons / cart / nav polish (remove to roll back) #}
 	 <link href="catalog/view/javascript/dk-search/dk-search.css?v=2" rel="stylesheet">{# live search (remove these 2 lines to fall back to the old live_search) #}
 	 <script src="catalog/view/javascript/dk-search/dk-search.js?v=4" defer></script>
 
@@ -123,6 +123,7 @@
 					<a href="{{ home }}" class="logo dk-logo" title="{{ name }}"><img src="{{ logo }}" alt="{{ name }}"></a>
 					<div class="header-mid dk-search">{{ search }}</div>
 					<div class="header-right dk-actions">
+						<button type="button" class="dk-sticky-search" title="Αναζήτηση" aria-label="Αναζήτηση"><i class="fa fa-search"></i></button>
 						<a href="index.php?route=account/login" class="dk-acct" title="Ο Λογαριασμός μου"><i class="fas fa-user"></i><span class="dk-acct-lbl">Ο Λογαριασμός μου</span></a>
 						<a id="wishlist-total" href="{{ wishlist }}" class="dk-wish" title="Αγαπημένα"><i class="fas fa-heart"></i><span class="dk-wishtext">{{ text_wishlist }}</span></a>
 						{{ cart }}
@@ -148,17 +149,24 @@
 			</div>
 		</header>
 {# dekor: the old "rz-stuck" condense script is gone — the header is not sticky, so shrinking it at 90px only made the page jump #}
-<script>/* dekor: dock the desktop menu row at the top once it scrolls out of view; keep its slot so nothing jumps */
-(function(){var m=document.getElementById('desk-menu');if(!m)return;var b=document.body,c='dk-menu-docked';
-/* a slot right after the menu takes its exact outer height (margins included) at the moment it docks */
-var slot=document.createElement('div');slot.id='dk-menu-slot';slot.style.height='0px';m.parentNode.insertBefore(slot,m.nextSibling);
-function outerTop(){return m.getBoundingClientRect().top-parseFloat(getComputedStyle(m).marginTop||0);}
-function outerH(){var s=getComputedStyle(m);return m.getBoundingClientRect().height+parseFloat(s.marginTop||0)+parseFloat(s.marginBottom||0);}
-function undock(){b.classList.remove(c);slot.style.height='0px';}
-function onScroll(){if(window.innerWidth<992){undock();return;}var docked=b.classList.contains(c);
- if(!docked&&outerTop()<=0){slot.style.height=outerH()+'px';b.classList.add(c);}
- else if(docked&&slot.getBoundingClientRect().top>0){undock();}}
-onScroll();window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',function(){undock();onScroll();});})();</script>
+<script>/* dekor: sticky header without any jump.
+   desktop (>=992px): the whole header row (logo, search, account, cart + menu) docks at the top as it is, the moment it reaches the top.
+   phones/tablets: once the header has scrolled out of view, a compact bar (burger, logo, search icon, cart) slides in.
+   A slot right after the header keeps its exact height, so the page never moves. */
+(function(){var w=document.querySelector('header .header-wrapper');if(!w)return;var b=document.body,c='dk-hd-docked',cm='dk-hd-compact';
+/* the side cart is a modal: keep it at body level so the docked header can never trap it under the dark backdrop */
+var cc=document.getElementById('cart-container');if(cc&&cc.parentNode!==b){b.appendChild(cc);}
+var slot=document.createElement('div');slot.id='dk-hd-slot';slot.style.height='0px';w.parentNode.insertBefore(slot,w.nextSibling);
+function desk(){return window.innerWidth>=992;}
+function undock(){b.classList.remove(c);b.classList.remove(cm);slot.style.height='0px';}
+function onScroll(){var docked=b.classList.contains(c),r;
+ if(!docked){r=w.getBoundingClientRect();
+  if(desk()?r.top<=0:r.bottom<=0){slot.style.height=r.height+'px';b.classList.add(c);if(!desk()){b.classList.add(cm);}}}
+ else{r=slot.getBoundingClientRect();if(b.classList.contains(cm)?r.bottom>0:r.top>0){undock();}}}
+onScroll();window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',function(){undock();onScroll();});
+/* compact bar: the search icon opens the normal search (full-screen sheet on phones) */
+var sb=document.querySelector('.dk-sticky-search');if(sb){sb.addEventListener('click',function(){var i=document.querySelector('#search input[name="search"]'),btn=document.querySelector('#search button');
+ if(window.innerWidth<768&&btn){btn.click();return;}undock();window.scrollTo(0,0);if(i){setTimeout(function(){i.focus();},60);}});}})();</script>
 
 	   <script>
 			$(document).ready(function() {
