@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="catalog/view/javascript/jquery/photoswipe/default-skin/default-skin.css"> 
 <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/swiper/css/swiper.min.css">
 <script type="text/javascript" src="catalog/view/javascript/jquery/swiper/js/swiper.jquery.js"></script>
+<link rel="stylesheet" href="catalog/view/theme/happy/stylesheet/redesign-pdp.css?v=7">
 <div class="container breadcrumbs-container container-max-width">
   <ul class="breadcrumb">
 	{% for breadcrumb in breadcrumbs %}
@@ -18,6 +19,13 @@
 		<div class="clearfix"></div>
 		<div class="row">
 			<section class="product-left product__images col-lg-5 col-md-4 col-sm-12 col-xs-12">
+				{% if special and price %}
+					{% set pdp_old = price|replace({'.': '', '€': '', ' ': ''})|replace({',': '.'}) + 0 %}
+					{% set pdp_new = special|replace({'.': '', '€': '', ' ': ''})|replace({',': '.'}) + 0 %}
+					{% if pdp_old > 0 and pdp_new < pdp_old %}
+						<span class="pdp-badge">{{ ((1 - pdp_new / pdp_old) * 100)|round }}%</span>
+					{% endif %}
+				{% endif %}
 				<div class="swiper-viewport">
 					<div id="product_img_gallery" class="swiper-container">  
 						<div class="swiper-wrapper">
@@ -456,6 +464,8 @@
 		</div>
 		<script type="text/javascript">
 			$(document).ready(function(){
+				// drop empty paragraphs (&nbsp; / <br>) the editor leaves in descriptions — they made large gaps
+				$('.product-tabs .tab-content p').filter(function () { return !$(this).find('img,iframe,video').length && !$.trim($(this).text().replace(/ /g, '')); }).remove();
 				$('.product-tabs ul li').first().addClass('active');
 				$('.product-tabs .tab-content').find('.tab-pane').first().addClass('active').fadeIn(100).css("opacity",1);;
 			});

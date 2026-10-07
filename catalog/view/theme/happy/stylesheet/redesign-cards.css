@@ -1,0 +1,81 @@
+/* ============================================================================
+   CARDS polish — product card + blog card (both stores; accent from --rz-accent)
+   Loaded after redesign-2026 / redesign-dekor / redesign-apokrifa. CSS only, so
+   every product_owl* variant and the blog module get it without template edits.
+   ========================================================================== */
+
+/* ---------- product card -------------------------------------------------- */
+
+/* discount badge: inside the photo corner, round like the PDP badge */
+.product-block > .product-sale {
+	top: 22px !important; left: 22px !important;
+	width: 46px; height: 46px; padding: 0 !important;
+	display: flex !important; align-items: center; justify-content: center; gap: 0;
+	border-radius: 50% !important; border: 2px solid #fff;
+	box-shadow: 0 2px 8px rgba(17, 17, 17, .12);
+	font-size: 12.5px !important; line-height: 1 !important;
+}
+.product-block > .product-sale .per-span { font-size: 10px !important; }
+
+/* single price (no package): same framed block + label as the package prices */
+.product-block-price:not(:has(.list-prices-package)):has(> .amount) {
+	display: flex; flex-direction: column; align-items: center; gap: 2px;
+	margin: 0 0 4px; padding: 10px 12px 12px !important;
+	border-top: 1px solid var(--rz-border, #ECEEF3);
+}
+.product-block-price:not(:has(.list-prices-package)):has(> .amount)::before {
+	content: "Τιμή";
+	font: 600 10px/1.2 var(--rz-ui) ; text-transform: uppercase; letter-spacing: .06em; color: var(--rz-muted, #5B5E68);
+}
+.product-block-price:not(:has(.list-prices-package)) > del.amount_before {
+	font: 500 13px/1.2 var(--rz-mono); color: #9396a3; text-decoration: line-through;
+}
+
+/* ---------- blog card ------------------------------------------------------ */
+.blog_grip-container .blog_item,
+.blog-module .blog_item {
+	display: flex; flex-direction: column; text-align: left !important;
+	padding: 14px !important; background: #fff;
+	border: 1px solid var(--rz-border, #ECEEF3) !important; border-radius: var(--rz-radius, 20px) !important;
+	transition: box-shadow .2s ease, transform .2s ease;
+}
+.blog_grip-container .blog_item:hover,
+.blog-module .blog_item:hover { box-shadow: 0 10px 28px rgba(17, 17, 17, .07); }
+.blog_item .summary { display: flex; flex-direction: column; height: 100%; }
+.blog_item .image { margin: 0 0 14px; border-radius: 14px; overflow: hidden; }
+.blog_item .image img { display: block; width: 100% !important; height: auto !important; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px !important; }
+
+.blog_item .blog_caption { display: flex; flex-direction: column; gap: 8px; padding: 0 6px 6px; text-align: left; }
+/* date: small mono eyebrow with a calendar mark, no longer floating alone in the middle */
+.blog_item .blog_stats { order: 0; display: flex; justify-content: flex-start; margin: 0 !important; padding: 0 !important; }
+.blog_item .blog_stats span {
+	display: inline-flex; align-items: center; gap: 6px;
+	font: 500 12px/1 var(--rz-mono) !important; color: var(--rz-muted, #5B5E68) !important; letter-spacing: .02em;
+}
+.blog_item .blog_stats span::before {
+	content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--rz-accent, #618764);
+}
+.blog_item .blog_stats span i { display: none; }
+/* title: readable UI font, ink colour, 2 lines max */
+.blog_item .blog_title { order: 1; margin: 0 !important; }
+.blog_item .blog_title a {
+	font: 700 17px/1.35 var(--rz-ui) !important; color: var(--rz-ink, #111) !important; text-transform: none !important; letter-spacing: -.005em;
+	display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.blog_item .blog_title a:hover { color: var(--rz-accent, #618764) !important; }
+/* excerpt: clean 3-line clamp with ellipsis instead of a word cut in half */
+.blog_item .blog_description {
+	order: 2; margin: 0 !important;
+	font: 400 14px/1.6 var(--rz-ui) !important; color: var(--rz-muted, #5B5E68) !important;
+	display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.blog_item .blog_read-more-container { margin-top: auto; padding: 10px 6px 4px; text-align: left; }
+
+/* a lone last card in the 3-column grid spans the row as a wide horizontal card */
+@media (min-width: 992px) {
+	.blog_grip-container .blog_item:last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
+	.blog_grip-container .blog_item:last-child:nth-child(3n + 1) .summary { flex-direction: row; align-items: center; gap: 24px; }
+	.blog_grip-container .blog_item:last-child:nth-child(3n + 1) .image { flex: 0 0 34%; margin: 0; }
+	.blog_grip-container .blog_item:last-child:nth-child(3n + 1) .blog_caption { flex: 1 1 auto; }
+	.blog_grip-container .blog_item:last-child:nth-child(3n + 1) .blog_title a { font-size: 20px !important; }
+}
