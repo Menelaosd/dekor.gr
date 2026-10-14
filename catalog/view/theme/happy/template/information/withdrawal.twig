@@ -1,0 +1,114 @@
+{{ header }}
+<div id="information-withdrawal" class="container-fluid">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+
+  <div class="row">
+    {{ column_left }}
+    {% if column_left and column_right %}
+      {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+      {% set class = 'col-sm-9' %}
+    {% else %}
+      {% set class = 'col-sm-12' %}
+    {% endif %}
+
+    <div id="content" class="{{ class }}">
+      {{ content_top }}
+      <h1>Υπαναχώρηση από σύμβαση</h1>
+
+      {% if error_warning %}
+        <div class="alert alert-danger">{{ error_warning }}</div>
+      {% endif %}
+
+      {% if stage == 'success' %}
+        <div class="alert alert-success">
+          <p><strong>Η δήλωσή σας καταχωρίστηκε.</strong></p>
+          <p>Στείλαμε στο email που δηλώσατε επιβεβαίωση παραλαβής με τα στοιχεία και την ημερομηνία και ώρα υποβολής.</p>
+        </div>
+
+      {% elseif stage == 'confirm' %}
+        <p>Ελέγξτε τα στοιχεία της δήλωσης. Για να ολοκληρωθεί η ηλεκτρονική υποβολή, πατήστε το κουμπί επιβεβαίωσης.</p>
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>Στοιχεία δήλωσης</strong></div>
+          <div class="panel-body">
+            <p><strong>Ονοματεπώνυμο:</strong> {{ form.name }}</p>
+            <p><strong>Email:</strong> {{ form.email }}</p>
+            <p><strong>Αριθμός παραγγελίας ή στοιχείο σύμβασης:</strong> {{ form.order_reference }}</p>
+            <p><strong>Προϊόντα:</strong><br>{{ form.items ? form.items|nl2br : 'Δεν δηλώθηκαν επιμέρους προϊόντα.' }}</p>
+          </div>
+        </div>
+
+        <form action="{{ action }}" method="post" class="form-horizontal">
+          <input type="hidden" name="stage" value="confirm">
+          <input type="hidden" name="confirm_token" value="{{ confirm_token }}">
+          <div class="buttons">
+            <a href="{{ action }}" class="btn btn-default">Επιστροφή για διόρθωση</a>
+            <button type="submit" class="btn btn-primary">Επιβεβαίωση και αποστολή δήλωσης υπαναχώρησης</button>
+          </div>
+        </form>
+
+      {% else %}
+        <p>Χρησιμοποιήστε αυτή τη φόρμα για να υποβάλετε ηλεκτρονικά δήλωση υπαναχώρησης από σύμβαση. Συμπληρώστε τα στοιχεία σας και της παραγγελίας. Πριν από την αποστολή θα σας ζητηθεί να ελέγξετε και να επιβεβαιώσετε τη δήλωση.</p>
+
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+          <input type="hidden" name="stage" value="review">
+          <input type="hidden" name="form_token" value="{{ form_token }}">
+
+          <fieldset>
+            <div class="form-group required">
+              <label class="col-sm-3 control-label" for="input-withdrawal-name">Ονοματεπώνυμο</label>
+              <div class="col-sm-9">
+                <input type="text" name="name" value="{{ form.name }}" id="input-withdrawal-name" class="form-control" maxlength="120" required>
+              </div>
+            </div>
+
+            <div class="form-group required">
+              <label class="col-sm-3 control-label" for="input-withdrawal-email">Email</label>
+              <div class="col-sm-9">
+                <input type="email" name="email" value="{{ form.email }}" id="input-withdrawal-email" class="form-control" maxlength="96" required>
+              </div>
+            </div>
+
+            <div class="form-group required">
+              <label class="col-sm-3 control-label" for="input-withdrawal-order">Αριθμός παραγγελίας ή άλλο στοιχείο σύμβασης</label>
+              <div class="col-sm-9">
+                <input type="text" name="order_reference" value="{{ form.order_reference }}" id="input-withdrawal-order" class="form-control" maxlength="100" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="input-withdrawal-items">Προϊόντα</label>
+              <div class="col-sm-9">
+                <textarea name="items" id="input-withdrawal-items" rows="4" class="form-control" maxlength="3000">{{ form.items }}</textarea>
+              </div>
+            </div>
+
+            <div class="form-group required">
+              <div class="col-sm-offset-3 col-sm-9">
+                <label>
+                  <input type="checkbox" name="consumer" value="1" {% if form.consumer == '1' %}checked{% endif %} required>
+                  Δηλώνω ότι η αγορά έγινε ως καταναλωτής για σκοπούς εκτός της επαγγελματικής μου δραστηριότητας.
+                </label>
+              </div>
+            </div>
+
+            {{ captcha }}
+          </fieldset>
+
+          <div class="buttons">
+            <button type="submit" class="btn btn-primary">Έλεγχος δήλωσης</button>
+          </div>
+        </form>
+      {% endif %}
+
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+{{ footer }}

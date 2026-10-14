@@ -2300,7 +2300,7 @@
 - [Πασχαλινές Πλακέ Αρωματικές Λαμπάδες](https://dekor.gr/plakes-aromatikes-pasxalines-lampades-xondriki): type_category
 - [Κυλινδρικές Πασχαλινές Λαμπάδες](https://dekor.gr/kylindrikes-aromatikes-lampades-20-xromata): type_category
 - [Πασχαλινές Τετράγωνες Αρωματικές Λαμπάδες](https://dekor.gr/tetragones-aromatikes-pasxalines-lampades): type_category
-- [Πασχαλινές Λαμπάδες Κηρήθρας Μελισσοκεριού](https://dekor.gr/lampades-apo-fysiko-melissokeri-xondriki): type_category
+- [Λαμπάδες Κηρήθρας από Μελισσοκέρι](https://dekor.gr/lampades-apo-fysiko-melissokeri-xondriki): type_category
 - [Ψαλμοί Δικαιοσύνης](https://dekor.gr/apokryfos-xeirismos-ton-psalmon-toy-dayid): type_category
 - [Αγγελικές Σφραγίδες](https://dekor.gr/aggelikoi-kosmoi-sfaires): type_category
 - [Σοφιστική Σολομωνική](https://dekor.gr/sofistiki-solomoniki): type_category
@@ -2317,13 +2317,10 @@
 - [Refill Κεριών](https://dekor.gr/refill-kerion): type_category
 - [Κεριά Citronella Εξωτερικού Χώρου](https://dekor.gr/keria-citronella-eksoterikou-xorou): type_category
 - [Dekor Candles](https://dekor.gr/dekor-candles): type_manufacturer
-- [Οροι Χρήσης](https://dekor.gr/oroi-xrisis): type_information
-- [Τρόποι Πληρωμής &amp;amp; Αποστολής](https://dekor.gr/tropoi-pliromis-apostolis): type_information
-- [Προσωπικά Δεδομένα](https://dekor.gr/prosopika-dedomena): type_information
-- [Σχετικά με εμάς](https://dekor.gr/sxetika-me-emas): type_information
-- [Όροι Χρήσης - Πολιτική Απορρήτου](https://dekor.gr/oroi-xrisis-politiki-aporritoy): type_information
+- [Όροι Χρήσης και Πώλησης - dekor.gr ](https://dekor.gr/oroi-xrisis): type_information
+- [Τρόποι Πληρωμής &amp;amp; Αποστολής - dekor.gr](https://dekor.gr/tropoi-pliromis-apostolis): type_information
+- [Πολιτική Απορρήτου - dekor.gr](https://dekor.gr/prosopika-dedomena): type_information
+- [Σχετικά με εμάς – dekor.gr](https://dekor.gr/sxetika-me-emas): type_information
 - [Πάσχα](https://dekor.gr/pasxa): type_information
 - [DEKOR CANDLES Ε.Ε. – Ελληνικά Χειροποίητα Διακοσμητικά Κεριά](https://dekor.gr/keimeno-arxikis-dekor): type_information
-- [Τρόποι Πληρωμής &amp;amp; Αποστολής](https://dekor.gr/tropoi-pliromis-apostolis-2-30): type_information
-- [Όροι Χρήσης &amp;amp; Προσωπικά Δεδομένα ](https://dekor.gr/oroi-xrisis-prosopika-dedomena): type_information
 - [Παραγωγή Κεριών – Χονδρική &amp;amp; Λιανική Πώληση](https://dekor.gr/paragogi-kerion-xondriki-lianiki): type_information

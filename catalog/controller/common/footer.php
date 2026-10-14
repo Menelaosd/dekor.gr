@@ -19,6 +19,9 @@ class ControllerCommonFooter extends Controller {
 		}
 		
 		$data['store_id'] = $this->config->get('config_store_id');
+		if ((int)$data['store_id'] !== 2) {
+			$data['withdrawal'] = $this->url->link('information/withdrawal', '', true);
+		}
 		
 		$data['year'] = date("Y");
 

@@ -265,7 +265,7 @@ if (isset($data['dimemsion'])) { $dimemsion = $data['dimemsion']; unset($data['d
 
 $setting_tags[] = array( 'route'	=> $route );
 
-$tagmanager['event_id'] = $this->gtm->eventid(); $this->gtm->saveGTMCookie('fb_eventid',$tagmanager['event_id']);
+$cookie_consent = $this->gtm->readConsent(); if (isset($cookie_consent['marketing_block']) && $cookie_consent['marketing_block'] === false) { $tagmanager['event_id'] = $this->gtm->eventid(); $this->gtm->saveGTMCookie('fb_eventid',$tagmanager['event_id']); } else { $tagmanager['event_id'] = false; }
 
 $tag_initiate = $this->gtm->getDataLayerSettings($setting_tags,$tagmanager,$dimemsion);
 
@@ -319,7 +319,7 @@ $setting_tags = array();
 
 $setting_tags[] = array( 'route'	=> $route );
 
-$tagmanager = $this->gtm->config(); $tagmanager['event_id'] = $this->gtm->eventid(); $tagmanager['url'] = $url; $this->gtm->saveGTMCookie('fb_eventid',$tagmanager['event_id']);
+$tagmanager = $this->gtm->config(); $cookie_consent = $this->gtm->readConsent(); if (isset($cookie_consent['marketing_block']) && $cookie_consent['marketing_block'] === false) { $tagmanager['event_id'] = $this->gtm->eventid(); $this->gtm->saveGTMCookie('fb_eventid',$tagmanager['event_id']); } else { $tagmanager['event_id'] = false; } $tagmanager['url'] = $url;
 
 $tag_initiate = $this->gtm->getDataLayerSettings($setting_tags,$tagmanager,$dimemsion);
 

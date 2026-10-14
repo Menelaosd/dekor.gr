@@ -514,9 +514,9 @@ header { position: static !important; }
 .dk-tab-info-text { min-width: 0; }
 .dk-tab-info h4 { font-family: var(--rz-serif); font-size: 18px; font-weight: 700; margin: 0 0 4px; color: var(--rz-ink); }
 .dk-tab-info .tab-text { color: var(--rz-muted); font-size: 13.5px; line-height: 1.55; margin: 0; }
-.dk-tab-all { white-space: nowrap; color: var(--rz-accent); font-weight: 600; font-size: 13.5px; display: inline-flex; align-items: center; gap: 7px; }
-.dk-tab-all i { font-size: 11px; transition: transform .2s var(--rz-ease); }
-.dk-tab-all:hover { color: var(--rz-accent-deep); } .dk-tab-all:hover i { transform: translateX(3px); }
+.dk-tab-all { white-space: nowrap; color: #fff !important; background: var(--rz-accent); font-weight: 700; font-size: 13.5px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 11px 18px; border-radius: 999px; text-decoration: none !important; transition: background .2s var(--rz-ease), transform .2s var(--rz-ease); }
+.dk-tab-all i { font-size: 12px; color: #fff; transition: transform .2s var(--rz-ease); }
+.dk-tab-all:hover, .dk-tab-all:focus { background: var(--rz-accent-deep); color: #fff !important; } .dk-tab-all:hover i { transform: translateX(3px); }
 
 /* slider mechanics */
 .dk-tabcontent > .tab-pane { display: none; }

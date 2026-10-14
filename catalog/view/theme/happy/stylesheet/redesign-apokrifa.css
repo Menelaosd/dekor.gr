@@ -423,7 +423,7 @@ body.checkout_checkout, body.checkout_cart, body.checkout_checkout #content, bod
 }
 
 /* ---- APOKRIFA: remove social icons from footer (per client) ------------- */
-.footer-social { display: none !important; }
+.footer-social { display: block !important; margin-top: 14px; }
 
 /* ============================================================================
    APOKRIFA ROUND 7 — card dividers EXACTLY like dekor (subtle line above the
@@ -496,3 +496,8 @@ footer h1, footer h2, footer h3, footer h4, footer h5, footer h6, footer .footer
 #search .live-search .product-price .price { color: var(--rz-accent-deep) !important; }
 #search .live-search .product-price .special { color: var(--rz-muted) !important; }
 #search .live-search .no-results { color: var(--rz-muted) !important; }
+
+/* APOKRIFA FOOTER ICON COLORS */
+.footer-social a > i { color: #60346f !important; -webkit-text-fill-color: #60346f !important; }
+.footer-social a:hover > i { color: #b58a3b !important; -webkit-text-fill-color: #b58a3b !important; }
+.footer-social a[aria-disabled="true"] { cursor: default !important; }

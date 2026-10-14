@@ -199,24 +199,37 @@
 						</div>
 						<div class="footer-text">
 							{% if store_id != 2 %}
-							Στο dekor.gr θα βρείτε, κεριά όλων των ειδών για χονδρική πώληση, πασχαλινές λαμπάδες, λαμπάδες γάμου, λαμπάδες βάπτισης, διακοσμητικά κεριά, κεριά εκδηλώσεων, εκκλησιαστικά κεριά, υλικά κατασκευής κεριών, αποστολή και στην Κύπρο.
+							Στο dekor.gr θα βρείτε κεριά για χονδρική και λιανική: πασχαλινές λαμπάδες, λαμπάδες γάμου και βάπτισης, διακοσμητικά και εκκλησιαστικά κεριά, κεριά εκδηλώσεων και υλικά κηροπλαστικής. Αποστολές και στην Κύπρο.
+{% else %}
+Στο apokrifa.gr θα βρείτε τελετουργικά είδη, θυμιάματα, βότανα, έλαια, σφραγίδες και φυλαχτά, καθώς και κείμενα για τη μελέτη ιστορικών και συμβολικών παραδόσεων.
 							{% endif %}
 						</div>
 						<div class="footer-social">
-							<a href="https://www.facebook.com/" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-							<a href="https://www.instagram.com/" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram"></i></a>
+							{% if store_id != 2 %}
+<a href="https://www.facebook.com/dekor.gr" target="_blank" rel="noopener noreferrer" title="Facebook DEKOR"><i class="fab fa-facebook-f"></i></a>
+<a href="https://www.instagram.com/dekor_candles/" target="_blank" rel="noopener noreferrer" title="Instagram DEKOR"><i class="fab fa-instagram"></i></a>
+<a href="https://www.youtube.com/channel/UCeIH2x4B12GO5TwbaGZhZgw" target="_blank" rel="noopener noreferrer" title="YouTube DEKOR"><i class="fab fa-youtube"></i></a>
+<a href="https://gr.pinterest.com/dekorcandles/" target="_blank" rel="noopener noreferrer" title="Pinterest DEKOR"><i class="fab fa-pinterest-p"></i></a>
+{% else %}
+<a href="https://www.facebook.com/profile.php?id=61594992213219" target="_blank" rel="noopener noreferrer" title="Facebook APOKRIFA"><i class="fab fa-facebook-f"></i></a>
+							<a href="https://www.instagram.com/apokrifa.gr/" target="_blank" rel="noopener noreferrer" title="Instagram APOKRIFA"><i class="fab fa-instagram"></i></a>
+<a aria-disabled="true" title="YouTube APOKRIFA - Σύντομα"><i class="fab fa-youtube"></i></a>
+<a aria-disabled="true" title="Pinterest APOKRIFA - Σύντομα"><i class="fab fa-pinterest-p"></i></a>
+{% endif %}
 							<a href="tel:{{ telephone }}" title="{{ telephone }}"><i class="fas fa-phone"></i></a>
 							<a href="{{ contact }}" title="{{ text_contact }}"><i class="fas fa-envelope"></i></a>
 						</div>
 					</div>
 				</div>
 				<div class="footer-block-2 footer-block col-lg-3 col-md-3 col-sm-12 col-xs-12">
-					<h3 class="footer-title">Πληροφοριές</h3>
+					<h3 class="footer-title">Πληροφορίες</h3>
 					 <ul class="list-unstyled footer-nav">
 						 {% for information in informations %}
 							<li><a href="{{ information.href }}">{{ information.title }}</a></li>
 						 {% endfor %}
-						 <li><a href="{{ contact }}">{{ text_contact }}</a></li>
+                                                {% if store_id != 2 %}
+                                                        <li class="footer-withdrawal"><a href="{{ withdrawal }}">Υπαναχώρηση από σύμβαση</a></li>
+                                                {% endif %}
 					</ul>
 				</div>
 				<div class="footer-block-3 footer-block col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -235,30 +248,70 @@
 						{# <li><i class="fas fa-envelope"></i><div><a class="footer-mail" href="mailto:info@dekor.gr">info@dekor.gr</a></div></li> #}
 						
 						{% if store_id != 2 %}
-							<li><i class="fas fa-clock"></i><div>Δευτέρα - Παρασκευή<span>08:30 πμ - 16.30 μμ</span></div></li>
-							<li><i class="fas fa-clock" style="flex:0 0 40px;"></i><div>Σάββατο<span>09.00 πμ - 14.00 μμ</span>
+							<li><i class="fas fa-clock"></i><div>Δευτέρα - Παρασκευή<span>08:30 - 16:30</span></div></li>
+							<li><i class="fas fa-clock" style="flex:0 0 40px;"></i><div>Σάββατο<span>09:00 - 14:00</span>
 							{#<div class="footer-red" style="{% if store_id == 2 %}color:#111 {% else %}color:#fff{% endif %}">Θα είμαστε κλειστά κάθε Σάββατο από την 1η Μαΐου έως τις 30 Σεπτεμβρίου</div>#}
 							</div></li>
 						{% else %}
-							<li><i class="fas fa-clock"></i><div>Δευτέρα - Παρασκευή<span>10:00 πμ - 16.00 μμ</span></div></li>
+							<li><i class="fas fa-clock"></i><div>Δευτέρα - Παρασκευή<span>09:00 - 15:00</span></div></li>
+<li><i class="fas fa-clock" style="flex:0 0 40px;"></i><div>Σάββατο<span>09:00 - 14:00</span></div></li>
 						{% endif %}
 					 
 							{% if store_id != 2 %}
-								<li class="list-phone"><i class="fas fa-phone"></i><a href="tel:{{ telephone }}"><span>{{ telephone }}</span></a></li>
+								<li class="list-phone"><i class="fas fa-phone"></i><a href="tel:+302103469717"><span>+30 210 346 9717</span></a></li>
 							{% else %}
 								<li class="list-phone"><i class="fas fa-phone"></i><a href="tel:{{ telephone }}"><span>{{ telephone }}</span></a></li>
+<li><i class="fas fa-envelope"></i><div><span class="footer-mail">info@apokrifa.gr</span></div></li>
 							{% endif %}
-					</ul>
+					                                                {% if store_id != 2 %}
+                                                <li><i class="fas fa-envelope"></i><div><span class="footer-mail">info@dekor.gr</span></div></li>
+                                                {% endif %}
+</ul>
 				</div>
 				<div class="clearfix"></div>
 			</div>
 			<div class="clearfix"></div>
 			<div class="footer-bottom">
-				<div class="footer-bottom-1 col-lg-4 col-md-4 col-sm-12 col-xs-12 text-left">
+				<div class="footer-bottom-1 col-lg-4 col-md-4 col-sm-12 col-xs-12 text-left{% if store_id != 2 %} footer-bottom-dekor{% endif %}">
 				© {{ year }} {% if store_id == 2 %}apokrifa.gr {% else %}dekor.gr {% endif %} All Rights Reserved
 				</div>
 				<div class="footer-bottom-2 col-lg-4 col-md-4 col-sm-12 col-xs-12 text-center">
-					<img src="image/catalog/cards.png" alt="Τρόποι Πληρωμής">
+					<style>
+@media screen and (min-width: 768px) {
+    .footer-bottom-dekor {
+        padding-top: 20px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .footer-payment-logos {
+        flex-wrap: nowrap !important;
+        gap: 2px !important;
+        justify-content: space-between !important;
+    }
+    .footer-payment-logos img {
+        height: 22px !important;
+        max-width: calc((100vw - 56px) / 7) !important;
+        min-width: 0;
+    }
+    .footer-payment-logos img[alt="IRIS"] {
+        height: 24px !important;
+    }
+    .footer-payment-logos img[alt="Visa"] {
+        height: 18px !important;
+        max-width: calc((100vw - 70px) / 7) !important;
+    }
+}
+</style>
+<div class="footer-payment-logos" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;width:100%;">
+    <img src="image/catalog/PLIROMES/vivawallet.svg" alt="Viva Wallet" style="display:block;width:auto;height:43px;max-width:125px;object-fit:contain;">
+    <img src="image/catalog/PLIROMES/iris.svg" alt="IRIS" style="display:block;width:auto;height:60px;max-width:138px;object-fit:contain;">
+    <img src="image/catalog/PLIROMES/visa_updated_1.svg" alt="Visa" style="display:block;width:auto;height:23px;max-width:65px;object-fit:contain;">
+    <img src="image/catalog/PLIROMES/googlepay.svg" alt="Google Pay" style="display:block;width:auto;height:55px;max-width:125px;object-fit:contain;">
+    <img src="image/catalog/PLIROMES/applepay.svg" alt="Apple Pay" style="display:block;width:auto;height:53px;max-width:125px;object-fit:contain;">
+    <img src="image/catalog/PLIROMES/mastercard.svg" alt="Mastercard" style="display:block;width:auto;height:40px;max-width:125px;object-fit:contain;">
+    <img src="image/data/Banners/paypal.png" alt="PayPal" style="display:block;width:auto;height:33px;max-width:108px;object-fit:contain;">
+</div>
 				</div>
 				<div class="footer-bottom-3 col-lg-4 col-md-4 col-sm-12 col-xs-12 text-right">
 				</div>

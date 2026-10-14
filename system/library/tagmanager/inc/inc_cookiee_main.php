@@ -140,7 +140,7 @@ link: '" . $eu_cookie['cookie_link'] . "',onAccept: function(){
 	dataLayer.push({'event': 'site','cc_site' : '1'});
 	if ($.fn.gdprcookie.preference('analytics') === true) { gtag('consent', 'update', {'analytics_storage': 'granted'});var cc_analytics=1;}
 	if ($.fn.gdprcookie.preference('marketing') === true) {gtag('consent', 'update', {'ad_storage': 'granted'});var cc_marketing=1;}
-	},uncheckBoxes: false,acceptBtnLabel: '" . $eu_cookie['cookie_button1'] . "',advancedBtnLabel: '" . $eu_cookie['cookie_button2'] ."', moreInfoLabel: '" . $eu_cookie['cookie_button3'] ."',cookieTypesTitle: '" . $eu_cookie['cookie_text2'] ."',fixedCookieTypeLabel: 'Essential',fixedCookieTypeDesc: 'These are essential for the website to work correctly.',cookieTypes: [{type: 'Analytics',value: 'analytics',description: 'Cookies related to site visits, browser types, etc.',status: ' '},{type: 'Marketing',value: 'marketing',description: 'Cookies related to marketing, e.g. newsletters, social media, etc',status: 'checked'}],}";
+	},uncheckBoxes: false,acceptBtnLabel: '" . $eu_cookie['cookie_button1'] . "',advancedBtnLabel: '" . $eu_cookie['cookie_button2'] ."', moreInfoLabel: '" . $eu_cookie['cookie_button3'] ."',cookieTypesTitle: '" . $eu_cookie['cookie_text2'] ."',fixedCookieTypeLabel: 'Απαραίτητα',fixedCookieTypeDesc: 'Απαραίτητα cookies για την ασφαλή και σωστή λειτουργία του καταστήματος.',cookieTypes: [{type: 'Ανάλυσης',value: 'analytics',description: 'Στατιστικά επισκέψεων και χρήσης της ιστοσελίδας.',status: ' '},{type: 'Διαφήμισης',value: 'marketing',description: 'Μέτρηση διαφημίσεων και προώθηση προϊόντων.',status: ' '}],}";
 $eu_js .= "\n" ;
 
 $tmanalytics .= '<script type="text/javascript" nitro-exclude="">';

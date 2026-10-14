@@ -1,0 +1,95 @@
+[07-Oct-2026 17:16:34 UTC] PHP Fatal error:  Uncaught Error: Class "Twig\Loader\ArrayLoader" not found in /home/chshost/storage/modification/system/library/template/twig.php:45
+Stack trace:
+#0 /home/chshost/storage/modification/system/library/template.php(57): Template\Twig->render()
+#1 /home/chshost/storage/modification/system/engine/loader.php(151): Template->render()
+#2 /home/chshost/storage/modification/admin/controller/common/header.php(97): Loader->view()
+#3 /home/chshost/storage/modification/system/engine/action.php(79): ControllerCommonHeader->index()
+#4 /home/chshost/storage/modification/system/engine/loader.php(48): Action->execute()
+#5 /home/chshost/storage/modification/admin/controller/marketplace/modification.php(981): Loader->controller()
+#6 /home/chshost/storage/modification/admin/controller/marketplace/modification.php(19): ControllerMarketplaceModification->getList()
+#7 /home/chshost/storage/modification/system/engine/action.php(79): ControllerMarketplaceModification->index()
+#8 /home/chshost/public_html/admin/controller/startup/router.php(26): Action->execute()
+#9 /home/chshost/storage/modification/system/engine/action.php(79): ControllerStartupRouter->index()
+#10 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#11 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#12 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#13 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#14 /home/chshost/public_html/admin/index.php(20): start()
+#15 {main}
+  thrown in /home/chshost/storage/modification/system/library/template/twig.php on line 45
+[07-Oct-2026 17:18:18 UTC] PHP Fatal error:  Uncaught Error: Class "Twig\Loader\ArrayLoader" not found in /home/chshost/storage/modification/system/library/template/twig.php:45
+Stack trace:
+#0 /home/chshost/storage/modification/system/library/template.php(57): Template\Twig->render()
+#1 /home/chshost/storage/modification/system/engine/loader.php(151): Template->render()
+#2 /home/chshost/storage/modification/admin/controller/common/header.php(97): Loader->view()
+#3 /home/chshost/storage/modification/system/engine/action.php(79): ControllerCommonHeader->index()
+#4 /home/chshost/storage/modification/system/engine/loader.php(48): Action->execute()
+#5 /home/chshost/storage/modification/admin/controller/marketplace/modification.php(981): Loader->controller()
+#6 /home/chshost/storage/modification/admin/controller/marketplace/modification.php(19): ControllerMarketplaceModification->getList()
+#7 /home/chshost/storage/modification/system/engine/action.php(79): ControllerMarketplaceModification->index()
+#8 /home/chshost/public_html/admin/controller/startup/router.php(26): Action->execute()
+#9 /home/chshost/storage/modification/system/engine/action.php(79): ControllerStartupRouter->index()
+#10 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#11 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#12 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#13 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#14 /home/chshost/public_html/admin/index.php(30): start()
+#15 {main}
+  thrown in /home/chshost/storage/modification/system/library/template/twig.php on line 45
+[07-Oct-2026 17:20:07 UTC] PHP Fatal error:  Uncaught Error: Class "Twig\Loader\ArrayLoader" not found in /home/chshost/public_html/system/library/template/twig.php:37
+Stack trace:
+#0 /home/chshost/public_html/system/library/template.php(51): Template\Twig->render()
+#1 /home/chshost/public_html/system/engine/loader.php(148): Template->render()
+#2 /home/chshost/public_html/admin/controller/common/header.php(96): Loader->view()
+#3 /home/chshost/public_html/system/engine/action.php(79): ControllerCommonHeader->index()
+#4 /home/chshost/public_html/system/engine/loader.php(48): Action->execute()
+#5 /home/chshost/public_html/admin/controller/marketplace/modification.php(781): Loader->controller()
+#6 /home/chshost/public_html/admin/controller/marketplace/modification.php(17): ControllerMarketplaceModification->getList()
+#7 /home/chshost/public_html/system/engine/action.php(79): ControllerMarketplaceModification->index()
+#8 /home/chshost/public_html/admin/controller/startup/router.php(26): Action->execute()
+#9 /home/chshost/public_html/system/engine/action.php(79): ControllerStartupRouter->index()
+#10 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#11 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#12 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#13 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#14 /home/chshost/public_html/admin/index.php(20): start()
+#15 {main}
+  thrown in /home/chshost/public_html/system/library/template/twig.php on line 37
+[07-Oct-2026 17:20:10 UTC] PHP Fatal error:  Uncaught Error: Class "Twig\Loader\ArrayLoader" not found in /home/chshost/storage/modification/system/library/template/twig.php:45
+Stack trace:
+#0 /home/chshost/storage/modification/system/library/template.php(57): Template\Twig->render()
+#1 /home/chshost/storage/modification/system/engine/loader.php(151): Template->render()
+#2 /home/chshost/storage/modification/admin/controller/common/header.php(97): Loader->view()
+#3 /home/chshost/storage/modification/system/engine/action.php(79): ControllerCommonHeader->index()
+#4 /home/chshost/storage/modification/system/engine/loader.php(48): Action->execute()
+#5 /home/chshost/storage/modification/admin/controller/marketplace/modification.php(981): Loader->controller()
+#6 /home/chshost/storage/modification/admin/controller/marketplace/modification.php(19): ControllerMarketplaceModification->getList()
+#7 /home/chshost/storage/modification/system/engine/action.php(79): ControllerMarketplaceModification->index()
+#8 /home/chshost/public_html/admin/controller/startup/router.php(26): Action->execute()
+#9 /home/chshost/storage/modification/system/engine/action.php(79): ControllerStartupRouter->index()
+#10 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#11 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#12 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#13 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#14 /home/chshost/public_html/admin/index.php(20): start()
+#15 {main}
+  thrown in /home/chshost/storage/modification/system/library/template/twig.php on line 45
+[07-Oct-2026 17:20:54 UTC] PHP Fatal error:  Uncaught Error: Class "Twig\Loader\ArrayLoader" not found in /home/chshost/storage/modification/system/library/template/twig.php:45
+Stack trace:
+#0 /home/chshost/storage/modification/system/library/template.php(57): Template\Twig->render()
+#1 /home/chshost/storage/modification/system/engine/loader.php(151): Template->render()
+#2 /home/chshost/storage/modification/admin/controller/common/header.php(97): Loader->view()
+#3 /home/chshost/storage/modification/system/engine/action.php(79): ControllerCommonHeader->index()
+#4 /home/chshost/storage/modification/system/engine/loader.php(48): Action->execute()
+#5 /home/chshost/storage/modification/admin/controller/marketplace/modification.php(981): Loader->controller()
+#6 /home/chshost/storage/modification/admin/controller/marketplace/modification.php(19): ControllerMarketplaceModification->getList()
+#7 /home/chshost/storage/modification/system/engine/action.php(79): ControllerMarketplaceModification->index()
+#8 /home/chshost/public_html/admin/controller/startup/router.php(26): Action->execute()
+#9 /home/chshost/storage/modification/system/engine/action.php(79): ControllerStartupRouter->index()
+#10 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#11 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#12 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#13 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#14 /home/chshost/public_html/admin/index.php(30): start()
+#15 {main}
+  thrown in /home/chshost/storage/modification/system/library/template/twig.php on line 45
