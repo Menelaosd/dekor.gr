@@ -60,21 +60,21 @@
     {% endfor %}
 	 {# TO APPEND AS LAST STYLE FOR MODIFICATIONS #}
 	 {% if store_id == 2 %}
-		<link href="catalog/view/theme/happy/stylesheet/apokrifa.css?v=10098040010.142" rel="stylesheet">
+		<link href="catalog/view/theme/happy/stylesheet/apokrifa.css?v=10098040010.143" rel="stylesheet">
 	 {% else %}
 		<link href="catalog/view/theme/happy/stylesheet/custom.css?v=10098040010.142" rel="stylesheet">
 	 {% endif %}
 
 	 {# ===== 2026 REDESIGN (layered, revertible — remove these 4 lines to roll back) ===== #}
 	 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-	 <link href="catalog/view/theme/happy/stylesheet/redesign-2026.css?v=84" rel="stylesheet">
+	 <link href="catalog/view/theme/happy/stylesheet/redesign-2026.css?v=85" rel="stylesheet">
 	 {% if store_id == 2 %}
-		<link href="catalog/view/theme/happy/stylesheet/redesign-apokrifa.css?v=84" rel="stylesheet">
+		<link href="catalog/view/theme/happy/stylesheet/redesign-apokrifa.css?v=85" rel="stylesheet">
 	 {% else %}
 		<link href="catalog/view/theme/happy/stylesheet/redesign-dekor.css?v=85" rel="stylesheet">
 	 {% endif %}
 	 <link href="catalog/view/theme/happy/stylesheet/redesign-cards.css?v=3" rel="stylesheet">{# product + blog cards polish (remove to roll back) #}
-	 <link href="catalog/view/theme/happy/stylesheet/redesign-header.css?v=11" rel="stylesheet">{# header / icons / cart / nav polish (remove to roll back) #}
+	 <link href="catalog/view/theme/happy/stylesheet/redesign-header.css?v=15" rel="stylesheet">{# header / icons / cart / nav polish (remove to roll back) #}
 	 <link href="catalog/view/javascript/dk-search/dk-search.css?v=2" rel="stylesheet">{# live search (remove these 2 lines to fall back to the old live_search) #}
 	 <script src="catalog/view/javascript/dk-search/dk-search.js?v=4" defer></script>
 
@@ -88,6 +88,10 @@
     {% for analytic in analytics %}
         {{ analytic }}
     {% endfor %}
+    {% if store_id == 2 %}
+        <link href="catalog/view/theme/happy/stylesheet/apokrifa-monochrome.css?v=6" rel="stylesheet">
+        <script src="catalog/view/theme/happy/javascript/apokrifa-navigation.js?v=1" defer></script>
+    {% endif %}
 </head>
 <body class="{{ page_class }}">
 	<div class="ho_wrapper">   
@@ -129,15 +133,11 @@
 						{{ cart }}
 					</div>
 				</div>
-				{% if not mobile %}
 					<div id="desk-menu" class="dk-navrow visible-lg visible-md">
 						<nav class="main-menu">{{ menu }}</nav>
 					</div>
-				{% endif %}
 			</div>
-			{% if mobile %}
 				<div class="mmenuparent" style="display:none;"><div id="mmenu">{{ menu }}</div></div>
-			{% endif %}
 			<div class="hidden">
 				<ul class="mobile-custom-submenu">
 					<li class="menu-separator mm-navbar"><a class="mm-navbar__title">ΛΟΓΑΡΙΑΣΜΟΣ</a></li>

@@ -7,6 +7,45 @@
 
 :root { --hd-surface: #F6F7F9; --hd-line: var(--rz-border, #ECEEF3); }
 
+/* Desktop dropdown indicators: small chevrons, rather than Bootstrap's
+   collapsed white border triangle. Shared by Dekor and Apokrifa. */
+#mmenu .dropdown-toggle > .caret { display: none !important; } /* mmenu supplies its own next-panel chevron */
+@media (min-width: 992px) {
+  #desk-menu .main-menu > .navbar-nav {
+    display: flex !important;
+    width: 100%;
+    float: none !important;
+    align-items: stretch;
+  }
+  #desk-menu .main-menu > .navbar-nav::before,
+  #desk-menu .main-menu > .navbar-nav::after { display: none; }
+  #desk-menu .main-menu > .navbar-nav > li { flex: 1 1 0; min-width: 0; }
+  #desk-menu .main-menu > .navbar-nav > li > a {
+    display: block !important;
+    height: 100%;
+    box-sizing: border-box;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+  #desk-menu .main-menu .navbar-nav > li > a > .caret {
+    display: inline-block !important;
+    flex: 0 0 6px;
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    margin: -4px 0 0;
+    vertical-align: middle;
+    border: 0 !important;
+    border-right: 1.5px solid currentColor !important;
+    border-bottom: 1.5px solid currentColor !important;
+    background: transparent !important;
+    color: #686868 !important;
+    transform: rotate(45deg);
+  }
+}
+
 /* ---------- account + wishlist as round icon buttons ------------------------- */
 .dk-acct, .dk-wish {
 	position: relative; display: inline-flex !important; align-items: center; justify-content: center;
