@@ -2,7 +2,8 @@
 <link rel="stylesheet" href="catalog/view/javascript/jquery/photoswipe/default-skin/default-skin.css"> 
 <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/swiper/css/swiper.min.css">
 <script type="text/javascript" src="catalog/view/javascript/jquery/swiper/js/swiper.jquery.js"></script>
-<link rel="stylesheet" href="catalog/view/theme/happy/stylesheet/redesign-pdp.css?v=8">
+<link rel="stylesheet" href="catalog/view/theme/happy/stylesheet/redesign-pdp.css?v=12">
+<script src="catalog/view/theme/happy/javascript/product-share.js?v=2" defer></script>
 <div class="container breadcrumbs-container container-max-width">
   <ul class="breadcrumb">
 	{% for breadcrumb in breadcrumbs %}
@@ -46,24 +47,24 @@
 								{% endfor %}
 							{% endif %}
 						</div>
-						<div class="swiper-button-next"></div>
-						<div class="swiper-button-prev"></div>
+						<button type="button" class="swiper-button-next" aria-label="Επόμενη εικόνα"></button>
+						<button type="button" class="swiper-button-prev" aria-label="Προηγούμενη εικόνα"></button>
 					</div>
 					{% if images %}
 						<div class="thumb">
 							{% if thumb %}
 								<div class="swiper-slide">
-									<a href="#">
-										<img src="{{ popup }}" title="{{ heading_title }}" alt="{{ heading_title }}">
-									</a>
+									<button type="button" class="pdp-thumb" aria-label="Εικόνα 1" aria-pressed="true">
+										<img src="{{ thumb }}" alt="{{ heading_title }}">
+									</button>
 								</div>
 							{% endif %}
 							{% if images %}
 								{% for image in images %}
 									<div class="swiper-slide">
-										<a href="#">
-											<img src="{{ image.popup }}" title="{{ heading_title }}" alt="{{ heading_title }}">
-										</a>
+										<button type="button" class="pdp-thumb" aria-label="Εικόνα {{ loop.index + (thumb ? 1 : 0) }}" aria-pressed="false">
+											<img src="{{ image.thumb|default(image.popup) }}" alt="{{ heading_title }}" loading="lazy">
+										</button>
 									</div>
 								{% endfor %}
 							{% endif %}
@@ -381,19 +382,19 @@
 						{% if quantity > 0 and working and not storeonly %}
 							<input type="hidden" name="product_id" value="{{ product_id }}" />
 							<button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="product-cart-button">
-								<i class="fa fa-shopping-bag"></i> <span>{{ button_cart}}</span>
+								<svg class="pdp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 7h14l1 14H4L5 7Z"/><path d="M8 9V6a4 4 0 0 1 8 0v3"/></svg> <span>{{ button_cart}}</span>
 							</button>
 						{% else %}
-							<button type="button" id="button-cart-disabled" class="product-cart-button">
+							<button type="button" id="button-cart-disabled" class="product-cart-button" disabled>
 								<i class="fa fa-shopping-bag"></i> <span>{{ storeonly ? 'Μόνο στο Κατάστημα' : 'Μη Διαθέσιμο' }}</span>
 							</button>
 						{% endif %}
 
 					</div>
 					<div class="product-wishlist">
-						<a title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');">
-							<i class="fal fa-heart"></i> <span>{{ button_wishlist }}</span>
-						</a>
+						<button type="button" title="{{ button_wishlist }}" aria-label="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');">
+							<svg class="pdp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+						</button>
 					</div>
 				</div>
 				
@@ -423,16 +424,18 @@
 						</div>
 					{% endif %}
 					<div class="product-share">
-						<span>{{ text_share }}</span>
-						<a href="#">
-							<i class="fab fa-facebook-f"></i>
+						{% set share_url = (breadcrumbs|last).href|replace({'&amp;': '&'}) %}
+						<span class="product-share-label">{{ text_share }}</span>
+						<a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url|url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Κοινοποίηση στο Facebook">
+							<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 21v-8h3l.5-4H14V7c0-1 .3-2 2-2h2V1.5A24 24 0 0 0 15 1c-3 0-5 1.8-5 5v3H7v4h3v8h4Z"/></svg><span>Facebook</span>
 						</a>
-						<a href="#">
-							<i class="fab fa-instagram"></i>
+						<a href="https://pinterest.com/pin/create/button/?url={{ share_url|url_encode }}&amp;media={{ popup|url_encode }}&amp;description={{ heading_title|url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Κοινοποίηση στο Pinterest">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m8 22 3-13m-1 8c2 2 7 1 8-5 1-5-1-9-6-9S4 7 4 11c0 2 1 3 2 4m5-3c-1-4 4-6 4-2 0 3-2 6-4 4"/></svg><span>Pinterest</span>
 						</a>
-						<a href="#">
-							<i class="fab fa-pinterest-p"></i>
-						</a>
+						<button type="button" class="product-share-copy" data-share-url="{{ share_url }}" aria-label="Αντιγραφή συνδέσμου">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/></svg><span>Αντιγραφή</span>
+						</button>
+						<span class="sr-only product-share-status" role="status" aria-live="polite"></span>
 					</div>
 				</div>
 			</section>
@@ -441,23 +444,25 @@
 		{% if description or nutri_description%}
 		<div class="product-tabs">
 			<ul class="nav nav-tabs">
-				{% if nutri_description %}
+				{% if description %}
 				<li><a data-toggle="tab" href="#home">Περιγραφή</a></li> 
 				{% endif %}
-				{% if description %}
-				<li><a data-toggle="tab" href="#nutri">Περιγραφή</a></li> 
+				{% if nutri_description %}
+				<li><a data-toggle="tab" href="#nutri">Περισσότερες πληροφορίες</a></li>
 				{% endif %}
 			</ul>
 
 			<div class="tab-content">
+				{% if description %}
 				<div id="home" class="tab-pane fade">
 					<div class="product_description" itemprop="description">
 						{{ description }}
 					</div>
 				</div>
+				{% endif %}
 				{% if nutri_description %}
 					<div id="nutri" class="tab-pane fade">
-						{{ description }}
+						{{ nutri_description }}
 					</div>
 				{% endif %}
 			</div>
@@ -510,11 +515,20 @@
             $(this).parent().addClass('actives'); //just to make a visual sense    
         });
 
+        function syncGallery(swiper) {
+            $('.product__images .thumb .swiper-slide').each(function(index) {
+                var active = index === swiper.activeIndex;
+                $(this).toggleClass('active', active).find('button').attr('aria-pressed', String(active));
+            });
+        }
         var mySwiper = new Swiper('#product_img_gallery',{
             pagination: '.pagination',
             paginationClickable: true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
+            nextButton: '#product_img_gallery .swiper-button-next',
+            prevButton: '#product_img_gallery .swiper-button-prev',
+            keyboardControl: true,
+            onInit: syncGallery,
+            onSlideChangeEnd: syncGallery,
         });
 
         mySwiper.on('onSliderMove', function () {
@@ -522,11 +536,9 @@
         });
 
         $(".product__images .thumb div").eq(0).addClass('active');
-        $(".product__images .thumb").on('click', 'div', function(e){
+        $(".product__images .thumb").on('click', '.pdp-thumb', function(e){
             e.preventDefault();
-            $(".product__images .thumb div").removeClass('active');
-            $(this).addClass('active');
-            mySwiper.slideTo($(this).index(), 500);
+            mySwiper.slideTo($(this).parent().index(), 250);
         });
 
         // $('.product__images').css('height', $('.product__content').innerHeight());
