@@ -85,3 +85,297 @@ body.dk-hd-docked header .header-wrapper {
 /* ---------- cart button: text was pushed 5px down by an old `#cart-total { position:relative; top:5px }` ---- */
 #cart #cart-total { top: 0 !important; }
 header #cart { margin-bottom: 0 !important; } /* stock OC margin pushed the cart 5px above the other header icons */
+#cart .menu-cart-icon::before {
+    background: #000 !important;
+}.dk-acct,
+.dk-wish,
+#cart > a.menu-cart-icon,
+.dk-acct:hover,
+.dk-wish:hover,
+#cart > a.menu-cart-icon:hover {
+    background: #fff !important;
+}
+.dk-acct:hover,
+.dk-wish:hover,
+#cart > a.menu-cart-icon:hover {
+    background: rgba(0, 0, 0, 0.10) !important;
+}
+
+.dk-acct:hover,
+.dk-wish:hover {
+    color: #000 !important;
+}
+
+#cart > a.menu-cart-icon:hover::before {
+    background: #000 !important;
+}
+#wishlist-total .notif {
+    background: rgba(0, 0, 0, 0.10) !important;
+    color: #000 !important;
+    border: 2px solid rgba(0, 0, 0, 0.10) !important;
+}
+/* Κεντρικό μενού και υποκατηγορίες: λευκό φόντο, μαύρα γράμματα */
+#desk-menu,
+#desk-menu .main-menu,
+#desk-menu .main-menu .nav.navbar-nav > li > a,
+#desk-menu .main-menu .nav.navbar-nav > li > a:hover,
+#desk-menu .main-menu .nav.navbar-nav > li.open > a,
+#desk-menu .main-menu .dropdown-menu,
+#desk-menu .main-menu .dropdown-menu > li > a,
+#desk-menu .main-menu .dropdown-menu > li > a:hover,
+#desk-menu .dropdown-megamenu,
+#desk-menu .dropdown-megamenu a,
+#desk-menu .dropdown-megamenu a:hover {
+    background: #fff !important;
+    background-image: none !important;
+}
+
+#desk-menu .main-menu a,
+#desk-menu .main-menu a *,
+#desk-menu .dropdown-megamenu a,
+#desk-menu .dropdown-megamenu a * {
+    color: #000 !important;
+}
+#desk-menu.dk-navrow,
+#desk-menu,
+.dk-navrow {
+    background: #fff !important;
+    background-image: none !important;
+}
+#desk-menu::before {
+    border-top-color: #fff !important;
+}
+
+header .header-wrapper {
+    border-bottom-color: #fff !important;
+}
+#desk-menu,
+#desk-menu *,
+#desk-menu::before,
+header .header-wrapper {
+    border-color: #fff !important;
+}
+#desk-menu .main-menu ul.dropdown-menu > li > a:hover,
+#desk-menu .main-menu ul.dropdown-menu > li > a:focus {
+    background: rgba(0, 0, 0, 0.10) !important;
+    color: #000 !important;
+}
+#desk-menu .main-menu .nav.navbar-nav > li > a:hover,
+#desk-menu .main-menu .nav.navbar-nav > li > a:focus,
+#desk-menu .main-menu .nav.navbar-nav > li.open > a {
+    background: rgba(0, 0, 0, 0.10) !important;
+    color: #000 !important;
+    border-radius: 8px !important;
+}
+.category-caption-box h1 span {
+    background: none !important;
+    -webkit-text-fill-color: rgba(0, 0, 0, 0.50) !important;
+    color: rgba(0, 0, 0, 0.50) !important;
+}
+.product-block-actions .product-wishlist,
+.product-block-actions .product-wishlist i,
+.product-block-actions .product-wishlist:hover,
+.product-block-actions .product-wishlist:hover i,
+.product-block-actions .product-wishlist.active,
+.product-block-actions .product-wishlist.active i {
+    color: rgba(0, 0, 0, 0.50) !important;
+}
+
+/* Apokrifa: χρώματα κουμπιού «Στο Καλάθι» */
+.product-block-actions a.awe-button.product-quick-view {
+    background: #F4F3F7 !important;
+    background-color: #F4F3F7 !important;
+    border-color: #F4F3F7 !important;
+    color: #000 !important;
+}
+
+.product-block-actions a.awe-button.product-quick-view *,
+.product-block-actions a.awe-button.product-quick-view *::before {
+    color: #000 !important;
+}
+
+.product-block-actions a.awe-button.product-quick-view:hover,
+.product-block-actions a.awe-button.product-quick-view:focus {
+    background: #808080 !important;
+    background-color: #808080 !important;
+    border-color: #808080 !important;
+    color: #000 !important;
+}
+
+.product-block-actions a.awe-button.product-quick-view:hover *,
+.product-block-actions a.awe-button.product-quick-view:hover *::before,
+.product-block-actions a.awe-button.product-quick-view:focus *,
+.product-block-actions a.awe-button.product-quick-view:focus *::before {
+    color: #000 !important;
+}
+
+/* Apokrifa: μαύρο εικονίδιο και κείμενο στο κουμπί καλαθιού */
+.product-block-actions a.awe-button.product-quick-view,
+.product-block-actions a.awe-button.product-quick-view:hover,
+.product-block-actions a.awe-button.product-quick-view:focus {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+.product-block-actions a.awe-button.product-quick-view i.fa-shopping-cart,
+.product-block-actions a.awe-button.product-quick-view i.fa-shopping-cart::before,
+.product-block-actions a.awe-button.product-quick-view span,
+.product-block-actions a.awe-button.product-quick-view span *,
+.product-block-actions a.awe-button.product-quick-view:hover i.fa-shopping-cart,
+.product-block-actions a.awe-button.product-quick-view:hover i.fa-shopping-cart::before,
+.product-block-actions a.awe-button.product-quick-view:hover span,
+.product-block-actions a.awe-button.product-quick-view:hover span *,
+.product-block-actions a.awe-button.product-quick-view:focus i.fa-shopping-cart,
+.product-block-actions a.awe-button.product-quick-view:focus i.fa-shopping-cart::before,
+.product-block-actions a.awe-button.product-quick-view:focus span,
+.product-block-actions a.awe-button.product-quick-view:focus span * {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+/* Apokrifa: μαύρη λεζάντα «Στο Καλάθι» */
+#content .product-block .product-block-actions .product-quick-view span,
+#content .product-block .product-block-actions .product-quick-view:hover span,
+#content .product-block .product-block-actions .product-quick-view:focus span {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    opacity: 1 !important;
+}
+
+/* Apokrifa: ακριβές ανοιχτό φόντο στο κουμπί καλαθιού */
+#content .product-block .product-block-actions .product-quick-view,
+#content .product-block .product-block-actions .product-quick-view:link,
+#content .product-block .product-block-actions .product-quick-view:visited {
+    background: #F4F3F7 !important;
+    background-color: #F4F3F7 !important;
+    background-image: none !important;
+    border-color: #F4F3F7 !important;
+}
+
+#content .product-block .product-block-actions .product-quick-view:hover,
+#content .product-block .product-block-actions .product-quick-view:focus {
+    background: #808080 !important;
+    background-color: #808080 !important;
+    background-image: none !important;
+    border-color: #808080 !important;
+}
+
+/* Apokrifa: ανοιχτό φόντο στο πλαίσιο τιμής προϊόντος */
+#content .product-block .product-block-price {
+    background: #F4F3F7 !important;
+    background-color: #F4F3F7 !important;
+    background-image: none !important;
+}
+
+/* Apokrifa: στρογγυλεμένες τέσσερις γωνίες στο πλαίσιο τιμών */
+#content .product-block .product-block-price {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+/* Apokrifa: λευκό φόντο στην ένδειξη «Άμεσα Διαθέσιμο» */
+#content .product-block .product-block-avail,
+#content .product-block .product-block-avail .prod-avail {
+    background: #fff !important;
+    background-color: #fff !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+/* Apokrifa: χρώματα τελείας διαθεσιμότητας προϊόντος */
+/* Άμεσα διαθέσιμο: πράσινη τελεία */
+#content .product-block .product-block-avail .prod-avail:not(:empty)::before {
+    background: #008000 !important;
+}
+
+/* Μη διαθέσιμο / «Καλέστε μας»: μαύρη τελεία */
+#content .product-block .product-block-avail .prod-noavail {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+#content .product-block .product-block-avail .prod-noavail::before {
+    content: "" !important;
+    width: 6px !important;
+    height: 6px !important;
+    flex: 0 0 6px !important;
+    border-radius: 50% !important;
+    background: #000 !important;
+    display: inline-block !important;
+}
+
+/* Στατικό προϊόν: γκρι 50% τελεία */
+#content .product-block .product-block-avail .prod-avail:empty::before {
+    background: #808080 !important;
+}
+
+/* Apokrifa: εμφάνιση ένδειξης «Διαθέσιμο μόνο στο Κατάστημα» */
+body.product_product #content .product-right .stock-status.storeonly {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background: #F4F3F7 !important;
+    background-color: #F4F3F7 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: #000 !important;
+}
+
+body.product_product #content .product-right .stock-status.storeonly > span {
+    color: #000 !important;
+}
+
+body.product_product #content .product-right .stock-status.storeonly > i,
+body.product_product #content .product-right .stock-status.storeonly > i::before {
+    color: #618764 !important;
+}
+
+/* Apokrifa: ένδειξη «Διαθέσιμο μόνο στο Κατάστημα» στις κάρτες κατηγορίας */
+#content .product-grid .product-block .product-block-avail:has(> .stock-status.storeonly) {
+    width: 100% !important;
+    margin: 15px 0 5px !important;
+    box-sizing: border-box !important;
+}
+
+#content .product-grid .product-block .product-block-avail > .stock-status.storeonly {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    box-sizing: border-box !important;
+    background: #F4F3F7 !important;
+    background-image: none !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    color: #000 !important;
+}
+
+#content .product-grid .product-block .product-block-avail > .stock-status.storeonly > span {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+#content .product-grid .product-block .product-block-avail > .stock-status.storeonly > i,
+#content .product-grid .product-block .product-block-avail > .stock-status.storeonly > i::before {
+    color: #618764 !important;
+}
+
+/* Apokrifa: γωνίες όπως το κουμπί και πράσινο Βραζιλίας στο εικονίδιο */
+#content .product-grid .product-block .product-block-avail > .stock-status.storeonly {
+    border-radius: var(--rz-btn) !important;
+}
+
+#content .product-grid .product-block .product-block-avail > .stock-status.storeonly > i,
+#content .product-grid .product-block .product-block-avail > .stock-status.storeonly > i::before {
+    color: #009739 !important;
+    -webkit-text-fill-color: #009739 !important;
+}

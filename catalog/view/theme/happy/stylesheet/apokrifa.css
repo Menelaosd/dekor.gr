@@ -719,7 +719,7 @@ header {
 }
 
 .header-mid #search .input-lg {
-    border: solid 2px #9b59b6;
+    border: solid 2px #000;
     -webkit-box-shadow: none;
     box-shadow: none;
     height: 40px;
@@ -740,7 +740,7 @@ button.header-search {
     line-height: 40px;
     padding: 0;
     margin: 0;
-    background: none;
+    background: #000 !important;
     border: none;
     color: #4b7354;
 }
@@ -8053,4 +8053,49 @@ div#mmenu li a {
 
 .homepage-message {
     font-family: Arial, sans-serif !important;
+}
+
+/* Apokrifa: μαύρο φόντο στο μενού PC και κινητού */
+#desk-menu {
+    background: #000 !important;
+}
+#desk-menu .dropdown-megamenu,
+.dropdown-megamenu {
+    background: #000 !important;
+    background-image: none !important;
+    filter: none !important;
+}
+.mm-menu {
+    background: #000 !important;
+}
+
+/* Apokrifa: ανοιχτό φόντο και μαύρα γράμματα στα μενού PC και κινητού */
+#desk-menu,
+#desk-menu .pav-megamenu,
+#desk-menu .megamenu,
+.dropdown-megamenu {
+    background: #F4F3F7 !important;
+    background-image: none !important;
+    filter: none !important;
+}
+#desk-menu a,
+.dropdown-megamenu a {
+    color: #000 !important;
+}
+.mm-menu {
+    background: #F4F3F7 !important;
+    color: #000 !important;
+}
+.mm-menu a,
+.mm-menu a:active,
+.mm-menu a:hover,
+.mm-menu a:link,
+.mm-menu a:visited {
+    color: #000 !important;
+}
+
+/* Apokrifa: τελική διόρθωση μπάρας mobile menu */
+#mmenu .mm-navbar a,
+#mmenu .mm-navbar > * {
+    color: #000 !important;
 }

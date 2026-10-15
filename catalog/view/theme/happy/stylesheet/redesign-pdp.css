@@ -354,3 +354,208 @@ body.product_product .product-right .product-cart-button span { white-space: now
 body.product_product .product-right .product-prices .price-block,
 body.product_product .product-right .product-prices .price { text-align: left !important; align-items: flex-start !important; }
 @media (max-width: 400px) { body.product_product .product-right .product-cart-button i { display: none; } }
+
+/* Apokrifa: ένδειξη διαθέσιμου μόνο στο κατάστημα */
+body.product_product .product-right .stock-status:has(i.fa-store) {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background: #F4F3F7 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: #000 !important;
+}
+
+body.product_product .product-right .stock-status:has(i.fa-store) > span {
+    color: #000 !important;
+}
+
+body.product_product .product-right .stock-status:has(i.fa-store) > i,
+body.product_product .product-right .stock-status:has(i.fa-store) > i::before {
+    color: #618764 !important;
+}
+
+/* Apokrifa: ένδειξη καταστήματος στο πλήρες πλάτος */
+body.product_product .product-right .stock-status:has(> i.fa-store) {
+    display: flex !important;
+    align-items: center !important;
+    align-self: stretch !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: none !important;
+    flex: 0 0 100% !important;
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    background: #F4F3F7 !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    color: #000 !important;
+}
+
+body.product_product .product-right .stock-status:has(> i.fa-store) > span {
+    color: #000 !important;
+}
+
+body.product_product .product-right .stock-status:has(> i.fa-store) > i,
+body.product_product .product-right .stock-status:has(> i.fa-store) > i::before {
+    color: #618764 !important;
+}
+
+/* Apokrifa: ένδειξη «Διαθέσιμο μόνο στο Κατάστημα» στη σελίδα προϊόντος */
+body.product_product #content .product-details .stock-status.storeonly {
+    background: #F4F3F7 !important;
+    background-color: #F4F3F7 !important;
+    background-image: none !important;
+    border: 1px solid #fff !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: #000 !important;
+}
+
+body.product_product #content .product-details .stock-status.storeonly > span {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+body.product_product #content .product-details .stock-status.storeonly > i,
+body.product_product #content .product-details .stock-status.storeonly > i::before {
+    color: #009739 !important;
+    -webkit-text-fill-color: #009739 !important;
+}
+
+/* Apokrifa: έντονο πράσινο Βραζιλίας στο εικονίδιο καταστήματος */
+body.product_product #content .product-details .stock-status.storeonly {
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+body.product_product #content .product-details .stock-status.storeonly > i.fa-store,
+body.product_product #content .product-details .stock-status.storeonly > i.fa-store::before {
+    color: #009739 !important;
+    -webkit-text-fill-color: #009739 !important;
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+/* Apokrifa: σωστός επιλογέας για την ένδειξη καταστήματος στη σελίδα προϊόντος */
+body.product_product .product-details .stock-status.storeonly {
+    background: #F4F3F7 !important;
+    background-color: #F4F3F7 !important;
+    background-image: none !important;
+    border: 1px solid #fff !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: #000 !important;
+}
+
+body.product_product .product-details .stock-status.storeonly > span {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+body.product_product .product-details .stock-status.storeonly > i.fa-store,
+body.product_product .product-details .stock-status.storeonly > i.fa-store::before {
+    color: #009739 !important;
+    -webkit-text-fill-color: #009739 !important;
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+/* Apokrifa: λευκό περίγραμμα και λευκές διαχωριστικές γραμμές */
+body.product_product section.product-right.product-content {
+    border-color: #fff !important;
+}
+
+body.product_product section.product-right.product-content .product-details {
+    border-bottom-color: #fff !important;
+}
+
+body.product_product section.product-right.product-content .product-filters-share {
+    border-top-color: #fff !important;
+}
+
+/* Apokrifa: λευκό εξωτερικό περίγραμμα και δύο διαχωριστικές γραμμές */
+body.product_product .product-right.product-content {
+    border: 1px solid #fff !important;
+}
+
+body.product_product .product-right.product-content .product-details {
+    border-bottom: 1px solid #fff !important;
+}
+
+body.product_product .product-right.product-content .product-filters-share {
+    border-top: 1px solid #fff !important;
+}
+
+/* Apokrifa: λευκό περίγραμμα και λευκές γραμμές στην ενότητα περιγραφής */
+body.product_product .product-tabs {
+    border-color: #fff !important;
+}
+
+body.product_product .product-tabs .nav-tabs {
+    border-bottom-color: #fff !important;
+}
+
+body.product_product .product-tabs .nav-tabs > li.active > a {
+    border-bottom-color: #fff !important;
+}
+
+/* Apokrifa: αφαίρεση οριζόντιων γραμμών και μεγέθυνση «Περιγραφή» */
+body.product_product .product-tabs .nav-tabs {
+    border-bottom: 0 !important;
+}
+body.product_product .product-tabs .nav-tabs > li > a,
+body.product_product .product-tabs .nav-tabs > li.active > a {
+    font-size: 19.5px !important;
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Apokrifa: χωρίς γκρι γραμμή κάτω από τις καρτέλες, μεγαλύτερο «Περιγραφή» */
+body.product_product .product-tabs .nav-tabs {
+    border-bottom: 0 !important;
+}
+body.product_product .product-tabs .nav-tabs > li > a {
+    font-size: 19.5px !important;
+}
+body.product_product .product-tabs .nav-tabs > li.active > a,
+body.product_product .product-tabs .nav-tabs > li.active > a:hover,
+body.product_product .product-tabs .nav-tabs > li.active > a:focus {
+    border-bottom: 2px solid #9B59B6 !important;
+}
+
+/* Apokrifa: χωρίς γκρι γραμμή κάτω από τις καρτέλες, μεγαλύτερο «Περιγραφή» */
+body.product_product .product-tabs .nav-tabs {
+    border-bottom: 0 !important;
+}
+body.product_product .product-tabs .nav-tabs > li > a {
+    font-size: 19.5px !important;
+}
+body.product_product .product-tabs .nav-tabs > li.active > a,
+body.product_product .product-tabs .nav-tabs > li.active > a:hover,
+body.product_product .product-tabs .nav-tabs > li.active > a:focus {
+    border-bottom: 2px solid #9B59B6 !important;
+}
+
+/* Apokrifa: γκρι 50% στην τιμή του προϊόντος 1582 */
+body.product_product:has(input[name="product_id"][value="1582"]) .product-right .product-prices .price-current,
+body.product_product:has(input[name="product_id"][value="1582"]) .product-right .product-prices .price-current-package,
+body.product_product:has(input[name="product_id"][value="1582"]) .product-right .product-prices .mptnew-price,
+body.product_product:has(input[name="product_id"][value="1582"]) .product-right .product-prices .mptnew-price-package {
+    color: #808080 !important;
+}
+
+/* Apokrifa: μαύρα γράμματα και πράσινο φορτηγό στο προϊόν 1582 */
+body.product_product:has(input[name="product_id"][value="1582"]) span.stock-status {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+body.product_product:has(input[name="product_id"][value="1582"]) span.stock-status > i.fa-truck,
+body.product_product:has(input[name="product_id"][value="1582"]) span.stock-status > i.fa-truck::before {
+    color: #009739 !important;
+    -webkit-text-fill-color: #009739 !important;
+}

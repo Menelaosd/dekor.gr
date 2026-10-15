@@ -187,6 +187,69 @@
 </script>
 
 <footer>
+{% if store_id == 2 %}
+<style id="apokrifa-footer-title-lines-black">
+html body footer .container .footer-block .footer-title::after {
+    background: #000000 !important;
+    border-color: #000000 !important;
+}
+</style>
+{% endif %}
+{% if store_id == 2 %}
+<style id="apokrifa-footer-contact-black">
+html body footer .footer-block-4.footer-block,
+html body footer .footer-block-4.footer-block *,
+html body footer .footer-block-4.footer-block *::before,
+html body footer .footer-block-4.footer-block *::after {
+    color: #000000 !important;
+}
+</style>
+{% endif %}
+{% if store_id == 2 %}
+<style id="apokrifa-footer-info-account-black">
+footer .footer-block-2 .footer-title,
+footer .footer-block-2 .footer-nav a,
+footer .footer-block-2 .footer-nav a:visited,
+footer .footer-block-2 .footer-nav a:hover,
+footer .footer-block-3 .footer-title,
+footer .footer-block-3 .footer-nav a,
+footer .footer-block-3 .footer-nav a:visited,
+footer .footer-block-3 .footer-nav a:hover {
+    color: #000000 !important;
+}
+</style>
+{% endif %}
+{% if store_id == 2 %}
+<style id="apokrifa-footer-description-black">
+footer .footer-text, footer .footer-text * { color: #000000 !important; }
+</style>
+{% endif %}
+{% if store_id == 2 %}
+<style id="apokrifa-copyright-desktop-align">
+@media screen and (min-width: 768px) {
+    footer .footer-bottom-1 { padding-top: 20px !important; }
+}
+</style>
+{% endif %}
+{% if store_id == 2 %}
+<style id="apokrifa-footer-sample">
+footer { background: #F4F3F7 !important; background-image: none !important; }
+</style>
+<style id="apokrifa-footer-center-black-text">
+footer, footer h3, footer p, footer .footer-text, footer .footer-nav,
+footer .footer-nav a, footer .footer-contact-nav,
+footer .footer-contact-nav a, footer .footer-contact-nav div,
+footer .footer-contact-nav span, footer .footer-bottom-1 {
+    color: #000 !important;
+}
+
+/* apokrifa-copyright-text-black-fix */
+footer .footer-bottom .footer-bottom-1,
+footer .footer-bottom .footer-bottom-1 * {
+    color: #000 !important;
+}
+</style>
+{% endif %}
 	<div class="container">
 		<div class="row">
 			<div class="footer-top">
@@ -197,7 +260,7 @@
 								<img src="{{logo}}" alt="{{ name }}"/>
 							</a>
 						</div>
-						<div class="footer-text">
+						<div class="footer-text"{% if store_id == 2 %} style="color: #000000 !important;"{% endif %}>
 							{% if store_id != 2 %}
 							Στο dekor.gr θα βρείτε κεριά για χονδρική και λιανική: πασχαλινές λαμπάδες, λαμπάδες γάμου και βάπτισης, διακοσμητικά και εκκλησιαστικά κεριά, κεριά εκδηλώσεων και υλικά κηροπλαστικής. Αποστολές και στην Κύπρο.
 {% else %}
@@ -227,9 +290,7 @@
 						 {% for information in informations %}
 							<li><a href="{{ information.href }}">{{ information.title }}</a></li>
 						 {% endfor %}
-                                                {% if store_id != 2 %}
-                                                        <li class="footer-withdrawal"><a href="{{ withdrawal }}">Υπαναχώρηση από σύμβαση</a></li>
-                                                {% endif %}
+                                                <li class="footer-withdrawal"><a href="{{ withdrawal }}">Ηλεκτρονική Δήλωση Υπαναχώρησης</a></li>
 					</ul>
 				</div>
 				<div class="footer-block-3 footer-block col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -238,6 +299,15 @@
 						<li><a href="{{ account }}">{{ text_account }}</a></li>
 						<li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
 						<li><a href="{{ order }}">{{ text_order }}</a></li>
+                                            <li class="footer-boxnow">
+                                                {% if store_id == 2 %}
+                                                <a href="https://apokrifa.gr/tropoi-pliromis-amp-apostolis-a" title="Τρόποι Πληρωμής &amp; Αποστολής - apokrifa.gr">
+                                                {% else %}
+                                                <a href="https://dekor.gr/tropoi-pliromis-apostolis" title="Τρόποι Πληρωμής &amp; Αποστολής - dekor.gr">
+                                                {% endif %}
+                                                <img src="image/catalog/box-now-logo.png" alt="BOX NOW" style="display:block;width:150px;max-width:100%;height:auto;">
+                                                </a>
+                                            </li>
 						{# <li><a href="{{ return }}">{{ text_return }}</a></li> #}
 					</ul>
 				</div>
@@ -319,6 +389,59 @@
 			</div>
 		</div>
 	</div>
+{% if store_id == 2 %}
+<style id="apokrifa-footer-icons-white-black">
+footer .footer-social a,
+footer .footer-contact-nav > li > i {
+    background-color: #fff !important;
+    border: 1px solid #000 !important;
+    border-radius: 50% !important;
+    color: #000 !important;
+}
+footer .footer-social a i,
+footer .footer-contact-nav > li > i {
+    color: #000 !important;
+}
+</style>
+{% endif %}
+{% if store_id == 2 %}
+<style id="apokrifa-footer-icons-black-glyphs">
+footer .footer-social a,
+footer .footer-social a i,
+footer .footer-social a i::before,
+footer .footer-contact-nav > li > i,
+footer .footer-contact-nav > li > i::before {
+    color: #000 !important;
+}
+</style>
+{% endif %}
+{% if store_id == 2 %}
+<style id="apokrifa-contact-icons-no-border">
+footer .footer-contact-nav > li > i {
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+</style>
+{% endif %}
+{% if store_id == 2 %}
+<style id="apokrifa-social-six-icons-black">
+footer .footer-social a i,
+footer .footer-social a i::before {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+</style>
+{% endif %}
+{% if store_id == 2 %}
+<style id="apokrifa-phone-font-size-hours">
+footer .footer-contact-nav li.list-phone,
+footer .footer-contact-nav li.list-phone a,
+footer .footer-contact-nav li.list-phone a span {
+    font-size: 14px !important;
+}
+</style>
+{% endif %}
 </footer>  
 
 {% for script in scripts %}
