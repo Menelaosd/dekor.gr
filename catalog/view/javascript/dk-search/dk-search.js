@@ -279,7 +279,7 @@
 				html += '<div class="dk-s-sec"><div class="dk-s-title">Δημοφιλείς αναζητήσεις</div><div class="dk-s-chips">' +
 					self.popular.map(function (q) { return '<a href="#" class="dk-s-chip" data-act="fill" data-q="' + esc(q) + '"><span class="dk-s-ico-trend"></span>' + esc(q) + '</a>'; }).join('') + '</div></div>';
 			}
-			html += '<div class="dk-s-hint">Γράψτε ελληνικά ή greeklish (π.χ. <b>keri sogias</b>) ή κωδικό προϊόντος</div>';
+			html += '<div class="dk-s-hint">Γράψτε ελληνικά ή greeklish (π.χ. <b>keri</b>) ή κωδικό προϊόντος</div>';
 			self.panel.innerHTML = '<div class="dk-s-body">' + html + '</div>';
 		};
 
