@@ -511,3 +511,15 @@ body.product_product #content .product-right .stock-status.storeonly > i::before
         padding-bottom: 1px !important;
     }
 }
+/* DEKOR_MOBILE_HEADER_FIT_V1: on 360px phones (most Samsung/Android) burger + logo + 3 icons
+   needed 335px of 332px with the 16px/22px gaps, so the icons dropped to a second row */
+@media (max-width: 400px) {
+    .header-wrapper .dk-hd { gap: 12px; }
+    .header-wrapper .dk-actions { gap: 12px; }
+    .dk-b2b-minimum summary { font-size: 14.5px; } /* B2B notice + its arrow on one line */
+}
+@media (max-width: 340px) {
+    .header-wrapper .dk-hd { gap: 8px; }
+    .header-wrapper .dk-actions { gap: 6px; }
+    .dk-b2b-minimum summary { font-size: 13px; }
+}
