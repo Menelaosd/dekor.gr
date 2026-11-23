@@ -61,3 +61,6 @@ composer.phar
 Thumbs.db
 desktop.ini
 .htaccess
+
+# PHP error logs written by the live server (contain stack traces with DB connection details)
+error_log
