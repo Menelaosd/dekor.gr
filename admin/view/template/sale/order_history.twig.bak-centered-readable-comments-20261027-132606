@@ -1,0 +1,46 @@
+<style>
+/* DEKOR: ευανάγνωστα σχόλια ιστορικού παραγγελίας */
+#history table td.order-history-comment {
+  min-width: 440px;
+  padding: 14px 24px !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  line-height: 1.55;
+  vertical-align: middle !important;
+}
+#history table thead td.order-history-comment {
+  min-width: 440px;
+}
+</style>
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td class="text-left">{{ column_date_added }}</td>
+        <td class="text-left order-history-comment">{{ column_comment }}</td>
+        <td class="text-left">{{ column_status }}</td>
+        <td class="text-left">{{ column_notify }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if histories %}
+      {% for history in histories %}
+      <tr>
+        <td class="text-left">{{ history.date_added }}</td>
+        <td class="text-left order-history-comment">{{ history.comment }}</td>
+        <td class="text-left">{{ history.status }}</td>
+        <td class="text-left">{{ history.notify }}</td>
+      </tr>
+      {% endfor %}
+      {% else %}
+      <tr>
+        <td class="text-center" colspan="4">{{ text_no_results }}</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-left">{{ pagination }}</div>
+  <div class="col-sm-6 text-right">{{ results }}</div>
+</div>

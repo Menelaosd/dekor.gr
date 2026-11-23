@@ -123,7 +123,8 @@ final class Loader {
 			$settingValue = $query->row['value'];
 		};
 		
-		$data['global_disable_cart'] = $settingValue;
+		$data['store_id'] = (int)$store_id;
+                $data['global_disable_cart'] = $settingValue;
 		
 		
 		// Keep the original trigger

@@ -1,6 +1,8 @@
 <?php
 class ControllerExtensionModuleFeatured extends Controller {
 	public function index($setting) {
+        $route = isset($this->request->get["route"]) ? (string)$this->request->get["route"] : "common/home";
+        $data["dekor_home_lazy"] = ((int)$this->config->get("config_store_id") === 0 && $route === "common/home");
 				$data['lang'] = $this->language->get('code');
 		
 		$data['lang_id'] = (int)$this->config->get('config_language_id'); 

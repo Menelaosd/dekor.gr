@@ -43,3 +43,72 @@
 @media (max-width: 767px) {
 	.category-description-bottom { padding: 0 18px; margin-top: 24px; }
 }
+
+
+
+/* DEKOR: Εικονίδιο τσάντας SVG στην αρχική */
+body.common_home #ho_product_tabs1 .product-block-actions a.product-quick-view {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+}
+
+body.common_home #ho_product_tabs1 .product-block-actions a.product-quick-view > i {
+    display: inline-block !important;
+    width: 14px !important;
+    height: 16px !important;
+    flex: 0 0 14px !important;
+    font-size: 0 !important;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 8h14l1 13H4L5 8Z'/%3E%3Cpath d='M9 9V6a3 3 0 0 1 6 0v3'/%3E%3C/svg%3E") center / contain no-repeat !important;
+}
+
+body.common_home #ho_product_tabs1 .product-block-actions a.product-quick-view > i::before,
+body.common_home #ho_product_tabs1 .product-block-actions a.product-quick-view > i::after {
+    content: none !important;
+    display: none !important;
+}
+
+body.common_home #ho_product_tabs1 .product-block-actions a.product-quick-view > span {
+    display: inline-block !important;
+    flex: 0 1 auto !important;
+    text-align: center !important;
+}
+
+
+/* DEKOR HOME WISHLIST POSITION FIX 20261018 */
+body.common_home #ho_product_tabs1 .product-block {
+    position: relative !important;
+}
+
+body.common_home #ho_product_tabs1 .product-block-actions > a.product-wishlist {
+    position: absolute !important;
+    top: 16px !important;
+    right: 16px !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: 36px !important;
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 5 !important;
+}
+
+body.common_home #ho_product_tabs1 .product-block-actions > a.product-quick-view {
+    width: 100% !important;
+}
+
+
+/* DEKOR_SLIDESHOW_992_FIX: use mobile slider up to 991px */
+
+
+/* DEKOR_TABLET_SLIDER_VISIBILITY_FIX_V1 */
+@media (min-width: 680px) and (max-width: 991px) {
+  body.common_home #slideshow0 {
+    display: none !important;
+  }
+  body.common_home #slideshow1 {
+    display: block !important;
+  }
+}

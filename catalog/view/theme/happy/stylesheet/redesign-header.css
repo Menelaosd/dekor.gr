@@ -418,3 +418,96 @@ body.product_product #content .product-right .stock-status.storeonly > i::before
     color: #009739 !important;
     -webkit-text-fill-color: #009739 !important;
 }
+
+/* DEKOR_B2B_MIN_ORDER_NOTICE_V1 */
+.dk-b2b-minimum {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 9px 12px;
+    text-align: center;
+    color: #168b42;
+    background: transparent;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+@media (max-width: 767px) {
+    .dk-b2b-minimum {
+        padding: 7px 10px;
+        font-size: 14px;
+    }
+}
+
+/* DEKOR_B2B_MIN_ORDER_NOTICE_V2 */
+.dk-b2b-minimum {
+    font-weight: 400;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+/* DEKOR_B2B_MIN_ORDER_NOTICE_V3 */
+.dk-b2b-minimum summary {
+    display: inline-block;
+    cursor: pointer;
+    list-style: none;
+}
+.dk-b2b-minimum summary::-webkit-details-marker {
+    display: none;
+}
+.dk-b2b-minimum summary::after {
+    content: " ▾";
+    font-size: 0.8em;
+}
+.dk-b2b-minimum[open] summary::after {
+    content: " ▴";
+}
+.dk-b2b-explainer {
+    padding: 4px 10px 0;
+    color: #333;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+}
+@media (max-width: 767px) {
+    .dk-b2b-minimum summary {
+        max-width: 100%;
+    }
+    .dk-b2b-explainer {
+        font-size: 13px;
+    }
+}
+
+/* DEKOR_B2B_MIN_ORDER_NOTICE_V4 */
+.dk-b2b-minimum summary {
+    color: #168b42;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.35;
+}
+@media (max-width: 767px) {
+    .dk-b2b-minimum summary {
+        font-size: 16px;
+    }
+}
+/* DEKOR_B2B_ARROW_TRIPLE_V1 */
+.dk-b2b-minimum summary::after {
+    font-size: 1.6em !important;
+}
+/* DEKOR_B2B_MOBILE_TOP_GAP_V1 */
+@media (max-width: 767px) {
+    .dk-b2b-minimum {
+        padding-top: 0 !important;
+        margin-top: -12px !important;
+    }
+}
+/* DEKOR_B2B_DESKTOP_SPACING_V1 */
+@media (min-width: 992px) {
+    .header-wrapper .dk-hd {
+        padding-bottom: 6px !important;
+    }
+    .dk-b2b-minimum {
+        padding-top: 1px !important;
+        padding-bottom: 1px !important;
+    }
+}

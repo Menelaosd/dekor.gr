@@ -27,6 +27,101 @@ $(document).ready(function() {
 .focusField {background: #FFEEEE !important;color: #000; border: none; cursor: pointer; border-radius: 0.25em;}
 .quantity {padding-left:4px;}
 .text-center .img-thumbnail {height: 40px; max-width: 40px;}
+  .table thead td { text-align: center !important; vertical-align: middle !important; }
+/* DEKOR: συμπίεση στηλών λίστας προϊόντων */
+#form-product table td:nth-child(4) { width: 58px !important; max-width: 58px !important; }
+#form-product table td:nth-child(6),
+#form-product table td:nth-child(7) { width: 68px !important; max-width: 68px !important; }
+#form-product table td:nth-child(8) { width: 58px !important; max-width: 58px !important; }
+#form-product table td:nth-child(9) { width: 58px !important; max-width: 58px !important; }
+#form-product table td:nth-child(11) { width: 96px !important; max-width: 96px !important; }
+#form-product table td:nth-child(12) { width: 92px !important; max-width: 92px !important; }
+
+#form-product .qChangeOrder { width: 38px !important; padding-left: 3px !important; padding-right: 3px !important; }
+#form-product .qChangeOrderBtn,
+#form-product td:nth-child(6) button,
+#form-product td:nth-child(7) button { padding: 3px 5px !important; font-size: 12px !important; }
+
+#form-product input[name$="_price"],
+#form-product input[name$="_special"] {
+  width: 52px !important;
+  max-width: 52px !important;
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+}
+
+#form-product td:nth-child(9) input { max-width: 46px !important; }
+#form-product .input-group-weight { width: 86px !important; max-width: 86px !important; }
+#form-product .editWeight { width: 54px !important; min-width: 0 !important; padding: 3px !important; }
+#form-product .editWeighBtn,
+#form-product td:nth-child(12) button { width: 28px !important; padding: 3px !important; }
+#form-product td:nth-child(12) .input-group { width: 82px !important; max-width: 82px !important; }
+#form-product td:nth-child(12) input { width: 50px !important; padding: 3px !important; }
+#form-product td:nth-child(11) .fa-save,
+#form-product td:nth-child(12) .fa-save { font-size: 12px !important; }
+/* DEKOR: πλάτος κωδικού και σειράς */
+#form-product table td:nth-child(3) {
+  width: 128px !important;
+  max-width: 128px !important;
+}
+#form-product table td:nth-child(3) textarea,
+#form-product table td:nth-child(3) input {
+  width: 118px !important;
+  max-width: 118px !important;
+}
+#form-product table td:nth-child(4) {
+  width: 64px !important;
+  max-width: 64px !important;
+}
+/* DEKOR: στενότερο κελί SEO-URL */
+#form-product table td:nth-child(5) {
+  width: 210px !important;
+  max-width: 210px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+#form-product table td:nth-child(5) > div {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+#form-product table td:nth-child(5) input,
+#form-product table td:nth-child(5) textarea {
+  width: 155px !important;
+  max-width: 155px !important;
+}
+#form-product table td:nth-child(5) button {
+  width: 28px !important;
+  padding: 3px !important;
+}
+/* DEKOR: κεντραρισμένα κουμπιά στατικού προϊόντος */
+#form-product table td:nth-child(6),
+#form-product table td:nth-child(7) {
+  text-align: center !important;
+}
+#form-product table td:nth-child(6) button,
+#form-product table td:nth-child(6) a,
+#form-product table td:nth-child(6) input[type="button"],
+#form-product table td:nth-child(6) input[type="submit"],
+#form-product table td:nth-child(7) button,
+#form-product table td:nth-child(7) a,
+#form-product table td:nth-child(7) input[type="button"],
+#form-product table td:nth-child(7) input[type="submit"] {
+  display: block !important;
+  float: none !important;
+  width: 90% !important;
+  max-width: 62px !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 3px 4px !important;
+}
+/* DEKOR: κόκκινη ένδειξη απενεργοποιημένου προϊόντος */
+#form-product .status-label.is-disabled {
+  color: #d9534f !important;
+  font-weight: 600;
+}
 </style>
   <div class="page-header">
     <div class="container-fluid">
@@ -63,7 +158,8 @@ $(document).ready(function() {
             <div class="form-group col-sm-3">
               <label class="control-label" for="input-name">Κατηγορία</label>
               <select name="filter_category" id="input-status" class="form-control">
-             <option value="*" {% if filter_category == '*' or filter_category == '' %}selected="selected"{% endif %}>Όλες οι κατηγορίες</option>
+             <option value="" {% if filter_category == '' %}selected="selected"{% endif %}>&nbsp;</option>
+             <option value="*" {% if filter_category == '*' %}selected="selected"{% endif %}>Όλες οι κατηγορίες</option>
 <option value="-1" {% if filter_category == '-1' %}selected="selected"{% endif %}>Χωρίς κατηγορία</option>
       			  {% for category in categories %}
       			  {% if category.product_count >= '1' %}			  
@@ -242,12 +338,12 @@ $(document).ready(function() {
 				  
                     <td class="text-left">
 					{% if product.special %}
-                    <span style="text-decoration: line-through;"><input type="text" class="editable" name="{{ product.product_id }}_price" id="{{ product.product_id }}_price" value="{{ product.price }}" size="8" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");' /></span><br/>
+                    <span style="text-decoration: line-through;"><input type="text" class="editable" name="{{ product.product_id }}_price" id="{{ product.product_id }}_price" value="{{ product.price|number_format(2, '.', '') }}" size="7" style="width:82px;" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");' /></span><br/>
                     <div class="text-danger">    
-	  {{ column_spec }} :<br><input type="text" class="editable" name="{{ product.product_id }}_special" id="{{ product.product_id }}_special" value="{{ product.special }}" size="8" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");' />
+	  {{ column_spec }} :<br><input type="text" class="editable" name="{{ product.product_id }}_special" id="{{ product.product_id }}_special" value="{{ product.special|number_format(2, '.', '') }}" size="7" style="width:82px;" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");' />
 		</div>
                     {% else %}
-                    <input type="text" class="editable" name="{{ product.product_id }}_price" id="{{ product.product_id }}_price" value="{{ product.price }}" size="8" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");' />
+                    <input type="text" class="editable" name="{{ product.product_id }}_price" id="{{ product.product_id }}_price" value="{{ product.price|number_format(2, '.', '') }}" size="7" style="width:82px;" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");' />
                     {% endif %}
 					  </td>
                     <td class="text-right">
@@ -260,24 +356,32 @@ $(document).ready(function() {
                     {% endif %}
 					</td>
                     <td class="text-left">
-{{ product.status }}					
-	<select name="{{ product.product_id }}_status" id="{{ product.product_id }}_status" onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");'> 
-                    {% if product.status == text_enabled %}
-                    <option value="1" selected="selected">{{ text_enabled }}</option>
-                    <option value="0">{{ text_disabled }}</option>
-                    {% else %}
-                    <option value="1">{{ text_enabled }}</option>
-                    <option value="0" selected="selected">{{ text_disabled }}</option>
-                    {% endif %}
+  <span class="status-label"><span class="status-label {% if product.status == text_disabled %}is-disabled{% endif %}">{{ product.status }}</span></span>
+  <div style="display:flex;align-items:center;justify-content:center;gap:2px;">
+    <select name="{{ product.product_id }}_status"
+            id="{{ product.product_id }}_status"
+            class="form-control"
+            style="width:auto;"
+            onclick='document.getElementById("{{ product.product_id }}_select").setAttribute("checked","checked");'>
+      {% if product.status == text_enabled %}
+        <option value="1" selected="selected">{{ text_enabled }}</option>
+        <option value="0">{{ text_disabled }}</option>
+      {% else %}
+        <option value="1">{{ text_enabled }}</option>
+        <option value="0" selected="selected">{{ text_disabled }}</option>
+      {% endif %}
     </select>
-	
-	
-					<br />id: {{ product.product_id }}
-					</td>
+    <button type="button" class="btn btn-primary btn-xs js-save-product-status"
+            data-product-id="{{ product.product_id }}" title="Αποθήκευση κατάστασης">
+      <i class="fa fa-save"></i>
+    </button>
+  </div>
+  <div class="status-product-id">id: {{ product.product_id }}</div>
+</td>
 					
                     <td class="text-left">
-						<div class="input-group input-group-weight mb-3">
-						  <input type="text" class="form-control editWeight" value="{{ product.weight }}" data-productid="{{ product.product_id }}" aria-label="Recipient's username">
+						<div class="input-group input-group-weight mb-3" style="width:120px;max-width:100%;">
+						  <input type="text" class="form-control editWeight" value="{{ product.weight }}" data-productid="{{ product.product_id }}" style="width:78px;min-width:78px;" aria-label="Recipient's username">
 						  <div class="input-group-append">
 							<button class="btn btn-primary editWeighBtn" data-productid="{{ product.product_id }}" type="button"><i class="fa fa-save"></i></button>
 						  </div>
@@ -391,6 +495,101 @@ $(document).ready(function() {
 
 input.form-control.editWeight {
 	min-width:100px;
+}
+  .table thead td { text-align: center !important; vertical-align: middle !important; }
+/* DEKOR: συμπίεση στηλών λίστας προϊόντων */
+#form-product table td:nth-child(4) { width: 58px !important; max-width: 58px !important; }
+#form-product table td:nth-child(6),
+#form-product table td:nth-child(7) { width: 68px !important; max-width: 68px !important; }
+#form-product table td:nth-child(8) { width: 58px !important; max-width: 58px !important; }
+#form-product table td:nth-child(9) { width: 58px !important; max-width: 58px !important; }
+#form-product table td:nth-child(11) { width: 96px !important; max-width: 96px !important; }
+#form-product table td:nth-child(12) { width: 92px !important; max-width: 92px !important; }
+
+#form-product .qChangeOrder { width: 38px !important; padding-left: 3px !important; padding-right: 3px !important; }
+#form-product .qChangeOrderBtn,
+#form-product td:nth-child(6) button,
+#form-product td:nth-child(7) button { padding: 3px 5px !important; font-size: 12px !important; }
+
+#form-product input[name$="_price"],
+#form-product input[name$="_special"] {
+  width: 52px !important;
+  max-width: 52px !important;
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+}
+
+#form-product td:nth-child(9) input { max-width: 46px !important; }
+#form-product .input-group-weight { width: 86px !important; max-width: 86px !important; }
+#form-product .editWeight { width: 54px !important; min-width: 0 !important; padding: 3px !important; }
+#form-product .editWeighBtn,
+#form-product td:nth-child(12) button { width: 28px !important; padding: 3px !important; }
+#form-product td:nth-child(12) .input-group { width: 82px !important; max-width: 82px !important; }
+#form-product td:nth-child(12) input { width: 50px !important; padding: 3px !important; }
+#form-product td:nth-child(11) .fa-save,
+#form-product td:nth-child(12) .fa-save { font-size: 12px !important; }
+/* DEKOR: πλάτος κωδικού και σειράς */
+#form-product table td:nth-child(3) {
+  width: 128px !important;
+  max-width: 128px !important;
+}
+#form-product table td:nth-child(3) textarea,
+#form-product table td:nth-child(3) input {
+  width: 118px !important;
+  max-width: 118px !important;
+}
+#form-product table td:nth-child(4) {
+  width: 64px !important;
+  max-width: 64px !important;
+}
+/* DEKOR: στενότερο κελί SEO-URL */
+#form-product table td:nth-child(5) {
+  width: 210px !important;
+  max-width: 210px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+#form-product table td:nth-child(5) > div {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+#form-product table td:nth-child(5) input,
+#form-product table td:nth-child(5) textarea {
+  width: 155px !important;
+  max-width: 155px !important;
+}
+#form-product table td:nth-child(5) button {
+  width: 28px !important;
+  padding: 3px !important;
+}
+/* DEKOR: κεντραρισμένα κουμπιά στατικού προϊόντος */
+#form-product table td:nth-child(6),
+#form-product table td:nth-child(7) {
+  text-align: center !important;
+}
+#form-product table td:nth-child(6) button,
+#form-product table td:nth-child(6) a,
+#form-product table td:nth-child(6) input[type="button"],
+#form-product table td:nth-child(6) input[type="submit"],
+#form-product table td:nth-child(7) button,
+#form-product table td:nth-child(7) a,
+#form-product table td:nth-child(7) input[type="button"],
+#form-product table td:nth-child(7) input[type="submit"] {
+  display: block !important;
+  float: none !important;
+  width: 90% !important;
+  max-width: 62px !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 3px 4px !important;
+}
+/* DEKOR: κόκκινη ένδειξη απενεργοποιημένου προϊόντος */
+#form-product .status-label.is-disabled {
+  color: #d9534f !important;
+  font-weight: 600;
 }
 </style>
 
@@ -1004,5 +1203,622 @@ div.switch5 > input.switch:focus ~ label:before { box-shadow: 0px 0px 0px 3px rg
     border-color: #00dd00;
 }
 
-  </style>
+    .table thead td { text-align: center !important; vertical-align: middle !important; }
+/* DEKOR: συμπίεση στηλών λίστας προϊόντων */
+#form-product table td:nth-child(4) { width: 58px !important; max-width: 58px !important; }
+#form-product table td:nth-child(6),
+#form-product table td:nth-child(7) { width: 68px !important; max-width: 68px !important; }
+#form-product table td:nth-child(8) { width: 58px !important; max-width: 58px !important; }
+#form-product table td:nth-child(9) { width: 58px !important; max-width: 58px !important; }
+#form-product table td:nth-child(11) { width: 96px !important; max-width: 96px !important; }
+#form-product table td:nth-child(12) { width: 92px !important; max-width: 92px !important; }
+
+#form-product .qChangeOrder { width: 38px !important; padding-left: 3px !important; padding-right: 3px !important; }
+#form-product .qChangeOrderBtn,
+#form-product td:nth-child(6) button,
+#form-product td:nth-child(7) button { padding: 3px 5px !important; font-size: 12px !important; }
+
+#form-product input[name$="_price"],
+#form-product input[name$="_special"] {
+  width: 52px !important;
+  max-width: 52px !important;
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+}
+
+#form-product td:nth-child(9) input { max-width: 46px !important; }
+#form-product .input-group-weight { width: 86px !important; max-width: 86px !important; }
+#form-product .editWeight { width: 54px !important; min-width: 0 !important; padding: 3px !important; }
+#form-product .editWeighBtn,
+#form-product td:nth-child(12) button { width: 28px !important; padding: 3px !important; }
+#form-product td:nth-child(12) .input-group { width: 82px !important; max-width: 82px !important; }
+#form-product td:nth-child(12) input { width: 50px !important; padding: 3px !important; }
+#form-product td:nth-child(11) .fa-save,
+#form-product td:nth-child(12) .fa-save { font-size: 12px !important; }
+/* DEKOR: πλάτος κωδικού και σειράς */
+#form-product table td:nth-child(3) {
+  width: 128px !important;
+  max-width: 128px !important;
+}
+#form-product table td:nth-child(3) textarea,
+#form-product table td:nth-child(3) input {
+  width: 118px !important;
+  max-width: 118px !important;
+}
+#form-product table td:nth-child(4) {
+  width: 64px !important;
+  max-width: 64px !important;
+}
+/* DEKOR: στενότερο κελί SEO-URL */
+#form-product table td:nth-child(5) {
+  width: 210px !important;
+  max-width: 210px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+#form-product table td:nth-child(5) > div {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+#form-product table td:nth-child(5) input,
+#form-product table td:nth-child(5) textarea {
+  width: 155px !important;
+  max-width: 155px !important;
+}
+#form-product table td:nth-child(5) button {
+  width: 28px !important;
+  padding: 3px !important;
+}
+/* DEKOR: κεντραρισμένα κουμπιά στατικού προϊόντος */
+#form-product table td:nth-child(6),
+#form-product table td:nth-child(7) {
+  text-align: center !important;
+}
+#form-product table td:nth-child(6) button,
+#form-product table td:nth-child(6) a,
+#form-product table td:nth-child(6) input[type="button"],
+#form-product table td:nth-child(6) input[type="submit"],
+#form-product table td:nth-child(7) button,
+#form-product table td:nth-child(7) a,
+#form-product table td:nth-child(7) input[type="button"],
+#form-product table td:nth-child(7) input[type="submit"] {
+  display: block !important;
+  float: none !important;
+  width: 90% !important;
+  max-width: 62px !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 3px 4px !important;
+}
+/* DEKOR: κεντράρισμα και ομοιόμορφα κουμπιά λίστας */
+#form-product table th:nth-child(10),
+#form-product table td:nth-child(10) {
+  width: 250px !important;
+  max-width: 250px !important;
+}
+
+#form-product table td:nth-child(4),
+#form-product table td:nth-child(6),
+#form-product table td:nth-child(7),
+#form-product table td:nth-child(10),
+#form-product table td:nth-child(11),
+#form-product table td:nth-child(12),
+#form-product table td:nth-child(13) {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+#form-product .qChangeOrderBtn {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+#form-product td:nth-child(6) a,
+#form-product td:nth-child(6) button,
+#form-product td:nth-child(6) input[type="button"],
+#form-product td:nth-child(7) a,
+#form-product td:nth-child(7) button,
+#form-product td:nth-child(7) input[type="button"] {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+#form-product td:nth-child(10) select {
+  display: block;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 100%;
+}
+
+#form-product td:nth-child(11) .input-group-weight,
+#form-product td:nth-child(12) .input-group {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+#form-product td:nth-child(11) .editWeighBtn,
+#form-product td:nth-child(12) .editPackageBtn,
+#form-product td:nth-child(13) button,
+#form-product td:nth-child(13) a,
+#form-product .js-save-product-status {
+  box-sizing: border-box !important;
+  width: 28px !important;
+  min-width: 28px !important;
+  max-width: 28px !important;
+  height: 28px !important;
+  padding: 3px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  vertical-align: middle !important;
+}
+
+#form-product td:nth-child(11),
+#form-product td:nth-child(12),
+#form-product td:nth-child(13) {
+  white-space: nowrap;
+}
+/* DEKOR: πλάτος στήλης ονόματος προϊόντος */
+#form-product table th:nth-child(2),
+#form-product table td:nth-child(2) {
+  width: 187px !important;
+  min-width: 187px !important;
+  max-width: 187px !important;
+  overflow-wrap: anywhere;
+}
+/* DEKOR: κατακόρυφο κεντράρισμα πεδίου ονόματος */
+#form-product table td:nth-child(2) {
+  vertical-align: middle !important;
+}
+#form-product table td:nth-child(2) input,
+#form-product table td:nth-child(2) textarea,
+#form-product table td:nth-child(2) .form-control {
+  vertical-align: middle !important;
+}
+/* DEKOR: μεγέθυνση μικρογραφιών προϊόντων 10% */
+#form-product table td:nth-child(1) img {
+  transform: scale(1.1);
+  transform-origin: center center;
+  vertical-align: middle;
+}
+/* DEKOR: κεντράρισμα πεδίου και κουμπιού σειράς */
+#form-product table td:nth-child(4) {
+  text-align: center !important;
+  vertical-align: middle !important;
+  white-space: nowrap;
+}
+#form-product td:nth-child(4) .qChangeOrder,
+#form-product td:nth-child(4) .qChangeOrderBtn {
+  display: inline-block !important;
+  float: none !important;
+  vertical-align: middle !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+/* DEKOR: ενιαία στοίχιση κελιών και κουμπιών */
+#form-product table th,
+#form-product table td {
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 8px 5px !important;
+}
+
+#form-product table td input,
+#form-product table td select,
+#form-product table td textarea {
+  text-align: center;
+}
+
+#form-product table td .input-group {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+#form-product .qChangeOrderBtn,
+#form-product .editWeighBtn,
+#form-product .editPackageBtn,
+#form-product .js-save-product-status,
+#form-product td:nth-child(5) .btn-primary,
+#form-product td:nth-child(10) .btn-primary,
+#form-product td:nth-child(13) .btn-primary {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  float: none !important;
+  width: 28px !important;
+  min-width: 28px !important;
+  max-width: 28px !important;
+  height: 28px !important;
+  padding: 3px !important;
+  margin: 2px auto !important;
+  vertical-align: middle !important;
+}
+/* DEKOR: μπλε επικεφαλίδες με αναδίπλωση */
+#form-product table thead th,
+#form-product table thead th a,
+#form-product table thead th span {
+  color: #168bd2 !important;
+  text-align: center !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  line-height: 1.25;
+}
+
+#form-product table thead th {
+  vertical-align: middle !important;
+  padding: 7px 4px !important;
+}
+/* DEKOR: μπλε αναδίπλωση μόνο στις επικεφαλίδες */
+#form-product table thead tr:first-child td,
+#form-product table thead tr:first-child td *,
+#form-product table thead tr:first-child th,
+#form-product table thead tr:first-child th * {
+  color: #168bd2 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+  text-align: center !important;
+  line-height: 1.25 !important;
+}
+/* DEKOR: εικόνα +20%, σειρά +5%, ενέργεια -50% */
+#form-product table td:nth-child(1) img {
+  transform: scale(1.2) !important;
+  transform-origin: center center !important;
+}
+
+#form-product table th:nth-child(4),
+#form-product table td:nth-child(4) {
+  width: 61px !important;
+  min-width: 61px !important;
+  max-width: 61px !important;
+}
+
+#form-product table th:nth-child(13),
+#form-product table td:nth-child(13) {
+  width: 117px !important;
+  min-width: 117px !important;
+  max-width: 117px !important;
+  white-space: normal !important;
+}
+/* DEKOR: μικρότερα κουμπιά καταστημάτων και πεδίο σειράς */
+#form-product td:nth-child(6) button,
+#form-product td:nth-child(6) a,
+#form-product td:nth-child(6) input[type="button"],
+#form-product td:nth-child(6) input[type="submit"],
+#form-product td:nth-child(7) button,
+#form-product td:nth-child(7) a,
+#form-product td:nth-child(7) input[type="button"],
+#form-product td:nth-child(7) input[type="submit"] {
+  transform: scale(0.7) !important;
+  transform-origin: center center !important;
+}
+
+#form-product tbody td:first-child input[type="checkbox"] {
+  position: relative;
+  top: 5px;
+}
+
+#form-product td:nth-child(4) .qChangeOrder {
+  box-sizing: border-box !important;
+  width: 24px !important;
+  min-width: 24px !important;
+  max-width: 24px !important;
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+}
+/* DEKOR: κεντράρισμα κελιού κατάστασης */
+#form-product tbody td:nth-child(10) {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+#form-product tbody td:nth-child(10) .status-label {
+  display: block;
+  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 3px;
+}
+#form-product tbody td:nth-child(10) select {
+  height: 34px;
+  box-sizing: border-box;
+  text-align: center;
+  text-align-last: center;
+}
+#form-product tbody td:nth-child(10) .js-save-product-status {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+#form-product tbody td:nth-child(10) .status-product-id {
+  display: block;
+  text-align: center;
+  position: relative;
+  top: -2px;
+  line-height: 1.2;
+}
+/* DEKOR: τελικό κενό και τετράγωνο κουμπί κατάστασης */
+#form-product tbody td:nth-child(10) {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+#form-product tbody td:nth-child(10) .status-label,
+#form-product tbody td:nth-child(10) .status-product-id {
+  text-align: center !important;
+}
+#form-product tbody td:nth-child(10) .status-product-id {
+  top: 0 !important;
+  margin-top: 0 !important;
+}
+#form-product tbody td:nth-child(10) div[style*="display:flex"] {
+  width: max-content !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  column-gap: 2px !important;
+}
+#form-product tbody td:nth-child(10) select {
+  width: 165px !important;
+  max-width: calc(100% - 36px) !important;
+  height: 34px !important;
+  margin: 0 !important;
+  text-align: center !important;
+  text-align-last: center !important;
+}
+#form-product tbody td:nth-child(10) .js-save-product-status {
+  box-sizing: border-box !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+/* DEKOR: ίδιο μέγεθος κουμπιών βάρους και συσκευασίας */
+#form-product tbody td:nth-child(11) .editWeighBtn,
+#form-product tbody td:nth-child(12) .editPackageBtn {
+  box-sizing: border-box !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+/* DEKOR: ύψος και κεντράρισμα πεδίων κατάστασης βάρους συσκευασίας */
+#form-product tbody td:nth-child(10) select,
+#form-product tbody td:nth-child(11) .editWeight,
+#form-product tbody td:nth-child(12) .editPackage {
+  box-sizing: border-box !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  text-align: center !important;
+}
+#form-product tbody td:nth-child(10) select {
+  text-align-last: center !important;
+}
+/* DEKOR: κεντραρισμένο κουμπί ενέργειας 40px */
+#form-product tbody td:nth-child(13) {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+#form-product tbody td:nth-child(13) > a.btn-primary {
+  box-sizing: border-box !important;
+  width: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+/* DEKOR: κατακόρυφο κεντράρισμα πεδίων και εικονιδίων */
+#form-product tbody td:nth-child(10),
+#form-product tbody td:nth-child(11),
+#form-product tbody td:nth-child(12),
+#form-product tbody td:nth-child(13) {
+  vertical-align: middle !important;
+}
+#form-product tbody td:nth-child(11) .input-group,
+#form-product tbody td:nth-child(12) .input-group {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+#form-product tbody td:nth-child(11) .input-group-append,
+#form-product tbody td:nth-child(12) .input-group-append {
+  display: flex !important;
+  align-items: center !important;
+}
+#form-product tbody td:nth-child(10) > div[style*="display:flex"] {
+  align-items: center !important;
+}
+#form-product tbody td:nth-child(13) > a.btn-primary {
+  vertical-align: middle !important;
+}
+/* DEKOR: κατακόρυφο κεντράρισμα κειμένου μέσα στα πεδία */
+#form-product tbody td:nth-child(10) select,
+#form-product tbody td:nth-child(11) .editWeight,
+#form-product tbody td:nth-child(12) .editPackage {
+  box-sizing: border-box !important;
+  height: 34px !important;
+  line-height: 32px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  vertical-align: middle !important;
+  text-align: center !important;
+}
+#form-product tbody td:nth-child(10) select {
+  text-align-last: center !important;
+}
+/* DEKOR: κουμπί σειράς 34px */
+#form-product tbody td:nth-child(4) .qChangeOrderBtn {
+  box-sizing: border-box !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+/* DEKOR: πεδίο και κουμπί σειράς 34px */
+#form-product tbody td:nth-child(4) {
+  width: 82px !important;
+  min-width: 82px !important;
+}
+#form-product tbody td:nth-child(4) .input-group {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  width: max-content !important;
+  margin: 0 auto !important;
+}
+#form-product tbody td:nth-child(4) .qChangeOrder {
+  box-sizing: border-box !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  line-height: 32px !important;
+  text-align: center !important;
+}
+#form-product tbody td:nth-child(4) .qChangeOrderBtn {
+  box-sizing: border-box !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+/* DEKOR: έντονες τιμές λίστας προϊόντων */
+#form-product tbody input[name$="_price"],
+#form-product tbody input[name$="_special"] {
+  font-weight: 700 !important;
+}
+/* DEKOR: τιμές λίστας +2px */
+#form-product tbody input[name$="_price"],
+#form-product tbody input[name$="_special"] {
+  font-size: calc(1em + 2px) !important;
+  font-weight: 700 !important;
+}
+/* DEKOR: SEO κουμπιά 34px δίπλα στα πεδία */
+#form-product tbody td:nth-child(5) .input-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  width: 100% !important;
+}
+#form-product tbody td:nth-child(5) .editSeoUrl {
+  box-sizing: border-box !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  height: 34px !important;
+  margin: 0 !important;
+}
+#form-product tbody td:nth-child(5) .updateSeoUrl {
+  box-sizing: border-box !important;
+  flex: 0 0 34px !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+/* DEKOR: κόκκινη ένδειξη απενεργοποιημένου προϊόντος */
+#form-product .status-label.is-disabled {
+  color: #d9534f !important;
+  font-weight: 600;
+}
+</style>
+<script type="text/javascript">
+$(document).on('click', '.js-save-product-status', function () {
+  var button = $(this);
+  var productId = button.data('product-id');
+  var status = $('#' + productId + '_status');
+
+  button.prop('disabled', true);
+
+  $.ajax({
+    url: 'index.php?route=catalog/product&user_token={{ user_token }}',
+    type: 'post',
+    dataType: 'json',
+    data: {
+      ajax_action: 'save_status',
+      product_id: productId,
+      status: status.val()
+    },
+    success: function (json) {
+      if (json && json.success) {
+        button.closest('td').find('.status-label').text(status.find('option:selected').text());
+        button.html('<i class="fa fa-check"></i>');
+        button.attr('title', 'Αποθηκεύτηκε');
+      } else {
+        alert((json && json.error) ? json.error : 'Δεν αποθηκεύτηκε η κατάσταση.');
+      }
+    },
+    error: function () {
+      alert('Η αποθήκευση απέτυχε. Δοκίμασε ξανά.');
+    },
+    complete: function () {
+      button.prop('disabled', false);
+    }
+  });
+});
+</script>
+<style>
+/* DEKOR: centered product switches v1 */
+#form-product .onoffswitch4 {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+#form-product .onoffswitch4-label {
+    margin: 0 !important;
+}
+#form-product .onoffswitch4-inner::before {
+    padding-left: 0 !important;
+    padding-right: 25px !important;
+    text-align: center !important;
+}
+#form-product .onoffswitch4-inner::after {
+    padding-left: 25px !important;
+    padding-right: 0 !important;
+    text-align: center !important;
+}
+</style>
 {{ footer }} 

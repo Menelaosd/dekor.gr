@@ -1192,3 +1192,54 @@ body.checkout_checkout table.exttable.btable-bordered td:last-child {
 		line-height: normal;
 	}
 }
+
+/* DEKOR CONFIRM TABLE WIDTH FIX V1 */
+@media (max-width: 768px) {
+  body.checkout_checkout .table-responsive {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+  }
+
+  body.checkout_checkout .table-responsive > table.table-bordered {
+    width: 100% !important;
+    min-width: 560px !important;
+    table-layout: auto !important;
+  }
+}
+/* END DEKOR CONFIRM TABLE WIDTH FIX V1 */
+
+
+/* DEKOR CONFIRM QUANTITY COLUMN FIX V2 */
+@media (max-width: 768px) {
+  body.checkout_checkout .table-responsive > table.table-bordered {
+    min-width: 560px !important;
+    table-layout: fixed !important;
+  }
+
+  body.checkout_checkout .table-responsive > table.table-bordered th:nth-child(1),
+  body.checkout_checkout .table-responsive > table.table-bordered td:nth-child(1) {
+    width: 38% !important;
+  }
+
+  body.checkout_checkout .table-responsive > table.table-bordered th:nth-child(2),
+  body.checkout_checkout .table-responsive > table.table-bordered td:nth-child(2) {
+    width: 18% !important;
+  }
+
+  body.checkout_checkout .table-responsive > table.table-bordered th:nth-child(3),
+  body.checkout_checkout .table-responsive > table.table-bordered td:nth-child(3) {
+    width: 14% !important;
+    min-width: 72px !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+  }
+
+  body.checkout_checkout .table-responsive > table.table-bordered th:nth-child(4),
+  body.checkout_checkout .table-responsive > table.table-bordered td:nth-child(4),
+  body.checkout_checkout .table-responsive > table.table-bordered th:nth-child(5),
+  body.checkout_checkout .table-responsive > table.table-bordered td:nth-child(5) {
+    width: 15% !important;
+  }
+}
+/* END DEKOR CONFIRM QUANTITY COLUMN FIX V2 */

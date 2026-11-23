@@ -3,6 +3,11 @@ class ControllerCatalogProduct extends Controller {
 	private $error = array();
 
 	public function index() {
+                if ($this->request->server['REQUEST_METHOD'] === 'POST' &&
+                    ($this->request->post['ajax_action'] ?? '') === 'save_status') {
+                        $this->saveStatus();
+                        return;
+                }
 		$this->load->language('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -1205,6 +1210,23 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['cancel'] = $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
+        // DEKOR FACEBOOK STORE ASSOCIATION
+        if (isset($this->request->get['product_id'])) {
+            $id = (int)$this->request->get['product_id'];
+            $productStores = $this->model_catalog_product->getProductStores($id);
+
+            $data['facebook_publish_dekor'] = in_array(0, array_map('intval', $productStores), true)
+                ? $this->url->link('extension/module/facebook_publish', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $id . '&page=dekor', true)
+                : '';
+
+            $data['facebook_publish_apokrifa'] = in_array(2, array_map('intval', $productStores), true)
+                ? $this->url->link('extension/module/facebook_publish', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $id . '&page=apokrifa', true)
+                : '';
+        } else {
+            $data['facebook_publish_dekor'] = '';
+            $data['facebook_publish_apokrifa'] = '';
+        }
+
 		if (isset($this->request->get['product_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 		}
@@ -1985,4 +2007,40 @@ class ControllerCatalogProduct extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+        private function saveStatus() {
+                $json = ['success' => false];
+
+                if (!$this->user->hasPermission('modify', 'catalog/product')) {
+                        $json['error'] = 'Δεν έχεις δικαίωμα αλλαγής προϊόντων.';
+                } else {
+                        $productIdRaw = $this->request->post['product_id'] ?? '';
+                        $statusRaw = $this->request->post['status'] ?? '';
+
+                        if (!ctype_digit((string)$productIdRaw) || (int)$productIdRaw < 1) {
+                                $json['error'] = 'Μη έγκυρο προϊόν.';
+                        } elseif ($statusRaw !== '0' && $statusRaw !== '1' &&
+                                  $statusRaw !== 0 && $statusRaw !== 1) {
+                                $json['error'] = 'Μη έγκυρη κατάσταση.';
+                        } else {
+                                $productId = (int)$productIdRaw;
+                                $status = (int)$statusRaw;
+                                $query = $this->db->query(
+                                        "SELECT product_id FROM `" . DB_PREFIX . "product` WHERE product_id = " . $productId
+                                );
+
+                                if (!$query->num_rows) {
+                                        $json['error'] = 'Το προϊόν δεν βρέθηκε.';
+                                } else {
+                                        $this->db->query(
+                                                "UPDATE `" . DB_PREFIX . "product` SET status = " . $status .
+                                                " WHERE product_id = " . $productId
+                                        );
+                                        $json['success'] = true;
+                                }
+                        }
+                }
+
+                $this->response->addHeader('Content-Type: application/json');
+                $this->response->setOutput(json_encode($json, JSON_UNESCAPED_UNICODE));
+        }
 }

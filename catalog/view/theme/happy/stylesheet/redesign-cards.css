@@ -85,3 +85,11 @@
 
 /* breathing room under the product code, before the price divider */
 .product-block .product-block-code { padding-bottom: 9px !important; margin-bottom: 2px !important; }
+
+/* DEKOR: οι διαγραμμένες παλιές τιμές καρτών σε μαύρο */
+html body .product-block-price .list-prices-package .list-price-block del.amount_before {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  text-decoration-color: #000 !important;
+  opacity: 1 !important;
+}

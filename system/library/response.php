@@ -66,7 +66,7 @@ class Response {
 		require_once DIR_SYSTEM . "library/mobile/Mobile_Detect.php";
 		$detect = new Mobile_Detect; 
 		
-		if(strpos($detect->getHttpHeaders()['HTTP_USER_AGENT'], 'Chrome-Lighthouse') !== false || isset($this->request->get['google_test'])){
+		if((!isset($_SERVER['HTTP_HOST']) || !in_array(strtolower(preg_replace('/:\d+$/', '', $_SERVER['HTTP_HOST'])), ['dekor.gr', 'www.dekor.gr'], true)) && (strpos($detect->getHttpHeaders()['HTTP_USER_AGENT'], 'Chrome-Lighthouse') !== false || isset($this->request->get['google_test']))){
 			
 			$header_css_files = [
 			'catalog/view/javascript/bootstrap/css/bootstrap.min.css',

@@ -1,4 +1,5 @@
-{% if product_data %}
+{# APOKRIFA_SEO_PRICE_GATE_V3 #}
+{% if product_data and not (apokrifa_info_page|default(false)) %}
 <script type="application/ld+json">
 {
     "@context": "http://schema.org",
@@ -13,7 +14,7 @@
     "brand": {
         "@type": "Thing",
         "name": "{{ manufacturer }}"
-    },
+    }{% if not apokrifa_hide_price %},
     "offers": {
         "@type": "Offer",
         "url": "{{ url }}",
@@ -25,7 +26,7 @@
     {% else %}
         "availability": "http://schema.org/OutOfStock"
     {% endif %}
-    }
+    }{% endif %}
     {% if review_count > 0 %},
     "aggregateRating": {
         "@type": "aggregateRating",

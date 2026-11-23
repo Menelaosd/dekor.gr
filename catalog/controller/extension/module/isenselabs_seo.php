@@ -995,7 +995,11 @@ class ControllerExtensionModuleiSenseLabsSeo extends Controller {
             
             if ($product_info && ($richsnippets_product_data || $richsnippets_product_breadcrumbs)) {
                 
-                if ($richsnippets_product_data) {
+                // APOKRIFA_INFORMATIONAL_SCHEMA_IDS_V1
+$seo_data['apokrifa_info_page'] =
+    ((int)$this->config->get('config_store_id') === 2
+    && in_array((int)$product_id, [13419, 13505, 13380, 13781], true));
+if ($richsnippets_product_data) {
                     $seo_data['product_data']      = true;   
                     $seo_data['name']              = $product_info['name']; 
                     $seo_data['quantity']          = $product_info['quantity'];
@@ -1008,7 +1012,8 @@ class ControllerExtensionModuleiSenseLabsSeo extends Controller {
                     $seo_data['rating']            = (int)$product_info['rating'];
                     $seo_data['model']             = $product_info['model'];
                     $seo_data['url']               = $this->url->link('product/product', 'product_id=' . $product_info['product_id'], 'SSL');
-                    $seo_data['description']       = substr(trim(strip_tags(str_replace('"', '',html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')))), 0, 150);
+                    // SEO_UTF8_DESCRIPTION_FIX_20261103
+$seo_data['description']       = utf8_substr(trim(strip_tags(str_replace('"', '',html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')))), 0, 150);
 
                     if ($product_info['image']) {
                         $seo_data['image']         = $this->model_tool_image->resize($product_info['image'], 500, 500);
@@ -1016,7 +1021,11 @@ class ControllerExtensionModuleiSenseLabsSeo extends Controller {
                         $seo_data['image']         = '';
                     }
                     
-                    $seo_data['price'] = $product_price;
+                    // APOKRIFA_SEO_PRICE_GATE_V3
+$seo_data['apokrifa_hide_price'] =
+    ((int)$this->config->get('config_store_id') === 2
+    && !$this->customer->isLogged());
+$seo_data['price'] = $product_price;
                     $seo_data['price_valid_until'] = isset($price_valid_until) && $price_valid_until != "0000-00-00" ? $price_valid_until : date('Y-m-d', strtotime("+24 months", strtotime($product_info['date_modified'])));
 
                     if ($product_info['reviews'] > 0) {
@@ -1097,11 +1106,20 @@ class ControllerExtensionModuleiSenseLabsSeo extends Controller {
                 $seo_data[] = array($this->url->link('product/product', 'product_id=' . $product_info['product_id'], 'SSL'), 'og:url', 'property');
 
                 if (!empty($product_info['image'])) {
-                    $seo_data[] = array($this->model_tool_image->resize($product_info['image'], 500, 500), 'og:image', 'property');
+                    $this->load->model('tool/facebook_image');
+                    $facebook_image = $this->model_tool_facebook_image->resizeFacebook($product_info['image']);
+
+                    if ($facebook_image) {
+                        $seo_data[] = array($facebook_image, 'og:image', 'property');
+                        $seo_data[] = array('1200', 'og:image:width', 'property');
+                        $seo_data[] = array('630', 'og:image:height', 'property');
+                    }
                 }
 
+if (!((int)$this->config->get('config_store_id') === 2 && !$this->customer->isLogged())) {
                 $seo_data[] = array($product_price, 'product:price:amount', 'property');
                 $seo_data[] = array($this->session->data['currency'], 'product:price:currency', 'property');
+}
             
                 $fb_app_id  = $this->{$this->callModel}->getSetting('facebook_open_graph_app_id');
                 if ($fb_app_id) {

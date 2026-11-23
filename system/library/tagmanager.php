@@ -2414,6 +2414,47 @@ class Tagmanager extends Controller
 
         $ecdata['fb_data'] = $fb_data;
 
+        // APOKRIFA_GUEST_GTM_PRICE_GUARD_V2
+        // Remove monetary fields from guest product-view tracking.
+        if ((int)$this->config->get('config_store_id') === 2
+            && !$this->customer->isLogged()) {
+
+            $monetaryKeys = array_fill_keys(array(
+                'price',
+                'fprice',
+                'value',
+                'pixel_value',
+                'ecomm_totalvalue',
+                'dynx_totalvalue',
+                'discount',
+                'totalvalue',
+                'unit_price',
+                'sale_price',
+                'original_price',
+                'item_price',
+                'price_value',
+                'revenue',
+                'amount',
+                'cost'
+            ), true);
+
+            $removeMonetary = function (&$node) use (&$removeMonetary, $monetaryKeys) {
+                if (!is_array($node)) {
+                    return;
+                }
+
+                foreach (array_keys($node) as $key) {
+                    if (is_string($key)
+                        && isset($monetaryKeys[strtolower($key)])) {
+                        unset($node[$key]);
+                    } elseif (isset($node[$key]) && is_array($node[$key])) {
+                        $removeMonetary($node[$key]);
+                    }
+                }
+            };
+
+            $removeMonetary($ecdata);
+        }
         return $ecdata;
 
     }

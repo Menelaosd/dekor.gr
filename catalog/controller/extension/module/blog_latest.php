@@ -71,7 +71,7 @@ class ControllerExtensionModuleBlogLatest extends Controller {
 		$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
 		// Detect Lighthouse or GTmetrix
-		if (strpos($userAgent, 'Chrome-Lighthouse') !== false || strpos($userAgent, 'GTmetrix') !== false) {
+		if ((int)$this->config->get('config_store_id') === 2 && (strpos($userAgent, 'Chrome-Lighthouse') !== false || strpos($userAgent, 'GTmetrix') !== false)) {
 			// Do not render the module
 			return;
 		}

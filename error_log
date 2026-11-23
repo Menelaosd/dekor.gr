@@ -3427,3 +3427,502 @@ Stack trace:
 #3 /home/chshost/public_html/index.php(30): start()
 #4 {main}
   thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[19-Oct-2026 21:35:22 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[19-Oct-2026 21:35:23 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[19-Oct-2026 21:35:25 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[19-Oct-2026 21:35:26 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[19-Oct-2026 21:35:28 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[19-Oct-2026 21:35:29 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[19-Oct-2026 21:35:30 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[19-Oct-2026 21:35:31 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[19-Oct-2026 21:35:33 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[19-Oct-2026 21:35:34 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[21-Oct-2026 10:21:49 UTC] PHP Fatal error:  Uncaught Exception: Error: RCPT TO not accepted from server! in /home/chshost/public_html/system/library/mail/smtp.php:172
+Stack trace:
+#0 /home/chshost/public_html/system/library/mail.php(142): Mail\Smtp->send()
+#1 /home/chshost/public_html/catalog/controller/mail/order.php(478): Mail->send()
+#2 /home/chshost/storage/modification/system/engine/action.php(79): ControllerMailOrder->alert()
+#3 /home/chshost/public_html/system/engine/event.php(62): Action->execute()
+#4 /home/chshost/storage/modification/system/engine/loader.php(255): Event->trigger()
+#5 /home/chshost/public_html/system/engine/proxy.php(47): Loader->{closure}()
+#6 /home/chshost/public_html/catalog/controller/extension/payment/bank_transfer.php(23): Proxy->__call()
+#7 /home/chshost/storage/modification/system/engine/action.php(79): ControllerExtensionPaymentBankTransfer->confirm()
+#8 /home/chshost/public_html/catalog/controller/startup/router.php(27): Action->execute()
+#9 /home/chshost/storage/modification/system/engine/action.php(79): ControllerStartupRouter->index()
+#10 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#11 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#12 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#13 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#14 /home/chshost/public_html/index.php(30): start()
+#15 {main}
+  thrown in /home/chshost/public_html/system/library/mail/smtp.php on line 172
+[21-Oct-2026 21:21:39 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[21-Oct-2026 21:21:43 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[22-Oct-2026 02:26:44 UTC] PHP Fatal error:  Uncaught Error: Call to a member function getAffiliate() on null in /home/chshost/public_html/catalog/controller/account/affiliate.php:221
+Stack trace:
+#0 /home/chshost/storage/modification/system/engine/action.php(79): ControllerAccountAffiliate->getForm()
+#1 /home/chshost/public_html/catalog/controller/startup/router.php(27): Action->execute()
+#2 /home/chshost/storage/modification/system/engine/action.php(79): ControllerStartupRouter->index()
+#3 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#4 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#5 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#6 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#7 /home/chshost/public_html/index.php(30): start()
+#8 {main}
+  thrown in /home/chshost/public_html/catalog/controller/account/affiliate.php on line 221
+[22-Oct-2026 06:29:03 UTC] PHP Fatal error:  Uncaught Error: Call to a member function apiOrderRefund() on null in /home/chshost/public_html/catalog/controller/extension/analytics/tagmanager.php:388
+Stack trace:
+#0 /home/chshost/storage/modification/system/engine/action.php(79): ControllerExtensionAnalyticsTagmanager->refund()
+#1 /home/chshost/public_html/catalog/controller/startup/router.php(27): Action->execute()
+#2 /home/chshost/storage/modification/system/engine/action.php(79): ControllerStartupRouter->index()
+#3 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#4 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#5 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#6 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#7 /home/chshost/public_html/index.php(30): start()
+#8 {main}
+  thrown in /home/chshost/public_html/catalog/controller/extension/analytics/tagmanager.php on line 388
+[26-Oct-2026 07:00:37 UTC] PHP Fatal error:  Uncaught Error: Call to a member function apiOrderRefund() on null in /home/chshost/public_html/catalog/controller/extension/analytics/tagmanager.php:388
+Stack trace:
+#0 /home/chshost/storage/modification/system/engine/action.php(79): ControllerExtensionAnalyticsTagmanager->refund()
+#1 /home/chshost/public_html/catalog/controller/startup/router.php(27): Action->execute()
+#2 /home/chshost/storage/modification/system/engine/action.php(79): ControllerStartupRouter->index()
+#3 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#4 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#5 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#6 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#7 /home/chshost/public_html/index.php(30): start()
+#8 {main}
+  thrown in /home/chshost/public_html/catalog/controller/extension/analytics/tagmanager.php on line 388
+[27-Oct-2026 10:56:54 UTC] PHP Fatal error:  Uncaught Error: Call to a member function isActive() on null in /home/chshost/public_html/catalog/controller/extension/analytics/tagmanager.php:15
+Stack trace:
+#0 /home/chshost/public_html/system/engine/action.php(79): ControllerExtensionAnalyticsTagmanager->index()
+#1 /home/chshost/public_html/system/engine/loader.php(48): Action->execute()
+#2 /home/chshost/public_html/catalog/controller/common/header.php(13): Loader->controller()
+#3 /home/chshost/public_html/system/engine/action.php(79): ControllerCommonHeader->index()
+#4 /home/chshost/public_html/system/engine/loader.php(48): Action->execute()
+#5 /home/chshost/public_html/catalog/controller/common/maintenance.php(25): Loader->controller()
+#6 /home/chshost/public_html/system/engine/action.php(79): ControllerCommonMaintenance->index()
+#7 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#8 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#9 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#10 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#11 /home/chshost/public_html/index.php(30): start()
+#12 {main}
+  thrown in /home/chshost/public_html/catalog/controller/extension/analytics/tagmanager.php on line 15
+[02-Nov-2026 07:10:38 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[04-Nov-2026 09:49:52 UTC] PHP Fatal error:  Uncaught Error: Call to a member function isActive() on null in /home/chshost/public_html/catalog/controller/extension/analytics/tagmanager.php:15
+Stack trace:
+#0 /home/chshost/public_html/system/engine/action.php(79): ControllerExtensionAnalyticsTagmanager->index()
+#1 /home/chshost/public_html/system/engine/loader.php(48): Action->execute()
+#2 /home/chshost/public_html/catalog/controller/common/header.php(13): Loader->controller()
+#3 /home/chshost/public_html/system/engine/action.php(79): ControllerCommonHeader->index()
+#4 /home/chshost/public_html/system/engine/loader.php(48): Action->execute()
+#5 /home/chshost/public_html/catalog/controller/common/maintenance.php(25): Loader->controller()
+#6 /home/chshost/public_html/system/engine/action.php(79): ControllerCommonMaintenance->index()
+#7 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#8 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#9 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#10 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#11 /home/chshost/public_html/index.php(30): start()
+#12 {main}
+  thrown in /home/chshost/public_html/catalog/controller/extension/analytics/tagmanager.php on line 15
+[07-Nov-2026 22:03:58 UTC] PHP Fatal error:  Uncaught Exception: Error: Table 'chshost_dekorcandles.a4ji_divido_lookup' doesn't exist<br />Error No: 1146<br />SELECT * FROM `a4ji_divido_lookup` WHERE `order_id` = dsf%22g%27sd%27fg%27s%22df%27gs%27dfg%27sd%27fgs%22ite%273438do in /home/chshost/public_html/system/library/db/mysqli.php:49
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(45): DB\MySQLi->query()
+#1 /home/chshost/public_html/catalog/model/extension/payment/divido.php(115): DB->query()
+#2 /home/chshost/storage/modification/system/engine/loader.php(275): ModelExtensionPaymentDivido->getLookupByOrderId()
+#3 /home/chshost/public_html/system/engine/proxy.php(47): Loader->{closure}()
+#4 /home/chshost/public_html/catalog/controller/extension/payment/divido.php(91): Proxy->__call()
+#5 /home/chshost/storage/modification/system/engine/action.php(79): ControllerExtensionPaymentDivido->update()
+#6 /home/chshost/public_html/catalog/controller/startup/router.php(27): Action->execute()
+#7 /home/chshost/storage/modification/system/engine/action.php(79): ControllerStartupRouter->index()
+#8 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#9 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#10 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#11 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#12 /home/chshost/public_html/index.php(30): start()
+#13 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 49
+[07-Nov-2026 22:05:03 UTC] PHP Fatal error:  Uncaught TypeError: mysqli::real_escape_string(): Argument #1 ($string) must be of type string, array given in /home/chshost/public_html/system/library/db/mysqli.php:54
+Stack trace:
+#0 /home/chshost/public_html/system/library/db/mysqli.php(54): mysqli->real_escape_string()
+#1 /home/chshost/public_html/system/library/db.php(56): DB\MySQLi->escape()
+#2 /home/chshost/storage/modification/catalog/controller/startup/seo_url.php(224): DB->escape()
+#3 /home/chshost/storage/modification/catalog/controller/startup/seo_url.php(362): ControllerStartupSeoUrl->islCustomAlias()
+#4 /home/chshost/public_html/system/library/url.php(64): ControllerStartupSeoUrl->rewrite()
+#5 /home/chshost/public_html/catalog/controller/error/not_found.php(32): Url->link()
+#6 /home/chshost/storage/modification/system/engine/action.php(79): ControllerErrorNotFound->index()
+#7 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#8 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#9 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#10 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#11 /home/chshost/public_html/index.php(30): start()
+#12 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 54
+[07-Nov-2026 22:05:07 UTC] PHP Fatal error:  Uncaught TypeError: mysqli::real_escape_string(): Argument #1 ($string) must be of type string, array given in /home/chshost/public_html/system/library/db/mysqli.php:54
+Stack trace:
+#0 /home/chshost/public_html/system/library/db/mysqli.php(54): mysqli->real_escape_string()
+#1 /home/chshost/public_html/system/library/db.php(56): DB\MySQLi->escape()
+#2 /home/chshost/storage/modification/catalog/controller/startup/seo_url.php(224): DB->escape()
+#3 /home/chshost/storage/modification/catalog/controller/startup/seo_url.php(362): ControllerStartupSeoUrl->islCustomAlias()
+#4 /home/chshost/public_html/system/library/url.php(64): ControllerStartupSeoUrl->rewrite()
+#5 /home/chshost/public_html/catalog/controller/error/not_found.php(32): Url->link()
+#6 /home/chshost/storage/modification/system/engine/action.php(79): ControllerErrorNotFound->index()
+#7 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#8 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#9 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#10 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#11 /home/chshost/public_html/index.php(30): start()
+#12 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 54
+[07-Nov-2026 22:07:20 UTC] PHP Fatal error:  Uncaught TypeError: mysqli::real_escape_string(): Argument #1 ($string) must be of type string, array given in /home/chshost/public_html/system/library/db/mysqli.php:54
+Stack trace:
+#0 /home/chshost/public_html/system/library/db/mysqli.php(54): mysqli->real_escape_string()
+#1 /home/chshost/public_html/system/library/db.php(56): DB\MySQLi->escape()
+#2 /home/chshost/storage/modification/catalog/controller/startup/seo_url.php(224): DB->escape()
+#3 /home/chshost/storage/modification/catalog/controller/startup/seo_url.php(362): ControllerStartupSeoUrl->islCustomAlias()
+#4 /home/chshost/public_html/system/library/url.php(64): ControllerStartupSeoUrl->rewrite()
+#5 /home/chshost/public_html/catalog/controller/error/not_found.php(32): Url->link()
+#6 /home/chshost/storage/modification/system/engine/action.php(79): ControllerErrorNotFound->index()
+#7 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#8 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#9 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#10 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#11 /home/chshost/public_html/index.php(30): start()
+#12 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 54
+[07-Nov-2026 22:07:24 UTC] PHP Fatal error:  Uncaught TypeError: mysqli::real_escape_string(): Argument #1 ($string) must be of type string, array given in /home/chshost/public_html/system/library/db/mysqli.php:54
+Stack trace:
+#0 /home/chshost/public_html/system/library/db/mysqli.php(54): mysqli->real_escape_string()
+#1 /home/chshost/public_html/system/library/db.php(56): DB\MySQLi->escape()
+#2 /home/chshost/storage/modification/catalog/controller/startup/seo_url.php(224): DB->escape()
+#3 /home/chshost/storage/modification/catalog/controller/startup/seo_url.php(362): ControllerStartupSeoUrl->islCustomAlias()
+#4 /home/chshost/public_html/system/library/url.php(64): ControllerStartupSeoUrl->rewrite()
+#5 /home/chshost/public_html/catalog/controller/error/not_found.php(32): Url->link()
+#6 /home/chshost/storage/modification/system/engine/action.php(79): ControllerErrorNotFound->index()
+#7 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#8 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#9 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#10 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#11 /home/chshost/public_html/index.php(30): start()
+#12 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 54
+[07-Nov-2026 22:07:27 UTC] PHP Fatal error:  Uncaught TypeError: mysqli::real_escape_string(): Argument #1 ($string) must be of type string, array given in /home/chshost/public_html/system/library/db/mysqli.php:54
+Stack trace:
+#0 /home/chshost/public_html/system/library/db/mysqli.php(54): mysqli->real_escape_string()
+#1 /home/chshost/public_html/system/library/db.php(56): DB\MySQLi->escape()
+#2 /home/chshost/storage/modification/catalog/controller/startup/seo_url.php(224): DB->escape()
+#3 /home/chshost/storage/modification/catalog/controller/startup/seo_url.php(362): ControllerStartupSeoUrl->islCustomAlias()
+#4 /home/chshost/public_html/system/library/url.php(64): ControllerStartupSeoUrl->rewrite()
+#5 /home/chshost/public_html/catalog/controller/error/not_found.php(32): Url->link()
+#6 /home/chshost/storage/modification/system/engine/action.php(79): ControllerErrorNotFound->index()
+#7 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#8 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#9 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#10 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#11 /home/chshost/public_html/index.php(30): start()
+#12 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 54
+[09-Nov-2026 06:29:17 UTC] PHP Fatal error:  Uncaught Error: Call to a member function apiOrderRefund() on null in /home/chshost/public_html/catalog/controller/extension/analytics/tagmanager.php:388
+Stack trace:
+#0 /home/chshost/storage/modification/system/engine/action.php(79): ControllerExtensionAnalyticsTagmanager->refund()
+#1 /home/chshost/public_html/catalog/controller/startup/router.php(27): Action->execute()
+#2 /home/chshost/storage/modification/system/engine/action.php(79): ControllerStartupRouter->index()
+#3 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#4 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#5 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#6 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#7 /home/chshost/public_html/index.php(30): start()
+#8 {main}
+  thrown in /home/chshost/public_html/catalog/controller/extension/analytics/tagmanager.php on line 388
+[09-Nov-2026 10:19:20 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[09-Nov-2026 22:35:00 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[12-Nov-2026 12:42:53 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'chshost_dekorcandles.a4ji_geo_zone_description' doesn't exist in Standard input code:20
+Stack trace:
+#0 Standard input code(20): mysqli->query('SELECT language...')
+#1 {main}
+  thrown in Standard input code on line 20
+[13-Nov-2026 22:36:06 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[14-Nov-2026 22:36:25 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[16-Nov-2026 22:34:54 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[16-Nov-2026 22:35:06 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[16-Nov-2026 22:35:09 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[18-Nov-2026 14:49:49 UTC] PHP Fatal error:  Uncaught Error: Call to a member function getAffiliate() on null in /home/chshost/public_html/catalog/controller/account/affiliate.php:221
+Stack trace:
+#0 /home/chshost/storage/modification/system/engine/action.php(79): ControllerAccountAffiliate->getForm()
+#1 /home/chshost/public_html/catalog/controller/startup/router.php(27): Action->execute()
+#2 /home/chshost/storage/modification/system/engine/action.php(79): ControllerStartupRouter->index()
+#3 /home/chshost/public_html/system/engine/router.php(67): Action->execute()
+#4 /home/chshost/public_html/system/engine/router.php(56): Router->execute()
+#5 /home/chshost/public_html/system/framework.php(178): Router->dispatch()
+#6 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#7 /home/chshost/public_html/index.php(30): start()
+#8 {main}
+  thrown in /home/chshost/public_html/catalog/controller/account/affiliate.php on line 221
+[18-Nov-2026 22:37:03 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[19-Nov-2026 20:02:31 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[19-Nov-2026 20:02:36 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/system/framework.php(81): DB->__construct()
+#2 /home/chshost/public_html/system/startup.php(107): require_once('/home/chshost/p...')
+#3 /home/chshost/public_html/index.php(30): start()
+#4 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[21-Nov-2026 06:29:06 UTC] PHP Deprecated:  Optional parameter $parent declared before required parameter $params is implicitly treated as a required parameter in admin/model/menu/tree.php on line 68
+[21-Nov-2026 06:29:06 UTC] PHP Deprecated:  Optional parameter $edit declared before required parameter $params is implicitly treated as a required parameter in admin/model/menu/tree.php on line 68
+[21-Nov-2026 06:29:06 UTC] PHP Deprecated:  Optional parameter $id declared before required parameter $selected is implicitly treated as a required parameter in admin/model/menu/megamenu.php on line 106
+[21-Nov-2026 06:29:06 UTC] PHP Deprecated:  Optional parameter $store_id declared before required parameter $selected is implicitly treated as a required parameter in admin/model/menu/megamenu.php on line 106
+[21-Nov-2026 06:29:06 UTC] PHP Deprecated:  Optional parameter $level declared before required parameter $selected is implicitly treated as a required parameter in admin/model/menu/megamenu.php on line 162
+[21-Nov-2026 06:29:06 UTC] PHP Deprecated:  Optional parameter $category declared before required parameter $megamenu_parent_id is implicitly treated as a required parameter in admin/model/menu/megamenu.php on line 241
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 546
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $category_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 591
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $manufacturer_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 622
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $information_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 653
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 743
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 796
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 949
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $category_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 982
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $information_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1015
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $manufacturer_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1048
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1188
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $category_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1219
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $information_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1253
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $manufacturer_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1284
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1468
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $category_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1496
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $information_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1524
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $manufacturer_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1552
+[21-Nov-2026 06:29:11 UTC] PHP Deprecated:  Optional parameter $data declared before required parameter $id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 2405
+[21-Nov-2026 06:29:38 UTC] PHP Parse error:  syntax error, unexpected single-quoted string ";" in catalog/language/el-gr/extension/payment/pp_braintree.php on line 11
+[21-Nov-2026 06:39:42 UTC] PHP Deprecated:  Optional parameter $parent declared before required parameter $params is implicitly treated as a required parameter in admin/model/menu/tree.php on line 68
+[21-Nov-2026 06:39:42 UTC] PHP Deprecated:  Optional parameter $edit declared before required parameter $params is implicitly treated as a required parameter in admin/model/menu/tree.php on line 68
+[21-Nov-2026 06:39:42 UTC] PHP Deprecated:  Optional parameter $id declared before required parameter $selected is implicitly treated as a required parameter in admin/model/menu/megamenu.php on line 106
+[21-Nov-2026 06:39:42 UTC] PHP Deprecated:  Optional parameter $store_id declared before required parameter $selected is implicitly treated as a required parameter in admin/model/menu/megamenu.php on line 106
+[21-Nov-2026 06:39:42 UTC] PHP Deprecated:  Optional parameter $level declared before required parameter $selected is implicitly treated as a required parameter in admin/model/menu/megamenu.php on line 162
+[21-Nov-2026 06:39:42 UTC] PHP Deprecated:  Optional parameter $category declared before required parameter $megamenu_parent_id is implicitly treated as a required parameter in admin/model/menu/megamenu.php on line 241
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 546
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $category_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 591
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $manufacturer_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 622
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $information_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 653
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 743
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 796
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 949
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $category_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 982
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $information_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1015
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $manufacturer_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1048
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1188
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $category_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1219
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $information_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1253
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $manufacturer_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1284
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1468
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $category_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1496
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $information_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1524
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $manufacturer_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1552
+[21-Nov-2026 06:39:47 UTC] PHP Deprecated:  Optional parameter $data declared before required parameter $id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 2405
+[21-Nov-2026 06:40:20 UTC] PHP Deprecated:  Optional parameter $parent declared before required parameter $params is implicitly treated as a required parameter in catalog/model/menu/megamenu.php on line 68
+[21-Nov-2026 06:40:20 UTC] PHP Deprecated:  Optional parameter $edit declared before required parameter $params is implicitly treated as a required parameter in catalog/model/menu/megamenu.php on line 68
+[21-Nov-2026 06:40:20 UTC] PHP Deprecated:  Optional parameter $parent declared before required parameter $params is implicitly treated as a required parameter in catalog/model/menu/megamenu.php on line 581
+[21-Nov-2026 06:40:20 UTC] PHP Deprecated:  Optional parameter $edit declared before required parameter $params is implicitly treated as a required parameter in catalog/model/menu/megamenu.php on line 581
+[21-Nov-2026 06:40:29 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in system/storage/vendor/divido/divido-php/lib/Divido/SingletonApiResource.php on line 19
+[21-Nov-2026 06:40:29 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in system/storage/vendor/divido/divido-php/lib/Divido/ApiResource.php on line 63
+[21-Nov-2026 06:40:33 UTC] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in system/storage/vendor/braintree/braintree_php/lib/Braintree/Digest.php on line 53
+[21-Nov-2026 07:01:13 UTC] PHP Deprecated:  Optional parameter $parent declared before required parameter $params is implicitly treated as a required parameter in admin/model/menu/tree.php on line 68
+[21-Nov-2026 07:01:13 UTC] PHP Deprecated:  Optional parameter $edit declared before required parameter $params is implicitly treated as a required parameter in admin/model/menu/tree.php on line 68
+[21-Nov-2026 07:01:13 UTC] PHP Deprecated:  Optional parameter $id declared before required parameter $selected is implicitly treated as a required parameter in admin/model/menu/megamenu.php on line 106
+[21-Nov-2026 07:01:13 UTC] PHP Deprecated:  Optional parameter $store_id declared before required parameter $selected is implicitly treated as a required parameter in admin/model/menu/megamenu.php on line 106
+[21-Nov-2026 07:01:13 UTC] PHP Deprecated:  Optional parameter $level declared before required parameter $selected is implicitly treated as a required parameter in admin/model/menu/megamenu.php on line 162
+[21-Nov-2026 07:01:13 UTC] PHP Deprecated:  Optional parameter $category declared before required parameter $megamenu_parent_id is implicitly treated as a required parameter in admin/model/menu/megamenu.php on line 241
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 546
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $category_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 591
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $manufacturer_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 622
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $information_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 653
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 743
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 796
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 949
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $category_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 982
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $information_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1015
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $manufacturer_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1048
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1188
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $category_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1219
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $information_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1253
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $manufacturer_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1284
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $product_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1468
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $category_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1496
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $information_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1524
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $manufacturer_ids declared before required parameter $language_id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 1552
+[21-Nov-2026 07:01:17 UTC] PHP Deprecated:  Optional parameter $data declared before required parameter $id is implicitly treated as a required parameter in admin/model/extension/module/isenselabs_seo.php on line 2405
+[21-Nov-2026 07:01:47 UTC] PHP Deprecated:  Optional parameter $parent declared before required parameter $params is implicitly treated as a required parameter in catalog/model/menu/megamenu.php on line 68
+[21-Nov-2026 07:01:47 UTC] PHP Deprecated:  Optional parameter $edit declared before required parameter $params is implicitly treated as a required parameter in catalog/model/menu/megamenu.php on line 68
+[21-Nov-2026 07:01:47 UTC] PHP Deprecated:  Optional parameter $parent declared before required parameter $params is implicitly treated as a required parameter in catalog/model/menu/megamenu.php on line 581
+[21-Nov-2026 07:01:47 UTC] PHP Deprecated:  Optional parameter $edit declared before required parameter $params is implicitly treated as a required parameter in catalog/model/menu/megamenu.php on line 581
+[21-Nov-2026 07:01:57 UTC] PHP Deprecated:  Optional parameter $sheet declared before required parameter $prop is implicitly treated as a required parameter in system/library/d_excel_reader_writer/spreadsheetreader/spreadsheetreader_xls.php on line 806
+[21-Nov-2026 07:01:57 UTC] PHP Warning:  "continue" targeting switch is equivalent to "break". Did you mean to use "continue 2"? in system/library/d_excel_reader_writer/spreadsheetreader/spreadsheetreader_xlsx.php on line 411
+[21-Nov-2026 07:01:57 UTC] PHP Warning:  "continue" targeting switch is equivalent to "break". Did you mean to use "continue 2"? in system/library/d_excel_reader_writer/spreadsheetreader/spreadsheetreader_xlsx.php on line 526
+[21-Nov-2026 07:01:57 UTC] PHP Warning:  "continue" targeting switch is equivalent to "break". Did you mean to use "continue 2"? in system/library/d_excel_reader_writer/spreadsheetreader/spreadsheetreader_xlsx.php on line 947
+[21-Nov-2026 07:01:57 UTC] PHP Warning:  "continue" targeting switch is equivalent to "break". Did you mean to use "continue 2"? in system/library/d_excel_reader_writer/spreadsheetreader/spreadsheetreader_xlsx.php on line 975
+[21-Nov-2026 07:02:05 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in system/library/stripe/SingletonApiResource.php on line 28
+[21-Nov-2026 07:02:05 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in system/library/stripe/ApiResource.php on line 85
+[21-Nov-2026 07:02:12 UTC] PHP Deprecated:  Optional parameter $only declared before required parameter $lineno is implicitly treated as a required parameter in system/library/template/Twig/Node/Include.php on line 20
+[21-Nov-2026 07:02:12 UTC] PHP Deprecated:  Optional parameter $ignoreMissing declared before required parameter $lineno is implicitly treated as a required parameter in system/library/template/Twig/Node/Include.php on line 20
+[21-Nov-2026 07:02:14 UTC] PHP Deprecated:  Optional parameter $asString declared before required parameter $lineno is implicitly treated as a required parameter in system/library/template/Twig/Node/Expression/BlockReference.php on line 20
+[21-Nov-2026 07:02:14 UTC] PHP Deprecated:  Optional parameter $only declared before required parameter $lineno is implicitly treated as a required parameter in system/library/template/Twig/Node/Embed.php on line 20
+[21-Nov-2026 07:02:14 UTC] PHP Deprecated:  Optional parameter $ignoreMissing declared before required parameter $lineno is implicitly treated as a required parameter in system/library/template/Twig/Node/Embed.php on line 20
+[21-Nov-2026 07:02:16 UTC] PHP Deprecated:  Return type of Twig_Util_TemplateDirIterator::key() should either be compatible with IteratorIterator::key(): mixed, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in system/library/template/Twig/Util/TemplateDirIterator.php on line 22
+[21-Nov-2026 07:02:16 UTC] PHP Deprecated:  Return type of Twig_Util_TemplateDirIterator::current() should either be compatible with IteratorIterator::current(): mixed, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in system/library/template/Twig/Util/TemplateDirIterator.php on line 17
+[21-Nov-2026 07:02:20 UTC] PHP Parse error:  syntax error, unexpected string content "", expecting "-" or identifier or variable or number in system/library/tagmanager/inc/quickview.php on line 1

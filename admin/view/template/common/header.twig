@@ -48,10 +48,6 @@
         <ul class="dropdown-menu dropdown-menu-right">
           <li><a href="{{ profile }}"><i class="fa fa-user-circle-o fa-fw"></i> {{ text_profile }}</a></li>
           <li role="separator" class="divider"></li>
-          <li class="dropdown-header">{{ text_store }}</li>
-          {% for store in stores %}
-          <li><a href="{{ store.href }}" target="_blank">{{ store.name }}</a></li>
-          {% endfor %}
           <li role="separator" class="divider"></li>
           <li class="dropdown-header">{{ text_help }}</li>
           <li><a href="https://www.opencart.com" target="_blank"><i class="fa fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>

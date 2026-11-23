@@ -1,0 +1,339 @@
+<?php
+class ControllerExtensionModuleFacebookPublish extends Controller {
+    // DEKOR SERVER STORE VALIDATION V1
+    private $route = 'extension/module/facebook_publish';
+
+    public function index() {
+        $this->document->setTitle('Δημοσίευση προϊόντος στο Facebook');
+        $userToken = $this->session->data['user_token'] ?? '';
+
+        $this->load->model('catalog/product');
+        $productIdRaw = $this->request->get['product_id'] ?? '';
+        $productId = ctype_digit((string)$productIdRaw) ? (int)$productIdRaw : 0;
+        $productStores = $productId > 0
+            ? array_map('intval', $this->model_catalog_product->getProductStores($productId))
+            : [];
+        $hasDekor = in_array(0, $productStores, true);
+        $hasApokrifa = in_array(2, $productStores, true);
+
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
+        $data['action'] = $this->url->link($this->route, 'user_token=' . $userToken, true);
+        $data['error'] = '';
+        $data['success'] = '';
+        $page = $this->request->get['page'] ?? 'dekor';
+        if (!in_array($page, ['dekor', 'apokrifa'], true)) {
+            $page = 'dekor';
+        }
+        if ($hasDekor && !$hasApokrifa) {
+            $page = 'dekor';
+        } elseif ($hasApokrifa && !$hasDekor) {
+            $page = 'apokrifa';
+        }
+
+        $data['page'] = $page;
+        $data['product_id'] = $productId;
+        $data['product_url'] = '';
+        if (!empty($this->request->get['product_id']) && ctype_digit((string)$this->request->get['product_id'])) {
+            $domain = $page === 'dekor' ? 'dekor.gr' : 'apokrifa.gr';
+            $data['product_url'] = 'https://' . $domain . '/index.php?route=product/product&product_id=' . (int)$this->request->get['product_id'];
+        }
+        $data['message'] = '';
+        // PHOTO DEFAULT: όλα τα προϊόντα DEKOR και APOKRIFA
+        $data['publish_mode'] = 'photo';
+
+        if ($this->request->server['REQUEST_METHOD'] === 'POST') {
+            $data['product_url'] = trim($this->request->post['product_url'] ?? '');
+            $data['message'] = trim($this->request->post['message'] ?? '');
+            $postedProductId = $this->request->post['product_id'] ?? '';
+            $data['product_id'] = ctype_digit((string)$postedProductId)
+                ? (int)$postedProductId : 0;
+            $productStores = $data['product_id'] > 0
+                ? array_map('intval', $this->model_catalog_product->getProductStores($data['product_id']))
+                : [];
+            $hasDekor = in_array(0, $productStores, true);
+            $hasApokrifa = in_array(2, $productStores, true);
+            $data['page'] = $this->request->post['page'] ?? 'dekor';
+            $data['publish_mode'] = $this->request->post['publish_mode'] ?? 'link';
+
+            if (!$this->user->hasPermission('modify', $this->route)) {
+                $data['error'] = 'Δεν έχεις δικαίωμα δημοσίευσης.';
+            } elseif ($data['product_id'] < 1) {
+                $data['error'] = 'Δεν αναγνωρίστηκε το προϊόν. Άνοιξέ το από την επεξεργασία προϊόντος.';
+            } elseif (!$hasDekor && !$hasApokrifa) {
+                $data['error'] = 'Το προϊόν δεν είναι συνδεδεμένο με το DEKOR ή το APOKRIFA.';
+            } elseif (($data['page'] === 'dekor' && !$hasDekor) ||
+                      ($data['page'] === 'apokrifa' && !$hasApokrifa)) {
+                $data['error'] = 'Η επιλεγμένη σελίδα Facebook δεν αντιστοιχεί στα καταστήματα του προϊόντος.';
+            } elseif (!in_array($data['page'], ['dekor', 'apokrifa'], true)) {
+                $data['error'] = 'Επίλεξε μία από τις δύο Σελίδες.';
+            } elseif (!in_array($data['publish_mode'], ['link', 'photo'], true)) {
+                $data['error'] = 'Επίλεξε έγκυρο τρόπο δημοσίευσης.';
+            } else {
+                $parts = parse_url($data['product_url']);
+                $host = strtolower($parts['host'] ?? '');
+                $allowedHosts = $data['page'] === 'dekor'
+                    ? ['dekor.gr', 'www.dekor.gr']
+                    : ['apokrifa.gr', 'www.apokrifa.gr'];
+
+                if ($data['publish_mode'] === 'link' && (($parts['scheme'] ?? '') !== 'https' || !in_array($host, $allowedHosts, true))) {
+                    $data['error'] = 'Βάλε τον σύνδεσμο προϊόντος από το σωστό κατάστημα, με https://.';
+                } elseif (strlen($data['message']) > 2000) {
+                    $data['error'] = 'Το κείμενο είναι πολύ μεγάλο.';
+                } else {
+                    $tokenPath = '/home/chshost/storage/facebook-publish/' . $data['page'] . '-page-token.txt';
+                    $pageToken = is_readable($tokenPath) ? trim(file_get_contents($tokenPath)) : '';
+
+                    if ($pageToken === '') {
+                        $data['error'] = 'Δεν βρέθηκε το ιδιωτικό token της Σελίδας.';
+                    } else {
+                        $pageInfo = $this->graphRequest('GET', '/me', [
+                            'fields' => 'id,name',
+                            'access_token' => $pageToken
+                        ]);
+
+                        if (empty($pageInfo['id'])) {
+                            $data['error'] = 'Η Meta δεν επιβεβαίωσε τη Σελίδα. Έλεγξε τα δικαιώματα της εφαρμογής.';
+                        } else {
+                            if ($data['publish_mode'] === 'link') {
+                            // Ανάκτηση canonical SEO URL για Facebook.
+                            $url = $data['product_url'];
+                            $ch = curl_init($url);
+                            curl_setopt_array($ch, [
+                                CURLOPT_RETURNTRANSFER => true,
+                                CURLOPT_FOLLOWLOCATION => false,
+                                CURLOPT_TIMEOUT => 15,
+                                CURLOPT_SSL_VERIFYPEER => true
+                            ]);
+                            $html = curl_exec($ch);
+                            $http = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            curl_close($ch);
+
+                            if ($http == 200 && is_string($html)) {
+                                $dom = new DOMDocument();
+                                $previous = libxml_use_internal_errors(true);
+                                $loaded = $dom->loadHTML($html);
+                                libxml_clear_errors();
+                                libxml_use_internal_errors($previous);
+
+                                if ($loaded) {
+                                    foreach ($dom->getElementsByTagName('link') as $link) {
+                                        if (strtolower($link->getAttribute('rel')) === 'canonical') {
+                                            $canonical = $link->getAttribute('href');
+                                            $parts = parse_url($canonical);
+
+                                            if (is_array($parts) &&
+                                                ($parts['scheme'] ?? '') === 'https' &&
+                                                in_array(strtolower($parts['host'] ?? ''), $allowedHosts, true) &&
+                                                !isset($parts['port']) &&
+                                                !isset($parts['user']) &&
+                                                !isset($parts['pass'])) {
+                                                $data['product_url'] = $canonical;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            }
+
+                            // DYNAMIC PRODUCT PHOTO PUBLISH V1
+                            if ($data['publish_mode'] === 'photo') {
+                                $productId = (int)($data['product_id'] ?? 0);
+                                $product = $productId > 0
+                                    ? $this->model_catalog_product->getProduct($productId)
+                                    : [];
+
+                                $domain = $data['page'] === 'dekor'
+                                    ? 'dekor.gr' : 'apokrifa.gr';
+
+                                $imageRelative = str_replace(
+                                    '\\',
+                                    '/',
+                                    trim((string)($product['image'] ?? ''))
+                                );
+
+                                $imageRoot = realpath(DIR_IMAGE);
+                                $realImage = $imageRelative !== ''
+                                    ? realpath(DIR_IMAGE . ltrim($imageRelative, '/'))
+                                    : false;
+
+                                if (empty($product) || $productId < 1) {
+                                    $data['error'] = 'Δεν βρέθηκαν τα στοιχεία του προϊόντος.';
+                                } elseif (!$imageRoot || !$realImage ||
+                                    strpos($realImage, $imageRoot . DIRECTORY_SEPARATOR) !== 0) {
+                                    $data['error'] = 'Δεν βρέθηκε ασφαλής διαδρομή εικόνας για το προϊόν.';
+                                } else {
+                                    $info = @getimagesize($realImage);
+                                    $cacheRelative = 'cache/facebook-photo/' .
+                                        $data['page'] . '-product-' .
+                                        $productId . '-1000x1000.jpg';
+                                    $destination = DIR_IMAGE . $cacheRelative;
+                                    $photoDir = dirname($destination);
+
+                                    if (!$info || $info[0] < 1 || $info[1] < 1) {
+                                        $data['error'] = 'Η κύρια εικόνα του προϊόντος δεν είναι έγκυρη.';
+                                    } elseif (!is_dir($photoDir) &&
+                                        !@mkdir($photoDir, 0755, true) &&
+                                        !is_dir($photoDir)) {
+                                        $data['error'] = 'Δεν δημιουργήθηκε ο φάκελος εικόνων Facebook.';
+                                    } else {
+                                        $needsUpdate = !is_file($destination) ||
+                                            filemtime($realImage) > filemtime($destination);
+
+                                        if ($needsUpdate) {
+                                            switch ($info[2]) {
+                                                case IMAGETYPE_JPEG:
+                                                    $src = @imagecreatefromjpeg($realImage);
+                                                    break;
+                                                case IMAGETYPE_PNG:
+                                                    $src = @imagecreatefrompng($realImage);
+                                                    break;
+                                                case IMAGETYPE_WEBP:
+                                                    $src = @imagecreatefromwebp($realImage);
+                                                    break;
+                                                case IMAGETYPE_GIF:
+                                                    $src = @imagecreatefromgif($realImage);
+                                                    break;
+                                                default:
+                                                    $src = false;
+                                                    break;
+                                            }
+
+                                            if (!$src) {
+                                                $data['error'] = 'Δεν υποστηρίζεται ο τύπος της κύριας εικόνας.';
+                                            } else {
+                                                $width = imagesx($src);
+                                                $height = imagesy($src);
+                                                $canvas = imagecreatetruecolor(1000, 1000);
+                                                $white = imagecolorallocate($canvas, 255, 255, 255);
+                                                imagefill($canvas, 0, 0, $white);
+
+                                                $scale = min(1000 / $width, 1000 / $height);
+                                                $newWidth = max(1, (int)round($width * $scale));
+                                                $newHeight = max(1, (int)round($height * $scale));
+                                                $x = (int)( (1000 - $newWidth) / 2 );
+                                                $y = (int)( (1000 - $newHeight) / 2 );
+
+                                                imagecopyresampled(
+                                                    $canvas, $src, $x, $y, 0, 0,
+                                                    $newWidth, $newHeight, $width, $height
+                                                );
+
+                                                if (!imagejpeg($canvas, $destination, 90)) {
+                                                    $data['error'] = 'Δεν δημιουργήθηκε η φωτογραφία JPEG.';
+                                                }
+
+                                                imagedestroy($src);
+                                                imagedestroy($canvas);
+                                            }
+                                        }
+
+                                        if ($data['error'] === '') {
+                                            $photoUrl = 'https://' . $domain . '/image/' .
+                                                $cacheRelative;
+
+                                            $caption = trim($data['message']);
+                                            $cta = "Δείτε το προϊόν:\n" .
+                                                'https://' . $domain . '/go/?id=' . $productId;
+
+                                            $caption = ($caption === ''
+                                                ? '' : $caption . "\n\n") . $cta;
+
+                                            $posted = $this->graphRequest(
+                                                'POST',
+                                                '/' . rawurlencode($pageInfo['id']) . '/photos',
+                                                [
+                                                    'url' => $photoUrl,
+                                                    'caption' => $caption,
+                                                    'access_token' => $pageToken
+                                                ]
+                                            );
+                                        }
+                                    }
+                                }
+                            } elseif ($data['publish_mode'] === 'link') {
+                            $postData = [
+                                'link' => $data['product_url'],
+                                'access_token' => $pageToken
+                            ];
+                            if ($data['message'] !== '') {
+                                $postData['message'] = $data['message'];
+                            }
+
+                            // Προετοιμασία Facebook link preview πριν από τη δημοσίευση.
+                            $scrape = $this->graphRequest('POST', '/', [
+                                'id' => $data['product_url'],
+                                'scrape' => 'true',
+                                'access_token' => $pageToken
+                            ]);
+
+                            if (!empty($scrape['_error'])) {
+                                $data['error'] = 'Δεν ολοκληρώθηκε η ανάκτηση της προεπισκόπησης από τη Meta: ' .
+                                    htmlspecialchars($scrape['_error'], ENT_QUOTES, 'UTF-8');
+                            } elseif (empty($scrape['image']) && empty($scrape['og_object']['id']) && empty($scrape['id'])) {
+                                $data['error'] = 'Η Meta δεν επιβεβαίωσε την ανάκτηση της προεπισκόπησης. Η δημοσίευση δεν πραγματοποιήθηκε.';
+                            } else {
+                                $posted = $this->graphRequest('POST', '/' . rawurlencode($pageInfo['id']) . '/feed', $postData);
+                            }
+
+                            } else {
+                                $data['error'] = 'Μη έγκυρος τρόπος δημοσίευσης.';
+                            }
+
+                            if (!isset($posted)) {
+                                // Διατηρούμε το σφάλμα προεπισκόπησης και δεν επιχειρούμε δημοσίευση.
+                            } elseif (!empty($posted['id'])) {
+                                $data['success'] = 'Η δημοσίευση ολοκληρώθηκε στη Σελίδα ' . htmlspecialchars($pageInfo['name'], ENT_QUOTES, 'UTF-8') . '.';
+                                $data['product_url'] = '';
+                                $data['message'] = '';
+                            } else {
+                                $data['error'] = 'Η Meta δεν ολοκλήρωσε τη δημοσίευση. ' .
+                                    htmlspecialchars($posted['_error'] ?? 'Έλεγξε τα δικαιώματα της εφαρμογής.', ENT_QUOTES, 'UTF-8');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $this->response->setOutput($this->load->view('extension/module/facebook_publish', $data));
+    }
+
+    private function graphRequest($method, $path, $params) {
+        $url = 'https://graph.facebook.com/v26.0' . $path;
+        $ch = curl_init();
+
+        if ($method === 'GET') {
+            $url .= '?' . http_build_query($params);
+        }
+
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_SSL_VERIFYPEER => true
+        ]);
+
+        if ($method === 'POST') {
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+        }
+
+        $body = curl_exec($ch);
+        $curlError = curl_error($ch);
+        curl_close($ch);
+
+        $result = is_string($body) ? json_decode($body, true) : null;
+
+        if (!is_array($result)) {
+            return ['_error' => $curlError ?: 'Δεν υπήρξε έγκυρη απάντηση από τη Meta.'];
+        }
+        if (!empty($result['error'])) {
+            return ['_error' => $result['error']['message'] ?? 'Σφάλμα Meta.'];
+        }
+        return $result;
+    }
+}

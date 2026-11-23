@@ -1,0 +1,122 @@
+<div id="main-tabs">
+<div class="home_product_block m_t_30  m_b_30 container">
+
+
+
+
+
+        {% if lang == 'el' %}  
+     <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">ΝΕΑ ΠΡΟΙΟΝΤΑ</a></li>
+         <li role="presentation"><a href="#tab2"  aria-controls="tab2"  role="tab" data-toggle="tab">ΔΗΜΟΦΙΛΗ</a></li>
+    </ul>
+     {% else %}
+     <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">NEW PRODUCTS</a></li>
+         <li role="presentation"><a href="#tab2"  aria-controls="tab2"  role="tab" data-toggle="tab">FEATURED</a></li>
+    </ul>    
+
+{% endif %} 
+
+
+
+
+    <div class="product_block-wrap">
+        <div class="swiper-viewport">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="tab1">
+                    <div id="ff" class="swiper-container">
+                        <div class="swiper-wrapper">
+                                {% for product in products %}
+                                    <div class="swiper-slide">
+                                        {{ include('happy/template/hostore/product_blocks/product_owl.twig') }}
+                                    </div>
+                                {% endfor %}
+                        </div> 
+                 </div>
+             </div>
+             <div role="tabpanel" class="tab-pane" id="tab2">
+                <div role="tabpanel" class="tab-pane" id="tab2">
+                <div class="products-owl-carousel owl-carousel-play" id="wrap-latestt" data-ride="owlcarousel">
+                    <div class="products-block products-owl owl-carousel" id="latestt" data-show="4" data-pagination="false" data-navigation="true">
+                        {% for product_l in products_l %}
+                                <div class="product-col-wrap products-row">
+                                    <div class="product-col">
+                                        {{ include('happy/template/hostore/product_blocks/product_owl_latest.twig') }}
+                                    </div>
+                                </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            </div>
+           </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<script type="text/javascript">
+    var swiper = new Swiper('#ff', {
+        slidesPerView: 4,
+        spaceBetween: 10,
+        loop: true,
+        nextButton: '.pager-{{ module }} .swiper-button-next',
+        prevButton: '.pager-{{ module }} .swiper-button-prev',
+        // Responsive breakpoints
+        breakpoints: {
+            // when window width is <= 420px
+            480: {
+                slidesPerView: 1,
+                spaceBetween: 0
+            },
+            // when window width is <= 640px
+            640: {
+                slidesPerView: 2,
+                spaceBetween: 20
+            },
+            // when window width is <= 640px
+            1100: {
+                slidesPerView: 3,
+                spaceBetween: 20
+            }
+        }
+    });
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+       var $carousel =  $("#latestt");
+       $carousel.owlCarousel({
+            autoplay: false,
+            lazyLoad : true,
+           
+            loop: true,
+      
+            margin: 20,
+          
+            nav: true,
+          
+            nav: false,
+         
+            navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+            dots: false,
+            responsive:{
+                0:{
+                    items:1
+                },
+                480:{
+                    items:2
+                },
+                600:{
+                    items:3
+                },
+                1220:{
+                    items:4
+                }
+            }
+        });
+    });
+</script>

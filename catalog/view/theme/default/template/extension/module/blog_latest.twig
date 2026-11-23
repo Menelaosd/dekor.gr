@@ -34,7 +34,7 @@
 										<div class="summary">
 											{% if blog.image and thumb %} 
 											<div class="image">
-											<a href="{{ blog.href }}"><img src="{{ blog.image }}" alt="{{ blog.title }}" title="{{ blog.title }}" rel="preload" fetchpriority="high"  decoding="async" loading="lazy" width="350" height="350"/></a>
+											<a href="{{ blog.href }}"><img src="{{ blog.image }}" alt="{{ blog.title }}" title="{{ blog.title }}" fetchpriority="low" decoding="async" loading="lazy" width="350" height="350"/></a>
 											</div>
 											{% endif %} 
 											<div class="blog_caption">
@@ -79,7 +79,7 @@
 										<div class="summary">
 											{% if blog.image and thumb %} 
 											<div class="image">
-											<a href="{{ blog.href }}"><img src="{{ blog.image }}" alt="{{ blog.title }}" title="{{ blog.title }}" rel="preload" fetchpriority="high"  decoding="async" loading="lazy" width="350" height="350"/></a>
+											<a href="{{ blog.href }}"><img src="{{ blog.image }}" alt="{{ blog.title }}" title="{{ blog.title }}" fetchpriority="low" decoding="async" loading="lazy" width="350" height="350"/></a>
 											</div>
 											{% endif %} 
 											<div class="blog_caption">

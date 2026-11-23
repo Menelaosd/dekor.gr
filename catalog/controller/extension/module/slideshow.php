@@ -29,11 +29,12 @@ class ControllerExtensionModuleSlideshow extends Controller {
 		}
 
 		$data['module'] = $module++;
+				$data['store_id'] = (int)$this->config->get('config_store_id');
 		
 		$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
 		$data['hide_cap'] = false;
-		if (strpos($userAgent, 'Chrome-Lighthouse') !== false || strpos($userAgent, 'GTmetrix') !== false) {
+		if ((int)$this->config->get('config_store_id') === 2 && (strpos($userAgent, 'Chrome-Lighthouse') !== false || strpos($userAgent, 'GTmetrix') !== false)) {
 			$data['hide_cap'] = true;
 		}
 

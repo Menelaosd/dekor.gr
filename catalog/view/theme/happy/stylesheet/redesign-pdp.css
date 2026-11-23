@@ -436,3 +436,711 @@ body.product_product .fancybox-toolbar .fancybox-button { background: #333; colo
 @media (max-width: 360px) {
   body.product_product #product #button-cart .pdp-icon { display: none; }
 }
+
+/* DEKOR: λευκό περίγραμμα και λευκές διαχωριστικές γραμμές */
+.product-right.product-content {
+  border-color: #fff !important;
+}
+
+.product-right.product-content .product-details {
+  border-bottom-color: #fff !important;
+}
+
+.product-right.product-content .product-prices {
+  border-top-color: #fff !important;
+}
+
+/* Μη διαθέσιμο: λευκό περίγραμμα και μεγάλη κόκκινη τελεία */
+.product-right.product-content .stock-status {
+  border-color: #fff !important;
+}
+
+.product-right.product-content .stock-status:has(i.fa-home) {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.product-right.product-content .stock-status:has(i.fa-home) i {
+  display: none !important;
+}
+
+.product-right.product-content .stock-status:has(i.fa-home)::before {
+  content: "" !important;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  border-radius: 50%;
+  background: #ff0000;
+}
+/* DEKOR: λευκό περίγραμμα, λευκές γραμμές και κόκκινη τελεία */
+html body.product_product #product .product-right.product-content {
+  border-color: #fff !important;
+}
+
+html body.product_product #product .product-right .product-details {
+  border-bottom-color: #fff !important;
+}
+
+html body.product_product #product .product-right .product-filters-share {
+  border-top-color: #fff !important;
+}
+
+html body.product_product #product .stock-status.storeonly:has(i.fa-store) {
+  width: auto !important;
+  border: 1px solid #fff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+html body.product_product #product .stock-status.storeonly:has(i.fa-store) i.fa-store {
+  display: none !important;
+}
+
+html body.product_product #product .stock-status.storeonly:has(i.fa-store)::before {
+  content: "" !important;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  border-radius: 50%;
+  background: #ff0000;
+}
+/* DEKOR PDP: αφαίρεση διαχωριστικών τιμών και πράσινη τελεία διαθεσιμότητας */
+html body.product_product #product .product-right .product-prices,
+html body.product_product #product .product-right .product-prices *,
+html body.product_product #product .product-right .product-details {
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  border-left: 0 !important;
+}
+
+html body.product_product #product .product-right .stock-status:has(i[class*="truck"]) {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+html body.product_product #product .product-right .stock-status:has(i[class*="truck"]) i {
+  display: none !important;
+}
+
+html body.product_product #product .product-right .stock-status:has(i[class*="truck"])::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: 9px !important;
+  height: 9px !important;
+  flex: 0 0 9px !important;
+  border-radius: 50% !important;
+  background: #168a3a !important;
+}
+CSS="/home/chshost/public_html/catalog/view/theme/happy/stylesheet/redesign-pdp.css"
+BACKUP="${CSS}.bak-price-lines-green-stock-dot-20261017-1144"
+
+if [ ! -f "$CSS" ]; then
+  echo "ABORT: δεν βρέθηκε το CSS"
+elif [ -e "$BACKUP" ]; then
+  echo "ABORT: υπάρχει ήδη το backup $BACKUP"
+else
+  cp -p "$CSS" "$BACKUP" || exit 1
+  cat >> "$CSS" <<'CSS'
+
+/* DEKOR PDP: αφαίρεση διαχωριστικών τιμών και πράσινη τελεία διαθεσιμότητας */
+html body.product_product #product .product-right .product-prices,
+html body.product_product #product .product-right .product-prices *,
+html body.product_product #product .product-right .product-details {
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  border-left: 0 !important;
+}
+
+html body.product_product #product .product-right .stock-status:has(i[class*="truck"]) {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+html body.product_product #product .product-right .stock-status:has(i[class*="truck"]) i {
+  display: none !important;
+}
+
+html body.product_product #product .product-right .stock-status:has(i[class*="truck"])::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: 9px !important;
+  height: 9px !important;
+  flex: 0 0 9px !important;
+  border-radius: 50% !important;
+  background: #168a3a !important;
+}
+
+/* DEKOR PDP: αφαίρεση των πραγματικών διαχωριστικών τιμών */
+html body.product_product #product .product-right .prices-package .price-block + .price-block {
+  border-left: 0 !important;
+  border-inline-start: 0 !important;
+}
+
+html body.product_product #product .product-right .product-prices {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+html body.product_product #product .product-right .packageRef {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+html body.product_product #product .product-right .product-details {
+  border-bottom: 0 !important;
+}
+
+/* Μαύρες τιμές στις κάρτες προϊόντων */
+.product-thumb .price,
+.product-thumb .price-current,
+.product-thumb .price-new,
+.product-thumb .price span {
+    color: #000000 !important;
+}
+
+/* DEKOR: Μαύρη τιμή στη σελίδα προϊόντος */
+body.product_product .product-right .product-prices .price-current,
+body.product_product .product-right .product-prices .price-current-package {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+}
+
+/* DEKOR: Μαύρο κείμενο άμεσα διαθέσιμο */
+body.product_product .stock-status,
+body.product_product .stock-status span {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+}
+
+
+/* DEKOR: μεγαλύτερη κύρια εικόνα προϊόντος και στρογγυλεμένες γωνίες */
+@media (min-width: 992px) {
+  body.product_product #product .product-left.product__images {
+    flex: 0 0 calc(55% - 14px) !important;
+    max-width: calc(55% - 14px) !important;
+    width: calc(55% - 14px) !important;
+  }
+
+  body.product_product #product .product-right.product-content {
+    flex: 0 0 calc(45% - 14px) !important;
+    max-width: calc(45% - 14px) !important;
+    width: calc(45% - 14px) !important;
+  }
+}
+
+body.product_product #product #product_img_gallery .swiper-slide a {
+  display: block;
+  width: 100%;
+}
+
+body.product_product #product #product_img_gallery .swiper-slide img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+
+/* DEKOR: μεγαλύτερη φωτογραφία προϊόντος και ακτίνα πλαισίου */
+body.product_product #product .product-left #product_img_gallery .swiper-slide {
+  max-height: 600px !important;
+}
+body.product_product #product .product-left #product_img_gallery .swiper-slide img {
+  border-radius: var(--pdp-radius) !important;
+}
+
+
+/* DEKOR: κύρια εικόνα ευθυγραμμισμένη και με στρογγυλεμένες γωνίες */
+body.product_product #product .product-left #product_img_gallery .swiper-slide img {
+  padding: 0 !important;
+  border-radius: var(--pdp-radius) !important;
+}
+
+
+/* DEKOR: σταθερά στρογγυλεμένες γωνίες κύριας εικόνας */
+body.product_product #product .product-left #product_img_gallery .swiper-slide,
+body.product_product #product .product-left #product_img_gallery .swiper-slide a,
+body.product_product #product .product-left #product_img_gallery .swiper-slide img {
+  border-radius: 24px !important;
+  overflow: hidden !important;
+}
+
+
+/* DEKOR: στρογγυλεμένη φωτογραφία χωρίς μαύρο περίγραμμα */
+body.product_product #product .product-left #product_img_gallery { border: 0 !important; box-shadow: none !important; }
+body.product_product #product .product-left #product_img_gallery .swiper-slide { border: 0 !important; outline: none !important; box-shadow: none !important; border-radius: 0 !important; }
+body.product_product #product .product-left #product_img_gallery .swiper-slide a { border: 0 !important; box-shadow: none !important; border-radius: 0 !important; }
+body.product_product #product .product-left #product_img_gallery .swiper-slide a:focus:not(:focus-visible) { outline: none !important; }
+body.product_product #product .product-left #product_img_gallery .swiper-slide a:focus-visible { outline: 2px solid #397a45 !important; outline-offset: 2px; }
+body.product_product #product .product-left #product_img_gallery .swiper-slide img { border: 0 !important; outline: none !important; box-shadow: none !important; border-radius: 24px !important; padding: 0 !important; }
+
+
+/* DEKOR: radius 32px στην πραγματική φωτογραφία προϊόντος */
+body.product_product #product .product-left #product_img_gallery .swiper-slide img {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 32px !important;
+  padding: 0 !important;
+}
+
+
+/* DEKOR APOKRIFA MOBILE SOCIAL GRID V1 */
+@media screen and (max-width: 767px) {
+  body.product_product #product .product-right .product-share {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px !important;
+    width: 100%;
+  }
+
+  body.product_product #product .product-share > .product-share-label {
+    grid-column: 1 / -1;
+  }
+
+  body.product_product #product .product-right .product-share a,
+  body.product_product #product .product-right .product-share button {
+    box-sizing: border-box;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100%;
+    height: 36px;
+    padding: 0 6px !important;
+    margin: 0 !important;
+    gap: 5px;
+    font-size: 11px !important;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  body.product_product #product .product-share svg {
+    width: 13px;
+    height: 13px;
+    flex: 0 0 13px;
+  }
+
+  body.product_product #product .product-share a span,
+  body.product_product #product .product-share button span {
+    display: inline !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    font-size: 11px !important;
+  }
+
+  body.product_product #product .product-right .product-share .product-share-native {
+    grid-column: 1 / -1;
+  }
+
+  body.product_product #product .product-share-status {
+    grid-column: 1 / -1;
+  }
+}
+
+/* DEKOR APOKRIFA MOBILE SOCIAL ICONS V2 */
+@media screen and (max-width: 767px) {
+  body.product_product #product .product-right .product-share {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    width: 100%;
+    align-items: center;
+  }
+
+  body.product_product #product .product-share > .product-share-label {
+    grid-column: 1 / -1;
+  }
+
+  body.product_product #product .product-right .product-share a,
+  body.product_product #product .product-right .product-share button {
+    box-sizing: border-box;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 48px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  body.product_product #product .product-share svg {
+    width: 23px !important;
+    height: 23px !important;
+    flex: 0 0 23px !important;
+  }
+
+  body.product_product #product .product-share a span,
+  body.product_product #product .product-share button span {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+  }
+
+  body.product_product #product .product-right .product-share .product-share-native {
+    grid-column: auto !important;
+  }
+
+  body.product_product #product .product-share-status {
+    grid-column: 1 / -1;
+  }
+}
+/* DEKOR & APOKRIFA - Share icons only */
+.product-share .product-share-native span,
+.product-share .product-share-copy span {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.product-share .product-share-native,
+.product-share .product-share-copy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 7px;
+    flex: 0 0 38px;
+}
+
+.product-share .product-share-native svg,
+.product-share .product-share-copy svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+}
+
+/* DEKOR + APOKRIFA: final share icons layout */
+@media screen {
+  body.product_product #product .product-right .product-share {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+  }
+
+  body.product_product #product .product-right .product-share > .product-share-label {
+    width: auto !important;
+    grid-column: auto !important;
+  }
+
+  body.product_product #product .product-right .product-share > button.product-share-native,
+  body.product_product #product .product-right .product-share > button.product-share-copy {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    height: 40px !important;
+    padding: 8px !important;
+    margin: 0 !important;
+    flex: 0 0 40px !important;
+  }
+
+  body.product_product #product .product-right .product-share > button svg {
+    width: 22px !important;
+    height: 22px !important;
+    flex: 0 0 22px !important;
+  }
+
+  body.product_product #product .product-right .product-share > button span {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  body.product_product #product .product-right .product-share-status {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+  }
+}
+
+/* DEKOR + APOKRIFA grayscale purchase controls 20261030 */
+body.product_product #product .product-right .product-buttons {
+    background-color: #808080 !important;
+}
+body.product_product #product .product-right .product-buttons,
+body.product_product #product .product-right .product-buttons button,
+body.product_product #product .product-right .product-buttons a {
+    color: #000 !important;
+}
+body.product_product #product .product-right .number-spinner,
+body.product_product #product .product-right .number-spinner .btn,
+body.product_product #product .product-right .product-wishlist button {
+    background-color: transparent !important;
+    color: #000 !important;
+}
+body.product_product #product .product-right .number-spinner #input-quantity {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+body.product_product #product .product-right .product-cart-button {
+    background: #808080 !important;
+    color: #000 !important;
+}
+body.product_product #product .product-right .product-cart-button span,
+body.product_product #product .product-right .product-cart-button i,
+body.product_product #product .product-right .product-wishlist button i {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+body.product_product #product .product-right .product-buttons button:hover,
+body.product_product #product .product-right .product-buttons a:hover,
+body.product_product #product .product-right .product-buttons button:focus,
+body.product_product #product .product-right .product-buttons a:focus,
+body.product_product #product .product-right .product-buttons button:active,
+body.product_product #product .product-right .product-buttons a:active,
+body.product_product #product .product-right .product-buttons .selected,
+body.product_product #product .product-right .product-buttons .active,
+body.product_product #product .product-right .product-buttons [aria-pressed="true"] {
+    background-color: #404040 !important;
+    color: #fff !important;
+}
+body.product_product #product .product-right .product-buttons button:hover *,
+body.product_product #product .product-right .product-buttons a:hover *,
+body.product_product #product .product-right .product-buttons button:focus *,
+body.product_product #product .product-right .product-buttons a:focus *,
+body.product_product #product .product-right .product-buttons button:active *,
+body.product_product #product .product-right .product-buttons a:active * {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+
+
+/* PDP_ACTION_REFINEMENT_20261103
+   Shared DEKOR + APOKRIFA PDP actions, desktop and mobile.
+   Scoped to product details only.
+*/
+body.product_product #product .product-right .product-buttons {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 12px !important;
+    background: #f4f5f6 !important;
+    border: 1px solid #dfe2e5 !important;
+    border-radius: 16px !important;
+    box-sizing: border-box !important;
+}
+
+body.product_product #product .product-right .product-quantity {
+    flex: 0 0 auto;
+    min-width: 0 !important;
+    background: transparent !important;
+}
+
+body.product_product #product .product-right .product-quantity label,
+body.product_product #product .product-right .product-buttons label {
+    color: #333 !important;
+    -webkit-text-fill-color: #333 !important;
+    font-weight: 600 !important;
+}
+
+body.product_product #product .product-right .number-spinner {
+    display: flex !important;
+    align-items: stretch !important;
+    width: 116px !important;
+    height: 48px !important;
+    overflow: hidden !important;
+    border: 1px solid #cbd0d4 !important;
+    border-radius: 12px !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+}
+
+body.product_product #product .product-right .number-spinner .btn {
+    height: 46px !important;
+    background: #eef0f2 !important;
+    color: #171717 !important;
+    -webkit-text-fill-color: #171717 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+body.product_product #product .product-right .number-spinner #input-quantity {
+    height: 46px !important;
+    background: #fff !important;
+    color: #111 !important;
+    -webkit-text-fill-color: #111 !important;
+    text-align: center !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+body.product_product #product .product-right .product-cart {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+}
+
+body.product_product #product #button-cart.product-cart-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    padding: 10px 12px !important;
+    gap: 8px !important;
+    border: 1px solid #303234 !important;
+    border-radius: 12px !important;
+    background: #303234 !important;
+    background-image: none !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+}
+
+body.product_product #product #button-cart.product-cart-button:not(:disabled) span,
+body.product_product #product #button-cart.product-cart-button:not(:disabled) i,
+body.product_product #product #button-cart.product-cart-button:not(:disabled) svg {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+
+body.product_product #product #button-cart.product-cart-button:not(:disabled):hover {
+    background: #181a1b !important;
+    border-color: #181a1b !important;
+}
+
+body.product_product #product #button-cart.product-cart-button:focus-visible,
+body.product_product #product .product-right .number-spinner button:focus-visible,
+body.product_product #product .product-right .product-wishlist button:focus-visible {
+    outline: 2px solid #526c55 !important;
+    outline-offset: 3px !important;
+}
+
+body.product_product #product .product-right .product-wishlist {
+    flex: 0 0 48px !important;
+    width: 48px !important;
+    min-width: 0 !important;
+}
+
+body.product_product #product .product-right .product-wishlist button {
+    width: 48px !important;
+    height: 48px !important;
+    padding: 0 !important;
+    border: 1px solid #cbd0d4 !important;
+    border-radius: 12px !important;
+    background: #fff !important;
+    color: #242424 !important;
+    -webkit-text-fill-color: #242424 !important;
+    box-shadow: none !important;
+}
+
+body.product_product #product .product-right .product-wishlist button:hover {
+    background: #e8eaec !important;
+    border-color: #8c959c !important;
+}
+
+body.product_product #product .product-right .product-wishlist button i,
+body.product_product #product .product-right .product-wishlist button svg {
+    color: #242424 !important;
+    -webkit-text-fill-color: #242424 !important;
+}
+
+body.product_product #product #button-cart-disabled {
+    background: #e5e7e9 !important;
+    color: #555 !important;
+    border-radius: 12px !important;
+    cursor: not-allowed !important;
+}
+
+@media (max-width: 767px) {
+    body.product_product #product .product-right .product-buttons {
+        gap: 7px !important;
+        padding: 9px !important;
+        flex-wrap: nowrap !important;
+        border-radius: 14px !important;
+    }
+
+    body.product_product #product .product-right .number-spinner {
+        width: 100px !important;
+        height: 46px !important;
+    }
+
+    body.product_product #product .product-right .number-spinner .btn {
+        width: 30px !important;
+        min-width: 30px !important;
+        height: 44px !important;
+    }
+
+    body.product_product #product .product-right .number-spinner #input-quantity {
+        width: 38px !important;
+        height: 44px !important;
+    }
+
+    body.product_product #product #button-cart.product-cart-button {
+        min-height: 46px !important;
+        padding: 8px 6px !important;
+        font-size: 13px !important;
+        border-radius: 11px !important;
+    }
+
+    body.product_product #product .product-right .product-wishlist {
+        flex-basis: 44px !important;
+        width: 44px !important;
+    }
+
+    body.product_product #product .product-right .product-wishlist button {
+        width: 44px !important;
+        height: 46px !important;
+        border-radius: 11px !important;
+    }
+}
+
+@media (max-width: 360px) {
+    body.product_product #product .product-right .product-buttons {
+        gap: 5px !important;
+        padding: 7px !important;
+    }
+
+    body.product_product #product .product-right .number-spinner {
+        width: 94px !important;
+    }
+
+    body.product_product #product #button-cart.product-cart-button {
+        font-size: 12px !important;
+    }
+}
+/* END PDP_ACTION_REFINEMENT_20261103 */
+

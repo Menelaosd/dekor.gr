@@ -516,7 +516,7 @@ class ControllerExtensionModuleBrainyFilter extends Controller {
     }
     
     private function _parsePostData() {
-        if(get_magic_quotes_gpc()){
+        if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
             $this->request->post['bf'] = stripslashes($this->request->post['bf']);
         }
         $json = str_replace('&quot;', '"', $this->request->post['bf']);

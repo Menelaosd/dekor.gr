@@ -29,7 +29,7 @@
                         <div class="swiper-wrapper">
                                 {% for product in products %}
                                     <div class="swiper-slide">
-                                        {{ include('happy/template/hostore/product_blocks/product_owl.twig') }}
+                                        {{ include('happy/template/hostore/product_blocks/product_owl.twig', {'dekor_home_lazy': dekor_home_lazy|default(false)}) }}
                                     </div>
                                 {% endfor %}
                         </div> 
@@ -58,6 +58,8 @@
 
 
 <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+    if (!window.Swiper) return;
     var swiper = new Swiper('#ff', {
         slidesPerView: 4,
         spaceBetween: 10,
@@ -82,6 +84,8 @@
                 spaceBetween: 20
             }
         }
+    });
+
     });
 </script>
 

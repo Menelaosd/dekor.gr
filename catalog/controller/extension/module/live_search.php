@@ -93,7 +93,14 @@ class ControllerExtensionModuleLiveSearch extends Controller {
 						$rating = false;
 					}
 					$json['total'] = (int)$search_result;
-					$json['products'][] = array(
+					// APOKRIFA_LIVE_SEARCH_PRICE_GUARD_V1
+if ((int)$this->config->get('config_store_id') === 2
+    && !$this->customer->isLogged()) {
+    $price = false;
+    $special = false;
+    $tax = false;
+}
+$json['products'][] = array(
 						'product_id' => $result['product_id'],
 						'working' => $result['working'],
 						'quantity' => $result['quantity'],
@@ -130,7 +137,7 @@ class ControllerExtensionModuleLiveSearch extends Controller {
 
             //$liveSearchJS = '<link href="catalog/view/javascript/live_search/live_search.css" rel="stylesheet" type="text/css">'."\n";
             $liveSearchJS 	= '';
-			$liveSearchJS .= '<script src="catalog/view/javascript/live_search/live_search.js?v=12"></script>'."\n";
+			$liveSearchJS .= '<script src="catalog/view/javascript/live_search/live_search.js?v=12"' . ((int)$this->config->get('config_store_id') === 0 ? ' defer' : '') . '></script>'."\n";
             $liveSearchJS .= '<script type="text/javascript"><!--'."\n";
 			$liveSearchJS .= '$(document).ready(function() {'."\n";
 			$liveSearchJS .= 'var options = '.json_encode($liveSearch).';'."\n";

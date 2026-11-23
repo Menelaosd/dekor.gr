@@ -159,7 +159,6 @@
 - [Mormorik Γατόμουρο ρίζα 40gr.](https://dekor.gr/): type_product
 - [Αγνό Κερί Μέλισσας σε Πλακάκι 50gr Φυσικό Beeswax](https://dekor.gr/agno-keri-melissas-plakaki-50gr): type_product
 - [Τάτουλα – Σπόροι Datura spp., 10 γρ.](https://dekor.gr/tatoula-sporoi-datura-10gr): type_product
-- [Θυμίαμα Thavael (Θαβαήλ) – Ψαλμός 33 για Φύλαξη &amp;amp; Καθοδήγηση](https://dekor.gr/): type_product
 - [Μεγάλο Κόκκινο Κερί Νεκροκεφαλής για Μεταμόρφωση, Δύναμη και Εργασία Σκιάς](https://dekor.gr/): type_product
 - [Premium Μείγμα Κεριού Παραφίνης 60–62°C Γερμανίας για Χυτά Κεριά 5kg](https://dekor.gr/premium-meigma-keriou-parafini-60-62-5kg): type_product
 - [Βελτιωτικό Κεριού για Παραφίνη 100gr Ενίσχυσης Καύσης &amp;amp; Σταθερότητας](https://dekor.gr/veltiotiko-keriou-parafini-100gr): type_product
@@ -987,78 +986,8 @@
 - [Arias](https://dekor.gr/arias-ag-00004): type_product
 - [Χειροποίητο Κυλινδρικό Κερί Ρουστίκ Ø12x20cm για Γάμο &amp;amp; Διακόσμηση](https://dekor.gr/kylindriko-keri-roustik-12x20cm-gia-gamo): type_product
 - [Χειροποίητο Κυλινδρικό Κερί Ρουστίκ Ø15x20cm για Γάμο &amp;amp; Διακόσμηση](https://dekor.gr/kylindriko-keri-roustik-15x20cm-gia-gamo): type_product
-- [1ος  Άγγελος  VEHUIAH והויה  ](https://dekor.gr/1os-aggelos-vehuiah-13-0001): type_product
-- [2ος  Άγγελος YELIEL יליאל  ](https://dekor.gr/2os-aggelos-yeliel-13-0002): type_product
-- [3ος  Άγγελος  SITAEL סיטאל ](https://dekor.gr/3os-aggelos-sitael-13-0003): type_product
-- [4ος  Άγγελος AULEMIAH עלמיה ](https://dekor.gr/4os-aggelos-aulemiah-13-0004): type_product
-- [5ος  Άγγελος MAHASIAH מהשיה  ](https://dekor.gr/5os-aggelos-mahasiah-13-0005): type_product
-- [6ος  Άγγελος LEHAHEL ללהאל   ](https://dekor.gr/6os-aggelos-lehahel-13-0006): type_product
-- [7ος  Άγγελος  ACHAIAH אכאיה  ](https://dekor.gr/7os-aggelos-achaiah-13-0007): type_product
-- [8ος  Άγγελος KAHATAEL כהתאל ](https://dekor.gr/8os-aggelos-kahatael-13-0008): type_product
-- [9ος  Άγγελος HETZIEL הזיאל  ](https://dekor.gr/9os-aggelos-hetziel-13-0009): type_product
-- [10ος  Άγγελος ALADIAH אלדיה  ](https://dekor.gr/10os-aggelos-aladiah-13-0010): type_product
-- [11ος  Άγγελος LAUVIAH לאויה  ](https://dekor.gr/11os-aggelos-lauviah-13-0011): type_product
-- [12ος  Άγγελος HAHAIAH ההעיה  ](https://dekor.gr/12os-aggelos-hahaiah-13-0012): type_product
-- [13ος  Άγγελος YETZELAEL יזלאל ](https://dekor.gr/13os-aggelos-yetzelael-13-0013): type_product
-- [14ος  Άγγελος MEBAHEL מבהאל  ](https://dekor.gr/14os-aggelos-mebahel-13-0014): type_product
-- [15ος  Άγγελος  HARIEL הריאל&amp;quot;](https://dekor.gr/15os-aggelos-hariel-13-0015): type_product
-- [16ος  Άγγελος HAQOMIAH הקמיה](https://dekor.gr/16os-aggelos-haqomiah-13-0016): type_product
-- [17ος  Άγγελος LAVAYAH לאויה ](https://dekor.gr/17os-aggelos-lavayah-13-0017): type_product
-- [18ος  Άγγελος  CALIEL כליאל](https://dekor.gr/18os-aggelos-caliel-13-0018): type_product
-- [19ος  Άγγελος LEUVIAH לוויה](https://dekor.gr/19os-aggelos-leuviah-13-0019): type_product
-- [20ος  Άγγελος PAHALIAH פהליה](https://dekor.gr/20os-aggelos-pahaliah-13-0020): type_product
-- [21ος  Άγγελος NELAKAEL נלכאל](https://dekor.gr/21os-aggelos-nelakael-13-0021): type_product
-- [22ος  Άγγελος YEYAYEL יייאל ](https://dekor.gr/22os-aggelos-yeyayel-13-0022): type_product
-- [23ος  Άγγελος MELAHEL מלהאל](https://dekor.gr/23os-aggelos-melahel-13-0023): type_product
-- [24ος  Άγγελος CHAHOAH חהויה](https://dekor.gr/24os-aggelos-chahoah-13-0024): type_product
-- [25ος  Άγγελος  NETHAHIAH נתהיה](https://dekor.gr/25os-aggelos-nethahiah-13-0025): type_product
-- [26ος  Άγγελος HAAYAH האאיה](https://dekor.gr/26os-aggelos-haayah-13-0026): type_product
-- [27ος  Άγγελος   YORETHAEL ירתאל](https://dekor.gr/27os-aggelos-yorethael-13-0027): type_product
-- [28ος  Άγγελος  SHAAHIAH שאהיה](https://dekor.gr/28os-aggelos-shaahiah-13-0028): type_product
-- [29ος  Άγγελος  REYIYEL רייאל](https://dekor.gr/29os-aggelos-reyiyel-13-0029): type_product
-- [30ος  Άγγελος OMAEL אומאל](https://dekor.gr/30os-aggelos-omael-13-0030): type_product
-- [31ος  Άγγελος  LEKABAEL לכבאל](https://dekor.gr/31os-aggelos-lekabael-13-0031): type_product
-- [32ος  Άγγελος VESHARIAH ושריה](https://dekor.gr/32os-aggelos-veshariah-13-0032): type_product
-- [33ος  Άγγελος YECHUYAH יחויה](https://dekor.gr/33os-aggelos-yechuyah-13-0033): type_product
-- [34ος  Άγγελος LEHACHIAH להחיה](https://dekor.gr/34os-aggelos-lehachiah-13-0034): type_product
-- [35ος  Άγγελος  KAVEQIAH כוקיה](https://dekor.gr/35os-aggelos-kaveqiah-13-0035): type_product
-- [36ος  Άγγελος  MENUDAEL מנדאל](https://dekor.gr/36os-aggelos-menudael-13-0036): type_product
-- [37ος  Άγγελος  ANIEL אניאל](https://dekor.gr/37os-aggelos-aniel-13-0037): type_product
-- [38ος  Άγγελος  CHAUMIAH חעמיה](https://dekor.gr/38os-aggelos-chaumiah-13-0038): type_product
-- [39ος  Άγγελος  REHAUEL רהעאל](https://dekor.gr/39os-aggelos-rehauel-13-0039): type_product
-- [40ος  Άγγελος  YAYTZAEL ייזאל ](https://dekor.gr/40os-aggelos-yaytzael-13-0040): type_product
-- [41ος  Άγγελος HAHAEL הההאל](https://dekor.gr/41os-aggelos-hahael-13-0041): type_product
-- [42ος  Άγγελος MIKAEL מיכאל](https://dekor.gr/42os-aggelos-mikael-13-00042): type_product
-- [43ος  Άγγελος VEVALIAH ווליה](https://dekor.gr/43os-aggelos-vevaliah-13-0043): type_product
-- [44ος  Άγγελος YELAHIAH ילהיה](https://dekor.gr/44os-aggelos-yelahiah-13-0044): type_product
-- [45ος  Άγγελος SEALIAH סאליה](https://dekor.gr/45os-aggelos-sealiah-13-0045): type_product
-- [46ος  Άγγελος AURIEL עריאל](https://dekor.gr/46os-aggelos-auriel-13-0046): type_product
-- [47ος  Άγγελος OSHALIAH עשליה](https://dekor.gr/47os-aggelos-oshaliah-13-0047): type_product
-- [48ος  Άγγελος MIYAEL מיהאל](https://dekor.gr/48os-aggelos-miyael-13-0048): type_product
-- [49ος  Άγγελος VAHOEL והואל](https://dekor.gr/49os-aggelos-vahoel-13-0049): type_product
-- [50ος  Άγγελος DANIEL דניאל](https://dekor.gr/50os-aggelos-daniel-13-0050): type_product
-- [51ος  Άγγελος HAHASHIAH החשיה](https://dekor.gr/51os-aggelos-hahashiah-13-0051): type_product
-- [52ος  Άγγελος AMEMIAH עממיה](https://dekor.gr/52os-aggelos-amemiah-13-0052): type_product
-- [53ος  Άγγελος NUNAEL ננאאל](https://dekor.gr/53os-aggelos-nunael-13-0053): type_product
-- [54ος  Άγγελος NUITHAEL ניתאל](https://dekor.gr/54os-aggelos-nuithael-13-0054): type_product
-- [55ος  Άγγελος MABAYAH מבהיה ](https://dekor.gr/55os-aggelos-mabayah-13-0055): type_product
-- [56ος  Άγγελος POYEL פויאל](https://dekor.gr/56os-aggelos-poyel-13-0056): type_product
-- [57ος  NEMEMIAH נממיה](https://dekor.gr/57os-nememiah-13-0057): type_product
-- [58ος  Άγγελος YEILAEL יילאל ](https://dekor.gr/58os-aggelos-yeilael-13-0058): type_product
-- [59ος  Άγγελος HERACHEL הרחאל](https://dekor.gr/59os-aggelos-herachel-13-0059): type_product
-- [60ος  Άγγελος  MITZRAEL מצראל](https://dekor.gr/60os-aggelos-mitzrael-13-0060): type_product
-- [61ος  Άγγελος VAMABEL ומבאל](https://dekor.gr/61os-aggelos-vamabel-13-0061): type_product
-- [63ος  Άγγελος ONUEL ענואל](https://dekor.gr/63os-aggelos-onuel-13-0063): type_product
-- [65ος  Άγγελος DAMABIAH דמביה](https://dekor.gr/65os-aggelos-damabiah-13-0065): type_product
-- [67ος  Άγγελος EYAOEL איעאל ](https://dekor.gr/67os-aggelos-eyaoel-13-0067): type_product
-- [69ος  Άγγελος REAHEL ראהאל](https://dekor.gr/69os-aggelos-reahel-13-0069): type_product
-- [71ος  Άγγελος HAIAIEL הייאל](https://dekor.gr/71os-aggelos-haiaiel-13-0071): type_product
-- [62ος  Άγγελος  YEHAHEL יההאל](https://dekor.gr/62os-aggelos-yehahel-13-0062): type_product
-- [64ος  Άγγελος MACHIEL מחיאל](https://dekor.gr/64os-aggelos-machiel-13-0064): type_product
-- [66ος  Άγγελος MENAQAEL מנקאל](https://dekor.gr/66os-aggelos-menaqael-13-0066): type_product
-- [68ος  Άγγελος CHEBOIAH חבויה](https://dekor.gr/68os-aggelos-cheboiah-13-0068): type_product
-- [70ος  Άγγελος YEBEMIAH יבמיה](https://dekor.gr/70os-aggelos-yebemiah-13-0070): type_product
-- [72ος  Άγγελος MOUMIAH מומיה](https://dekor.gr/72os-aggelos-moumiah-13-0072): type_product
+- [3ος Άγγελος SITAEL סיטאל](https://dekor.gr/): type_product
+- [12ος Άγγελος HAHAIAH ההעיה](https://dekor.gr/12os-aggelos-hahaiah-13-0012): type_product
 - [25ος Αρχάγγελος ΣΕΛΑΦΙΕΛ](https://dekor.gr/): type_product
 - [Φυτικό Μαλακό Κερί Σόγιας–Κοκοφοίνικα Cargill Nature Wax C-1 Νιφάδες 22,68kg](https://dekor.gr/malako-keri-soyas-kokofoinika-cargill-c1-nifades-22-68kg): type_product
 - [Λευκή Πασχαλινή Λαμπάδα Σούπερ Οβάλ 30cm – Κουτί 5 Τεμαχίων](https://dekor.gr/leuki-super-oval-pasxalini-lampada-5tem-30cm): type_product
@@ -1151,7 +1080,6 @@
 - [Χρυσό Κέρινο Μόριο Ανδρικής Δύναμης και Γονιμότητας](https://dekor.gr/): type_product
 - [Χρυσό Κέρινο Ομοίωμα Πέταλου Τύχης και Ανοίγματος Δρόμων](https://dekor.gr/): type_product
 - [Χρυσό Κέρινο Ομοίωμα Κλειδιού Ανοίγματος Δρόμων](https://dekor.gr/): type_product
-- [Χρυσό Κέρινο Ομοίωμα Ροδιού Αφθονίας και Ευλογίας](https://dekor.gr/): type_product
 - [Μαύρο Κερί Τεσσάρων Κατευθύνσεων Βορρά Νότου Ανατολής Δύσης](https://dekor.gr/): type_product
 - [Χρυσό Τελετουργικό Κερί Τεσσάρων Κατευθύνσεων Επίκλησης](https://dekor.gr/): type_product
 - [Χρυσό Κέρινο Ομοίωμα Γάτας ΜΑΟΥ Πνευματικής Γνώσης και Προστασίας](https://dekor.gr/): type_product
@@ -1250,7 +1178,7 @@
 - [Χρωματιστές Λαμπάδες Κηρήθρας Μελισσοκεριού Φ27mm × 20cm | Σετ 15 Τεμ.](https://dekor.gr/xromatistes-lampades-kirithras-melissokeriou-20cm-15tem): type_product
 - [Σετ 10 Κυλινδρικές Λαμπάδες Παραμυθιών 30cm – Διάφορες Παραστάσεις](https://dekor.gr/kylindrikes-lampades-paramythion-30cm-set-10): type_product
 - [Φυτικό Μαλακό Κερί Σόγιας–Κοκοφοίνικα Cargill Nature Wax C-310 Παστίλες 20kg](https://dekor.gr/malako-keri-soyas-cargill-c310-20kg): type_product
-- [Φυτικό Μαλακό Κερί Σόγιας Cargill Nature Wax C-3 Νιφάδες 22,68kg](https://dekor.gr/malako-keri-soyas-cargill-c3-nifades-22-68kg): type_product
+- [Φυτικό Μαλακό Κερί Σόγιας Cargill Nature Wax C-3  20 kg](https://dekor.gr/malako-keri-soyas-cargill-c3-nifades-22-68kg): type_product
 - [Φυτικό Μαλακό Κερί Σόγιας–Καρύδας Cargill Nature Wax C-6 Τρίμμα](https://dekor.gr/malako-keri-soyas-karydas-cargill-c6-trimma): type_product
 - [Φυτικό Μαλακό Κερί Σόγιας WAX-535 Παστίλες](https://dekor.gr/malako-keri-soyas-wax-535-pastiles): type_product
 - [Φυτικό Κερί Ελαιοκράμβης–Καρύδας Cargill Nature Wax 660-55M Παστίλες](https://dekor.gr/fytiko-keri-elaio-krambis-karydas-660-55m-pastiles): type_product
@@ -1319,7 +1247,6 @@
 - [Κόκκινο Κέρινο Ομοίωμα Ευρώ για Αφθονία και Ροή Πλούτου](https://dekor.gr/): type_product
 - [Λευκά Votive Τελετουργικά Κεριά για Καθαρισμό, Ευλογία και Πνευματική Προστασία](https://dekor.gr/): type_product
 - [Κεράκια Ρεσώ Πράσινα Αρωματικά 10τεμ για Αφθονία και Ευημερία](https://dekor.gr/): type_product
-- [Ψαλμός 90 – ασπίδα έναντι μαγείας, δαιμονίων και κρυφών εχθρών](https://dekor.gr/psalmos-90-aspida-enanti-mageias-daimonion-kai-kryfon-extron-ps-90): type_product
 - [Χρυσό Κερί Κυριακής Ηλίου &amp;amp; Αρχαγγέλου Μιχαήλ](https://dekor.gr/): type_product
 - [Κίτρινο Επτάκομπο Κερί Μέλισσας για Λύσιμο Δεσμών και Διαύγεια](https://dekor.gr/): type_product
 - [Λευκό Κερί Ομοίωμα Γυναικείας Μορφής για Καθαρισμό, Θεραπεία και Πνευματική Εξισορρόπηση](https://dekor.gr/): type_product
@@ -1425,7 +1352,7 @@
 - [Ψαλμός 77  Για να φωτίσει ο Θεός τους δανειστές, να μην πιέζουν τους συνανθρώπους τους για το χρέος τους, και να είναι ευσπλαχνικο](https://dekor.gr/psalmos-77-gia-na-fotisei-o-teos-toys-daneistes-na-min-piezoyn-toys-synantropoys-toys-gia-to-xreos-toys-kai-na-einai-eysplaxniko-ps-77): type_product
 - [Ψαλμός 78  Για να προφυλάξει ο Θεός τα χωριά από ληστείες και καταστροφές των εχθρικών στρατευμάτων.](https://dekor.gr/psalmos-78-gia-na-profylaksei-o-teos-ta-xoria-apo-listeies-kai-katastrofes-ton-extrikon-strateymaton-ps-78): type_product
 - [Ψαλμός 79  Για να θεραπεύσει ο Θεός τον άνθρωπο, όταν πρήζεται το πρόσωπό του και πονάει όλο το κεφάλι του.](https://dekor.gr/psalmos-79-gia-na-terapeysei-o-teos-ton-antropo-otan-prizetai-to-prosopo-toy-kai-ponaei-olo-to-kefali-toy-ps-79): type_product
-- [Ψαλμός 80  Για να οικονομήσει ο Θεός τους φτωχούς, που στερούνται και στενοχωριούνται από την ανέχεια και θλίβονται.](https://dekor.gr/psalmos-80-gia-na-oikonomisei-o-teos-toys-ftoxoys-poy-steroyntai-kai-stenoxorioyntai-apo-tin-anexeia-kai-tlibontai-ps-80): type_product
+- [Ψαλμός 80  Για να οικονομήσει ο Θεός τους φτωχούς, που στερούνται και στενοχωριούνται από την ανέχεια και θλίβονται.](https://dekor.gr/): type_product
 - [Ψαλμός 81  Για να αγοράσουν οι άνθρωποι τα προϊόντα των γεωργών, για να μην στενοχωριούνται και θλίβονται οι χωρικοί.](https://dekor.gr/psalmos-81-gia-na-agorasoyn-oi-antropoi-ta-proionta-ton-georgon-gia-na-min-stenoxorioyntai-kai-tlibontai-oi-xorikoi-ps-81): type_product
 - [Ψαλμός 82  Για να εμποδίσει ο Θεός τους κακούς ανθρώπους, που θέλουν να κάνουν δολοφονίες.](https://dekor.gr/psalmos-82-gia-na-empodisei-o-teos-toys-kakoys-antropoys-poy-teloyn-na-kanoyn-dolofonies-ps-82): type_product
 - [Ψαλμός 83 – για επαναφορά συντρόφου ή σχέσης](https://dekor.gr/psalmos-83-gia-epanafora-syntrofoy-i-sxesis-ps-83): type_product
@@ -1470,7 +1397,6 @@
 - [Ψαλμός 123  Για να φυλάξει ο Θεός τους ανθρώπους από τα φίδια, να μην τους δαγκώσουν.](https://dekor.gr/psalmos-123-gia-na-fylaksei-o-teos-toys-antropoys-apo-ta-fidia-na-min-toys-dagkosoyn-ps-123): type_product
 - [Ψαλμός 124  Για να προφυλάξει ο Θεός τα κτήματα των δικαίων ανθρώπων από τους κακούς ανθρώπους.](https://dekor.gr/psalmos-124-gia-na-profylaksei-o-teos-ta-ktimata-ton-dikaion-antropon-apo-toys-kakoys-antropoys-ps-124): type_product
 - [Ψαλμός 125   Για να θεραπεύσει ο Θεός τους ανθρώπους, που πάσχουν από συνεχείς πονοκεφάλους.](https://dekor.gr/psalmos-125-gia-na-terapeysei-o-teos-toys-antropoys-poy-pasxoyn-apo-synexeis-ponokefaloys-ps-125): type_product
-- [Ψαλμός 126  Προστασία Οικογένειας, Ευλογία Οικίας &amp;amp; Εργασία](https://dekor.gr/psalmos-126-prostasia-oikogeneias-eylogia-oikias-ergasia-ps-126): type_product
 - [Ψαλμός 127   Για να μην πλησιάσει η κακία του εχθρού ποτέ στα σπίτια και να επικρατήσει η ειρήνη και η ευλογία του Θεού στην οικογένεια.](https://dekor.gr/psalmos-127-gia-na-min-plisiasei-i-kakia-toy-extroy-pote-sta-spitia-kai-na-epikratisei-i-eirini-kai-i-eylogia-toy-teoy-stin-oikogeneia-ps-127): type_product
 - [Ψαλμός 128   Για να θεραπεύσει ο Θεός τους ανθρώπους που πάσχουν από ημικρανία, πονοκεφάλους και να ελεήσει τους σκληρόκαρδους και αδιάκριτους ανθρώπους, που στενοχωρούν τους ευαίσθητους.](https://dekor.gr/psalmos-128-gia-na-terapeysei-o-teos-toys-antropoys-poy-pasxoyn-apo-imikrania-ponokefaloys-kai-na-eleisei-toys-sklirokardoys-kai-adiakritoys-antropoys-poy-stenoxoroyn-toys-eyaistitoys-ps-128): type_product
 - [Ψαλμός 129 – για άρση ενοχών και λύσιμο δεσμών](https://dekor.gr/psalmos-129-gia-arsi-enoxon-kai-lysimo-desmon-ps-129): type_product
@@ -1503,11 +1429,11 @@
 - [Τελετουργική Επίκληση –  Αρχάγγελος  Αναήλ (Χανιήλ)](https://dekor.gr/teletoyrgiki-epiklisi-arxaggelos-anail-xaniil-1): type_product
 - [Τελετουργική Επίκληση – Αρχάγγελος Μιχαήλ](https://dekor.gr/teletoyrgiki-epiklisi-arxaggelos-mixail-1): type_product
 - [Ψαλμός 149 Ευγνωμοσύνη και ευχαριστία στον Θεό ](https://dekor.gr/psalmos-149-eygnomosyni-kai-eyxaristia-ston-teo-ps-149): type_product
-- [Ψαλμός 1 –  Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδρᾳ λοιμῶν οὐκ ἐκάθισεν.](https://dekor.gr/psalmos-1-makarios-anir-os-oyk-eporeyti-en-boyli-asebon-kai-en-odo-amartolon-oyk-esti-kai-epi-katedra-loimon-oyk-ekatisen-psl-1): type_product
-- [Ψαλμός 2 –  Ἱνατί ἐφρύαξαν ἔθνη, καὶ λαοὶ ἐμελέτησαν κενά;](https://dekor.gr/psalmos-2-inati-efryaksan-etni-kai-laoi-emeletisan-kena-psl-2): type_product
-- [Ψαλμός 3 – Κύριε, τί ἐπληθύνθησαν οἱ θλίβοντές με; πολλοὶ ἐπανίστανται ἐπ᾿ ἐμέ·](https://dekor.gr/psalmos-3-kyrie-ti-eplityntisan-oi-tlibontes-me-polloi-epanistantai-ep-eme-psl-3): type_product
-- [Ψαλμός 4 –  Ἐν τῷ ἐπικαλεῖσθαί με εἰσήκουσάς μου, ὁ Θεὸς τῆς δικαιοσύνης μου· ἐν θλίψει ἐπλάτυνάς με. οἰκτείρησόν με καὶ εἰσάκουσον τῆς προσευχῆς μου.](https://dekor.gr/psalmos-4-en-to-epikaleistai-me-eisikoysas-moy-o-teos-tis-dikaiosynis-moy-en-tlipsei-eplatynas-me-oikteirison-me-kai-eisakoyson-tis-proseyxis-moy-psl-4): type_product
-- [Ψαλμός 5 –  Τὰ ῥήματά μου ἐνώτισαι, Κύριε, σύνες τῆς κραυγῆς μου·](https://dekor.gr/psalmos-5-ta-rimata-moy-enotisai-kyrie-synes-tis-kraygis-moy-psl-5): type_product
+- [Ψαλμός 1 –  Μακάριος ἀνήρ, ὃς οὐκ ἐπορεύθη ἐν βουλῇ ἀσεβῶν καὶ ἐν ὁδῷ ἁμαρτωλῶν οὐκ ἔστη καὶ ἐπὶ καθέδρᾳ λοιμῶν οὐκ ἐκάθισεν.](https://dekor.gr/): type_product
+- [Ψαλμός 2 –  Ἱνατί ἐφρύαξαν ἔθνη, καὶ λαοὶ ἐμελέτησαν κενά;](https://dekor.gr/): type_product
+- [Ψαλμός 3 – Κύριε, τί ἐπληθύνθησαν οἱ θλίβοντές με; πολλοὶ ἐπανίστανται ἐπ᾿ ἐμέ·](https://dekor.gr/): type_product
+- [Ψαλμός 4 –  Ἐν τῷ ἐπικαλεῖσθαί με εἰσήκουσάς μου, ὁ Θεὸς τῆς δικαιοσύνης μου· ἐν θλίψει ἐπλάτυνάς με. οἰκτείρησόν με καὶ εἰσάκουσον τῆς προσευχῆς μου.](https://dekor.gr/): type_product
+- [Ψαλμός 5 –  Τὰ ῥήματά μου ἐνώτισαι, Κύριε, σύνες τῆς κραυγῆς μου·](https://dekor.gr/): type_product
 - [ΨΑΛΜΟΣ 7  -  Κύριε ὁ Θεός μου, ἐπὶ σοὶ ἤλπισα· σῶσόν με ἐκ πάντων τῶν διωκόντων με καὶ ῥῦσαί με,](https://dekor.gr/psalmos-7-kyrie-o-teos-moy-epi-soi-ilpisa-soson-me-ek-panton-ton-diokonton-me-kai-rysai-me-psl-7): type_product
 - [Ψαλμός 8 – Κύριε ὁ Κύριος ἡμῶν, ὡς θαυμαστὸν τὸ ὄνομά σου ἐν πάσῃ τῇ γῇ· ὅτι ἐπήρθη ἡ μεγαλοπρέπειά σου ὑπεράνω τῶν οὐρανῶν.](https://dekor.gr/psalmos-8-kyrie-o-kyrios-imon-os-taymaston-to-onoma-soy-en-pasi-ti-gi-oti-epirti-i-megaloprepeia-soy-yperano-ton-oyranon-psl-8): type_product
 - [Ψαλμός 9 –  Ἐξομολογήσομαί σοι, Κύριε, ἐν ὅλῃ καρδίᾳ μου, διηγήσομαι πάντα τὰ θαυμάσιά σου·](https://dekor.gr/psalmos-9-eksomologisomai-soi-kyrie-en-oli-kardia-moy-diigisomai-panta-ta-taymasia-soy-psl-9): type_product
@@ -1533,7 +1459,7 @@
 - [Ψαλμός 29 –   Ὑψώσω σε, Κύριε, ὅτι ὑπέλαβές με καὶ οὐκ εὔφρανας τοὺς ἐχθρούς μου ἐπ᾿ ἐμέ.](https://dekor.gr/psalmos-29-ypsoso-se-kyrie-oti-ypelabes-me-kai-oyk-eyfranas-toys-extroys-moy-ep-eme-psl-29): type_product
 - [Ψαλμός 30 – Ἐπὶ σοί, Κύριε, ἤλπισα, μὴ καταισχυνθείην εἰς τὸν αἰῶνα· ἐν τῇ δικαιοσύνῃ σου ῥῦσαί με καὶ ἐξελοῦ με.](https://dekor.gr/psalmos-30-epi-soi-kyrie-ilpisa-mi-kataisxynteiin-eis-ton-aiona-en-ti-dikaiosyni-soy-rysai-me-kai-ekseloy-me-psl-30): type_product
 - [Ψαλμός 31 –Μακάριοι ὧν ἀφέθησαν αἱ ἀνομίαι καὶ ὧν ἐπεκαλύφθησαν αἱ ἁμαρτίαι·](https://dekor.gr/psalmos-31-makarioi-on-afetisan-ai-anomiai-kai-on-epekalyftisan-ai-amartiai-psl-31): type_product
-- [Ψαλμός 32 – Ἀγαλλιᾶσθε, δίκαιοι, ἐν Κυρίῳ· τοῖς εὐθέσι πρέπει αἴνεσις.](https://dekor.gr/psalmos-32-agalliaste-dikaioi-en-kyrio-tois-eytesi-prepei-ainesis-psl-32): type_product
+- [Ψαλμός 32 – Ἀγαλλιᾶσθε, δίκαιοι, ἐν Κυρίῳ· τοῖς εὐθέσι πρέπει αἴνεσις.](https://dekor.gr/): type_product
 - [Ψαλμός 33 – Εὐλογήσω τὸν Κύριον ἐν παντὶ καιρῷ, διὰ παντὸς ἡ αἴνεσις αὐτοῦ ἐν τῷ στόματί μου.](https://dekor.gr/psalmos-33-eylogiso-ton-kyrion-en-panti-kairo-dia-pantos-i-ainesis-aytoy-en-to-stomati-moy-psl-33): type_product
 - [Ψαλμός 34 –  Δίκασον, Κύριε, τοὺς ἀδικοῦντάς με, πολέμησον τοὺς πολεμοῦντάς με.](https://dekor.gr/psalmos-34-dikason-kyrie-toys-adikoyntas-me-polemison-toys-polemoyntas-me-psl-34): type_product
 - [Ψαλμός 35 – Φησὶν ὁ παράνομος τοῦ ἁμαρτάνειν ἐν ἑαυτῷ, οὐκ ἔστι φόβος Θεοῦ ἀπέναντι τῶν ὀφθαλμῶν αὐτοῦ·](https://dekor.gr/psalmos-35-fisin-o-paranomos-toy-amartanein-en-eayto-oyk-esti-fobos-teoy-apenanti-ton-oftalmon-aytoy-psl-35): type_product
@@ -1581,7 +1507,7 @@
 - [ΨΑΛΜΟΣ 77 - Προσέχετε, λαός μου, τῷ νόμῳ μου, κλίνατε τὸ οὖς ὑμῶν εἰς τὰ ῥήματα τοῦ στόματός μου·](https://dekor.gr/psalmos-77-prosexete-laos-moy-to-nomo-moy-klinate-to-oys-ymon-eis-ta-rimata-toy-stomatos-moy-psl-77): type_product
 - [ΨΑΛΜΟΣ 78 - Ὁ Θεὸς, ἤλθοσαν ἔθνη εἰς τὴν κληρονομίαν σου, ἐμίαναν τὸν ναὸν τὸν ἅγιόν σου, ἔθεντο Ἱερουσαλὴμ ὡς ὀπωροφυλάκιον.](https://dekor.gr/psalmos-78-o-teos-iltosan-etni-eis-tin-klironomian-soy-emianan-ton-naon-ton-agion-soy-etento-ieroysalim-os-oporofylakion-psl-78): type_product
 - [ΨΑΛΜΟΣ 79 - Ὁ ποιμαίνων τὸν Ἰσραήλ, πρόσχες, ὁ ὁδηγῶν ὡσεὶ πρόβατα τὸν Ἰωσήφ. ὁ καθήμενος ἐπὶ τῶν Χερουβίμ, ἐμφάνηθι.](https://dekor.gr/psalmos-79-o-poimainon-ton-israil-prosxes-o-odigon-osei-probata-ton-iosif-o-katimenos-epi-ton-xeroybim-emfaniti-psl-79): type_product
-- [ΨΑΛΜΟΣ 80ος (Ἀγαλλιᾶσθε τῷ Θεῷ τῷ βοηθῷ ἡμῶν)  – Ύμνος Επαίνου και Μνήμης της Θείας Παρέμβασης](https://dekor.gr/psalmos-80os-agalliaste-to-teo-to-boito-imon-ymnos-epainoy-kai-mnimis-tis-teias-parembasis-psl-80): type_product
+- [ΨΑΛΜΟΣ 80ος (Ἀγαλλιᾶσθε τῷ Θεῷ τῷ βοηθῷ ἡμῶν)  – Ύμνος Επαίνου και Μνήμης της Θείας Παρέμβασης](https://dekor.gr/): type_product
 - [ΨΑΛΜΟΣ 81 - Ὁ Θεὸς ἔστη ἐν συναγωγῇ θεῶν, ἐν μέσῳ δὲ θεοὺς διακρινεῖ.](https://dekor.gr/psalmos-81-o-teos-esti-en-synagogi-teon-en-meso-de-teoys-diakrinei-psl-81): type_product
 - [ΨΑΛΜΟΣ 82 - Ὁ Θεὸς, τίς ὁμοιωθήσεταί σοι; μὴ σιγήσῃς μηδὲ καταπραΰνῃς, ὁ Θεός·](https://dekor.gr/psalmos-82-o-teos-tis-omoiotisetai-soi-mi-sigisis-mide-katapraynis-o-teos-psl-82): type_product
 - [ΨΑΛΜΟΣ 83 -  Ὡς ἀγαπητὰ τὰ σκηνώματά σου, Κύριε τῶν δυνάμεων.](https://dekor.gr/psalmos-83-os-agapita-ta-skinomata-soy-kyrie-ton-dynameon-psl-83): type_product
@@ -1756,7 +1682,7 @@
 - [Ψαλμός77:20	«Ὁδηγήσας τὸν λαόν σου ὡς πρόβατα»	Καθοδήγηση προς θεία πορεία ](https://dekor.gr/psalmos77-20-odigisas-ton-laon-soy-os-probata-katodigisi-pros-teia-poreia-psalmos77-20): type_product
 - [Ψαλμός 78:38	«Καὶ ἐλεήμων ἔσται, καὶ ἱλάσεται»	Συγχώρεση και έλεος σε μεταμέλεια](https://dekor.gr/psalmos-78-38-kai-eleimon-estai-kai-ilasetai-sygxoresi-kai-eleos-se-metameleia-psalmos-78-38): type_product
 - [Ψαλμός 79:3	«Ἐπίστρεψον ἡμᾶς, ὁ Θεός»	Αποκατάσταση σχέσης με το Θείο](https://dekor.gr/psalmos-79-3-epistrepson-imas-o-teos-apokatastasi-sxesis-me-to-teio-psalmos-79-3): type_product
-- [Ψαλμός 80:17	«Καὶ ἐξέτεινεν ἐπ’ αὐτοὺς τὸ χεῖρ αὐτοῦ»	Επιβολή θείας δύναμης ενάντια σε αντιπάλους](https://dekor.gr/psalmos-80-17-kai-ekseteinen-ep-aytoys-to-xeir-aytoy-epiboli-teias-dynamis-enantia-se-antipaloys-psalmos-80-17): type_product
+- [Ψαλμός 80:17	«Καὶ ἐξέτεινεν ἐπ’ αὐτοὺς τὸ χεῖρ αὐτοῦ»	Επιβολή θείας δύναμης ενάντια σε αντιπάλους](https://dekor.gr/): type_product
 - [Ψαλμός 81:1	«Ὁ Θεὸς ἔστη ἐν συναγωγῇ θεῶν»	Κρίση και απόδοση δικαιοσύνης σε υψηλά επίπεδα](https://dekor.gr/psalmos-81-1-o-teos-esti-en-synagogi-teon-krisi-kai-apodosi-dikaiosynis-se-ypsila-epipeda-psalmos-81-1): type_product
 - [Ψαλμός 82:2	«Ὁ Θεός, τίς ὁμοιωθήσεταί σοι;»	Τελετουργία αναγνώρισης ανώτερης θείας δύναμης](https://dekor.gr/psalmos-82-2-o-teos-tis-omoiotisetai-soi-teletoyrgia-anagnorisis-anoteris-teias-dynamis-psalmos-82-2): type_product
 - [Ψαλμός 83:11	«Ὅτι κρεῖσσον ἡ ἡμέρα μία ἐν ταῖς αὐλαῖς σου»	Επίκληση για παραμονή σε θεία χάρη](https://dekor.gr/psalmos-83-11-oti-kreisson-i-imera-mia-en-tais-aylais-soy-epiklisi-gia-paramoni-se-teia-xari-psalmos-83-11): type_product
@@ -2247,6 +2173,9 @@
 - [Ακατέργαστη Ρητίνη Gum Benjamin – 20 γρ.](https://dekor.gr/): type_product
 - [Ζωδιακό Έλαιο Ταύρου – Πλανητικό Έλαιο Αφροδίτης, 10 ml](https://dekor.gr/zodiako-elaio-tavrou-planitiko-elaio-afroditis-10ml): type_product
 - [Ζωδιακό Έλαιο Καρκίνου – Πλανητικό Έλαιο Σελήνης, 10 ml](https://dekor.gr/zodiako-elaio-karkinou-planitiko-elaio-selinis-10ml): type_product
+- [COLZA Σκληρό Φυτικό Κερί Ελαιοκράμβης WAX452](https://dekor.gr/skliro-keri-elaiokramvis-wax452-colza): type_product
+- [Αρωματικά Ρεσώ Σόγιας Ancient Vanilla σε Διάφανο Κυπελάκι – 6άδα](https://dekor.gr/aromatika-reso-sogias-ancient-vanilla-6ada): type_product
+- [Αρωματικά Ρεσώ Σόγιας Luxury Hotel σε Διάφανο Κυπελάκι – 6άδα](https://dekor.gr/aromatika-reso-sogias-luxury-hotel-6ada): type_product
 - [Κεριά για Ντεκουπάζ &amp;amp; Ζωγραφική](https://dekor.gr/keria-gia-decoupage-zografiki): type_category
 - [Λευκές Πασχαλινές Λαμπάδες](https://dekor.gr/lefkes-klasikes-pasxalines-lampades-xondriki): type_category
 - [Λευκά Ρεσώ Tealights](https://dekor.gr/leyka-reso-tealights): type_category
@@ -2302,7 +2231,6 @@
 - [Πασχαλινές Τετράγωνες Αρωματικές Λαμπάδες](https://dekor.gr/tetragones-aromatikes-pasxalines-lampades): type_category
 - [Λαμπάδες Κηρήθρας από Μελισσοκέρι](https://dekor.gr/lampades-apo-fysiko-melissokeri-xondriki): type_category
 - [Ψαλμοί Δικαιοσύνης](https://dekor.gr/apokryfos-xeirismos-ton-psalmon-toy-dayid): type_category
-- [Αγγελικές Σφραγίδες](https://dekor.gr/aggelikoi-kosmoi-sfaires): type_category
 - [Σοφιστική Σολομωνική](https://dekor.gr/sofistiki-solomoniki): type_category
 - [Ψαλμοί Καθαρισμού](https://dekor.gr/isxyroteroi-teletoyrgikoi-stixoi-ton-psalmon): type_category
 - [Ψαλμοί Ευημερίας](https://dekor.gr/ypoloipoi-psalmoi-dayid): type_category

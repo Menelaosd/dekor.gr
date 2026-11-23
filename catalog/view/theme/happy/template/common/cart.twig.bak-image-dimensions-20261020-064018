@@ -1,0 +1,129 @@
+<div id="cart-container" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-inner">
+			<div class="cart-content">
+				<div class="modal-heading">
+					<button type="button" id="close-cart" class="close">
+						<i class="fal fa-times"></i>
+					</button>
+					{{ text_cart }}
+				</div>
+				<div class="modal-body">
+					{% if products or vouchers %}
+						<div class="cart_products">
+							{% for product in products %}
+								<div class="cart_row">
+									{% if product.thumb %}
+										<div class="cart_row_image">
+											<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-fluid" /></a>
+										</div>
+										<div class="cart_row_info">
+											<h4>{{ product.name }}</h4>
+											<div class="cart_row_subtotal">{{ product.quantity }} x {{ product.price_tax }}</div>
+											<div class="cart_row_total">{{ product.total_tax }}</div>
+										</div>
+										<div class="cart_row_remove">
+											<a href="#" onclick="cart.remove('{{ product.cart_id }}'); return false;" title="{{ button_remove }}">
+												<i class="far fa-times-circle"></i>
+											</a>
+										</div>
+									{% endif %}
+								</div>
+							{% endfor %}
+						</div>
+						<div class="cart_totals">
+							{% for total in totals %}
+								{% if total.code == 'sub_total' or total.code == 'tax' or total.code == 'total' %}
+								<div class="cart_totals_row">
+									<span class="col">{{ total.title }}:</span>
+									<span class="col text-right">{{ total.text }}</span>
+								</div>  
+								{% endif %}
+							{% endfor %}
+						</div>
+					{% else %}
+						<div class="cart_empty">
+							<i class="fal fa-info-circle"></i>
+							{{ text_empty }}
+						</div>
+					{% endif %}
+				</div>
+				<div class="modal-footer">
+					<a href="{{ cart }}" class="btn btn-block btn-primary show-cart-button">{{ text_cart }}</a>
+					{% if products or vouchers %}
+						<a href="{{ checkout }}" class="btn btn-block btn-primary buy-now-button">{{ text_checkout }}</a>
+					{% else %}
+						<a href="{{ checkout }}" class="btn btn-block btn-primary buy-now-button disabled">{{ text_checkout }}</a>
+					{% endif %}
+					{#
+					<a href="#"  id="close-cart-footer" class="btn btn-block btn-primary continue-cart-button"><i class="far fa-chevron-left"></i> {{ button_shopping }}</a>
+					#}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="cart">
+  {#<a data-toggle="dropdown" data-loading-text="{{ text_loading }}" class="dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total">{{ text_items }}</span></a>#}
+  <a data-loading-text="{{ text_loading }}" class="dropdown-toggle menu-cart-icon" href="index.php?route=checkout/cart" title="Καλάθι Αγορών">
+	
+	 {% if store_id == 2 %}
+		<img src="image/catalog/cart2.png" class="hidden-xs hidden-sm" alt="{{text_cart}}">
+	 {% else %}
+		<img src="image/catalog/favico.png" class="hidden-xs hidden-sm" alt="{{text_cart}}">
+	 {% endif %}
+	<i class="fa fa-shopping-cart visible-sm visible-xs"></i>
+  <span id="cart-total">{{ text_items }}</span>
+  </a>
+ {#
+  <ul class="dropdown-menu pull-right">
+    {% if products or vouchers %}
+    <li>
+      <table class="table table-striped">
+        {% for product in products %}
+        <tr>
+          <td class="text-center">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a> {% endif %}</td>
+          <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% if product.option %}
+            {% for option in product.option %} <br />
+            - <small>{{ option.name }} {{ option.value }}</small> {% endfor %}
+            {% endif %}
+            {% if product.recurring %} <br />
+            - <small>{{ text_recurring }} {{ product.recurring }}</small> {% endif %}</td>
+          <td class="text-right">x {{ product.quantity }}</td>
+          <td class="text-right">{{ product.total }}</td>
+          <td class="text-center"><button type="button" onclick="cart.remove('{{ product.cart_id }}');" title="{{ button_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></td>
+        </tr>
+        {% endfor %}
+        {% for voucher in vouchers %}
+        <tr>
+          <td class="text-center"></td>
+          <td class="text-left">{{ voucher.description }}</td>
+          <td class="text-right">x&nbsp;1</td>
+          <td class="text-right">{{ voucher.amount }}</td>
+          <td class="text-center text-danger"><button type="button" onclick="voucher.remove('{{ voucher.key }}');" title="{{ button_remove }}" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </li>
+    <li>
+      <div>
+        <table class="table table-bordered">
+          {% for total in totals %}
+          <tr>
+            <td class="text-right"><strong>{{ total.title }}</strong></td>
+            <td class="text-right">{{ total.text }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+        <p class="text-right"><a href="{{ cart }}"><strong><i class="fa fa-shopping-cart"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="{{ checkout }}"><strong><i class="fa fa-share"></i> {{ text_checkout }}</strong></a></p>
+      </div>
+    </li>
+    {% else %}
+    <li>
+      <p class="text-center">{{ text_empty }}</p>
+    </li>
+    {% endif %}
+  </ul>
+  #}
+</div>

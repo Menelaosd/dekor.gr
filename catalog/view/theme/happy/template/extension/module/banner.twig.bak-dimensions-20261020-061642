@@ -1,0 +1,30 @@
+<div id="banner{{ module }}" class="banners-container">
+	<div class="container">
+		{% if module_name %}
+			<h3 class="module-title">{{module_name}}</h3>
+		{% endif %}  
+		<div class="banners-wrapper">
+		{% for banner in banners %}
+			{% set class = 'three-col' %}
+			{% if loop.index % 4 == 0 %}
+				{% set class = 'two-col' %}
+			{% endif %}
+			{% if loop.index % 5 == 0 %}
+				{% set class = 'two-col' %}
+			{% endif %}
+			<div class="banner-block {{class}}">
+				<div class="banner-block-inner">
+					{% if banner.link %}
+					<a href="{{ banner.link }}" title="{{ banner.title }}"></a>
+					{% endif %}
+					{% if banner.title %}
+					<span class="banner-title">{{ banner.title }}</span>
+					{% endif %}
+					<img src="{{ banner.raw_image }}" alt="{{ banner.title }}" rel="preload" fetchpriority="high"  decoding="async" loading="eager"/>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+

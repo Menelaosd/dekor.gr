@@ -1,6 +1,9 @@
 <?php
 class ControllerExtensionModuleHoProducttabs extends Controller {
 	public function index($setting) {
+        $route = isset($this->request->get["route"]) ? (string)$this->request->get["route"] : "common/home";
+        $data["store_id"] = (int)$this->config->get("config_store_id");
+        $data["dekor_home_lazy"] = ((int)$this->config->get("config_store_id") === 0 && $route === "common/home");
 		static $module = 0;
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
@@ -187,7 +190,7 @@ class ControllerExtensionModuleHoProducttabs extends Controller {
 							
 							require_once DIR_SYSTEM . "library/mobile/Mobile_Detect.php";
 							$detect = new Mobile_Detect;	
-							if(strpos($detect->getHttpHeaders()['HTTP_USER_AGENT'], 'Chrome-Lighthouse') !== false || isset($this->request->get['google_test'])){
+							if((int)$this->config->get('config_store_id') === 2 && (strpos($detect->getHttpHeaders()['HTTP_USER_AGENT'], 'Chrome-Lighthouse') !== false || isset($this->request->get['google_test']))){
 								$image = '';
 								$secondImage = '';
 							} else {
@@ -253,7 +256,7 @@ class ControllerExtensionModuleHoProducttabs extends Controller {
 		$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
 		// Detect Lighthouse or GTmetrix
-		if (strpos($userAgent, 'Chrome-Lighthouse') !== false || strpos($userAgent, 'GTmetrix') !== false) {
+		if ((int)$this->config->get('config_store_id') === 2 && (strpos($userAgent, 'Chrome-Lighthouse') !== false || strpos($userAgent, 'GTmetrix') !== false)) {
 			// Do not render the module
 			return '';
 		}

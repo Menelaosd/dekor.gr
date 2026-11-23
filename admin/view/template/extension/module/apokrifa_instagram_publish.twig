@@ -1,0 +1,24 @@
+{{ header }}{{ column_left }}
+<div id="content"><div class="page-header"><div class="container-fluid"><h1>Δημοσίευση στο Instagram APOKRIFA</h1></div></div>
+<div class="container-fluid">
+{% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+{% if success %}<div class="alert alert-success">{{ success }}</div>{% endif %}
+<div class="alert alert-info">Προορισμός: <strong>Instagram @apokrifa.gr</strong>. Η φωτογραφία και το κείμενο θα δημοσιευτούν μόνο στο Instagram. Ο σύνδεσμος στη λεζάντα εμφανίζεται ως κείμενο.</div>
+<form action="{{ action }}" method="post" id="apokrifa-instagram-form">
+<input type="hidden" name="product_id" value="{{ product_id }}">
+<input type="hidden" name="publish_key" value="{{ publish_key }}">
+<div class="form-group"><label for="apokrifa-message">Κείμενο δημοσίευσης</label><textarea class="form-control" id="apokrifa-message" name="message" rows="5" maxlength="2000">{{ message }}</textarea></div>
+<div class="panel panel-info"><div class="panel-heading">Προεπισκόπηση λεζάντας</div><div class="panel-body" style="white-space:pre-wrap;overflow-wrap:anywhere" id="apokrifa-preview"></div></div>
+<button class="btn btn-primary" type="submit" id="apokrifa-submit" {% if publish_completed %}disabled{% endif %}>{% if publish_completed %}Ολοκληρώθηκε{% else %}Δημοσίευση στο Instagram APOKRIFA{% endif %}</button>
+</form></div></div>
+<script>
+(function(){
+'use strict';
+var f=document.getElementById('apokrifa-instagram-form'), m=document.getElementById('apokrifa-message'), b=document.getElementById('apokrifa-submit'), p=document.getElementById('apokrifa-preview');
+var busy=false, done={{ publish_completed ? 'true' : 'false' }};
+function preview(){p.textContent=(m.value.trim()?m.value.trim()+'\n\n':'')+'Δείτε το προϊόν:\nhttps://apokrifa.gr/go/?id='+f.querySelector('[name="product_id"]').value;}
+m.addEventListener('input',preview);preview();
+f.addEventListener('submit',function(e){if(busy||done||!window.confirm('Να δημοσιευτεί δημόσια τώρα στο Instagram @apokrifa.gr;')){e.preventDefault();return;}busy=true;b.disabled=true;b.textContent='Η δημοσίευση εκτελείται…';});
+})();
+</script>
+{{ footer }}

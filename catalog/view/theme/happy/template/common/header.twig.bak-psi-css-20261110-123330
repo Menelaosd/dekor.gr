@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}">
+<!--<![endif]-->
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+{# DEKOR_MOBILE_LCP_PRELOAD_20261022 #}
+    {% if store_id == 0 and page_class == 'common_home' %}
+    <link rel="preload" as="image" media="(max-width: 991px)" href="https://dekor.gr/image/cache/catalog/banners/khrhures-kai-plake-lampades-banner-mobil-900x506-416x234.webp" fetchpriority="high">
+    <link rel="preload" as="image" media="(min-width: 992px)" href="https://dekor.gr/image/cache/catalog/banners/plake-khrhures-lampades-banner-pc-1200x675-2048x1152.webp" fetchpriority="high">
+    {% endif %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>{{ title }}</title>
+    <base href="{{ base }}" />
+    {% if store_id == 0 and (page_class == '' or page_class == 'common_home') %}
+    <link href="https://dekor.gr/" rel="canonical" />
+{% endif %}
+    {% if description %}
+        <meta name="description" content="{{ description }}" />
+    {% endif %}
+    {% if keywords %}
+        <meta name="keywords" content="{{ keywords }}" />
+    {% endif %}
+    {% for meta in metas %}
+        <meta name="{{ meta.meta_name}}" content="{{ meta.content }}" />
+    {% endfor %}
+	{% if store_id == 2 %}
+	    <meta name="theme-color" content="#000" />
+	{% else %}
+		<meta name="theme-color" content="#000" />
+	{% endif %}
+	<meta name="google-site-verification" content="niwEXKjIvokijmCNKU-wT3zA4qMsHFXJWkG3j6G_RIY" />
+    <link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+        {% if store_id == 0 and page_class == 'common_home' %}
+<link rel="preload" href="catalog/view/theme/happy/stylesheet/jquery.mmenu.all.css" as="style" fetchpriority="low" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="catalog/view/theme/happy/stylesheet/jquery.mmenu.all.css" rel="stylesheet" type="text/css"></noscript>
+{% else %}
+<link href="catalog/view/theme/happy/stylesheet/jquery.mmenu.all.css" rel="stylesheet" type="text/css">
+{% endif %}
+    <link href="catalog/view/javascript/font-awesome-new/css/fontawesome-all.min.css" rel="stylesheet" type="text/css">
+    <link href="catalog/view/theme/happy/stylesheet/stylesheet.css?v=243" rel="stylesheet">
+    {% if not (store_id == 0 and page_class == 'common_home') %}
+    <link href="catalog/view/javascript/jquery/owl/css/owl.carousel.min.css" rel="stylesheet">
+    {% endif %}
+    <script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+    {% if store_id == 0 and page_class == 'common_home' %}
+    <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript" defer></script>
+{% else %}
+    <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+{% endif %}
+    {% if store_id == 0 and page_class == 'common_home' %}
+    <script src="catalog/view/javascript/jquery/mmenu/jquery.mmenu.all.js?v=2.40" type="text/javascript" defer></script>
+{% else %}
+    <script src="catalog/view/javascript/jquery/mmenu/jquery.mmenu.all.js?v=2.40" type="text/javascript" ></script>
+{% endif %}
+    {% if store_id == 0 and page_class == 'common_home' %}
+<script src="catalog/view/javascript/jquery/cookie/js.cookie.js" type="text/javascript" defer></script>
+{% else %}
+<script src="catalog/view/javascript/jquery/cookie/js.cookie.js" type="text/javascript" ></script>
+{% endif %}
+    {% if not (store_id == 0 and page_class == 'common_home') %}
+    <script type="text/javascript" src="catalog/view/javascript/jquery/owl/js/owl.carousel.min.js"></script>
+    {% endif %}
+
+    <link href="image/icons/apple-touch-icon.png" rel="apple-touch-icon" />
+    <link href="image/icons/apple-touch-icon-152x152.png" rel="apple-touch-icon" sizes="152x152" />
+    <link href="image/icons/apple-touch-icon-167x167.png" rel="apple-touch-icon" sizes="167x167" />
+    <link href="image/icons/apple-touch-icon-180x180.png" rel="apple-touch-icon" sizes="180x180" />
+    {% if store_id == 0 %}
+    <link href="image/catalog/banners/favicon-dekor-candles.png" rel="icon" type="image/png" />
+    {% else %}
+    <link href="image/icons/icon-hires.png" rel="icon" sizes="192x192" />
+    <link href="image/icons/icon-normal.png" rel="icon" sizes="128x128" />
+    {% endif %}
+
+	  <!-- Preload Google Fonts -->
+	  <link rel="preconnect" href="https://fonts.googleapis.com">
+	  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	  <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&amp;subset=greek-ext&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&amp;subset=greek-ext&display=swap" rel="stylesheet"></noscript>	
+
+    {% for style in styles %}
+        <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+    {% endfor %}
+	 {# TO APPEND AS LAST STYLE FOR MODIFICATIONS #}
+	 {% if store_id == 2 %}
+		<link href="catalog/view/theme/happy/stylesheet/apokrifa.css?v=10098040010.146" rel="stylesheet">
+                {% if page_class == "checkout_cart" or page_class == "checkout_checkout" %}
+                <link href="catalog/view/theme/happy/stylesheet/apokrifa-cart.css?v=1" rel="stylesheet">
+                {% endif %}
+	 {% else %}
+		<link href="catalog/view/theme/happy/stylesheet/custom.css?v=10098040010.162" rel="stylesheet">
+         {% if store_id == 0 and (page_class == 'checkout_cart' or page_class == 'checkout_checkout') %}
+         <link href="catalog/view/theme/happy/stylesheet/dekor-cart.css?v=6" rel="stylesheet">
+         {% endif %}
+	 {% endif %}
+
+	 {# ===== 2026 REDESIGN (layered, revertible — remove these 4 lines to roll back) ===== #}
+	 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
+	 <link href="catalog/view/theme/happy/stylesheet/redesign-2026.css?v=86" rel="stylesheet">
+	 {% if store_id == 2 %}
+		<link href="catalog/view/theme/happy/stylesheet/redesign-apokrifa.css?v=90" rel="stylesheet">
+	 {% else %}
+		<link href="catalog/view/theme/happy/stylesheet/redesign-dekor.css?v=94" rel="stylesheet">
+             <link href="catalog/view/theme/happy/stylesheet/dekor-font-display.css?v=1" rel="stylesheet">
+	 {% endif %}
+	 {% if store_id == 0 and page_class == 'common_home' %}
+<link rel="preload" href="catalog/view/theme/happy/stylesheet/redesign-cards.css?v=4" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="catalog/view/theme/happy/stylesheet/redesign-cards.css?v=4" rel="stylesheet"></noscript>
+{% else %}
+<link href="catalog/view/theme/happy/stylesheet/redesign-cards.css?v=4" rel="stylesheet">
+{% endif %}
+	 <link href="catalog/view/theme/happy/stylesheet/redesign-header.css?v=24" rel="stylesheet">{# header / icons / cart / nav polish (remove to roll back) #}
+	 <link href="catalog/view/javascript/dk-search/dk-search.css?v=2" rel="stylesheet">{# live search (remove these 2 lines to fall back to the old live_search) #}
+	 <script src="catalog/view/javascript/dk-search/dk-search.js?v=5" defer></script>
+
+    {% for script in scripts %}
+        {% if store_id == 0 and page_class == 'common_home' and ('jquery.matchHeight-min.js' in script or 'swiper.jquery.js' in script) %}
+            <script src="{{ script }}" type="text/javascript" defer></script>
+        {% else %}
+            <script src="{{ script }}" type="text/javascript"></script>
+        {% endif %}
+    {% endfor %}
+    {# DEKOR_HOME_COMMON_DEFER_V1 #}
+{% if store_id == 0 and page_class == 'common_home' %}
+<script src="catalog/view/javascript/common.js?v=2.42" type="text/javascript" defer></script>
+{% else %}
+<script src="catalog/view/javascript/common.js?v=2.42" type="text/javascript"></script>
+{% endif %}
+    {% for link in links %}
+        <link href="{{ link.href }}" rel="{{ link.rel }}" />
+    {% endfor %}
+    {% for analytic in analytics %}
+        {{ analytic }}
+    {% endfor %}
+    {% if store_id == 2 %}
+        <link href="catalog/view/theme/happy/stylesheet/apokrifa-monochrome.css?v=14" rel="stylesheet">
+        <script src="catalog/view/theme/happy/javascript/apokrifa-navigation.js?v=1" defer></script>
+    {% endif %}
+
+    </head>
+<body class="{{ page_class }}">
+	<div class="ho_wrapper">   
+		<header>
+			<!-- UTILITY BAR -->
+			<div class="dk-util">
+				<div class="dk-util-in">
+					<div class="dk-util-left">
+						<a href="tel:{{ telephone }}" class="dk-util-tel"><i class="fas fa-phone"></i> {{ telephone }}</a>
+						<span class="dk-util-sep dk-util-sec">|</span>
+						<span class="dk-util-sec">Αποστολή και στην Κύπρο</span>
+					</div>
+					<div class="dk-util-right">
+						<a href="index.php?route=account/login" class="dk-util-reg"><i class="fas fa-user"></i> {% if logged %}Ο Λογαριασμός μου{% else %}Εγγραφή | Είσοδος{% endif %}</a>
+						<div class="header-langs">
+							<div class="dropdown language-dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+									<img id="active-flag" src="https://flagcdn.com/w20/gr.png" alt="Greek" class="language-flag" width="20" height="14">
+									<span id="active-label" class="language-label">ΕΛ</span>
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="languageDropdown" id="language-menu"></ul>
+							</div>
+							<div id="google_translate_element"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- HEADER ROW -->
+			<div class="header-wrapper">
+				<div class="dk-hd">
+					<a class="burger-box mmenu_opener dk-mobToggle" href="#mmenu" title="Menu"><div class="burgers"></div></a>
+					<a href="{{ home }}" class="logo dk-logo" title="{{ name }}">{% if "dekor_logo.png" in logo %}<img src="{{ logo }}" alt="{{ name }}" width="116" height="60">{% else %}<img src="{{ logo }}" alt="{{ name }}">{% endif %}</a>
+					<div class="header-mid dk-search">{{ search }}</div>
+					<div class="header-right dk-actions">
+						<button type="button" class="dk-sticky-search" title="Αναζήτηση" aria-label="Αναζήτηση"><i class="fa fa-search"></i></button>
+						<a href="index.php?route=account/login" class="dk-acct" title="Ο Λογαριασμός μου"><i class="fas fa-user"></i><span class="dk-acct-lbl">Ο Λογαριασμός μου</span></a>
+						<a id="wishlist-total" href="{{ wishlist }}" class="dk-wish" title="Αγαπημένα"><i class="fas fa-heart"></i><span class="dk-wishtext">{{ text_wishlist }}</span></a>
+						{{ cart }}
+					</div>
+				</div>
+					<details class="dk-b2b-minimum">
+    <summary>B2B | Ελάχιστη παραγγελία: 100 € + ΦΠΑ</summary>
+    <div class="dk-b2b-explainer">Μπορείτε να αγοράσετε απευθείας από το φυσικό κατάστημα, ανεξαρτήτως ποσού, σε τιμές B2B.</div>
+</details>
+						<div id="desk-menu" class="dk-navrow visible-lg visible-md">
+						<nav class="main-menu">{{ menu }}</nav>
+					</div>
+			</div>
+				<div class="mmenuparent" style="display:none;"><div id="mmenu">{{ menu }}</div></div>
+			<div class="hidden">
+				<ul class="mobile-custom-submenu">
+					<li class="menu-separator mm-navbar"><a class="mm-navbar__title">ΛΟΓΑΡΙΑΣΜΟΣ</a></li>
+					<li><a href="index.php?route=account/login"><i class="fas fa-user"></i>{{ text_account }}</a></li>
+					<li><a href="index.php?route=checkout/cart"><i class="fa fa-shopping-cart"></i>{{ text_cart }}</a></li>
+					<li><a href="{{ wishlist }}"><i class="fas fa-heart"></i>{{ text_wishlist }}</a></li>
+					<li><a href="{{ contact }}"><i class="fas fa-envelope"></i>{{ text_contact }}</a></li>
+				</ul>
+			</div>
+		</header>
+{# dekor: the old "rz-stuck" condense script is gone — the header is not sticky, so shrinking it at 90px only made the page jump #}
+<script>/* dekor: sticky header without any jump.
+   desktop (>=992px): the whole header row (logo, search, account, cart + menu) docks at the top as it is, the moment it reaches the top.
+   phones/tablets: once the header has scrolled out of view, a compact bar (burger, logo, search icon, cart) slides in.
+   A slot right after the header keeps its exact height, so the page never moves. */
+(function(){var w=document.querySelector('header .header-wrapper');if(!w)return;var b=document.body,c='dk-hd-docked',cm='dk-hd-compact';
+/* the side cart is a modal: keep it at body level so the docked header can never trap it under the dark backdrop */
+var cc=document.getElementById('cart-container');if(cc&&cc.parentNode!==b){b.appendChild(cc);}
+var slot=document.createElement('div');slot.id='dk-hd-slot';slot.style.height='0px';w.parentNode.insertBefore(slot,w.nextSibling);
+function desk(){return window.innerWidth>=992;}
+function undock(){b.classList.remove(c);b.classList.remove(cm);slot.style.height='0px';}
+function onScroll(){var docked=b.classList.contains(c),r;
+ if(!docked){r=w.getBoundingClientRect();
+  if(desk()?r.top<=0:r.bottom<=0){slot.style.height=r.height+'px';b.classList.add(c);if(!desk()){b.classList.add(cm);}}}
+ else{r=slot.getBoundingClientRect();if(b.classList.contains(cm)?r.bottom>0:r.top>0){undock();}}}
+onScroll();window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',function(){undock();onScroll();});
+/* compact bar: the search icon opens the normal search (full-screen sheet on phones) */
+var sb=document.querySelector('.dk-sticky-search');if(sb){sb.addEventListener('click',function(){var i=document.querySelector('#search input[name="search"]'),btn=document.querySelector('#search button');
+ if(window.innerWidth<768&&btn){btn.click();return;}undock();window.scrollTo(0,0);if(i){setTimeout(function(){i.focus();},60);}});}})();</script>
+
+	   <script>
+			$(document).ready(function() {
+				$("#mmenu").mmenu({
+					"extensions": [
+						// "fx-panels-zoom",
+						// "pagedim-black"
+					],
+					"navbar": {
+						"title": "NAVIGATION"
+					}
+				});
+				var API = $("#mmenu").data( "mmenu" );
+				var li = '';
+				$('ul.mobile-custom-submenu').each(function(){
+					li += $(this).html();
+				});
+				$("#mmenu").find( ".mm-listview" ).first().append( li );
+				$("#mmenu").find('.menu-separator').prev('li').addClass('last-li-item');
+				//API.initPanels( $("#mmenu").find( '.mm-listview' ).first().closest('.mm-panel') );
+				$(".mmenuparent").fadeIn(100);
+			});
+		</script>

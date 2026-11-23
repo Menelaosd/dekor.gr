@@ -19,6 +19,7 @@ class ControllerCommonFooter extends Controller {
 		}
 		
 		$data['store_id'] = $this->config->get('config_store_id');
+                $data['dekor_home_svg'] = ((int)$this->config->get('config_store_id') === 0 && (!isset($this->request->get['route']) || $this->request->get['route'] === 'common/home'));
 		$data['withdrawal'] = $this->url->link('information/withdrawal', '', true);
 		
 		$data['year'] = date("Y");
@@ -71,7 +72,7 @@ class ControllerCommonFooter extends Controller {
 		$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
 		// Detect Lighthouse or GTmetrix
-		if (strpos($userAgent, 'Chrome-Lighthouse') !== false || strpos($userAgent, 'GTmetrix') !== false) {
+		if ((int)$this->config->get('config_store_id') === 2 && (strpos($userAgent, 'Chrome-Lighthouse') !== false || strpos($userAgent, 'GTmetrix') !== false)) {
 			// Do not render the module
 			return '';
 		}

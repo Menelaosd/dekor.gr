@@ -49,6 +49,7 @@
 					{% endif %}
 				</div>
 				<div class="modal-footer">
+{% if store_id == 0 or store_id == 2 %}<a href="#" class="btn btn-block btn-primary continue-cart-button" onclick="document.getElementById('close-cart').click();return false;">Συνέχεια στις Αγορές</a>{% endif %}
 					<a href="{{ cart }}" class="btn btn-block btn-primary show-cart-button">{{ text_cart }}</a>
 					{% if products or vouchers %}
 						<a href="{{ checkout }}" class="btn btn-block btn-primary buy-now-button">{{ text_checkout }}</a>
@@ -71,7 +72,7 @@
 	 {% if store_id == 2 %}
 		<img src="image/catalog/cart2.png" class="hidden-xs hidden-sm" alt="{{text_cart}}">
 	 {% else %}
-		<img src="image/catalog/favico.png" class="hidden-xs hidden-sm" alt="{{text_cart}}">
+		<img width="64" height="64" src="image/catalog/favico.png" class="hidden-xs hidden-sm" alt="{{text_cart}}">
 	 {% endif %}
 	<i class="fa fa-shopping-cart visible-sm visible-xs"></i>
   <span id="cart-total">{{ text_items }}</span>

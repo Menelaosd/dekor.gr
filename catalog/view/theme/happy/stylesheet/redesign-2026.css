@@ -1304,3 +1304,16 @@ a.burger-box::after, .burger-box::after, .dk-mobToggle::after { display: none !i
     border-radius: 16px;
   }
 }
+
+/* DEKOR CONTINUE BUTTON GRAY V1 */
+#cart-container .modal-footer a.continue-cart-button,
+#cart-container .modal-footer a.continue-cart-button:hover,
+#cart-container .modal-footer a.continue-cart-button:focus {
+background:var(--rz-surface-2)!important;
+color:var(--rz-ink)!important;
+border:1px solid var(--rz-border-2)!important;
+border-radius:var(--rz-btn)!important;
+text-transform:none!important;
+letter-spacing:normal!important;
+font-size:14px!important;
+}

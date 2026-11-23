@@ -267,6 +267,21 @@ class ControllerCheckoutCart extends Controller {
 	}
 
 	public function add() {
+        // APOKRIFA_LOGIN_REQUIRED_CART_V1
+        if ((int)$this->config->get('config_store_id') === 2
+            && !$this->customer->isLogged()) {
+
+            $json = [
+                'error' => [
+                    'warning' => 'Εγγραφείτε ή συνδεθείτε για να πραγματοποιήσετε αγορά.'
+                ],
+                'redirect' => $this->url->link('account/login', '', true)
+            ];
+
+            $this->response->addHeader('Content-Type: application/json');
+            $this->response->setOutput(json_encode($json));
+            return;
+        }
 		$this->load->language('checkout/cart');
 
 		$json = array();

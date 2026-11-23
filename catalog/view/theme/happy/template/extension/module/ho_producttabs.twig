@@ -5,7 +5,7 @@
 				<div class="products_carousel swiper-container mega-products-carousel" id="products_carousel_mega{{ module }}_{{ loop.index }}">
 					<div class="swiper-wrapper">
 						{% for product in tab.products %}
-							<div class="product-layout swiper-slide">{{ include('happy/template/hostore/product_blocks/product_owl.twig') }}</div>
+							<div class="product-layout swiper-slide">{{ include('happy/template/hostore/product_blocks/product_owl.twig', {'dekor_home_lazy': dekor_home_lazy|default(false)}) }}</div>
 						{% endfor %}
 					</div>
 				</div>
@@ -70,7 +70,7 @@
 							<div class="products_carousel swiper-container" id="products_carousel{{ module }}_{{ loop.index }}">
 								<div class="swiper-wrapper">
 									{% for product in tab.products %}
-										<div class="product-layout swiper-slide">{{ include('happy/template/hostore/product_blocks/product_owl.twig') }}</div>
+										<div class="product-layout swiper-slide">{{ include('happy/template/hostore/product_blocks/product_owl.twig', {'dekor_home_lazy': dekor_home_lazy|default(false)}) }}</div>
 									{% endfor %}
 								</div>
 								<div class="products-pagination swiper-pagination" id="products-pagination{{ module }}_{{ loop.index }}"></div>
@@ -113,7 +113,19 @@
 				});
 			}
 		}
-		if(window.jQuery){ jQuery(window).on('load', init); } else { window.addEventListener('load', init); }
+		{% if store_id is defined and store_id == 0 %}
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init, { once: true });
+            } else {
+                init();
+            }
+            window.addEventListener('load', function () {
+                if (!window.Swiper) return;
+                build(1);
+            }, { once: true });
+{% else %}
+            if(document.readyState === 'complete') { init(); } else { window.addEventListener('load', init); }
+{% endif %}
 	})();
 	</script>
 </div>

@@ -1,0 +1,162 @@
+<div class="swiper-viewport slideshowwrapper">
+    <div id="slideshow{{ module }}" class="swiper-container slideshowwrapper">
+        <div class="swiper-wrapper">
+            {% for banner in banners %}
+                {# DEKOR_SLIDESHOW_PRIORITY_V1 #}
+                {% if store_id is defined and store_id == 0 %}
+                    {% if loop.first %}
+                        {% set image_priority = 'high' %}
+                        {% set image_loading = 'eager' %}
+                    {% else %}
+                        {% set image_priority = 'low' %}
+                        {% set image_loading = 'lazy' %}
+                    {% endif %}
+                {% else %}
+                    {% set image_priority = 'high' %}
+                    {% set image_loading = 'eager' %}
+                {% endif %}
+                {% if not hide_cap or loop.index == 1 %}
+                    <div class="swiper-slide">
+                        <div class="swiper-slide-wrapper">
+                            <a title="{{ banner.title }}" href="{{ banner.link }}" class="swiper-slide-link">
+                                {# DEKOR_RESPONSIVE_PICTURE_V1 #}
+                                {% if store_id is defined and store_id == 0 and (module == 0 or module == 1) %}
+                                    <picture>
+                                        {% if module == 0 %}
+                                            <source media="(max-width: 679px)" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==">
+                                        {% else %}
+                                            <source media="(min-width: 680px)" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==">
+                                        {% endif %}
+                                {% endif %}
+                                {% if "apokrifa-pc-2048-1260" in banner.image %}
+                                    <picture>
+                                        <source media="(max-width: 679px)" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==">
+                                        <img src="{{ banner.image }}" alt="{{ banner.title }}" fetchpriority="{{ image_priority }}" decoding="async" loading="{{ image_loading }}" width="1800" height="1107">
+                                    </picture>
+                                {% elseif "apokrifa-mb-1536-945" in banner.image %}
+                                    <picture>
+                                        <source media="(min-width: 680px)" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==">
+                                        <img src="{{ banner.image }}" alt="{{ banner.title }}" fetchpriority="{{ image_priority }}" decoding="async" loading="{{ image_loading }}" width="416" height="256">
+                                    </picture>
+                                {% else %}
+                                    {% if "/PC-SLIDER/" in banner.image %}
+                                      <img src="{{ banner.image }}" alt="{{ banner.title }}" fetchpriority="{{ image_priority }}" decoding="async" loading="{{ image_loading }}" width="2048" height="1152">
+                                  {% elseif "/MB-SLIDER/" in banner.image %}
+                                      <img src="{{ banner.image }}" alt="{{ banner.title }}" fetchpriority="{{ image_priority }}" decoding="async" loading="{{ image_loading }}" width="416" height="234">
+                                  {% else %}
+                                      {% if "/banners/" in banner.image and "2048x1152" in banner.image %}
+                                      <img src="{{ banner.image }}" alt="{{ banner.title }}" fetchpriority="{{ image_priority }}" decoding="async" loading="{{ image_loading }}" width="2048" height="1152">
+                                  {% elseif "/banners/" in banner.image and "416x234" in banner.image %}
+                                      <img src="{{ banner.image }}" alt="{{ banner.title }}" fetchpriority="{{ image_priority }}" decoding="async" loading="{{ image_loading }}" width="416" height="234">
+                                  {% else %}
+                                      <img src="{{ banner.image }}" alt="{{ banner.title }}" fetchpriority="{{ image_priority }}" decoding="async" loading="{{ image_loading }}">
+                                  {% endif %}
+                                  {% endif %}
+                                {% endif %}
+                                {% if store_id is defined and store_id == 0 and (module == 0 or module == 1) %}
+                                    </picture>
+                                {% endif %}
+                            </a>
+                            {% if banner.subtitle and not hide_cap %}
+                                <h3 class="banner-caption">{{ banner.subtitle }}</h3>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% if not hide_cap %}
+<script type="text/javascript"><!--
+	{% if store_id is defined and store_id == 0 %}
+ $(document).ready(function() {
+{% else %}
+ $(window).load(function() {
+{% endif %}
+		{# DEKOR_RESPONSIVE_SWIPER_V2 #}
+		{% if store_id is defined and store_id == 0 %}
+		if (({{ module }} === 0 && window.innerWidth >= 680) || ({{ module }} === 1 && window.innerWidth < 680) || {{ module }} > 1) {
+		{% endif %}
+		$('#slideshow{{ module }}').swiper({
+			speed: 1000,
+			{% if banners|length > 1 %}
+				autoplay: 4000,
+			{% endif %}
+			effect: '{{ store_id is defined and store_id == 0 ? 'slide' : 'coverflow' }}',
+			parallax: true,
+			mode: 'horizontal',
+			visibilityFullFit: true,
+			autoResize: false,
+			autoHeight: {{ store_id is defined and store_id == 0 ? 'true' : 'false' }},
+			{% if store_id is defined and store_id == 0 and module == 1 %}
+			preloadImages: false,
+			{% endif %}
+			slidesPerView: 1,
+			pagination: '#slideshow{{ module }} .swiper-pagination',
+			paginationClickable: true,
+			nextButton: '#slideshow{{ module }} .swiper-button-next',
+			prevButton: '#slideshow{{ module }} .swiper-button-prev',
+			spaceBetween: 0,
+			loop: true
+		});
+		{% if store_id is defined and store_id == 0 %}
+		}
+		{% endif %}
+	})
+--></script>
+
+<style type="text/css">
+a.swiper-slide-link {
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    display: block;
+}
+
+.swiper-slide-wrapper:before {
+	display:none !important;
+}
+
+h3.banner-caption {
+    background: #353535;
+    padding: 1.5rem 1rem;
+    margin: 0;
+    color: #fff;
+    font-size: 20px;
+    font-weight: normal;
+    left: 0;
+    z-index: 10;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-top: solid 1px #fff;
+	width:100%;
+}
+
+@media(max-width:767px){
+	h3.banner-caption {
+		position: relative;
+		font-size: 16px;
+		line-height:20px;
+	}
+}
+
+#slideshow{{ module }} .swiper-pagination {
+    bottom: 60px !important;
+    left: 0;
+    text-align: left !important;
+    left: 15px !important;
+    width: 100%;
+    position: static;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+</style>
+{% endif %}

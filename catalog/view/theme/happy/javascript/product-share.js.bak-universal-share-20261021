@@ -1,0 +1,64 @@
+(function () {
+  'use strict';
+  var button = document.querySelector('.product-share-copy');
+  if (!button) return;
+  button.addEventListener('click', async function () {
+    var status = document.querySelector('.product-share-status');
+    var label = button.querySelector('span');
+    var url = button.getAttribute('data-share-url');
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(url);
+      } else {
+        var input = document.createElement('textarea');
+        input.value = url;
+        input.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+        document.body.appendChild(input);
+        input.select();
+        var copied = document.execCommand('copy');
+        input.remove();
+        button.focus();
+        if (!copied) throw new Error('Clipboard unavailable');
+      }
+      label.textContent = 'Έτοιμο';
+      status.textContent = 'Ο σύνδεσμος αντιγράφηκε.';
+    } catch (error) {
+      status.textContent = 'Δεν ήταν δυνατή η αντιγραφή. Αντιγράψτε τη διεύθυνση από τη γραμμή του browser.';
+    }
+  });
+
+  var nativeButton = document.querySelector('.product-share-native');
+
+  if (nativeButton && typeof navigator.share === 'function') {
+    var mobileQuery = window.matchMedia('(max-width: 767px)');
+
+    function updateNativeShare() {
+      nativeButton.style.display = mobileQuery.matches ? 'inline-flex' : 'none';
+    }
+
+    updateNativeShare();
+    window.addEventListener('resize', updateNativeShare);
+
+    nativeButton.addEventListener('click', async function () {
+      var url = button.getAttribute('data-share-url') || window.location.href;
+      var titleElement = document.querySelector('#product h1.title');
+      var title = titleElement
+        ? titleElement.textContent.trim()
+        : document.title;
+
+      try {
+        await navigator.share({
+          title: title,
+          url: url
+        });
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          var status = document.querySelector('.product-share-status');
+          if (status) {
+            status.textContent = 'Η κοινοποίηση δεν ολοκληρώθηκε.';
+          }
+        }
+      }
+    });
+  }
+}());

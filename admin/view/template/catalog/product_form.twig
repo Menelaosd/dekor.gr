@@ -3,6 +3,12 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
+        {% if facebook_publish_dekor %}
+        <a href="{{ facebook_publish_dekor }}" class="btn btn-info" data-facebook-store="0" title="Άνοιγμα φόρμας Facebook DEKOR"><i class="fa fa-facebook"></i> Facebook DEKOR</a>
+        {% endif %}
+        {% if facebook_publish_apokrifa %}
+        <a href="{{ facebook_publish_apokrifa }}" class="btn btn-info" data-facebook-store="2" title="Άνοιγμα φόρμας Facebook APOKRIFA"><i class="fa fa-facebook"></i> Facebook APOKRIFA</a>
+        {% endif %}
         <button type="submit" form="form-product" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -1905,4 +1911,26 @@ $('#option a:first').tab('show');
             return str;
         }
     </script>
+<script>
+/* DEKOR APOKRIFA FACEBOOK STORE VISIBILITY 20261021 */
+(function ($) {
+    function updateFacebookButtons() {
+        var dekor = $('input[name="product_store[]"][value="0"]').is(':checked');
+        var apokrifa = $('input[name="product_store[]"][value="2"]').is(':checked');
+
+        $('a[data-facebook-store="0"]').toggle(dekor);
+        $('a[data-facebook-store="2"]').toggle(apokrifa);
+    }
+
+    $(function () {
+        updateFacebookButtons();
+
+        $(document).on(
+            'change',
+            'input[name="product_store[]"]',
+            updateFacebookButtons
+        );
+    });
+})(jQuery);
+</script>
 {{ footer }} 

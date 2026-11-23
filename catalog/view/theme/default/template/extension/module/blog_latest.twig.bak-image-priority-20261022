@@ -1,0 +1,136 @@
+<div class="blog-module latest-blog module-wrapper arrow-nav-wrapper arrow-nav-offset">
+	<div class="container">
+		<h3 class="module-title">
+			<span class="module-title-text">{{ heading_title_latest }}</span>
+		</h3>
+		<div class="blog-module-cap">
+			<div class="module-description-text">{{text_descreption}}</div>
+			<a class="all btn btn-secondary" href="{{ blog_show_all }}">{{ text_show_all }}</a>
+		</div>
+	</div>	
+	{% if posts|length > columns %}
+	{% else %}
+		{% set carousel = 0 %}
+	{% endif %}
+	
+	{% set carousel = 0 %}
+	{% if posts %} 
+	
+	
+		{% if mobile %}
+			{% set comp = 1 %}
+		{% else %}
+			{% set comp = 2 %}
+		{% endif %}
+
+		{% if carousel %}
+			<div class="blog_grid_holder {% if not carousel %} column-{{columns}} {% endif %} container">
+				<div class="blog_grip-wrapper">
+					<div class="blog_grip-container">
+						<div class="swiper-container carousel-{{ carousel }} m{{ module }}">
+							<div class="swiper-wrapper {% if not carousel %} has-not-carousel {% endif %}">
+								{% for blog in posts %} 
+									<div class="blog_item swiper-slide">
+										<div class="summary">
+											{% if blog.image and thumb %} 
+											<div class="image">
+											<a href="{{ blog.href }}"><img src="{{ blog.image }}" alt="{{ blog.title }}" title="{{ blog.title }}" rel="preload" fetchpriority="high"  decoding="async" loading="lazy" width="350" height="350"/></a>
+											</div>
+											{% endif %} 
+											<div class="blog_caption">
+												<h3 class="blog_title"><a href="{{ blog.href }}">{{ blog.title }}</a></h3>
+												<div class="blog_stats">
+													{% if date_added_status %}
+													<span><i class="fal fa-clock"></i>{{ blog.date_added_full }}</span>
+													{% endif %} 
+													{% if page_view_status %}
+													<span><i class="fal fa-eye"></i>{{ text_read }} {{ blog.count_read }}</span>
+													{% endif %} 
+												</div>
+												{% if not characters == '0' %} 
+												<div class="blog_description">{{ blog.description }}</div>
+												{% endif %}
+											</div>
+											<div class="blog_read-more-container">
+												<a class="generic-button blog_read-more" href="{{ blog.href }}">{{ text_read_more }} <i class="fal fa-arrow-right"></i></a>
+											</div>
+										</div>
+									</div>
+								{% endfor %}
+							</div>
+							{% if carousel and posts|length > comp and not mobile %}
+								<div class="swiper-navigation">
+									<div class="swiper-button-next bloglatest-button-next-{{module}}"></div>
+									<div class="swiper-button-prev bloglatest-button-prev-{{module}}"></div>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<div class="blog_grid_holder {% if not carousel %} column-{{columns}} {% endif %} container">
+				<div class="blog_grip-wrapper">
+					<div class="blog_grip-container">
+						
+							
+								{% for blog in posts %} 
+									<div class="blog_item">
+										<div class="summary">
+											{% if blog.image and thumb %} 
+											<div class="image">
+											<a href="{{ blog.href }}"><img src="{{ blog.image }}" alt="{{ blog.title }}" title="{{ blog.title }}" rel="preload" fetchpriority="high"  decoding="async" loading="lazy" width="350" height="350"/></a>
+											</div>
+											{% endif %} 
+											<div class="blog_caption">
+												<div class="blog_stats">
+													{% if date_added_status %}
+													<span>{{ blog.date_added_full }}</span>
+													{% endif %} 
+												</div>
+												<h3 class="blog_title"><a href="{{ blog.href }}">{{ blog.title }}</a></h3>
+												{% if not characters == '0' %} 
+												<div class="blog_description">{{ blog.description }}</div>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+
+								{% endfor %}
+							
+
+						
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	{% endif %}
+</div>
+
+{% if carousel and posts|length > comp %}
+	<script>
+		var swiperTabs{{ module }}_{{ loop.index }} = new Swiper('.blog_grid_holder .m{{ module }}', {
+			slidesPerView: {{columns}},
+			spaceBetween: 0,
+			mode: 'horizontal',
+			observer: true,
+			observeParents: true,
+			navigation: {
+				nextEl: '.bloglatest-button-next-{{module}}',
+				prevEl: '.bloglatest-button-prev-{{module}}',
+			},
+			loop:true,
+			breakpoints: {
+				0: {
+				  slidesPerView: 1,
+				},
+				576: {
+				  slidesPerView: 2,
+				},
+				1200: {
+				  slidesPerView: {{columns}},
+				}
+			}			
+		});
+	</script>
+{% endif %}

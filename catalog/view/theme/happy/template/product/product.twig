@@ -2,8 +2,142 @@
 <link rel="stylesheet" href="catalog/view/javascript/jquery/photoswipe/default-skin/default-skin.css"> 
 <link rel="stylesheet" type="text/css" href="catalog/view/javascript/jquery/swiper/css/swiper.min.css">
 <script type="text/javascript" src="catalog/view/javascript/jquery/swiper/js/swiper.jquery.js"></script>
-<link rel="stylesheet" href="catalog/view/theme/happy/stylesheet/redesign-pdp.css?v=12">
-<script src="catalog/view/theme/happy/javascript/product-share.js?v=2" defer></script>
+<link rel="stylesheet" href="catalog/view/theme/happy/stylesheet/redesign-pdp.css?v=27">
+<script src="catalog/view/theme/happy/javascript/product-share.js?v=4" defer></script>
+<!-- DEKOR-APOKRIFA MOBILE IMAGE ZOOM v1 -->
+<style>
+@media (max-width: 767px) {
+    .mfp-bg.pdp-mobile-zoom-bg {
+        background: #fff !important;
+        opacity: 1 !important;
+    }
+    .mfp-wrap.pdp-mobile-zoom .mfp-container {
+        background: #fff !important;
+    }
+    .mfp-wrap.pdp-mobile-zoom .mfp-figure::after {
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    .mfp-wrap.pdp-mobile-zoom .mfp-image-holder .mfp-content {
+        background: #fff !important;
+    }
+    .mfp-wrap.pdp-mobile-zoom .mfp-title,
+    .mfp-wrap.pdp-mobile-zoom .mfp-counter,
+    .mfp-wrap.pdp-mobile-zoom .mfp-close {
+        display: none !important;
+    }
+}
+</style>
+<script>
+(function () {
+    function setupMobileZoom() {
+        if (!window.matchMedia('(max-width: 767px)').matches) return;
+        if (!window.jQuery || !jQuery.fn.magnificPopup) return;
+
+        var $gallery = jQuery('#product_img_gallery');
+        if (!$gallery.length || $gallery.data('mobileZoomReady')) return;
+
+        $gallery.data('mobileZoomReady', true);
+
+        $gallery.magnificPopup({
+            delegate: 'a[data-fancybox="gallery"]',
+            type: 'image',
+            gallery: { enabled: false },
+            mainClass: 'pdp-mobile-zoom',
+            closeOnContentClick: true,
+            closeOnBgClick: true,
+            showCloseBtn: false,
+            image: {
+                titleSrc: function () { return ''; }
+            },
+            callbacks: {
+                open: function () {
+                    jQuery('.mfp-bg').addClass('pdp-mobile-zoom-bg');
+                }
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', setupMobileZoom);
+})();
+</script>
+<!-- END DEKOR-APOKRIFA MOBILE IMAGE ZOOM v1 -->
+<!-- MOBILE ZOOM CENTER FIX v2 -->
+<style>
+@media (max-width: 767px) {
+    .mfp-wrap.pdp-mobile-zoom .mfp-container {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 12px !important;
+        box-sizing: border-box !important;
+    }
+
+    .mfp-wrap.pdp-mobile-zoom .mfp-content {
+        width: 100% !important;
+        max-width: 440px !important;
+        margin: 0 auto !important;
+    }
+
+    .mfp-wrap.pdp-mobile-zoom .mfp-figure {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: 0 !important;
+    }
+
+    .mfp-wrap.pdp-mobile-zoom img.mfp-img {
+        display: block !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: 100% !important;
+        max-height: 75dvh !important;
+        object-fit: contain !important;
+        padding: 0 !important;
+        margin: 0 auto !important;
+    }
+
+    .mfp-wrap.pdp-mobile-zoom .mfp-bottom-bar {
+        display: none !important;
+    }
+}
+</style>
+<!-- END MOBILE ZOOM CENTER FIX v2 -->
+
+<!-- MOBILE ZOOM SCROLL LOCK v3 -->
+<style>
+@media (max-width: 767px) {
+    html:has(.mfp-wrap.pdp-mobile-zoom.mfp-ready),
+    body:has(.mfp-wrap.pdp-mobile-zoom.mfp-ready) {
+        overflow: hidden !important;
+        overscroll-behavior: none !important;
+    }
+
+    .mfp-wrap.pdp-mobile-zoom {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: 100dvh !important;
+        overflow: hidden !important;
+        overscroll-behavior: none !important;
+        touch-action: none !important;
+    }
+
+    .mfp-wrap.pdp-mobile-zoom .mfp-container,
+    .mfp-wrap.pdp-mobile-zoom .mfp-content,
+    .mfp-wrap.pdp-mobile-zoom .mfp-figure,
+    .mfp-wrap.pdp-mobile-zoom img.mfp-img {
+        touch-action: none !important;
+        overscroll-behavior: none !important;
+    }
+}
+</style>
+<!-- END MOBILE ZOOM SCROLL LOCK v3 -->
+
+
 <div class="container breadcrumbs-container container-max-width">
   <ul class="breadcrumb">
 	{% for breadcrumb in breadcrumbs %}
@@ -72,7 +206,7 @@
 					{% endif %}
 				</div>
 			</section>
-			<section class="product-right product-content  col-lg-7 col-md-8 col-sm-12 col-xs-12">
+			<section class="product-right product-content  col-lg-7 col-md-8 col-sm-12 col-xs-12{% if disablecart %} apokrifa-static-product-page{% endif %}">
 <div class="title hidden-xs hidden-sm" role="heading" aria-level="1">{{ heading_title }}</div>
 				<div class="row">
 					<div class="product-details">
@@ -84,13 +218,15 @@
 								{% endif %}
 							</ul>
 						</div>
-						{% if storeonly %}
+						{% if is_apokrifa_store and disablecart %}
+    {# APOKRIFA static product: hide the availability badge #}
+{% elseif storeonly %}
 							<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 								<span class="stock-status storeonly"><i class="fas fa-store"></i><span>Διαθέσιμο μόνο στο Κατάστημα</span></span>
 							</div>
 						{% elseif disablecart or global_disable_cart %}
 							<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color:#dd0000">
-								<span class="stock-status storeonly"><i class="fas fa-store"></i><span>Μη Διαθέσιμο</span></span>
+								<span class="stock-status storeonly{% if disablecart %} apokrifa-static-product-unavailable{% endif %}"><i class="fas fa-store"></i><span>Μη Διαθέσιμο</span></span>
 							</div>
 						{% else %}
 							<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -110,9 +246,25 @@
 				</div>
 				{% endif %}
 				
-				{% if not disablecart and not global_disable_cart %}
+				{# APOKRIFA_GUEST_NOTICE_OUTSIDE_CART_V3 #}
+{% if apokrifa_guest_gate %}
+<div class="apokrifa-login-price-notice" style="border:1px solid #d8d8d8;border-radius:12px;padding:18px;margin:16px 0;text-align:center;">
+    <strong style="display:block;margin-bottom:10px;">
+        {% if apokrifa_guest_gate and disablecart %}Εγγραφείτε ή συνδεθείτε για να συνεχίσετε{% else %}Εγγραφείτε ή συνδεθείτε για να δείτε τις τιμές{% endif %}
+    </strong>
+    <p>Η εγγραφή πραγματοποιείται χωρίς αναμονή έγκρισης.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <a class="btn btn-primary" href="index.php?route=account/register">Εγγραφή</a>
+        <a class="btn btn-default" href="index.php?route=account/login">Σύνδεση</a>
+    </div>
+</div>
+{% endif %}
+
+{% if not disablecart and not global_disable_cart %}
 				
-				{% if package %}
+				{# APOKRIFA_GUEST_GATE_V2 #}
+{% if not apokrifa_guest_gate %}
+{% if package %}
 					<div class="product-prices prices-package">
 						{% if package_price %}
 							<div class="price-block">
@@ -185,7 +337,8 @@
 					{% endif %}
 				{% endif %}
 
-				<div class="product-options">
+				{% endif %}
+<div class="product-options">
 				
 					{% if optionsproduct %}
 						<div class="product-option-container">
@@ -361,7 +514,8 @@
 					{% endfor %}
 					{% endif %}
 				</div>
-				<div class="product-buttons">
+				{% if not apokrifa_guest_gate %}
+<div class="product-buttons">
 					<div class="product-quantity">
 						<div class="product-quantity-label">
 							{{ entry_qty }}
@@ -399,6 +553,7 @@
 				</div>
 				
 				{% endif %}
+{% endif %}
 				{# for disablecart #}
 				
 				<div class="clearfix"></div>
@@ -424,19 +579,38 @@
 						</div>
 					{% endif %}
 					<div class="product-share">
-						{% set share_url = (breadcrumbs|last).href|replace({'&amp;': '&'}) %}
-						<span class="product-share-label">{{ text_share }}</span>
-						<a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url|url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Κοινοποίηση στο Facebook">
-							<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 21v-8h3l.5-4H14V7c0-1 .3-2 2-2h2V1.5A24 24 0 0 0 15 1c-3 0-5 1.8-5 5v3H7v4h3v8h4Z"/></svg><span>Facebook</span>
-						</a>
-						<a href="https://pinterest.com/pin/create/button/?url={{ share_url|url_encode }}&amp;media={{ popup|url_encode }}&amp;description={{ heading_title|url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Κοινοποίηση στο Pinterest">
-							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m8 22 3-13m-1 8c2 2 7 1 8-5 1-5-1-9-6-9S4 7 4 11c0 2 1 3 2 4m5-3c-1-4 4-6 4-2 0 3-2 6-4 4"/></svg><span>Pinterest</span>
-						</a>
-						<button type="button" class="product-share-copy" data-share-url="{{ share_url }}" aria-label="Αντιγραφή συνδέσμου">
-							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/></svg><span>Αντιγραφή</span>
-						</button>
-						<span class="sr-only product-share-status" role="status" aria-live="polite"></span>
-					</div>
+    {% set share_url = (breadcrumbs|last).href|replace({'&amp;': '&'}) %}
+    <span class="product-share-label">{{ text_share }}</span>
+
+    <button type="button" class="product-share-native"
+            data-share-url="{{ share_url }}"
+            aria-label="Κοινοποίηση προϊόντος">
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.8"
+             aria-hidden="true">
+            <circle cx="18" cy="5" r="3"/>
+            <circle cx="6" cy="12" r="3"/>
+            <circle cx="18" cy="19" r="3"/>
+            <path d="M8.7 10.7 15.3 6.3M8.7 13.3l6.6 4.4"/>
+        </svg>
+        <span>Κοινοποίηση</span>
+    </button>
+
+    <button type="button" class="product-share-copy"
+            data-share-url="{{ share_url }}"
+            aria-label="Αντιγραφή συνδέσμου">
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.7"
+             aria-hidden="true">
+            <rect x="8" y="8" width="12" height="13" rx="2"/>
+            <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/>
+        </svg>
+        <span>Αντιγραφή</span>
+    </button>
+
+    <span class="sr-only product-share-status"
+          role="status" aria-live="polite"></span>
+</div>
 				</div>
 			</section>
 		</div>

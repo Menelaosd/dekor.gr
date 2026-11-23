@@ -1,0 +1,168 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        {% if page == 'dekor' %}<a href="{{ dekor_instagram_action }}" class="btn btn-success">Instagram DEKOR</a>{% endif %}
+        {% if page == 'apokrifa' %}<a href="{{ apokrifa_instagram_action }}" class="btn btn-success">Instagram APOKRIFA</a>{% endif %}
+        <button type="submit" form="form-facebook-publish" class="btn btn-primary" id="social-publish-button"
+                {% if publish_completed %}disabled{% endif %}>
+          <i class="fa fa-paper-plane"></i> <span id="social-publish-label">{% if publish_completed %}Ολοκληρώθηκε{% elseif instagram_retry %}Επανάληψη μόνο Instagram{% else %}Δημοσίευση{% endif %}</span>
+        </button>
+      </div>
+      <h1>Δημοσίευση προϊόντος στο Facebook</h1>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success">{{ success }}</div>
+    {% endif %}
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Νέα δημοσίευση</strong></div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" id="form-facebook-publish">
+          <input type="hidden" name="product_id" value="{{ product_id|default(0) }}">
+          <input type="hidden" name="publish_key" value="{{ publish_key }}">
+          <div class="form-group">
+            <label for="input-page">Σελίδα Facebook</label>
+            <select name="page" id="input-page" class="form-control">
+              <option value="dekor" {% if page == 'dekor' %}selected{% endif %}>DEKOR</option>
+              <option value="apokrifa" {% if page == 'apokrifa' %}selected{% endif %}>APOKRIFA</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="product-url-group">
+            <label for="input-product-url">Σύνδεσμος προϊόντος</label>
+            <input type="url" name="product_url" id="input-product-url"
+                   value="{{ product_url }}" class="form-control"
+                   placeholder="https://dekor.gr/...">
+          </div>
+
+          <div class="form-group">
+            <label>Τρόπος δημοσίευσης</label>
+            <div class="radio">
+              <label>
+                <input type="radio" name="publish_mode" value="link"
+                  {% if publish_mode|default('link') == 'link' %}checked{% endif %}>
+                Δημοσίευση συνδέσμου (υπάρχων τρόπος)
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="publish_mode" value="photo"
+                  {% if publish_mode|default('photo') == 'photo' %}checked{% endif %}>
+                Δημοσίευση φωτογραφίας (νέος τρόπος)
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="input-message">Κείμενο δημοσίευσης (προαιρετικό)</label>
+            <textarea name="message" id="input-message" rows="5" maxlength="2000"
+                      class="form-control">{{ message }}</textarea>
+          </div>
+
+          <div id="photo-caption-preview" class="panel panel-info" style="display:none;">
+            <div class="panel-heading">
+              <strong>Προεπισκόπηση λεζάντας φωτογραφίας</strong>
+            </div>
+            <div class="panel-body">
+              <div id="photo-caption-text"
+                   style="white-space:pre-wrap;overflow-wrap:anywhere;"></div>
+              <p class="help-block">
+                Η προεπισκόπηση δεν αποτελεί δημοσίευση.
+                Ο σύνδεσμος του επιλεγμένου προϊόντος δημιουργείται αυτόματα.
+              </p>
+            </div>
+          </div>
+
+          <p id="instagram-publish-notice" class="alert alert-info" style="display:none;">
+            Η φωτογραφία και το κείμενο θα δημοσιευτούν στο Facebook Apokrifa.gr και στο Instagram @apokrifa.gr.
+            Ο σύνδεσμος στη λεζάντα Instagram εμφανίζεται ως κείμενο.
+          </p>
+          <p>Έλεγξε τον προορισμό και την προεπισκόπηση πριν από τη δημοσίευση.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  var form = document.getElementById('form-facebook-publish');
+  if (!form) return;
+
+  var urlInput = document.getElementById('input-product-url');
+  var messageInput = document.getElementById('input-message');
+  var preview = document.getElementById('photo-caption-preview');
+  var output = document.getElementById('photo-caption-text');
+  var pageInput = document.getElementById('input-page');
+
+  var productIdInput = form.querySelector('input[name="product_id"]');
+  var urlGroup = document.getElementById('product-url-group');
+
+  function updatePreview() {
+    var selected = form.querySelector('input[name="publish_mode"]:checked');
+    var isPhoto = selected && selected.value === 'photo';
+
+    preview.style.display = isPhoto ? 'block' : 'none';
+    urlGroup.style.display = isPhoto ? 'none' : '';
+    urlInput.required = !isPhoto;
+
+    if (!isPhoto) return;
+
+    var productId = parseInt(productIdInput.value, 10) || 0;
+    if (productId < 1) {
+      output.textContent = 'Δεν αναγνωρίστηκε το προϊόν.';
+      return;
+    }
+
+    var domain = pageInput.value === 'apokrifa'
+      ? 'apokrifa.gr'
+      : 'dekor.gr';
+
+    var message = messageInput.value.trim();
+    var cta = 'Δείτε το προϊόν – Αγορά / Πληροφορίες\nhttps://' +
+      domain + '/go/?id=' + productId;
+
+    output.textContent = (message ? message + '\n\n' : '') + cta;
+  }
+
+  form.addEventListener('input', updatePreview);
+  form.addEventListener('change', updatePreview);
+  updatePreview();
+
+  var publishButton = document.getElementById('social-publish-button');
+  var publishLabel = document.getElementById('social-publish-label');
+  var igNotice = document.getElementById('instagram-publish-notice');
+  var igRetry = {{ instagram_retry ? 'true' : 'false' }};
+  var completed = {{ publish_completed ? 'true' : 'false' }};
+  var submitting = false;
+  function updateTargets() {
+    var mode = form.querySelector('input[name="publish_mode"]:checked');
+    var both = false;
+    igNotice.style.display = both ? 'block' : 'none';
+    if (!completed && !igRetry) {
+      publishLabel.textContent = pageInput.value === 'apokrifa' ? 'Facebook APOKRIFA' : 'Δημοσίευση στο Facebook';
+    }
+  }
+  form.addEventListener('submit', function (event) {
+    if (submitting || completed) { event.preventDefault(); return; }
+    var text = igRetry ? 'Να επαναληφθεί μόνο το Instagram; Το Facebook έχει ήδη δημοσιευτεί.'
+      : 'Να γίνει τώρα ' + publishLabel.textContent.toLowerCase() + ';';
+    if (!window.confirm(text)) { event.preventDefault(); return; }
+    submitting = true;
+    publishButton.disabled = true;
+    publishLabel.textContent = 'Η δημοσίευση εκτελείται…';
+  });
+  form.addEventListener('change', updateTargets);
+  updateTargets();
+})();
+</script>
+{{ footer }}

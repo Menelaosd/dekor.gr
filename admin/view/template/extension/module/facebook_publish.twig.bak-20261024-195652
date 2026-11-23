@@ -1,0 +1,54 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-facebook-publish" class="btn btn-primary"
+                onclick="return confirm('Να δημοσιευτεί τώρα στη Σελίδα Facebook;');">
+          <i class="fa fa-paper-plane"></i> Δημοσίευση στο Facebook
+        </button>
+      </div>
+      <h1>Δημοσίευση προϊόντος στο Facebook</h1>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    {% if success %}
+      <div class="alert alert-success">{{ success }}</div>
+    {% endif %}
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Νέα δημοσίευση</strong></div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" id="form-facebook-publish">
+          <div class="form-group">
+            <label for="input-page">Σελίδα Facebook</label>
+            <select name="page" id="input-page" class="form-control">
+              <option value="dekor" {% if page == 'dekor' %}selected{% endif %}>DEKOR</option>
+              <option value="apokrifa" {% if page == 'apokrifa' %}selected{% endif %}>APOKRIFA</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="input-product-url">Σύνδεσμος προϊόντος</label>
+            <input type="url" name="product_url" id="input-product-url"
+                   value="{{ product_url }}" class="form-control"
+                   placeholder="https://dekor.gr/..." required>
+          </div>
+
+          <div class="form-group">
+            <label for="input-message">Κείμενο δημοσίευσης (προαιρετικό)</label>
+            <textarea name="message" id="input-message" rows="5" maxlength="2000"
+                      class="form-control">{{ message }}</textarea>
+          </div>
+
+          <p>Έλεγξε τη Σελίδα και τον σύνδεσμο πριν πατήσεις «Δημοσίευση στο Facebook».</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

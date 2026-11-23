@@ -23,6 +23,10 @@ Options -Indexes
 </IfModule>
 # SEO URL Settings
 RewriteEngine On
+
+# APOKRIFA_PSL108_SLUG_REDIRECT_V1
+RewriteCond %{HTTP_HOST} ^(www\.)?apokrifa\.gr$ [NC]
+RewriteRule ^psalmos-108-17-xorki-kataras-dikait-timoria/?$ https://apokrifa.gr/psalmos-108-17-xorki-kataras-dikaii-timoria [R=301,L,NE]
 RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
@@ -126,6 +130,13 @@ RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
 RewriteCond %{HTTP_HOST} ^.*$
 RewriteRule ^αλλα\ \-προϊοντα$ "https\:\/\/dekor\.gr\/aggelies\-exoplismos\-ergastirion" [R=301,L]
 
+# Security headers
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=86400"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
 # php -- BEGIN cPanel-generated handler, do not edit
 # This domain inherits the “PHP” package.
 # php -- END cPanel-generated handler, do not edit

@@ -308291,3 +308291,142 @@ Stack trace:
 [13-Oct-2026 00:01:33 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
 [13-Oct-2026 03:01:18 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
 [13-Oct-2026 03:01:18 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[16-Oct-2026 09:01:15 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[16-Oct-2026 09:01:15 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[17-Oct-2026 00:01:39 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[17-Oct-2026 00:01:39 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[17-Oct-2026 01:01:13 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[17-Oct-2026 01:01:14 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[17-Oct-2026 02:01:38 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[17-Oct-2026 02:01:38 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[19-Oct-2026 12:40:05 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[20-Oct-2026 06:01:15 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[20-Oct-2026 06:01:16 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[20-Oct-2026 08:01:58 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[20-Oct-2026 08:01:58 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[20-Oct-2026 09:01:19 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[20-Oct-2026 09:01:19 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[20-Oct-2026 10:01:25 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[20-Oct-2026 10:01:25 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[20-Oct-2026 11:01:16 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[20-Oct-2026 11:01:16 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[20-Oct-2026 13:20:07 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[20-Oct-2026 13:20:07 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 210
+[21-Oct-2026 10:25:04 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[21-Oct-2026 10:45:05 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[21-Oct-2026 10:45:12 UTC] PHP Warning:  Undefined array key "vivawallet" in /home/chshost/public_html/api/erp_send_orders.php on line 361
+[21-Oct-2026 22:06:06 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 66
+[21-Oct-2026 22:11:16 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 66
+[29-Oct-2026 08:55:04 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[29-Oct-2026 08:55:13 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[29-Oct-2026 08:55:14 UTC] PHP Warning:  Undefined array key "vivawallet" in /home/chshost/public_html/api/erp_send_orders.php on line 361
+[29-Oct-2026 08:55:16 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[29-Oct-2026 21:15:06 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[29-Oct-2026 21:15:07 UTC] PHP Warning:  Undefined array key "vivawallet" in /home/chshost/public_html/api/erp_send_orders.php on line 361
+[30-Oct-2026 07:50:09 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[30-Oct-2026 07:50:10 UTC] PHP Warning:  Undefined array key "vivawallet" in /home/chshost/public_html/api/erp_send_orders.php on line 361
+[01-Nov-2026 07:45:03 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[02-Nov-2026 08:55:04 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[02-Nov-2026 08:55:06 UTC] PHP Warning:  Undefined array key "vivawallet" in /home/chshost/public_html/api/erp_send_orders.php on line 361
+[03-Nov-2026 07:01:14 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[03-Nov-2026 07:01:14 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[04-Nov-2026 12:01:29 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[04-Nov-2026 12:01:30 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[05-Nov-2026 05:01:06 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[05-Nov-2026 05:01:06 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[05-Nov-2026 06:01:09 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[05-Nov-2026 06:01:10 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[05-Nov-2026 07:01:18 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[05-Nov-2026 07:01:19 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[05-Nov-2026 07:21:24 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 78
+[05-Nov-2026 07:26:04 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 66
+[05-Nov-2026 07:36:36 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 66
+[05-Nov-2026 08:01:11 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[05-Nov-2026 08:01:11 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[05-Nov-2026 09:01:31 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[05-Nov-2026 09:01:31 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[05-Nov-2026 10:01:31 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[05-Nov-2026 10:01:31 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[05-Nov-2026 11:01:34 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[05-Nov-2026 11:01:34 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[05-Nov-2026 22:06:28 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 66
+[05-Nov-2026 22:11:18 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 66
+[06-Nov-2026 00:01:07 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[06-Nov-2026 00:01:07 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[06-Nov-2026 23:01:16 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[06-Nov-2026 23:01:16 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[06-Nov-2026 23:21:37 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 66
+[07-Nov-2026 00:01:29 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[07-Nov-2026 00:01:29 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[07-Nov-2026 01:01:23 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[07-Nov-2026 01:01:24 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[07-Nov-2026 01:10:04 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 66
+[07-Nov-2026 02:01:17 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[07-Nov-2026 02:01:17 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[07-Nov-2026 03:01:20 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[07-Nov-2026 03:01:20 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[07-Nov-2026 17:00:14 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 50
+[07-Nov-2026 17:00:14 UTC] PHP Warning:  Undefined variable $client_id in /home/chshost/public_html/api/erp_products.php on line 69
+[07-Nov-2026 17:00:15 UTC] PHP Warning:  Undefined variable $client_id in /home/chshost/public_html/api/erp_products.php on line 77
+[07-Nov-2026 17:00:15 UTC] PHP Warning:  Undefined array key "reqID" in /home/chshost/public_html/api/erp_products.php on line 79
+[07-Nov-2026 17:00:15 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[08-Nov-2026 01:01:09 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[08-Nov-2026 01:01:09 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[08-Nov-2026 02:01:13 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[08-Nov-2026 02:01:13 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[08-Nov-2026 03:01:07 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[08-Nov-2026 03:01:07 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[08-Nov-2026 04:01:10 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[08-Nov-2026 04:01:11 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[08-Nov-2026 05:01:05 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[08-Nov-2026 05:01:05 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[08-Nov-2026 06:01:09 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[08-Nov-2026 06:01:09 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[08-Nov-2026 08:01:08 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[08-Nov-2026 08:01:08 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[08-Nov-2026 09:01:21 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[08-Nov-2026 09:01:22 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[09-Nov-2026 05:45:03 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[09-Nov-2026 12:40:05 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[09-Nov-2026 12:40:10 UTC] PHP Warning:  Undefined array key "vivawallet" in /home/chshost/public_html/api/erp_send_orders.php on line 361
+[09-Nov-2026 18:05:04 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[10-Nov-2026 09:35:04 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[10-Nov-2026 09:35:08 UTC] PHP Warning:  Undefined array key "vivawallet" in /home/chshost/public_html/api/erp_send_orders.php on line 361
+[11-Nov-2026 11:20:05 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[12-Nov-2026 10:40:05 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[12-Nov-2026 12:30:08 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[12-Nov-2026 12:30:11 UTC] PHP Warning:  Undefined array key "vivawallet" in /home/chshost/public_html/api/erp_send_orders.php on line 361
+[13-Nov-2026 08:30:14 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[16-Nov-2026 22:35:01 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/api/erp_send_orders.php(25): DB->__construct()
+#2 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[16-Nov-2026 22:35:02 UTC] PHP Fatal error:  Uncaught Exception: Error: Could not make a database link using chshost_dekorcandles@localhost! in /home/chshost/public_html/system/library/db/mysqli.php:10
+Stack trace:
+#0 /home/chshost/public_html/system/library/db.php(31): DB\MySQLi->__construct()
+#1 /home/chshost/public_html/api/check_orders.php(47): DB->__construct()
+#2 {main}
+  thrown in /home/chshost/public_html/system/library/db/mysqli.php on line 10
+[17-Nov-2026 02:31:26 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 66
+[17-Nov-2026 06:01:19 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[17-Nov-2026 06:01:19 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[17-Nov-2026 07:01:18 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[17-Nov-2026 07:01:18 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[17-Nov-2026 08:01:17 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[17-Nov-2026 08:01:17 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[17-Nov-2026 09:01:30 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[17-Nov-2026 09:01:31 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[17-Nov-2026 10:01:11 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[17-Nov-2026 10:01:12 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[17-Nov-2026 13:00:25 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 79
+[17-Nov-2026 13:00:25 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[19-Nov-2026 00:10:02 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 66
+[19-Nov-2026 11:45:08 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[21-Nov-2026 09:01:07 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_send_orders.php on line 78
+[21-Nov-2026 09:01:38 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/chshost/public_html/api/erp_products.php on line 62
+[21-Nov-2026 09:01:38 UTC] PHP Warning:  Undefined array key "reqID" in /home/chshost/public_html/api/erp_products.php on line 79
+[21-Nov-2026 09:01:38 UTC] PHP Warning:  Undefined array key "rows" in /home/chshost/public_html/api/erp_products.php on line 93
+[22-Nov-2026 08:35:03 UTC] PHP Warning:  Undefined array key 0 in /home/chshost/public_html/api/erp_send_orders.php on line 197
+[22-Nov-2026 08:35:04 UTC] PHP Warning:  Undefined array key "vivawallet" in /home/chshost/public_html/api/erp_send_orders.php on line 361

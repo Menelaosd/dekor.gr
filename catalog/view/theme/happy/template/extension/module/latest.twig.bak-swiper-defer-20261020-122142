@@ -1,0 +1,94 @@
+<div class="home_product_block m_t_30  m_b_30 container">
+
+
+     <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">ΝΕΑ ΠΡΟΙΟΝΤΑ</a></li>
+         <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">ΔΗΜΟΦΙΛΗ</a></li>
+    </ul>
+    <div class="product_block-wrap">
+        <div class="swiper-viewport">
+            <div class="tab-content">
+            
+                <div role="tabpanel" class="tab-pane active" id="tab1">
+                    <div id="latest" class="swiper-container">
+                <div class="swiper-wrapper">
+                    {% for product in products %}
+                        <div class="swiper-slide">
+                            {{ include('happy/template/hostore/product_blocks/product_owl.twig') }}
+                        </div>
+                    {% endfor %}
+                 </div> 
+                 </div>
+             </div>
+             <div role="tabpanel" class="tab-pane" id="tab2">
+                <div id="featured_2" class="swiper-container">
+                 <div class="swiper-wrapper">  
+                    {% for products_f in products_featured %}
+                        <div class="swiper-slide">
+                            {{ include('happy/template/hostore/product_blocks/product_owl_f.twig') }}
+                        </div>
+                    {% endfor %}
+                     </div>
+                 </div>
+                </div>
+           
+        </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    var swiper = new Swiper('#latest', {
+        slidesPerView: 4,
+        spaceBetween: 10,
+        loop: true,
+        nextButton: '.pager-{{ module }} .swiper-button-next',
+        prevButton: '.pager-{{ module }} .swiper-button-prev',
+        // Responsive breakpoints
+        breakpoints: {
+            // when window width is <= 420px
+            480: {
+                slidesPerView: 1,
+                spaceBetween: 0
+            },
+            // when window width is <= 640px
+            640: {
+                slidesPerView: 2,
+                spaceBetween: 20
+            },
+            // when window width is <= 640px
+            1100: {
+                slidesPerView: 3,
+                spaceBetween: 20
+            }
+        }
+    });
+</script>
+<script type="text/javascript">
+    var swiper = new Swiper('#featured_2', {
+        slidesPerView: 4,
+        spaceBetween: 10,
+        loop: true,
+        nextButton: '.pager-{{ module }} .swiper-button-next',
+        prevButton: '.pager-{{ module }} .swiper-button-prev',
+        // Responsive breakpoints
+        breakpoints: {
+            // when window width is <= 420px
+            480: {
+                slidesPerView: 1,
+                spaceBetween: 0
+            },
+            // when window width is <= 640px
+            640: {
+                slidesPerView: 2,
+                spaceBetween: 20
+            },
+            // when window width is <= 640px
+            1100: {
+                slidesPerView: 3,
+                spaceBetween: 20
+            }
+        }
+    });
+</script>

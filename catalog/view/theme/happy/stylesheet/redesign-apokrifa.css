@@ -501,3 +501,192 @@ footer h1, footer h2, footer h3, footer h4, footer h5, footer h6, footer .footer
 .footer-social a > i { color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }
 .footer-social a:hover > i { color: #b58a3b !important; -webkit-text-fill-color: #b58a3b !important; }
 .footer-social a[aria-disabled="true"] { cursor: default !important; }
+
+/* APOKRIFA grayscale product cards 20261030 */
+.product-block .product-cart-button,
+.product-block .product-cart-button span,
+.product-block .product-cart-button i {
+    background: #808080 !important;
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+.product-block .product-cart-button:hover,
+.product-block .product-cart-button:focus,
+.product-block .product-cart-button:active,
+.product-block .product-cart-button.selected,
+.product-block .product-cart-button[aria-pressed="true"],
+.product-block .product-cart-button:hover span,
+.product-block .product-cart-button:hover i,
+.product-block .product-cart-button:focus span,
+.product-block .product-cart-button:focus i {
+    background: #404040 !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+.product-block-actions a,
+.product-block-actions button {
+    color: #000 !important;
+}
+.product-block-actions a:hover,
+.product-block-actions button:hover,
+.product-block-actions a:focus,
+.product-block-actions button:focus,
+.product-block-actions a.active,
+.product-block-actions button.active,
+.product-block-actions [aria-pressed="true"] {
+    background-color: #404040 !important;
+    color: #fff !important;
+}
+.product-block-actions a:hover *,
+.product-block-actions button:hover *,
+.product-block-actions a:focus *,
+.product-block-actions button:focus *,
+.product-block-actions a.active *,
+.product-block-actions button.active * {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+
+/* CARD CART BUTTON SELECTOR 20261030 */
+button.awe-button.product-quick-view:not(.not-enabled) {
+    background: #808080 !important;
+    color: #000 !important;
+}
+button.awe-button.product-quick-view:not(.not-enabled) span,
+button.awe-button.product-quick-view:not(.not-enabled) i {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+button.awe-button.product-quick-view:not(.not-enabled):hover,
+button.awe-button.product-quick-view:not(.not-enabled):focus,
+button.awe-button.product-quick-view:not(.not-enabled):active {
+    background: #404040 !important;
+    color: #fff !important;
+}
+button.awe-button.product-quick-view:not(.not-enabled):hover span,
+button.awe-button.product-quick-view:not(.not-enabled):hover i,
+button.awe-button.product-quick-view:not(.not-enabled):focus span,
+button.awe-button.product-quick-view:not(.not-enabled):focus i {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+
+/* DEKOR + APOKRIFA card CTA gray links and buttons 20261030 */
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view {
+    background: #808080 !important;
+    border-color: #808080 !important;
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view *,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view * {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view:hover,
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view:focus,
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view:active,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view:hover,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view:focus,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view:active {
+    background: #404040 !important;
+    border-color: #404040 !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view:hover *,
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view:focus *,
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view:active *,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view:hover *,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view:focus *,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view:active * {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+
+/* DEKOR + APOKRIFA card CTA light gray and centered cart 20261030 */
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view {
+    background: #bfbfbf !important;
+    border-color: #bfbfbf !important;
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    display: flex !important;
+    width: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-align: center !important;
+}
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view *,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view * {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view i,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view i {
+    position: static !important;
+    float: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view span,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view span {
+    float: none !important;
+    margin: 0 !important;
+}
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view:hover,
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view:focus,
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view:active,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view:hover,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view:focus,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view:active {
+    background: #404040 !important;
+    border-color: #404040 !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view:hover *,
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view:focus *,
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view:active *,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view:hover *,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view:focus *,
+html body #content .product-block .product-block-actions button.awe-button.product-quick-view:active * {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+
+/* APOKRIFA final card CTA gray override 20261030 */
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view[class~="product-quick-view"]:is(:link, :visited):not(:hover):not(:focus):not(:active) {
+    background: #bfbfbf !important;
+    border-color: #bfbfbf !important;
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view[class~="product-quick-view"]:is(:link, :visited):not(:hover):not(:focus):not(:active) *,
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view[class~="product-quick-view"]:is(:link, :visited):not(:hover):not(:focus):not(:active) *::before {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view[class~="product-quick-view"]:is(:hover, :focus, :active) {
+    background: #404040 !important;
+    border-color: #404040 !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view[class~="product-quick-view"]:is(:hover, :focus, :active) *,
+html body #content .product-block .product-block-actions a.awe-button.product-quick-view[class~="product-quick-view"]:is(:hover, :focus, :active) *::before {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+
+
+/* APOKRIFA_REGISTER_HEADINGS_V1 */
+body.account-register fieldset legend,
+body.account-register .fieldset legend,
+body.account-register #content legend,
+body.account-register #content h2 {
+    color: #111111 !important;
+    opacity: 1 !important;
+}

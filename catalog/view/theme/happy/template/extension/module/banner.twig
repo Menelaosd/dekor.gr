@@ -20,7 +20,13 @@
 					{% if banner.title %}
 					<span class="banner-title">{{ banner.title }}</span>
 					{% endif %}
-					<img src="{{ banner.raw_image }}" alt="{{ banner.title }}" rel="preload" fetchpriority="high"  decoding="async" loading="eager"/>
+					{% if "2048x1152" in banner.raw_image %}
+                                        <img src="{{ banner.raw_image }}" alt="{{ banner.title }}" rel="preload" fetchpriority="high" decoding="async" loading="eager" width="2048" height="1152"/>
+                                    {% elseif "416x234" in banner.raw_image %}
+                                        <img src="{{ banner.raw_image }}" alt="{{ banner.title }}" rel="preload" fetchpriority="high" decoding="async" loading="eager" width="416" height="234"/>
+                                    {% else %}
+                                        <img src="{{ banner.raw_image }}" alt="{{ banner.title }}" rel="preload" fetchpriority="high"  decoding="async" loading="eager"/>
+                                    {% endif %}
 				</div>
 			</div>
 		{% endfor %}

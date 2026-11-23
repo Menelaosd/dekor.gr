@@ -39,6 +39,8 @@
 </div>
 
 <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+    if (!window.Swiper) return;
     var swiper = new Swiper('#latest', {
         slidesPerView: 4,
         spaceBetween: 10,
@@ -64,8 +66,12 @@
             }
         }
     });
+
+    });
 </script>
 <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+    if (!window.Swiper) return;
     var swiper = new Swiper('#featured_2', {
         slidesPerView: 4,
         spaceBetween: 10,
@@ -90,5 +96,7 @@
                 spaceBetween: 20
             }
         }
+    });
+
     });
 </script>
