@@ -1,7 +1,8 @@
 /*!
  * dekor live search — replaces the old live_search dropdown on #search.
  * Greek + Greeklish, product codes, typo suggestions, categories, blog posts,
- * recent + popular searches, keyboard navigation, add to cart, mobile sheet.
+ * recent + popular searches, keyboard navigation, add to cart. Phones get the same
+ * dropdown under the field (sized to the screen above the keyboard, scrolls inside).
  */
 (function () {
 	'use strict';
@@ -71,16 +72,12 @@
 	}
 
 	// ------------------------------------------------------------ widget
-	var sheetWidget = null;
-
 	function isMobile() {
 		return window.matchMedia ? window.matchMedia('(max-width: 767px)').matches : window.innerWidth < 768;
 	}
 
-	function DkSearch(box, sheet) {
+	function DkSearch(box) {
 		this.box = box;
-		this.sheet = sheet || null;
-		this.isSheet = !!sheet;
 		this.input = box.querySelector('input[name="search"]');
 		this.button = box.querySelector('button');
 		this.cache = {};
@@ -110,20 +107,20 @@
 
 		this.panel = document.createElement('div');
 		this.panel.className = 'dk-search-panel';
-		this.panel.id = this.isSheet ? 'dk-sheet-panel' : 'dk-search-panel';
+		this.panel.id = 'dk-search-panel';
 		this.panel.setAttribute('role', 'listbox');
 		input.setAttribute('aria-controls', this.panel.id);
-		// in the mobile sheet the panel sits below the bar and takes the rest of the screen
-		(this.isSheet ? this.sheet : this.box).appendChild(this.panel);
+		this.box.appendChild(this.panel);
 		this.box.classList.add('dk-search-ready');
 
+		// phones: keep the dropdown above the keyboard while it opens / closes
+		if (window.visualViewport) {
+			window.visualViewport.addEventListener('resize', function () {
+				if (self.box.classList.contains('dk-open')) { self.fit(); }
+			});
+		}
+
 		input.addEventListener('focus', function () {
-			// phones: the header field only opens the full-screen sheet
-			if (!self.isSheet && isMobile() && sheetWidget) {
-				input.blur();
-				sheetWidget.openSheet(input.value);
-				return;
-			}
 			self.open();
 			if (!input.value.trim()) { self.renderEmpty(); } else { self.query(input.value); }
 		});
@@ -133,24 +130,31 @@
 		if (this.button) {
 			this.button.addEventListener('click', function (e) {
 				e.preventDefault(); e.stopImmediatePropagation();
-				if (!self.isSheet && isMobile() && sheetWidget && !input.value.trim()) { sheetWidget.openSheet(''); return; }
+				// phones, compact sticky bar (the header's search icon clicks this button): show the field
+				// under the bar and focus it in the same tap, so the keyboard opens
+				if (isMobile() && document.body.classList.contains('dk-hd-compact') && !document.body.classList.contains('dk-hd-search')) {
+					document.body.classList.add('dk-hd-search');
+					input.focus();
+					return;
+				}
 				self.go();
 			}, true);
 		}
 
-		if (!this.isSheet) {
-			document.addEventListener('mousedown', function (e) {
-				if (!self.box.contains(e.target)) { self.close(); }
-			});
-
-			// "/" opens the search from anywhere
-			document.addEventListener('keydown', function (e) {
-				if (e.key === '/' && !/input|textarea|select/i.test((document.activeElement || {}).tagName || '')) {
-					e.preventDefault();
-					input.focus();
-				}
-			});
+		// a click or touch outside closes it (the compact bar's search icon re-opens it in the same tap)
+		function outside(e) {
+			if (self.box.classList.contains('dk-open') && !self.box.contains(e.target)) { self.close(); }
 		}
+		document.addEventListener('mousedown', outside);
+		document.addEventListener('touchstart', outside, { passive: true });
+
+		// "/" opens the search from anywhere
+		document.addEventListener('keydown', function (e) {
+			if (e.key === '/' && !/input|textarea|select/i.test((document.activeElement || {}).tagName || '')) {
+				e.preventDefault();
+				input.focus();
+			}
+		});
 
 		this.panel.addEventListener('click', function (e) {
 			var t = e.target.closest('[data-act]');
@@ -172,23 +176,26 @@
 
 	DkSearch.prototype.open = function () {
 		this.box.classList.add('dk-open');
-		if (this.isSheet) { this.sheet.classList.add('is-open'); this.sheet.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('dk-sheet-open'); }
+		// phones: keep the field (and its dropdown) in the bar if the header turns compact while searching
+		if (isMobile()) { document.body.classList.add('dk-hd-search'); }
 		this.input.setAttribute('aria-expanded', 'true');
+		this.fit();
 	};
 
 	DkSearch.prototype.close = function () {
 		this.box.classList.remove('dk-open');
-		if (this.isSheet) { this.sheet.classList.remove('is-open'); this.sheet.setAttribute('aria-hidden', 'true'); document.documentElement.classList.remove('dk-sheet-open'); }
+		document.body.classList.remove('dk-hd-search');
 		this.input.setAttribute('aria-expanded', 'false');
 		this.active = -1;
 	};
 
-	DkSearch.prototype.openSheet = function (value) {
-		this.input.value = value || '';
-		this.open();
-		if (this.input.value.trim()) { this.query(this.input.value); } else { this.renderEmpty(); }
-		var input = this.input;
-		setTimeout(function () { input.focus(); }, 30);
+	// phones: the dropdown ends above the keyboard / bottom of the screen and scrolls inside
+	DkSearch.prototype.fit = function () {
+		if (!isMobile()) { this.panel.style.maxHeight = ''; return; }
+		var vv = window.visualViewport;
+		var bottom = vv ? vv.height + vv.offsetTop : window.innerHeight;
+		var top = this.box.getBoundingClientRect().bottom + 6;
+		this.panel.style.maxHeight = Math.max(220, Math.round(bottom - top - 10)) + 'px';
 	};
 
 	DkSearch.prototype.schedule = function () {
@@ -355,32 +362,7 @@
 	};
 
 	// ------------------------------------------------------------ boot (after the old live_search initialised itself)
-	function buildSheet() {
-		var header = document.querySelector('#search input[name="search"]');
-		var sheet = document.createElement('div');
-		sheet.className = 'dk-sheet';
-		sheet.setAttribute('aria-hidden', 'true');
-		sheet.innerHTML = '<div class="dk-sheet-top">' +
-			'<button type="button" class="dk-sheet-back" aria-label="Κλείσιμο"></button>' +
-			'<div class="dk-sheet-box"><input type="search" name="search" enterkeyhint="search" placeholder="' + esc(header ? header.getAttribute('placeholder') : 'Αναζήτηση') + '">' +
-			'<button type="button" class="dk-sheet-go" aria-label="Αναζήτηση"></button></div></div>';
-		document.body.appendChild(sheet);
-
-		var w = new DkSearch(sheet.querySelector('.dk-sheet-box'), sheet);
-		sheet.querySelector('.dk-sheet-back').addEventListener('click', function () {
-			if (header) { header.value = w.input.value; }
-			w.close();
-			w.input.blur();
-		});
-
-		return w;
-	}
-
 	function boot() {
-		if (document.querySelector('#search input[name="search"]')) {
-			sheetWidget = buildSheet();
-		}
-
 		document.querySelectorAll('#search').forEach(function (box) {
 			if (box.querySelector('input[name="search"]') && !box.classList.contains('dk-search-ready')) {
 				new DkSearch(box);

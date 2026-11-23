@@ -9,7 +9,7 @@
 	font-family: var(--rz-ui, "Geologica", system-ui, sans-serif); color: var(--rz-ink, #111);
 }
 #search.dk-open .dk-search-panel { display: flex; }
-.dk-s-body { overflow-y: auto; padding: 8px 0 6px; overscroll-behavior: contain; }
+.dk-s-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 8px 0 6px; overscroll-behavior: contain; }
 .dk-s-sec { padding: 8px 16px 6px; }
 .dk-s-sec + .dk-s-sec { border-top: 1px solid var(--rz-border, #ECEEF3); }
 .dk-s-title { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--rz-muted, #5B5E68); margin: 4px 0 8px; display: flex; align-items: center; gap: 8px; }
@@ -94,42 +94,20 @@
 .dk-s-skel-img, .dk-s-skel-lines i { background: linear-gradient(90deg, #F0F1F4 25%, #F8F9FA 50%, #F0F1F4 75%); background-size: 200% 100%; animation: dkShimmer 1.1s linear infinite; }
 @keyframes dkShimmer { to { background-position: -200% 0; } }
 
-/* ---------- mobile: full-screen sheet (own element on <body>, independent of the header CSS) ---------- */
-.dk-sheet { display: none; }
+/* ---------- phones: the same dropdown under the field. JS keeps it above the keyboard / screen
+   bottom (max-height); it scrolls inside with a visible scrollbar. The site stays in view. ---------- */
 @media (max-width: 767px) {
-	#search .dk-search-panel { display: none !important; } /* phones use the sheet */
-	html.dk-sheet-open, html.dk-sheet-open body { overflow: hidden !important; }
-	.dk-sheet.is-open {
-		display: flex; flex-direction: column; position: fixed; inset: 0; z-index: 5000; background: #fff;
-		font-family: var(--rz-ui, "Geologica", system-ui, sans-serif); color: var(--rz-ink, #111);
-	}
-	.dk-sheet-top { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--rz-border, #ECEEF3); }
-	.dk-sheet-back {
-		flex: 0 0 44px; height: 46px; border: none; border-radius: 12px; background: #F6F7F9; cursor: pointer; position: relative;
-	}
-	.dk-sheet-back::before {
-		content: ""; position: absolute; top: 50%; left: 50%; width: 10px; height: 10px; margin: -5px 0 0 -3px;
-		border-left: 2px solid var(--rz-ink, #111); border-bottom: 2px solid var(--rz-ink, #111); transform: rotate(45deg);
-	}
-	.dk-sheet-box { flex: 1 1 auto; min-width: 0; display: flex; align-items: stretch; height: 46px; border: 1px solid var(--rz-accent, #618764); border-radius: 12px; overflow: hidden; }
-	.dk-sheet-box input {
-		flex: 1 1 auto; min-width: 0; border: none !important; outline: none; box-shadow: none !important; padding: 0 12px;
-		font-family: inherit; font-size: 16px; /* 16px: iOS does not zoom the page on focus */ background: #fff; color: inherit; -webkit-appearance: none; appearance: none;
-	}
-	.dk-sheet-box input::-webkit-search-cancel-button { -webkit-appearance: none; }
-	.dk-sheet-go { flex: 0 0 48px; border: none; background: var(--rz-accent, #618764); position: relative; cursor: pointer; }
-	.dk-sheet-go::before {
-		content: ""; position: absolute; inset: 0; background: #fff;
-		-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cpath d='M20 20l-4.2-4.2'/%3E%3C/svg%3E") center/20px no-repeat;
-		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cpath d='M20 20l-4.2-4.2'/%3E%3C/svg%3E") center/20px no-repeat;
-	}
-	.dk-sheet .dk-search-panel {
-		display: flex !important; position: static; flex: 1 1 auto; min-height: 0; min-width: 0; max-height: none;
-		border: none; border-radius: 0; box-shadow: none;
-	}
-	.dk-sheet .dk-s-sec { padding: 10px 14px 6px; }
-	.dk-sheet .dk-s-posts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-	.dk-sheet .dk-s-price b { font-size: 14px; }
-	.dk-sheet .dk-s-all { padding-bottom: calc(13px + env(safe-area-inset-bottom, 0px)); }
+	#search input[name="search"] { font-size: 16px !important; } /* below 16px iOS zooms the page on focus and it stays zoomed */
+	#search .dk-search-panel { min-width: 0; top: calc(100% + 6px); max-height: 70vh; border-radius: 12px; }
+	#search .dk-s-body { overflow-y: scroll; scrollbar-width: thin; scrollbar-color: #B9BCC6 transparent; }
+	#search .dk-s-body::-webkit-scrollbar { width: 6px; }
+	#search .dk-s-body::-webkit-scrollbar-thumb { background: #B9BCC6; border-radius: 3px; }
+	#search .dk-s-body::-webkit-scrollbar-track { background: transparent; }
+	#search .dk-s-sec { padding: 10px 14px 6px; }
+	#search .dk-s-posts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	#search .dk-s-price b { font-size: 14px; }
+	#search .dk-s-all { padding-bottom: calc(13px + env(safe-area-inset-bottom, 0px)); }
+	/* compact sticky bar: the search icon shows the field (and its dropdown) under the bar */
+	body.dk-hd-compact.dk-hd-search header .header-wrapper .dk-search { display: block !important; }
 }
 @media (min-width: 768px) and (max-width: 1199px) { .dk-search-panel { min-width: 480px; } }
