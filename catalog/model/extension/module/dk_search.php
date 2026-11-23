@@ -311,6 +311,30 @@ class ModelExtensionModuleDkSearch extends Model {
 		return $scores;
 	}
 
+	/** product ids for a query, best first: the same matching + typo fallback as the live dropdown (used by the full search page) */
+	public function searchIds($raw) {
+		$raw = mb_substr(trim(html_entity_decode((string)$raw, ENT_QUOTES, 'UTF-8')), 0, 80);
+
+		if (mb_strlen($raw) < 2) {
+			return array();
+		}
+
+		$index = $this->getIndex();
+		$tokens = $this->words($raw);
+		$code = $this->code($raw);
+		$scores = $tokens || $code ? $this->searchProducts($index, $tokens, $code) : array();
+
+		if (!$scores && $tokens) {
+			$sug = $this->suggest($index, $tokens);
+
+			if ($sug) {
+				$scores = $this->searchProducts($index, $sug[0], '');
+			}
+		}
+
+		return array_map('intval', array_keys($scores));
+	}
+
 	public function searchList($items, $tokens, $limit) {
 		$out = array();
 

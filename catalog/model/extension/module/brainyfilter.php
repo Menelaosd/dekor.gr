@@ -52,6 +52,9 @@ final class ModelExtensionModuleBrainyFilter extends Model
      * @var string
      */
     private $searchDescriptionString = '';
+
+    /** dekor: live search result ids for the search page (null = not computed yet) */
+    private $dkSearchIds = null;
     
     /**
      * List of all selected filters with the following items:
@@ -348,10 +351,30 @@ final class ModelExtensionModuleBrainyFilter extends Model
      * 
      * @return array
      */
+    /** dekor: product ids from the live search engine for the current search string (cached per request) */
+    private function _dkSearchIds()
+    {
+        if ($this->dkSearchIds === null) {
+            $this->dkSearchIds = array();
+
+            if (is_file(DIR_APPLICATION . 'model/extension/module/dk_search.php')) {
+                $this->load->model('extension/module/dk_search');
+                $this->dkSearchIds = $this->model_extension_module_dk_search->searchIds($this->searchNameString);
+            }
+        }
+
+        return $this->dkSearchIds;
+    }
+
     private function _prepareSearchConditions()
     {
         $search = array();
-        
+
+        // dekor: the search page finds exactly what the live search finds (typos, Greeklish, codes)
+        if (!empty($this->searchNameString) && ($dk = $this->_dkSearchIds())) {
+            return array(array('p.product_id IN (' . implode(',', $dk) . ')'));
+        }
+
         if (!empty($this->searchNameString)) {
             $words = explode(' ', trim(preg_replace('/\s\s+/', ' ', $this->searchNameString)));
             $nameCond = array();
@@ -736,8 +759,14 @@ final class ModelExtensionModuleBrainyFilter extends Model
         
         $sql->innerJoin(array('pd' => 'product_description'), 'pd.product_id = p.product_id')
             ->where('pd.language_id = ?', (int)$this->config->get('config_language_id'));
-        switch ($this->sortBy) 
+        // dekor: default order on the search page = live search relevance
+        $dk = (!empty($this->searchNameString) && ($this->sortBy === null || $this->sortBy === 'p.sort_order')) ? $this->_dkSearchIds() : array();
+        switch ($dk ? 'dk_relevance' : $this->sortBy)
         {
+            case 'dk_relevance' : {
+                $sql->order(array('FIELD(p.product_id, ' . implode(',', $dk) . ')'));
+                break;
+            }
             case 'pd.name' : {
                 $sql->order(array("LCASE(pd.name) {$this->order}"));
                 break;
