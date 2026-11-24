@@ -1,0 +1,71 @@
+{{ header }}{{ column_left }}
+<div id="content" class="hoan">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="hoan-head">
+        <div>
+          <h1>{{ heading_title }}</h1>
+          <p class="hoan-sub">{{ text_subtitle }}</p>
+        </div>
+        <button type="button" class="hoan-live" data-hoan-tab-link="realtime" title="{{ text_active_now }}"><span class="hoan-live__dot" aria-hidden="true"></span><b data-hoan-live>–</b> {{ text_live }}</button>
+      </div>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="hoan-bar">
+      <nav class="hoan-tabs" role="tablist">
+        <button type="button" role="tab" class="is-active" data-hoan-tab="overview">{{ tab_overview }}</button>
+        <button type="button" role="tab" data-hoan-tab="acquisition">{{ tab_acquisition }}</button>
+        <button type="button" role="tab" data-hoan-tab="behaviour">{{ tab_behaviour }}</button>
+        <button type="button" role="tab" data-hoan-tab="products">{{ tab_products }}</button>
+        <button type="button" role="tab" data-hoan-tab="sales">{{ tab_sales }}</button>
+        <button type="button" role="tab" data-hoan-tab="realtime">{{ tab_realtime }}</button>
+      </nav>
+      <div class="hoan-filters">
+        <select class="form-select form-select-sm" data-hoan-preset aria-label="{{ text_range_custom }}">
+          <option value="today">{{ text_range_today }}</option>
+          <option value="yesterday">{{ text_range_yesterday }}</option>
+          <option value="7">{{ text_range_7 }}</option>
+          <option value="28" selected>{{ text_range_28 }}</option>
+          <option value="90">{{ text_range_90 }}</option>
+          <option value="month">{{ text_range_month }}</option>
+          <option value="last_month">{{ text_range_last_month }}</option>
+          <option value="year">{{ text_range_year }}</option>
+          <option value="365">{{ text_range_12m }}</option>
+          <option value="custom">{{ text_range_custom }}</option>
+        </select>
+        <input type="text" class="form-control form-control-sm hoan-dates" data-hoan-dates readonly aria-label="{{ text_range_custom }}">
+        <select class="form-select form-select-sm" data-hoan-device aria-label="{{ text_devices }}">
+          <option value="">{{ text_all_devices }}</option>
+          <option value="desktop">{{ text_device_desktop }}</option>
+          <option value="mobile">{{ text_device_mobile }}</option>
+          <option value="tablet">{{ text_device_tablet }}</option>
+        </select>
+        <select class="form-select form-select-sm" data-hoan-channel aria-label="{{ text_channels }}">
+          <option value="">{{ text_all_channels }}</option>
+          {% for c in ['organic', 'paid', 'social', 'marketplace', 'email', 'ai', 'referral', 'direct'] %}
+          <option value="{{ c }}">{{ attribute(_context, 'text_channel_' ~ c) }}</option>
+          {% endfor %}
+        </select>
+        {% if stores|length > 1 %}
+        <select class="form-select form-select-sm form-control input-sm" data-hoan-store aria-label="Κατάστημα">
+          <option value="">Όλα τα καταστήματα</option>
+          {% for s in stores %}
+          <option value="{{ s.store_id }}">{{ s.name }}</option>
+          {% endfor %}
+        </select>
+        {% endif %}
+        <label class="hoan-switch"><input type="checkbox" data-hoan-compare checked> <span>{{ text_compare }}</span></label>
+      </div>
+    </div>
+
+    <div class="hoan-body" data-hoan-body aria-live="polite"></div>
+  </div>
+</div>
+<script>window.HOAN = {{ config }};</script>
+{{ footer }}

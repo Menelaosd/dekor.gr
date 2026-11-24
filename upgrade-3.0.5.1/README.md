@@ -38,3 +38,10 @@
    Manager `isActive()` error — do it at a quiet time.
 6. Clear `system/storage/cache/` (incl. `template/`).
 7. Switch the domain to PHP 8.1.
+
+## Reports > Analytics (ported from oc_ho_blank, 24/11/2026)
+
+After `git pull`, once on the server: `php upgrade-3.0.5.1/ho_analytics_install.php`
+(table `ho_analytics_hit` with `store_id`, OpenCart events `ho_analytics`, Administrator permission).
+No Modifications > Refresh needed: nothing in core / OCMOD files changes. Off again: `--remove`.
+Server-side counting, no cookie without consent, bots skipped; filter per store (DEKOR / APOKRIFA) in the page.

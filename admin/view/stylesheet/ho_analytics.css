@@ -1,0 +1,107 @@
+/* Reports › Analytics — on the admin's tokens (ho_admin.css): flat cards, 6–8 px corners, no shadows */
+.hoan { --an-1: #3451e6; --an-2: #0e9f8e; --an-3: #e3a008; --an-4: #d6457a; --an-5: #7c5cdb; --an-6: #2f8fd8; --an-7: #8a93a6; --an-8: #2e9d5b; --an-up: #137a3a; --an-down: #c2261b; }
+
+.hoan-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.hoan-sub { margin: .125rem 0 0; color: var(--ha-muted); font-size: .875rem; }
+.hoan-live { cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: .5rem; padding: .375rem .75rem; border: 1px solid var(--ha-border); border-radius: var(--ha-radius); background: var(--ha-surface); color: var(--ha-text-2); font-size: .8125rem; text-decoration: none; white-space: nowrap; }
+.hoan-live:hover { background: var(--ha-hover); color: var(--ha-text); }
+.hoan-live b { font-variant-numeric: tabular-nums; }
+.hoan-live__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ha-success-bg); box-shadow: 0 0 0 0 rgba(22, 163, 74, .45); animation: hoanPulse 2s infinite; }
+@keyframes hoanPulse { 70% { box-shadow: 0 0 0 7px rgba(22, 163, 74, 0); } 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); } }
+
+/* tabs + filters */
+.hoan-bar { position: sticky; top: var(--ha-top-h, 60px); z-index: 20; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin: 0 0 1.25rem; padding: .5rem 0; background: var(--ha-bg); border-bottom: 1px solid var(--ha-border); }
+.hoan-tabs { display: flex; gap: .25rem; overflow-x: auto; scrollbar-width: none; }
+.hoan-tabs::-webkit-scrollbar { display: none; }
+.hoan-tabs button { flex: none; padding: .5rem .875rem; border: 0; border-radius: var(--ha-radius); background: none; color: var(--ha-muted); font-size: .875rem; font-weight: 500; white-space: nowrap; }
+.hoan-tabs button:hover { background: var(--ha-hover); color: var(--ha-text); }
+.hoan-tabs button.is-active { background: var(--ha-surface); color: var(--ha-text); box-shadow: inset 0 0 0 1px var(--ha-border); font-weight: 600; }
+.hoan-filters { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.hoan-filters .form-select { width: auto; min-width: 9.5rem; }
+.hoan-dates { width: 13.5rem; background: var(--ha-surface) !important; cursor: pointer; }
+.hoan-switch { display: inline-flex; align-items: center; gap: .375rem; margin: 0; color: var(--ha-text-2); font-size: .8125rem; cursor: pointer; user-select: none; }
+.hoan-switch input { width: 1rem; height: 1rem; accent-color: var(--ha-primary); }
+
+/* layout */
+.hoan-body { min-height: 60vh; transition: opacity .2s; }
+.hoan-body.is-loading { opacity: .45; pointer-events: none; }
+.hoan-grid { display: grid; gap: 1rem; margin-bottom: 1rem; }
+.hoan-grid--kpi { grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr)); }
+.hoan-grid--2 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+.hoan-grid--half { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.hoan-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1199.98px) { .hoan-grid--2, .hoan-grid--3 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 767.98px) { .hoan-grid--half { grid-template-columns: minmax(0, 1fr); } .hoan-bar { position: static; } .hoan-head { flex-direction: column; } }
+
+.hoan-card { min-width: 0; padding: 1.125rem 1.25rem; border: 1px solid var(--ha-border); border-radius: var(--ha-radius-lg); background: var(--ha-surface); }
+.hoan-card__head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .875rem; }
+.hoan-card__title { margin: 0; color: var(--ha-text); font-size: .9375rem; font-weight: 600; }
+.hoan-card__note { margin: .75rem 0 0; color: var(--ha-muted); font-size: .75rem; line-height: 1.5; }
+.hoan-card__tools { display: flex; gap: .375rem; }
+.hoan-chip { padding: .25rem .625rem; border: 1px solid var(--ha-border); border-radius: var(--ha-radius); background: var(--ha-surface); color: var(--ha-muted); font-size: .75rem; font-weight: 500; text-decoration: none; }
+.hoan-chip:hover { background: var(--ha-hover); color: var(--ha-text); }
+.hoan-chip.is-active { border-color: var(--ha-text); color: var(--ha-text); }
+.hoan-canvas { position: relative; height: 18rem; }
+.hoan-canvas--sm { height: 13rem; }
+.hoan-canvas--xs { height: 10rem; }
+
+/* KPI tiles */
+.hoan-kpi { position: relative; display: flex; flex-direction: column; gap: .25rem; padding: 1rem 1.125rem .5rem; border: 1px solid var(--ha-border); border-radius: var(--ha-radius-lg); background: var(--ha-surface); text-align: left; cursor: pointer; }
+.hoan-kpi:hover { border-color: var(--ha-border-strong); }
+.hoan-kpi.is-static { cursor: default; }
+.hoan-kpi.is-static:hover { border-color: var(--ha-border); }
+.hoan-kpi.is-active { border-color: var(--ha-primary); box-shadow: inset 0 0 0 1px var(--ha-primary); }
+.hoan-kpi__label { color: var(--ha-muted); font-size: .75rem; font-weight: 500; }
+.hoan-kpi__value { color: var(--ha-text); font-size: 1.5rem; font-weight: 700; letter-spacing: -.01em; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.hoan-kpi__delta { font-size: .75rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.hoan-kpi__delta.is-up { color: var(--an-up); }
+.hoan-kpi__delta.is-down { color: var(--an-down); }
+.hoan-kpi__delta.is-flat { color: var(--ha-subtle); }
+.hoan-kpi__delta small { color: var(--ha-subtle); font-weight: 400; }
+.hoan-kpi__spark { height: 2.25rem; margin-top: .25rem; }
+
+/* tables */
+.hoan-table { width: 100%; margin: 0; font-size: .8125rem; border-collapse: collapse; }
+.hoan-table th { padding: .5rem .625rem; border-bottom: 1px solid var(--ha-border); color: var(--ha-muted); font-size: .6875rem; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; text-align: right; }
+.hoan-table td { padding: .5rem .625rem; border-bottom: 1px solid var(--ha-border); color: var(--ha-text-2); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.hoan-table th:first-child, .hoan-table td:first-child { text-align: left; white-space: normal; }
+.hoan-table tr:last-child td { border-bottom: 0; }
+.hoan-table tbody tr:hover td { background: var(--ha-surface-2); }
+.hoan-table__name { display: block; color: var(--ha-text); font-weight: 500; overflow-wrap: anywhere; }
+.hoan-table__sub { display: block; color: var(--ha-subtle); font-size: .75rem; overflow-wrap: anywhere; }
+.hoan-bar-cell { position: relative; }
+.hoan-bar-cell::before { content: ""; position: absolute; inset: 15% auto 15% 0; width: var(--w, 0%); border-radius: 3px; background: var(--ha-primary-soft); z-index: 0; }
+.hoan-bar-cell > * { position: relative; z-index: 1; }
+.hoan-scroll { max-height: 28rem; overflow: auto; }
+.hoan-empty { padding: 2rem 1rem; color: var(--ha-muted); font-size: .875rem; text-align: center; }
+.hoan-empty strong { display: block; margin-bottom: .25rem; color: var(--ha-text); }
+
+/* funnel */
+.hoan-funnel { display: grid; gap: .625rem; }
+.hoan-funnel__row { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr) 7.5rem; align-items: center; gap: .75rem; font-size: .8125rem; }
+.hoan-funnel__label { color: var(--ha-text-2); }
+.hoan-funnel__track { height: 1.75rem; border-radius: var(--ha-radius); background: var(--ha-surface-2); overflow: hidden; }
+.hoan-funnel__fill { height: 100%; border-radius: var(--ha-radius); background: var(--an-1); transition: width .6s ease; display: flex; align-items: center; padding-left: .5rem; color: #fff; font-size: .75rem; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.hoan-funnel__rate { color: var(--ha-muted); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hoan-funnel__rate b { color: var(--ha-text); font-weight: 600; }
+
+/* heatmap */
+.hoan-heat { display: grid; grid-template-columns: 2.5rem repeat(24, minmax(0, 1fr)); gap: 2px; font-size: .625rem; color: var(--ha-subtle); }
+.hoan-heat span { aspect-ratio: 1 / 1; border-radius: 2px; background: var(--ha-surface-2); }
+.hoan-heat .hoan-heat__label { aspect-ratio: auto; background: none; display: flex; align-items: center; color: var(--ha-muted); }
+.hoan-heat .hoan-heat__hour { aspect-ratio: auto; background: none; text-align: center; }
+
+/* legend list (donuts) */
+.hoan-legend { display: grid; gap: .375rem; margin-top: .75rem; font-size: .8125rem; }
+.hoan-legend__row { display: grid; grid-template-columns: .625rem minmax(0, 1fr) auto auto; align-items: center; gap: .5rem; }
+.hoan-legend__dot { width: .625rem; height: .625rem; border-radius: 2px; }
+.hoan-legend__name { color: var(--ha-text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hoan-legend__value { color: var(--ha-text); font-weight: 600; font-variant-numeric: tabular-nums; }
+.hoan-legend__share { min-width: 3rem; color: var(--ha-subtle); text-align: right; font-variant-numeric: tabular-nums; }
+
+/* real time */
+.hoan-big { color: var(--ha-text); font-size: 3rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.hoan-feed { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; font-size: .8125rem; }
+.hoan-feed li { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .5rem .625rem; border-radius: var(--ha-radius); background: var(--ha-surface-2); }
+.hoan-feed b { color: var(--ha-text); }
+.hoan-feed small { color: var(--ha-subtle); white-space: nowrap; }
