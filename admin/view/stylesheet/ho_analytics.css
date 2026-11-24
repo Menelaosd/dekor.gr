@@ -1,5 +1,11 @@
 /* dekor: sizes in px - this admin is Bootstrap 3 (html font-size 10px), the package's rem sizes came out at 62% */
 /* Reports › Analytics — on the admin's tokens (ho_admin.css): flat cards, 6–8 px corners, no shadows */
+/* dekor: the package takes these tokens from its admin theme (ho_admin.css), which this admin does not have */
+.hoan { --ha-bg: #f3f4f7; --ha-border: #e3e6ec; --ha-border-strong: #cdd2db; --ha-hover: #f1f3f7; --ha-muted: #626b7d; --ha-primary: #3451e6; --ha-primary-soft: #edf0fe; --ha-radius: 6px; --ha-radius-lg: 8px; --ha-subtle: #959dad; --ha-success-bg: #16a34a; --ha-surface: #ffffff; --ha-surface-2: #f8f9fb; --ha-text: #161b26; --ha-text-2: #343c4d; --ha-top-h: 0px; background: var(--ha-bg); min-height: 100vh; padding-bottom: 40px; }
+.hoan .page-header { background: var(--ha-surface); border-bottom: 1px solid var(--ha-border); margin-bottom: 0; }
+.hoan .hoan-bar { padding: 10px 0; }
+.hoan-tabs { background: var(--ha-surface-2); border: 1px solid var(--ha-border); border-radius: var(--ha-radius-lg); padding: 4px; }
+.hoan-tabs button.is-active { color: var(--ha-primary); }
 .hoan { --an-1: #3451e6; --an-2: #0e9f8e; --an-3: #e3a008; --an-4: #d6457a; --an-5: #7c5cdb; --an-6: #2f8fd8; --an-7: #8a93a6; --an-8: #2e9d5b; --an-up: #137a3a; --an-down: #c2261b; }
 
 .hoan-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
