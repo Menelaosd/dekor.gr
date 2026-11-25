@@ -115,6 +115,27 @@ class Mail extends \stdClass {
      *
      */
 	public function send() {
+		// dekor: an e-mail that cannot be sent (a mailbox the mail server refuses, e.g. a mistyped @dekor.gr address, or the
+		// server down) goes to the error log instead of stopping the page with a fatal error: the registration / order that
+		// asked for it is already saved and completes, only that e-mail is missing. Returns false when it failed.
+		try {
+			$this->sendOrThrow();
+
+			return true;
+		} catch (\Throwable $e) {
+			$to = is_array($this->to) ? implode(', ', $this->to) : (string)$this->to;
+
+			if (class_exists('Log') && defined('DIR_LOGS')) {
+				(new \Log('error.log'))->write('Mail not sent to ' . $to . ' («' . $this->subject . '»): ' . $e->getMessage());
+			} else {
+				error_log('Mail not sent to ' . $to . ': ' . $e->getMessage());
+			}
+
+			return false;
+		}
+	}
+
+	private function sendOrThrow() {
 		if (!$this->to) {
 			throw new \Exception('Error: E-Mail to required!');
 		}
