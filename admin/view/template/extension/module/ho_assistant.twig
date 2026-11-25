@@ -84,10 +84,10 @@
         <p class="text-muted">{{ text_intro }}</p>
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal" autocomplete="off">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-general" data-toggle="tab">{{ text_tab_general }}</a></li>
-            <li><a href="#tab-texts" data-toggle="tab">{{ text_tab_texts }}</a></li>
-            <li><a href="#tab-orders" data-toggle="tab">{{ text_tab_orders }}</a></li>
-            <li><a href="#tab-log" data-toggle="tab">{{ text_tab_log }}</a></li>
+            <li class="active"><a href="#tab-general">{{ text_tab_general }}</a></li>
+            <li><a href="#tab-texts">{{ text_tab_texts }}</a></li>
+            <li><a href="#tab-orders">{{ text_tab_orders }}</a></li>
+            <li><a href="#tab-log">{{ text_tab_log }}</a></li>
           </ul>
           <div class="tab-content">
 
@@ -286,6 +286,28 @@
 .hoa-msg--user .hoa-msg__text { background: #1e91cf; color: #fff; }
 </style>
 <script type="text/javascript"><!--
+// the tabs switch by themselves (no dependence on Bootstrap's tab plugin or anything else on the page)
+document.addEventListener('click', function (e) {
+	var a = e.target.closest ? e.target.closest('#form-module .nav-tabs a[href^="#tab-"]') : null;
+
+	if (!a) {
+		return;
+	}
+
+	e.preventDefault();
+
+	var nav = a.closest('.nav-tabs');
+	var target = document.querySelector(a.getAttribute('href'));
+
+	nav.querySelectorAll('li').forEach(function (li) { li.classList.remove('active'); });
+	a.parentNode.classList.add('active');
+
+	if (target) {
+		target.parentNode.querySelectorAll(':scope > .tab-pane').forEach(function (pane) { pane.classList.remove('active', 'in'); });
+		target.classList.add('active', 'in');
+	}
+}, true);
+
 // «build the store profile»: one request, the text lands in the field (already saved by the server)
 $('#button-profile').on('click', function () {
 	var button = $(this);
