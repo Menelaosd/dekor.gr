@@ -101,10 +101,13 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 		$data['action'] = $this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'] . '&hoa_store=' . $store_id, true);
 
 		$data['store_id'] = $store_id;
+		// the chosen store's name for the page (own names: another admin extension rewrites a view variable called store_id)
+		$data['hoa_store_name'] = $stores[$store_id]['name'];
+		$data['hoa_is_main'] = !$store_id;
 		$data['stores'] = array();
 
 		foreach ($stores as $s) {
-			$data['stores'][] = array('store_id' => $s['store_id'], 'name' => $s['name'], 'href' => $this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'] . '&hoa_store=' . $s['store_id'], true));
+			$data['stores'][] = array('store_id' => $s['store_id'], 'name' => $s['name'], 'active' => $s['store_id'] == $store_id, 'href' => $this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'] . '&hoa_store=' . $s['store_id'], true));
 		}
 
 		$data['status'] = isset($current['module_ho_assistant_status']) ? (int)$current['module_ho_assistant_status'] : ($store_id ? 0 : 1);

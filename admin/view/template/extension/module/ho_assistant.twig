@@ -31,7 +31,7 @@
     {% if stores|length > 1 %}
     <ul class="nav nav-tabs hoa-stores">
       {% for s in stores %}
-      <li{% if s.store_id == store_id %} class="active"{% endif %}><a href="{{ s.href }}"><i class="fa fa-shopping-bag"></i> {{ s.name }}</a></li>
+      <li{% if s.active %} class="active"{% endif %}><a href="{{ s.href }}"><i class="fa fa-shopping-bag"></i> {{ s.name }}</a></li>
       {% endfor %}
     </ul>
     {% endif %}
@@ -78,7 +78,7 @@
 
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}{% if stores|length > 1 %} — <strong>{{ hoa_store_name }}</strong>{% endif %}</h3>
       </div>
       <div class="panel-body">
         <p class="text-muted">{{ text_intro }}</p>
@@ -111,7 +111,7 @@
                 </div>
               </div>
 
-              {% if store_id %}
+              {% if not hoa_is_main %}
               <div class="alert alert-info"><i class="fa fa-link"></i> {{ text_common_settings }}</div>
               {% else %}
               <div class="form-group">
@@ -210,7 +210,7 @@
                   {% endfor %}
                 </div>
               </div>
-              {% if store_id %}
+              {% if not hoa_is_main %}
               <div class="alert alert-info"><i class="fa fa-link"></i> {{ text_common_settings }}</div>
               {% else %}
               <div class="form-group">
