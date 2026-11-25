@@ -1,0 +1,201 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}<button type="button" class="close" data-dismiss="alert">&times;</button></div>{% endif %}
+    {% if success %}<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}<button type="button" class="close" data-dismiss="alert">&times;</button></div>{% endif %}
+    {% if not switch_on %}<div class="alert alert-warning"><i class="fa fa-info-circle"></i> {{ text_switch_off }}</div>{% elseif not ready %}<div class="alert alert-warning"><i class="fa fa-key"></i> {{ text_no_key }}</div>{% elseif only_customer %}<div class="alert alert-info"><i class="fa fa-user-secret"></i> {{ text_only_customer_on|format(only_customer) }}</div>{% else %}<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ text_switch_on }}</div>{% endif %}
+
+    <div class="row g-3 mb-3">
+      <div class="col-md-4"><div class="panel panel-default h-100 mb-0"><div class="panel-body"><div class="text-muted small">{{ text_today }}</div><div class="fs-4 fw-bold">{{ today.requests }} <span class="fs-6 fw-normal text-muted">{{ text_requests }}</span></div><div class="small text-muted">{{ text_cost }}: ${{ today.cost|number_format(4) }}</div></div></div></div>
+      <div class="col-md-4"><div class="panel panel-default h-100 mb-0"><div class="panel-body"><div class="text-muted small">{{ text_month }}</div><div class="fs-4 fw-bold">{{ month.requests }} <span class="fs-6 fw-normal text-muted">{{ text_requests }}</span></div><div class="small text-muted">{{ text_cost }}: ${{ month.cost|number_format(4) }}</div></div></div></div>
+      <div class="col-md-4"><div class="panel panel-default h-100 mb-0"><div class="panel-body"><div class="text-muted small">{{ text_month }}</div><div class="fs-4 fw-bold">{{ orders }} <span class="fs-6 fw-normal text-muted">{{ text_orders }}</span></div></div></div></div>
+    </div>
+
+    <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" autocomplete="off">
+      <div class="panel panel-default">
+        <div class="panel-heading"><i class="fa fa-commenting-o"></i> {{ text_edit }}</div>
+        <div class="panel-body">
+          <p class="text-muted">{{ text_intro }}</p>
+          <ul class="nav nav-tabs mb-3" role="tablist">
+            <li class="nav-item active"><a href="#tab-general" data-toggle="tab" class="nav-link">{{ text_tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-texts" data-toggle="tab" class="nav-link">{{ text_tab_texts }}</a></li>
+            <li class="nav-item"><a href="#tab-orders" data-toggle="tab" class="nav-link">{{ text_tab_orders }}</a></li>
+            <li class="nav-item"><a href="#tab-log" data-toggle="tab" class="nav-link">{{ text_tab_log }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="input-only-customer">{{ entry_only_customer }}</label>
+                <div class="col-sm-10">
+                  <input type="email" name="only_customer" value="{{ only_customer }}" id="input-only-customer" class="form-control{% if only_customer_missing %} is-invalid{% endif %}" placeholder="email@example.com" autocomplete="off">
+                  {% if only_customer_missing %}<div class="invalid-feedback d-block">{{ error_only_customer }}</div>{% endif %}
+                  <div class="form-text">{{ help_only_customer }}</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="input-key">{{ entry_key }}</label>
+                <div class="col-sm-10">
+                  {% if key_file %}<div class="alert alert-info py-2 mb-2"><i class="fa fa-file-code-o"></i> {{ text_key_file|format(key_file) }}</div>{% endif %}
+                  <input type="password" name="key" id="input-key" class="form-control" placeholder="sk-…" autocomplete="new-password">
+                  {% if key_saved %}<div class="form-text">{{ text_key_saved|format(key_saved) }} · <label class="form-check-label"><input type="checkbox" name="key_remove" value="1" class="form-check-input"> {{ text_key_remove }}</label></div>{% endif %}
+                  <div class="form-text">{{ help_key }}</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="input-anthropic-key">{{ entry_anthropic_key }}</label>
+                <div class="col-sm-10">
+                  {% if anthropic_key_file %}<div class="alert alert-info py-2 mb-2"><i class="fa fa-file-code-o"></i> {{ text_anthropic_key_file|format(anthropic_key_file) }}</div>{% endif %}
+                  <input type="password" name="anthropic_key" id="input-anthropic-key" class="form-control" placeholder="sk-ant-…" autocomplete="new-password">
+                  {% if anthropic_key_saved %}<div class="form-text">{{ text_key_saved|format(anthropic_key_saved) }} · <label class="form-check-label"><input type="checkbox" name="anthropic_key_remove" value="1" class="form-check-input"> {{ text_key_remove }}</label></div>{% endif %}
+                  <div class="form-text">{{ help_anthropic_key }}</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="input-model">{{ entry_model }}</label>
+                <div class="col-sm-10">
+                  <select name="model" id="input-model" class="form-control">
+                    {% for m in models %}<option value="{{ m }}"{% if m == model %} selected{% endif %}>{{ m }}</option>{% endfor %}
+                    <option value="mock"{% if model == 'mock' %} selected{% endif %}>{{ text_mock }}</option>
+                  </select>
+                  <div class="form-text">{{ help_model }}</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="input-profile">{{ entry_profile }}</label>
+                <div class="col-sm-10">
+                  <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                    <button type="button" id="button-profile" class="btn btn-primary"><i class="fa fa-magic"></i> {{ profile ? button_profile_again : button_profile }}</button>
+                    <span id="profile-status" class="small text-muted">{{ profile ? '' : text_profile_empty }}</span>
+                  </div>
+                  <textarea name="profile" id="input-profile" rows="16" class="form-control font-monospace small" placeholder="{{ text_profile_placeholder }}">{{ profile }}</textarea>
+                  <div class="form-text">{{ help_profile }}</div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="input-instructions">{{ entry_instructions }}</label>
+                <div class="col-sm-10"><textarea name="instructions" id="input-instructions" rows="4" class="form-control">{{ instructions }}</textarea><div class="form-text">{{ help_instructions }}</div></div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-texts">
+              <p class="text-muted small">{{ help_texts }}</p>
+              {% for language in languages %}
+                <fieldset class="mb-4">
+                  <legend class="fs-6 fw-semibold"><img src="language/{{ language.code }}/{{ language.code }}.png" alt=""> {{ language.name }}</legend>
+                  <div class="row mb-3"><label class="col-sm-2 col-form-label">{{ entry_name }}</label><div class="col-sm-10"><input type="text" name="name[{{ language.language_id }}]" value="{{ names[language.language_id] }}" class="form-control"></div></div>
+                  <div class="row mb-3"><label class="col-sm-2 col-form-label">{{ entry_greeting }}</label><div class="col-sm-10"><textarea name="greeting[{{ language.language_id }}]" rows="3" class="form-control">{{ greetings[language.language_id] }}</textarea></div></div>
+                  <div class="row mb-3"><label class="col-sm-2 col-form-label">{{ entry_suggestions }}</label><div class="col-sm-10"><textarea name="suggestions[{{ language.language_id }}]" rows="4" class="form-control">{{ suggestions[language.language_id] }}</textarea></div></div>
+                </fieldset>
+              {% endfor %}
+            </div>
+            <div class="tab-pane" id="tab-orders">
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">{{ entry_payments }}</label>
+                <div class="col-sm-10">
+                  {% for pm in payment_methods %}
+                    <div class="form-check"><input type="checkbox" name="payments[]" value="{{ pm.code }}" id="pm-{{ pm.code }}" class="form-check-input"{% if pm.code in payments %} checked{% endif %}><label class="form-check-label" for="pm-{{ pm.code }}">{{ pm.name }} <span class="text-muted small">· {{ pm.offline ? text_offline : text_online }}</span></label></div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="row mb-3"><label class="col-sm-2 col-form-label" for="input-budget">{{ entry_budget }}</label><div class="col-sm-3"><input type="number" step="0.5" min="0" name="budget" value="{{ budget }}" id="input-budget" class="form-control"></div><div class="col-sm-7 form-text">{{ help_budget }}</div></div>
+              <div class="row mb-3"><label class="col-sm-2 col-form-label" for="input-rate">{{ entry_rate }}</label><div class="col-sm-3"><input type="number" min="1" name="rate" value="{{ rate }}" id="input-rate" class="form-control"></div></div>
+              <div class="row mb-3"><label class="col-sm-2 col-form-label" for="input-retention">{{ entry_retention }}</label><div class="col-sm-3"><input type="number" min="1" name="retention" value="{{ retention }}" id="input-retention" class="form-control"></div><div class="col-sm-7 form-text">{{ help_retention }}</div></div>
+            </div>
+            <div class="tab-pane" id="tab-log">
+              {% if chats %}
+                <div class="table-responsive"><table class="table table-hover align-middle">
+                  <tbody>
+                    {% for c in chats %}
+                      <tr>
+                        <td class="text-nowrap text-muted small">{{ c.date }}</td>
+                        <td>{{ c.first }}</td>
+                        <td class="text-nowrap small">{{ c.turns }} · {{ c.cost }}</td>
+                        <td class="text-nowrap">{% if c.order %}<a href="{{ c.order }}" class="badge bg-success text-decoration-none">{{ text_order|format(c.order_id) }}</a>{% endif %}</td>
+                        <td class="text-end"><button type="button" class="btn btn-sm btn-light" data-chat="{{ c.chat_id }}">{{ text_view }}</button></td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table></div>
+              {% else %}
+                <p class="text-muted">{{ text_no_chats }}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal fade" id="modal-chat" tabindex="-1"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">{{ text_tab_log }}</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div><div class="modal-body" id="chat-body"></div></div></div></div>
+<script>
+// «build the store profile»: one request, the text lands in the field (already saved by the server)
+document.getElementById('button-profile').addEventListener('click', function () {
+	var button = this;
+	var field = document.getElementById('input-profile');
+	var status = document.getElementById('profile-status');
+
+	if (field.value.trim() !== '' && !confirm({{ text_profile_confirm|json_encode }})) {
+		return;
+	}
+
+	button.disabled = true;
+	status.className = 'small text-muted';
+	status.textContent = {{ text_profile_working|json_encode }};
+
+	fetch({{ profile_url|json_encode }}, { method: 'POST', credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (d) {
+		button.disabled = false;
+
+		if (d.error) {
+			status.className = 'small text-danger';
+			status.textContent = d.error;
+
+			return;
+		}
+
+		field.value = d.profile;
+		status.className = 'small ' + (d.warning ? 'text-warning' : 'text-success');
+		status.textContent = (d.warning ? d.warning + ' ' : '') + d.success;
+	}).catch(function () {
+		button.disabled = false;
+		status.className = 'small text-danger';
+		status.textContent = {{ text_profile_failed|json_encode }};
+	});
+});
+
+document.addEventListener('click', function (e) {
+	var b = e.target.closest('[data-chat]');
+
+	if (!b) {
+		return;
+	}
+
+	var body = document.getElementById('chat-body');
+	var esc = function (s) { return String(s || '').replace(/[&<>"']/g, function (c) { return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]; }); };
+
+	body.innerHTML = '…';
+	$("#modal-chat").modal("show");
+
+	fetch({{ chat_url|json_encode }} + '&chat_id=' + b.getAttribute('data-chat')).then(function (r) { return r.json(); }).then(function (d) {
+		body.innerHTML = (d.log || []).map(function (m) {
+			var who = m.role === 'user' ? {{ text_customer|json_encode }} : {{ text_assistant|json_encode }};
+			var cards = m.cards ? ' <span class="text-muted small">' + {{ text_cards|json_encode }}.replace('%s', m.cards) + '</span>' : '';
+
+			return '<div class="mb-3 ' + (m.role === 'user' ? 'text-end' : '') + '"><div class="small text-muted">' + esc(who) + '</div><div class="d-inline-block p-2 rounded ' + (m.role === 'user' ? 'bg-primary text-white' : 'bg-light') + '" style="max-width:85%;text-align:left;white-space:pre-wrap">' + esc(m.text) + cards + '</div></div>';
+		}).join('');
+	});
+});
+</script>
+{{ footer }}

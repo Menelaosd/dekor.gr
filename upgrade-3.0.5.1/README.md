@@ -45,3 +45,12 @@ After `git pull`, once on the server: `php upgrade-3.0.5.1/ho_analytics_install.
 (table `ho_analytics_hit` with `store_id`, OpenCart events `ho_analytics`, Administrator permission).
 No Modifications > Refresh needed: nothing in core / OCMOD files changes. Off again: `--remove`.
 Server-side counting, no cookie without consent, bots skipped; filter per store (DEKOR / APOKRIFA) in the page.
+
+## Shopping assistant / AI chat (ported from oc_ho_blank, 25/11/2026)
+
+After `git pull`, once on the server: `php upgrade-3.0.5.1/ho_assistant_install.php`
+(module, OpenCart event `ho_assistant`, Administrator permission; no Modifications > Refresh). Then in the admin:
+Extensions > Modules > HO Βοηθός αγορών: put an OpenAI (or Anthropic) key and, for a first test, a customer e-mail in
+«Μόνο για τον πελάτη» so only that logged-in customer sees the chat. Off again: `--remove`.
+Payments completed in the chat: bank transfer (tick Viva there only after one real test payment); BoxNow goes through the
+store checkout. Receipt / invoice stored on the order like the onepage checkout (custom_field 2/3/4, payment_company).

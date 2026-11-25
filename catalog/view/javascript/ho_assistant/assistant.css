@@ -1,0 +1,274 @@
+/* HappyOnline shopping assistant — the chat widget. Self-contained (hoa- prefix); colours follow the shop / kit tokens. */
+.hoa {
+	--hoa-accent: var(--ho-primary, var(--ho-ink, #15181d));
+	--hoa-on-accent: var(--ho-on-primary, #ffffff);
+	--hoa-ink: var(--ho-ink, #15181d);
+	--hoa-muted: #6b7280;
+	--hoa-line: #e6e8ec;
+	--hoa-soft: #f4f5f7;
+	--hoa-bg: #ffffff;
+	--hoa-sale: var(--ho-sale, #d02c3a);
+	--hoa-ok: #157347;
+	--hoa-r: 8px;
+	--hoa-bottom: 20px;
+	position: fixed;
+	right: 20px;
+	bottom: var(--hoa-bottom);
+	z-index: 1039; /* under the mini cart, menus and modals (Bootstrap offcanvas / modal and their backdrops start at 1040) */
+	font: 400 14px/1.5 inherit;
+	font-family: inherit;
+	color: var(--hoa-ink);
+	-webkit-font-smoothing: antialiased;
+}
+.hoa *, .hoa *::before, .hoa *::after { box-sizing: border-box; }
+.hoa button { font: inherit; cursor: pointer; }
+.hoa .hoa-chip, .hoa .hoa-icon-btn { color: inherit; }
+.hoa [hidden] { display: none !important; }
+
+/* launcher */
+.hoa .hoa-launch { display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 20px 0 14px; border: 0; border-radius: 12px; background: var(--hoa-accent); color: var(--hoa-on-accent); font-weight: 600; letter-spacing: .01em; box-shadow: 0 8px 24px rgb(15 18 25 / .18); transition: transform .25s cubic-bezier(.2, .8, .2, 1), opacity .2s, box-shadow .25s; }
+.hoa .hoa-launch:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgb(15 18 25 / .24); }
+.hoa-launch:focus-visible, .hoa-panel button:focus-visible, .hoa-panel input:focus-visible, .hoa-panel select:focus-visible, .hoa-panel textarea:focus-visible { outline: 2px solid var(--hoa-accent); outline-offset: 2px; }
+.hoa-launch__icon { position: relative; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: rgb(255 255 255 / .14); }
+.hoa-launch__icon::after { content: ""; position: absolute; top: -2px; right: -2px; width: 9px; height: 9px; border: 2px solid var(--hoa-accent); border-radius: 50%; background: #34d399; }
+.hoa.is-open .hoa-launch.hoa-launch, .hoa.is-covered .hoa-launch.hoa-launch { transform: scale(.9); opacity: 0; pointer-events: none; }
+.hoa.is-covered { pointer-events: none; }
+
+/* panel */
+.hoa-panel { position: absolute; right: 0; bottom: 0; display: flex; flex-direction: column; width: 400px; height: min(660px, calc(100vh - 40px)); border: 0; border-radius: 14px; background: linear-gradient(var(--hoa-accent) 0 48px, var(--hoa-bg) 48px); box-shadow: 0 24px 60px rgb(15 18 25 / .22), 0 2px 8px rgb(15 18 25 / .08); overflow: hidden; isolation: isolate; transform-origin: 100% 100%; opacity: 0; transform: translateY(16px) scale(.96); pointer-events: none; transition: opacity .22s ease, transform .3s cubic-bezier(.2, .8, .2, 1); }
+.hoa.is-open .hoa-panel { opacity: 1; transform: none; pointer-events: auto; }
+
+.hoa-head { display: flex; align-items: center; gap: 12px; padding: 14px 14px 14px 16px; border-radius: 14px 14px 0 0; background: var(--hoa-accent); color: var(--hoa-on-accent); }
+.hoa-avatar { display: grid; flex: none; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: rgb(255 255 255 / .14); }
+.hoa-title { flex: 1; min-width: 0; }
+.hoa-title strong { display: flex; align-items: center; gap: 8px; font-size: 15px; line-height: 1.2; white-space: nowrap; }
+.hoa-title__name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.hoa-badge { flex: none; }
+.hoa-title small { display: flex; align-items: center; gap: 6px; margin-top: 3px; font-size: 12px; opacity: .78; }
+.hoa-title small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #34d399; }
+.hoa-badge { padding: 1px 6px; border: 1px solid rgb(255 255 255 / .35); border-radius: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; }
+.hoa-icon-btn { display: grid; flex: none; place-items: center; width: 34px; height: 34px; border: 0; border-radius: 8px; background: transparent; color: inherit; opacity: .85; transition: background .2s, opacity .2s; }
+.hoa-icon-btn:hover { background: rgb(255 255 255 / .14); opacity: 1; }
+
+/* messages */
+.hoa-body { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.hoa-log { height: 100%; padding: 18px 16px 8px; overflow-y: auto; overscroll-behavior: contain; scroll-behavior: smooth; }
+.hoa-log::-webkit-scrollbar { width: 6px; }
+.hoa-log::-webkit-scrollbar-thumb { border-radius: 3px; background: #d6d9df; }
+.hoa-msg { display: flex; margin: 0 0 12px; animation: hoaIn .32s cubic-bezier(.2, .8, .2, 1) both; }
+.hoa-msg--user { justify-content: flex-end; }
+.hoa-bubble { max-width: 86%; padding: 10px 13px; border-radius: 12px 12px 12px 4px; background: var(--hoa-soft); color: var(--hoa-ink); overflow-wrap: anywhere; }
+.hoa-msg--user .hoa-bubble { border-radius: 12px 12px 4px 12px; background: var(--hoa-accent); color: var(--hoa-on-accent); }
+.hoa-bubble p { margin: 0 0 6px; }
+.hoa-bubble p:last-child, .hoa-bubble ul:last-child, .hoa-bubble ol:last-child { margin-bottom: 0; }
+.hoa-bubble ul, .hoa-bubble ol { margin: 4px 0 6px; padding-left: 18px; }
+.hoa-bubble a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.hoa-bubble strong { font-weight: 650; }
+@keyframes hoaIn { from { opacity: 0; transform: translateY(8px); } }
+
+.hoa-welcome { margin: 4px 0 14px; animation: hoaIn .4s cubic-bezier(.2, .8, .2, 1) both; }
+.hoa-welcome__hello { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; color: var(--hoa-muted); }
+.hoa-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.hoa-chip { padding: 8px 12px; border: 1px solid var(--hoa-line); border-radius: var(--hoa-r); background: var(--hoa-bg); color: var(--hoa-ink); font-size: 13px; text-align: left; transition: border-color .2s, background .2s, transform .2s; }
+.hoa-chip:hover { border-color: var(--hoa-ink); transform: translateY(-1px); }
+.hoa-chips--refine { margin: -4px 0 14px; } /* quick answers to the assistant's question, under the cards */
+
+.hoa-typing { display: inline-flex; align-items: center; gap: 10px; padding: 10px 13px; border-radius: 12px 12px 12px 4px; background: var(--hoa-soft); color: var(--hoa-muted); font-size: 13px; }
+.hoa-dots { display: inline-flex; gap: 3px; }
+.hoa-dots i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: hoaDot 1.2s infinite ease-in-out; }
+.hoa-dots i:nth-child(2) { animation-delay: .15s; }
+.hoa-dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes hoaDot { 0%, 80%, 100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+.hoa-error { padding: 10px 12px; border: 1px solid #f3c7cb; border-radius: var(--hoa-r); background: #fdf2f3; color: #9b1c27; font-size: 13px; }
+
+/* product cards */
+.hoa-added { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: -4px 0 14px; padding: 8px 8px 8px 12px; border: 1px solid #cfe7d8; border-radius: 10px; background: #f3faf6; color: #1f5135; font-size: 13px; font-weight: 600; animation: hoaIn .35s cubic-bezier(.2, .8, .2, 1) both; }
+.hoa-added { flex-wrap: wrap; row-gap: 8px; }
+.hoa-added span { display: inline-flex; flex: 1 1 130px; align-items: center; gap: 6px; min-width: 0; white-space: nowrap; }
+.hoa-added svg { width: 16px; height: 16px; }
+.hoa .hoa-added .hoa-btn { flex: none; margin: 0 0 0 auto; white-space: nowrap; }
+/* the row scrolls sideways; arrows over its edges on a computer */
+.hoa-carousel { position: relative; margin: 0 -16px 14px; }
+.hoa .hoa-arrow { position: absolute; top: 76px; z-index: 2; display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid var(--hoa-line); border-radius: 8px; background: var(--hoa-bg); color: var(--hoa-ink); cursor: pointer; transition: opacity .2s, border-color .2s; }
+.hoa .hoa-arrow:hover { border-color: var(--hoa-ink); }
+.hoa .hoa-arrow--prev { left: 8px; }
+.hoa .hoa-arrow--next { right: 8px; }
+.hoa .hoa-arrow.is-hidden { opacity: 0; pointer-events: none; }
+.hoa-cards.is-dragging { cursor: grabbing; scroll-snap-type: none; scroll-behavior: auto; }
+.hoa-cards.is-dragging * { pointer-events: none; }
+@media (hover: none) { .hoa .hoa-arrow { display: none; } }
+.hoa-cards { display: flex; gap: 10px; margin: 0; padding: 2px 16px 6px; scroll-padding-inline: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; animation: hoaIn .4s cubic-bezier(.2, .8, .2, 1) both; }
+.hoa-cards::-webkit-scrollbar { display: none; }
+.hoa-card { display: flex; flex: none; flex-direction: column; width: 172px; border: 1px solid var(--hoa-line); border-radius: 10px; background: var(--hoa-bg); overflow: hidden; scroll-snap-align: start; transition: border-color .2s, transform .25s cubic-bezier(.2, .8, .2, 1); }
+.hoa-card:hover { border-color: #c9cdd4; transform: translateY(-2px); }
+.hoa-card.hoa-card--single { width: 100%; flex-direction: row; } /* stronger than the phone widths of .hoa-card below */
+.hoa-card__media { position: relative; display: block; aspect-ratio: 1 / 1; background: var(--hoa-soft); }
+.hoa-card--single .hoa-card__media { flex: none; width: 112px; }
+.hoa-card__media img { width: 100%; height: 100%; padding: 10px; object-fit: contain; mix-blend-mode: multiply; }
+.hoa-card__off { position: absolute; top: 8px; left: 8px; padding: 2px 6px; border-radius: 5px; background: var(--hoa-sale); color: #fff; font-size: 11px; font-weight: 700; }
+.hoa-card__body { display: flex; flex: 1; flex-direction: column; gap: 3px; padding: 10px 11px 11px; }
+.hoa-card__brand { color: var(--hoa-muted); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+.hoa-card__name { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; color: var(--hoa-ink); font-size: 13px; font-weight: 550; line-height: 1.35; text-decoration: none; }
+.hoa-card__name:hover { text-decoration: underline; }
+.hoa-card__code { color: var(--hoa-muted); font-size: 11px; font-variant-numeric: tabular-nums; letter-spacing: .02em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hoa-card__price { display: flex; align-items: baseline; gap: 6px; padding-top: 4px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.hoa-card__price.is-sale { color: var(--hoa-sale); }
+.hoa-card__price del { color: var(--hoa-muted); font-size: 12px; font-weight: 400; }
+.hoa-card__stock { color: var(--hoa-ok); font-size: 11.5px; }
+.hoa-card__stock.is-out { color: var(--hoa-muted); }
+.hoa-card__few { color: #c62828; font-size: 11.5px; font-weight: 700; line-height: 1.35; } /* «Μόνο N τεμάχια», as on the product page */
+.hoa .hoa-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; margin-top: 8px; padding: 0 12px; border: 1px solid var(--hoa-accent); border-radius: var(--hoa-r); background: var(--hoa-accent); color: var(--hoa-on-accent); font-size: 13px; font-weight: 600; text-decoration: none; transition: filter .2s, background .2s, color .2s; }
+.hoa .hoa-btn { line-height: 1.25; text-align: center; text-wrap: balance; overflow-wrap: normal; hyphens: manual; }
+.hoa .hoa-btn:not(.hoa-btn--lg) { padding-top: 6px; padding-bottom: 6px; }
+.hoa .hoa-btn:hover { filter: brightness(1.12); }
+.hoa .hoa-btn--ghost { background: var(--hoa-bg); color: var(--hoa-ink); border-color: var(--hoa-line); }
+.hoa .hoa-btn--ghost:hover { border-color: var(--hoa-ink); filter: none; }
+/* «Πληροφορίες»: blue, above the card's main button */
+.hoa .hoa-btn--info { border-color: #2563eb; background: #2563eb; color: #fff; }
+/* the card's buttons: one block at the bottom of the card, every button as tall as the tallest one */
+.hoa-card__actions { display: grid; grid-auto-rows: 1fr; gap: 6px; margin-top: auto; padding-top: 8px; }
+.hoa .hoa-card__actions .hoa-btn { width: 100%; height: 100%; margin: 0; }
+.hoa .hoa-btn--info:hover { border-color: #1d4ed8; background: #1d4ed8; filter: none; }
+.hoa .hoa-btn--info:focus-visible { outline: 2px solid #93c5fd; outline-offset: 2px; }
+.hoa .hoa-btn--info svg { flex: none; }
+.hoa-card--single .hoa-btn--info { align-self: flex-start; }
+.hoa .hoa-btn.is-done { border-color: var(--hoa-ok); background: var(--hoa-ok); color: #fff; }
+.hoa .hoa-btn--lg { width: 100%; min-height: 46px; font-size: 14.5px; }
+.hoa .hoa-btn[disabled] { opacity: .55; cursor: progress; }
+
+/* cart */
+.hoa-cart { margin: 0 0 14px; border: 1px solid var(--hoa-line); border-radius: 10px; background: var(--hoa-bg); animation: hoaIn .4s cubic-bezier(.2, .8, .2, 1) both; }
+.hoa-cart__head { display: flex; justify-content: space-between; padding: 11px 13px; border-bottom: 1px solid var(--hoa-line); font-weight: 600; }
+.hoa-cart__head span { color: var(--hoa-muted); font-weight: 400; }
+.hoa-cart__line { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 13px; }
+.hoa-cart__line img { width: 44px; height: 44px; border-radius: 6px; background: var(--hoa-soft); object-fit: contain; }
+.hoa-cart__line b { display: block; overflow: hidden; font-size: 13px; font-weight: 550; text-overflow: ellipsis; white-space: nowrap; }
+.hoa-cart__line small { color: var(--hoa-muted); font-size: 12px; }
+.hoa-cart__line em { font-style: normal; font-weight: 600; font-variant-numeric: tabular-nums; }
+.hoa-cart__foot { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; padding: 4px 13px 13px; }
+.hoa-cart__foot .hoa-btn { white-space: nowrap; }
+.hoa-cart__foot .hoa-btn--ghost { padding: 0 16px; }
+.hoa-cart__total { display: flex; justify-content: space-between; grid-column: 1 / -1; padding: 8px 0 2px; border-top: 1px dashed var(--hoa-line); font-weight: 700; }
+
+/* the order form (a sheet over the conversation) */
+.hoa-sheet { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; background: var(--hoa-bg); transform: translateY(100%); transition: transform .38s cubic-bezier(.2, .8, .2, 1); }
+.hoa-sheet.is-open { transform: none; }
+.hoa-sheet__head { display: flex; align-items: center; gap: 8px; padding: 12px 12px 10px; border-bottom: 1px solid var(--hoa-line); }
+.hoa-sheet__head strong { flex: 1; font-size: 15px; }
+.hoa-sheet__head .hoa-icon-btn { color: var(--hoa-ink); }
+.hoa-sheet__head .hoa-icon-btn:hover { background: var(--hoa-soft); }
+.hoa-sheet__body { flex: 1; padding: 14px 16px 18px; overflow-y: auto; }
+.hoa-note { display: flex; gap: 8px; margin: 0 0 14px; padding: 9px 11px; border-radius: var(--hoa-r); background: #eef6f1; color: #1f5135; font-size: 12.5px; line-height: 1.45; }
+.hoa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.hoa-field { display: flex; flex-direction: column; gap: 4px; }
+.hoa-field--full { grid-column: 1 / -1; }
+.hoa-field label { color: var(--hoa-muted); font-size: 12px; font-weight: 500; }
+.hoa-field input, .hoa-field select, .hoa-field textarea, .hoa-input { width: 100%; min-height: 42px; padding: 9px 11px; border: 1px solid #d4d8de; border-radius: var(--hoa-r); background: var(--hoa-bg); color: var(--hoa-ink); font: inherit; font-size: 16px; transition: border-color .2s; }
+.hoa-field textarea { min-height: 64px; resize: vertical; }
+.hoa-field input:focus, .hoa-field select:focus, .hoa-field textarea:focus { border-color: var(--hoa-ink); outline: none; }
+.hoa-field.has-error input, .hoa-field.has-error select { border-color: var(--hoa-sale); }
+.hoa-field__err, .hoa-form-err { color: var(--hoa-sale); font-size: 12px; }
+.hoa-legend { margin: 16px 0 8px; font-size: 13px; font-weight: 650; }
+.hoa-choice { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; padding: 11px 12px; border: 1px solid var(--hoa-line); border-radius: var(--hoa-r); cursor: pointer; transition: border-color .2s, background .2s; }
+.hoa-choice:has(input:checked) { border-color: var(--hoa-ink); background: var(--hoa-soft); }
+.hoa-choice input { width: 16px; height: 16px; margin: 0; accent-color: var(--hoa-accent); }
+.hoa-choice span { flex: 1; font-size: 13.5px; }
+.hoa-choice b { font-size: 13px; font-variant-numeric: tabular-nums; }
+.hoa-totals { margin: 14px 0 12px; padding: 10px 12px; border-radius: var(--hoa-r); background: var(--hoa-soft); font-size: 13px; }
+.hoa-totals div { display: flex; justify-content: space-between; padding: 2px 0; }
+.hoa-totals div:last-child { margin-top: 4px; padding-top: 6px; border-top: 1px solid var(--hoa-line); font-size: 15px; font-weight: 700; }
+.hoa-agree { display: flex; align-items: flex-start; gap: 8px; margin: 4px 0 12px; font-size: 13px; }
+.hoa-agree input { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--hoa-accent); }
+.hoa-agree a { color: inherit; text-decoration: underline; }
+.hoa-muted { color: var(--hoa-muted); font-size: 12.5px; }
+
+/* order placed */
+.hoa-done { margin: 0 0 14px; padding: 18px 16px; border: 1px solid #cfe7d8; border-radius: 10px; background: #f3faf6; text-align: center; animation: hoaIn .45s cubic-bezier(.2, .8, .2, 1) both; }
+.hoa-done__check { display: grid; place-items: center; width: 46px; height: 46px; margin: 0 auto 10px; border-radius: 50%; background: var(--hoa-ok); color: #fff; animation: hoaPop .5s cubic-bezier(.2, 1.4, .4, 1) both .1s; }
+@keyframes hoaPop { from { transform: scale(.4); opacity: 0; } }
+.hoa-done strong { display: block; margin-bottom: 4px; font-size: 15px; }
+.hoa-done p { margin: 0; color: #2e4b3a; font-size: 13px; }
+.hoa-done__bank { margin-top: 12px; padding: 10px 12px; border-radius: var(--hoa-r); background: #fff; color: var(--hoa-ink); font-size: 12.5px; text-align: left; }
+
+/* composer */
+.hoa-foot { padding: 10px 12px 12px; border-top: 1px solid #eef0f3; background: var(--hoa-bg); }
+.hoa-compose { display: flex; align-items: flex-end; gap: 8px; padding: 6px 6px 6px 14px; border: 1px solid transparent; border-radius: 12px; background: var(--hoa-soft); transition: background .2s, border-color .2s, box-shadow .2s; }
+.hoa-compose:focus-within { border-color: #d4d8de; background: var(--hoa-bg); box-shadow: 0 0 0 4px rgb(15 18 25 / .05); }
+.hoa .hoa-compose textarea:focus, .hoa .hoa-compose textarea:focus-visible { outline: none; box-shadow: none; }
+.hoa .hoa-compose textarea { flex: 1; border: 0 !important; box-shadow: none !important; -webkit-appearance: none; appearance: none; max-height: 120px; min-height: 24px; padding: 6px 0; border: 0; background: transparent; color: var(--hoa-ink); font: inherit; font-size: 15px; line-height: 1.45; resize: none; outline: none; }
+.hoa .hoa-send { display: grid; flex: none; place-items: center; width: 36px; height: 36px; border: 0; border-radius: 8px; background: var(--hoa-accent); color: var(--hoa-on-accent); transition: opacity .2s, transform .2s; }
+.hoa .hoa-send:disabled { opacity: .35; cursor: default; }
+.hoa .hoa-send:not(:disabled):hover { transform: translateY(-1px); }
+.hoa-disclaimer { margin: 7px 2px 0; color: var(--hoa-muted); font-size: 11px; line-height: 1.4; text-align: center; }
+/* «Καθαρισμός συνομιλίας»: discreet, a small grey link-like button under the disclaimer */
+.hoa .hoa-clear { display: block; margin: 4px auto 0; padding: 2px 6px; border: 0; background: none; color: var(--hoa-muted); font-size: 11.5px; text-decoration: none; cursor: pointer; }
+.hoa .hoa-clear:hover, .hoa .hoa-clear:focus-visible { color: var(--hoa-ink); text-decoration: underline; text-underline-offset: 2px; }
+
+/* the order form («checkout mode»): the panel grows to give the form room (wider, full height); the composer steps aside */
+.hoa-panel { transition: opacity .22s ease, transform .3s cubic-bezier(.2, .8, .2, 1), width .35s cubic-bezier(.2, .8, .2, 1), height .35s cubic-bezier(.2, .8, .2, 1); }
+.hoa.is-checkout .hoa-panel { width: min(600px, calc(100vw - 40px)); height: calc(100vh - 40px); height: calc(100dvh - 40px); }
+.hoa.is-checkout .hoa-foot { display: none; }
+.hoa.is-checkout .hoa-sheet__body { padding: 18px 22px 22px; }
+
+/* phones and tablets: only the icon */
+@media (max-width: 767.98px) {
+	.hoa { right: 14px; }
+	.hoa .hoa-launch { width: 54px; height: 54px; padding: 0; justify-content: center; border-radius: 14px; }
+	.hoa-launch__label { display: none; }
+}
+
+/* phones: the whole screen */
+@media (max-width: 575.98px) {
+	.hoa.is-open { inset: 0; right: 0; bottom: 0; }
+	.hoa-panel, .hoa.is-checkout .hoa-panel { position: fixed; inset: 0; width: 100%; height: 100%; height: 100dvh; border: 0; border-radius: 0; }
+	/* a page wider than the phone (a carousel sticking out) must not stretch the chat: the screen's width, not the page's */
+	.hoa.is-open, .hoa.is-open .hoa-panel { right: auto; width: 100vw; max-width: 100vw; }
+	.hoa.is-open { z-index: 2147483000; } /* full screen on a phone: above newsletter pop-ups and bars of the site */
+	.hoa-card { width: 156px; }
+}
+
+/* very narrow screens: a little smaller text and padding, so the labels fit */
+@media (max-width: 360px) {
+	.hoa .hoa-btn { padding-left: 8px; padding-right: 8px; font-size: 12.5px; }
+	.hoa-card { width: 146px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hoa *, .hoa *::before, .hoa *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- dekor / APOKRIFA: the store's own look, like its live search. Colours from the theme tokens (--rz-*):
+   green on DEKOR, black on APOKRIFA; Geologica for text, the mono font for prices, 12px corners like the store's buttons */
+.hoa {
+	--hoa-accent: var(--rz-accent, #618764);
+	--hoa-on-accent: var(--rz-accent-ink, #ffffff);
+	--hoa-ink: var(--rz-ink, #111111);
+	--hoa-muted: var(--rz-muted, #5b5e68);
+	--hoa-line: var(--rz-border, #eceef3);
+	--hoa-soft: #f6f7f9;
+	--hoa-ok: var(--rz-avail, #618764);
+	--hoa-r: var(--rz-btn, 12px);
+	font-family: var(--rz-ui, "Geologica", system-ui, -apple-system, "Segoe UI", Arial, sans-serif);
+}
+.hoa .hoa-card__price { font-family: var(--rz-mono, ui-monospace, monospace); color: var(--hoa-accent); letter-spacing: -.01em; }
+.hoa .hoa-card__price.is-sale { color: var(--hoa-sale); }
+.hoa .hoa-card__vat { font-family: var(--rz-ui, inherit); font-size: 11px; font-weight: 600; color: var(--hoa-muted); }
+.hoa .hoa-card__unit { display: block; font-size: 11.5px; color: var(--hoa-muted); font-variant-numeric: tabular-nums; }
+.hoa .hoa-card__stock.is-store { color: #8a5a00; font-weight: 600; }
+.hoa .hoa-btn--info { border-color: var(--hoa-accent); background: var(--hoa-bg); color: var(--hoa-accent); }
+.hoa .hoa-btn--info:hover { border-color: var(--hoa-accent); background: var(--hoa-soft); color: var(--hoa-accent); }
+.hoa .hoa-btn--info:focus-visible { outline-color: var(--hoa-accent); }
+/* receipt / invoice */
+.hoa .hoa-seg { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.hoa .hoa-seg__opt { position: relative; flex: 1 1 0; min-width: 0; margin: 0; padding: 0; font-weight: inherit; cursor: pointer; }
+.hoa .hoa-seg__opt input { position: absolute; opacity: 0; pointer-events: none; }
+.hoa .hoa-seg__opt span { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 10px; border: 1px solid var(--hoa-line); border-radius: var(--hoa-r); background: var(--hoa-bg); font-weight: 600; text-align: center; transition: border-color .2s, background .2s, color .2s; }
+.hoa .hoa-seg__opt input:checked + span { border-color: var(--hoa-accent); box-shadow: inset 0 0 0 1px var(--hoa-accent); color: var(--hoa-accent); background: var(--hoa-soft); }
+.hoa .hoa-seg__opt input:focus-visible + span { outline: 2px solid var(--hoa-accent); outline-offset: 2px; }
+.hoa .hoa-seg .hoa-field__err { flex: 1 0 100%; }
+.hoa .hoa-seg .hoa-field__err:empty { display: none; }
+.hoa .hoa-invoice { margin-bottom: 12px; }
+.hoa .hoa-min { margin: 0 0 12px; }
+.hoa .hoa-min[hidden] { display: none; }
+.hoa .hoa-login { display: flex; flex-direction: column; gap: 10px; padding: 6px 0; }
+.hoa .hoa-login p { margin: 0 0 4px; }
