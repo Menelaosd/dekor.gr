@@ -73,6 +73,7 @@ class Assistant {
 			`tokens_out` int(11) NOT NULL DEFAULT '0',
 			`cost` decimal(10,5) NOT NULL DEFAULT '0.00000',
 			`order_id` int(11) NOT NULL DEFAULT '0',
+			`store_id` int(11) NOT NULL DEFAULT '0',
 			`transcript` mediumtext NOT NULL,
 			`date_added` datetime NOT NULL,
 			`date_modified` datetime NOT NULL,
@@ -88,6 +89,13 @@ class Assistant {
 			`cost` decimal(10,5) NOT NULL DEFAULT '0.00000',
 			PRIMARY KEY (`day`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+	}
+
+	// dekor: two stores — a chat table made without store_id gets it
+	public static function upgrade($db) {
+		if (!$db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "ho_assistant_chat` LIKE 'store_id'")->num_rows) {
+			$db->query("ALTER TABLE `" . DB_PREFIX . "ho_assistant_chat` ADD `store_id` int(11) NOT NULL DEFAULT '0' AFTER `order_id`");
+		}
 	}
 
 	// ------------------------------------------------------------------------------------------- the API key at rest

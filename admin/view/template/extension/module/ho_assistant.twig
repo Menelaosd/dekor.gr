@@ -25,6 +25,11 @@
       <div class="col-md-4"><div class="panel panel-default h-100 mb-0"><div class="panel-body"><div class="text-muted small">{{ text_month }}</div><div class="fs-4 fw-bold">{{ orders }} <span class="fs-6 fw-normal text-muted">{{ text_orders }}</span></div></div></div></div>
     </div>
 
+    {% if stores|length > 1 %}
+    <ul class="nav nav-pills" style="margin-bottom:15px">
+      {% for s in stores %}<li{% if s.store_id == store_id %} class="active"{% endif %}><a href="{{ s.href }}"><i class="fa fa-shopping-bag"></i> {{ s.name }}</a></li>{% endfor %}
+    </ul>
+    {% endif %}
     <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" autocomplete="off">
       <div class="panel panel-default">
         <div class="panel-heading"><i class="fa fa-commenting-o"></i> {{ text_edit }}</div>
@@ -39,6 +44,13 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
               <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_store_status }}</label>
+                <div class="col-sm-10">
+                  <label class="form-check-label" style="font-weight:600;padding-top:7px"><input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}> {{ text_store_status }}</label>
+                  <div class="form-text">{{ help_store_status }}</div>
+                </div>
+              </div>
+              <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="input-only-customer">{{ entry_only_customer }}</label>
                 <div class="col-sm-10">
                   <input type="email" name="only_customer" value="{{ only_customer }}" id="input-only-customer" class="form-control{% if only_customer_missing %} is-invalid{% endif %}" placeholder="email@example.com" autocomplete="off">
@@ -46,6 +58,10 @@
                   <div class="form-text">{{ help_only_customer }}</div>
                 </div>
               </div>
+              {% if store_id %}
+              <div class="alert alert-info"><i class="fa fa-link"></i> {{ text_common_settings }}</div>
+              <div style="display:none">
+              {% endif %}
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="input-key">{{ entry_key }}</label>
                 <div class="col-sm-10">
@@ -74,6 +90,7 @@
                   <div class="form-text">{{ help_model }}</div>
                 </div>
               </div>
+              {% if store_id %}</div>{% endif %}
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="input-profile">{{ entry_profile }}</label>
                 <div class="col-sm-10">
@@ -110,9 +127,11 @@
                   {% endfor %}
                 </div>
               </div>
+              {% if store_id %}<div class="alert alert-info"><i class="fa fa-link"></i> {{ text_common_settings }}</div><div style="display:none">{% endif %}
               <div class="row mb-3"><label class="col-sm-2 col-form-label" for="input-budget">{{ entry_budget }}</label><div class="col-sm-3"><input type="number" step="0.5" min="0" name="budget" value="{{ budget }}" id="input-budget" class="form-control"></div><div class="col-sm-7 form-text">{{ help_budget }}</div></div>
               <div class="row mb-3"><label class="col-sm-2 col-form-label" for="input-rate">{{ entry_rate }}</label><div class="col-sm-3"><input type="number" min="1" name="rate" value="{{ rate }}" id="input-rate" class="form-control"></div></div>
               <div class="row mb-3"><label class="col-sm-2 col-form-label" for="input-retention">{{ entry_retention }}</label><div class="col-sm-3"><input type="number" min="1" name="retention" value="{{ retention }}" id="input-retention" class="form-control"></div><div class="col-sm-7 form-text">{{ help_retention }}</div></div>
+              {% if store_id %}</div>{% endif %}
             </div>
             <div class="tab-pane" id="tab-log">
               {% if chats %}

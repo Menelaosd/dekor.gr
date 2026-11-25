@@ -54,3 +54,6 @@ Extensions > Modules > HO Βοηθός αγορών: put an OpenAI (or Anthropic
 «Μόνο για τον πελάτη» so only that logged-in customer sees the chat. Off again: `--remove`.
 Payments completed in the chat: bank transfer (tick Viva there only after one real test payment); BoxNow goes through the
 store checkout. Receipt / invoice stored on the order like the onepage checkout (custom_field 2/3/4, payment_company).
+Per store (25/11/2026): DEKOR and APOKRIFA each have their own switch, test customer, texts, profile, notes and chat
+payments (store tabs on the admin page); key, model and limits are common. APOKRIFA stays OFF until it is switched on and
+saved on its own tab. Chats are listed per store.

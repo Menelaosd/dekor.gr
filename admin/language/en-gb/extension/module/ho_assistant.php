@@ -6,8 +6,8 @@ $_['heading_title']      = 'HO Shopping Assistant (AI chat)';
 $_['text_extension']     = 'Extensions';
 $_['text_success']       = 'The assistant settings are saved.';
 $_['text_edit']          = 'Assistant settings';
-$_['text_switch_off']    = 'The assistant is off for this store. It is switched on only in system/config/happyonline.php (ho_assistant_status = true). Settings are saved as usual.';
-$_['text_switch_on']     = 'The assistant is on and shows bottom right on every page of DEKOR and APOKRIFA (not on the checkout). To test it with one customer only, enter their e-mail below.';
+$_['text_switch_off']    = 'The assistant is off in this store. Switch it on with «In this store» below.';
+$_['text_switch_on']     = 'The assistant is on in this store and shows bottom right on every page (not on the checkout). To test it with one customer only, enter their e-mail below.';
 $_['text_no_key']        = 'The key for the chosen model is missing (OpenAI for gpt, Anthropic for claude): add it below. Until then the chat does not show.';
 $_['text_intro']         = 'A chat at the bottom right of every page: it answers about products, prices, stock, shipping and payment from the store\'s real data, and completes orders with a form inside the chat. The customer\'s personal details are never sent to OpenAI.';
 $_['text_tab_general']   = 'General';
@@ -78,3 +78,9 @@ $_['help_profile']          = 'What the assistant must know about THIS store: wh
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify the assistant!';
+
+// dekor: per store
+$_['entry_store_status']   = 'In this store';
+$_['text_store_status']    = 'The assistant is on in this store';
+$_['help_store_status']    = 'Every store (DEKOR, APOKRIFA) has its own switch, texts, profile, notes, test customer and payments. A store that was never saved is off.';
+$_['text_common_settings'] = 'Keys, model and limits are common to all stores and are changed on the first store.';

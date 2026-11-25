@@ -28,14 +28,38 @@ class ControllerExtensionHoAssistant extends Controller {
 
 	// ------------------------------------------------------------------------------------------- settings
 
+	// dekor: switch, test customer, texts, profile, notes and chat payments are per store (DEKOR = 0, APOKRIFA = 2) and never
+	// borrowed from another store (APOKRIFA must not speak with DEKOR's profile); key, model, limits are common (store 0)
+	const STORE_KEYS = array('status', 'only_customer', 'name', 'greeting', 'suggestions', 'instructions', 'profile', 'payments');
+
 	private function setting($key, $default = '') {
-		$value = $this->config->get('module_ho_assistant_' . $key);
+		if (in_array($key, self::STORE_KEYS) && (int)$this->config->get('config_store_id') > 0) {
+			$own = $this->ownSettings();
+			$value = isset($own[$key]) ? $own[$key] : null;
+		} else {
+			$value = $this->config->get('module_ho_assistant_' . $key);
+		}
 
 		return $value === null || $value === '' ? $default : $value;
 	}
 
+	private function ownSettings() {
+		static $own = null;
+
+		if ($own === null) {
+			$own = array();
+
+			foreach ($this->db->query("SELECT `key`, `value`, `serialized` FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `code` = 'module_ho_assistant'")->rows as $row) {
+				$own[substr($row['key'], strlen('module_ho_assistant_'))] = $row['serialized'] ? json_decode($row['value'], true) : $row['value'];
+			}
+		}
+
+		return $own;
+	}
+
 	public function enabled() {
-		return $this->config->get('module_ho_assistant_status') && ($this->setting('model') == 'mock' || $this->apiKey() !== '') && $this->visible();
+		// a store whose settings were never saved is off (APOKRIFA stays off until it is switched on in the admin)
+		return $this->setting('status', 0) && ($this->setting('model') == 'mock' || $this->apiKey() !== '') && $this->visible();
 	}
 
 	// dekor: Reports > Analytics is on when its events are installed (upgrade-3.0.5.1/ho_analytics_install.php)
@@ -2205,6 +2229,7 @@ class ControllerExtensionHoAssistant extends Controller {
 	private function install() {
 		if (!$this->registry->has('ho_assistant_installed')) {
 			\Ho\Assistant::install($this->db);
+			\Ho\Assistant::upgrade($this->db);
 			$this->registry->set('ho_assistant_installed', true);
 		}
 	}
@@ -2224,7 +2249,7 @@ class ControllerExtensionHoAssistant extends Controller {
 		$cost = \Ho\Assistant::cost($model, $result['tokens_in'], $result['tokens_out']);
 
 		if (empty($state['chat_id'])) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "ho_assistant_chat` SET `customer_id` = '" . (int)$this->customer->getId() . "', `language` = '" . $this->db->escape($this->config->get('config_language')) . "', `turns` = 1, `tokens_in` = '" . (int)$result['tokens_in'] . "', `tokens_out` = '" . (int)$result['tokens_out'] . "', `cost` = '" . (float)$cost . "', `transcript` = '" . $this->db->escape($transcript) . "', `date_added` = NOW(), `date_modified` = NOW()");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "ho_assistant_chat` SET `store_id` = '" . (int)$this->config->get('config_store_id') . "', `customer_id` = '" . (int)$this->customer->getId() . "', `language` = '" . $this->db->escape($this->config->get('config_language')) . "', `turns` = 1, `tokens_in` = '" . (int)$result['tokens_in'] . "', `tokens_out` = '" . (int)$result['tokens_out'] . "', `cost` = '" . (float)$cost . "', `transcript` = '" . $this->db->escape($transcript) . "', `date_added` = NOW(), `date_modified` = NOW()");
 
 			$state['chat_id'] = (int)$this->db->getLastId();
 		} else {

@@ -18,13 +18,27 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		\Ho\Assistant::install($this->db);
+		\Ho\Assistant::upgrade($this->db);
+
+		// dekor: one switch / test customer / texts / profile / notes / chat payments per store; key, model, limits common (store 0)
+		$stores = $this->stores();
+		$store_id = isset($this->request->get['store_id']) && isset($stores[(int)$this->request->get['store_id']]) ? (int)$this->request->get['store_id'] : 0;
+		$store_keys = array('status', 'only_customer', 'name', 'greeting', 'suggestions', 'instructions', 'profile', 'payments');
 
 		$current = $this->model_setting_setting->getSetting('module_ho_assistant');
+
+		if ($store_id) {
+			foreach ($store_keys as $k) {
+				unset($current['module_ho_assistant_' . $k]);
+			}
+
+			$current = array_merge($current, $this->model_setting_setting->getSetting('module_ho_assistant', $store_id));
+		}
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
 			$post = $this->request->post;
 			$save = array(
-				'module_ho_assistant_status'       => 1, // kept for the Extensions list; the switch is happyonline.php
+				'module_ho_assistant_status'       => !empty($post['status']) ? 1 : 0,
 				// tests on a live store: only this logged-in customer sees the chat (empty = everyone)
 				'module_ho_assistant_only_customer' => isset($post['only_customer']) ? mb_substr(trim((string)$post['only_customer']), 0, 96) : '',
 				'module_ho_assistant_model'        => in_array($post['model'], array_merge(\Ho\Assistant::models(), array('mock'))) ? $post['model'] : 'gpt-4.1-mini',
@@ -50,11 +64,22 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 				$save['module_ho_assistant_anthropic_key'] = '';
 			}
 
-			$this->model_setting_setting->editSetting('module_ho_assistant', $save);
+			if ($store_id) {
+				// another store: only its own part (the common part stays as the first store has it)
+				$own = array();
+
+				foreach ($store_keys as $k) {
+					$own['module_ho_assistant_' . $k] = $save['module_ho_assistant_' . $k];
+				}
+
+				$this->model_setting_setting->editSetting('module_ho_assistant', $own, $store_id);
+			} else {
+				$this->model_setting_setting->editSetting('module_ho_assistant', $save);
+			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'], true));
+			$this->response->redirect($this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store_id, true));
 		}
 
 		$data = array();
@@ -73,11 +98,20 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 			array('text' => $this->language->get('heading_title'), 'href' => $this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'], true))
 		);
 
-		$data['action'] = $this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store_id, true);
+
+		$data['store_id'] = $store_id;
+		$data['stores'] = array();
+
+		foreach ($stores as $s) {
+			$data['stores'][] = array('store_id' => $s['store_id'], 'name' => $s['name'], 'href' => $this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $s['store_id'], true));
+		}
+
+		$data['status'] = isset($current['module_ho_assistant_status']) ? (int)$current['module_ho_assistant_status'] : ($store_id ? 0 : 1);
 		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true);
 		$data['chat_url'] = html_entity_decode($this->url->link('extension/module/ho_assistant/chat', 'user_token=' . $this->session->data['user_token'], true), ENT_QUOTES, 'UTF-8');
 
-		$data['switch_on'] = true;
+		$data['switch_on'] = (bool)$data['status'];
 		$data['only_customer'] = isset($current['module_ho_assistant_only_customer']) ? $current['module_ho_assistant_only_customer'] : '';
 
 		// the test customer must exist, or nobody sees the chat
@@ -94,7 +128,7 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 		$data['suggestions'] = $get('suggestions', array());
 		$data['instructions'] = $get('instructions', '');
 		$data['profile'] = $get('profile', '');
-		$data['profile_url'] = html_entity_decode($this->url->link('extension/module/ho_assistant/profile', 'user_token=' . $this->session->data['user_token'], true), ENT_QUOTES, 'UTF-8');
+		$data['profile_url'] = html_entity_decode($this->url->link('extension/module/ho_assistant/profile', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store_id, true), ENT_QUOTES, 'UTF-8');
 		$data['budget'] = $get('budget', 5);
 		$data['rate'] = $get('rate', 30);
 		$data['payments'] = $get('payments', array('bank_transfer'));
@@ -136,10 +170,10 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 		// usage: today, this month; the latest conversations
 		$data['today'] = $this->db->query("SELECT COALESCE(SUM(`requests`), 0) AS requests, COALESCE(SUM(`cost`), 0) AS cost FROM `" . DB_PREFIX . "ho_assistant_usage` WHERE `day` = CURDATE()")->row;
 		$data['month'] = $this->db->query("SELECT COALESCE(SUM(`requests`), 0) AS requests, COALESCE(SUM(`cost`), 0) AS cost FROM `" . DB_PREFIX . "ho_assistant_usage` WHERE `day` >= DATE_FORMAT(CURDATE(), '%Y-%m-01')")->row;
-		$data['orders'] = (int)$this->db->query("SELECT COUNT(*) AS n FROM `" . DB_PREFIX . "ho_assistant_chat` WHERE `order_id` > 0 AND `date_added` >= DATE_FORMAT(CURDATE(), '%Y-%m-01')")->row['n'];
+		$data['orders'] = (int)$this->db->query("SELECT COUNT(*) AS n FROM `" . DB_PREFIX . "ho_assistant_chat` WHERE `store_id` = '" . $store_id . "' AND `order_id` > 0 AND `date_added` >= DATE_FORMAT(CURDATE(), '%Y-%m-01')")->row['n'];
 		$data['chats'] = array();
 
-		foreach ($this->db->query("SELECT `chat_id`, `customer_id`, `turns`, `cost`, `order_id`, `date_added`, `date_modified`, `transcript` FROM `" . DB_PREFIX . "ho_assistant_chat` ORDER BY `date_modified` DESC LIMIT 30")->rows as $row) {
+		foreach ($this->db->query("SELECT `chat_id`, `customer_id`, `turns`, `cost`, `order_id`, `date_added`, `date_modified`, `transcript` FROM `" . DB_PREFIX . "ho_assistant_chat` WHERE `store_id` = '" . $store_id . "' ORDER BY `date_modified` DESC LIMIT 30")->rows as $row) {
 			$log = json_decode($row['transcript'], true) ?: array();
 			$first = '';
 
@@ -187,13 +221,15 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 			$this->load->model('setting/setting');
 
 			$current = $this->model_setting_setting->getSetting('module_ho_assistant');
+			$stores = $this->stores();
+			$store_id = isset($this->request->get['store_id']) && isset($stores[(int)$this->request->get['store_id']]) ? (int)$this->request->get['store_id'] : 0;
 			$model = isset($current['module_ho_assistant_model']) ? $current['module_ho_assistant_model'] : 'gpt-4.1-mini';
 			$anthropic = \Ho\Assistant::provider($model) == 'anthropic';
 			$file_key = trim((string)$this->config->get($anthropic ? 'ho_assistant_anthropic_key' : 'ho_assistant_openai_key'));
 			$stored = $anthropic ? 'module_ho_assistant_anthropic_key' : 'module_ho_assistant_key';
 			$key = $file_key !== '' ? $file_key : \Ho\Assistant::decrypt(isset($current[$stored]) ? $current[$stored] : '');
 
-			$facts = $this->facts();
+			$facts = $this->facts($store_id);
 			$text = '';
 			$json['source'] = 'data';
 
@@ -220,8 +256,8 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 
 			$text = mb_substr($text, 0, 8000, 'UTF-8');
 
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `code` = 'module_ho_assistant' AND `key` = 'module_ho_assistant_profile'");
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'module_ho_assistant', `key` = 'module_ho_assistant_profile', `value` = '" . $this->db->escape($text) . "', `serialized` = '0'");
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . $store_id . "' AND `code` = 'module_ho_assistant' AND `key` = 'module_ho_assistant_profile'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '" . $store_id . "', `code` = 'module_ho_assistant', `key` = 'module_ho_assistant_profile', `value` = '" . $this->db->escape($text) . "', `serialized` = '0'");
 
 			$json['profile'] = $text;
 			$json['success'] = $this->language->get($json['source'] == 'ai' ? 'text_profile_done_ai' : 'text_profile_done_data');
@@ -250,7 +286,19 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 	}
 
 	// the store as data: the input of the profile (and the profile itself when there is no AI)
-	private function facts() {
+	// dekor: the stores (0 = the main one)
+	private function stores() {
+		$stores = array(0 => array('store_id' => 0, 'name' => html_entity_decode((string)$this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
+
+		foreach ($this->db->query("SELECT `store_id`, `name` FROM `" . DB_PREFIX . "store` ORDER BY `store_id`")->rows as $row) {
+			$stores[(int)$row['store_id']] = array('store_id' => (int)$row['store_id'], 'name' => html_entity_decode($row['name'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		return $stores;
+	}
+
+	private function facts($store_id = 0) {
+		$store_id = (int)$store_id;
 		$db = $this->db;
 		$p = DB_PREFIX;
 		$lang = (int)$this->config->get('config_language_id');
@@ -261,8 +309,15 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 
 			return $row ? reset($row) : null;
 		};
-		$setting = function ($key) use ($one, $p) {
-			$value = $one("SELECT `value` FROM `" . $p . "setting` WHERE `store_id` = '0' AND `key` = '" . $key . "'");
+		$setting = function ($key) use ($one, $p, $store_id, $lang) {
+			$value = $one("SELECT `value` FROM `" . $p . "setting` WHERE `store_id` IN (0, " . $store_id . ") AND `key` = '" . $key . "' ORDER BY `store_id` DESC LIMIT 1");
+
+			// dekor keeps some texts per language ({"2": "…"}): the admin language's one
+			$list = is_string($value) && substr(ltrim($value), 0, 1) == '{' ? json_decode($value, true) : null;
+
+			if (is_array($list)) {
+				$value = isset($list[$lang]) ? $list[$lang] : (string)reset($list);
+			}
 
 			return trim(html_entity_decode(strip_tags((string)$value), ENT_QUOTES, 'UTF-8'));
 		};
@@ -292,7 +347,7 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 		$lines[] = '- Languages: ' . implode(', ', $names("SELECT `name` FROM `" . $p . "language` WHERE `status` = '1' ORDER BY `sort_order`")) . ' · currency ' . $currency;
 
 		// the products: how many, what prices
-		$products = " FROM `" . $p . "product` p JOIN `" . $p . "product_to_store` p2s ON (p2s.product_id = p.product_id AND p2s.store_id = '0') JOIN `" . $p . "product_description` pd ON (pd.product_id = p.product_id AND pd.language_id = '" . $lang . "')";
+		$products = " FROM `" . $p . "product` p JOIN `" . $p . "product_to_store` p2s ON (p2s.product_id = p.product_id AND p2s.store_id = '" . $store_id . "') JOIN `" . $p . "product_description` pd ON (pd.product_id = p.product_id AND pd.language_id = '" . $lang . "')";
 		$active = " WHERE p.status = '1' AND p.date_available <= NOW()";
 		$prices = array();
 
@@ -313,14 +368,14 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 			$lines[] = '- Prices (before tax): from ' . $money($at(0)) . ' · a quarter under ' . $money($at(.25)) . ' · median ' . $money($at(.5)) . ' · a quarter over ' . $money($at(.75)) . ' · up to ' . $money($at(1));
 		}
 
-		$specials = (int)$one("SELECT COUNT(DISTINCT ps.product_id) FROM `" . $p . "product_special` ps WHERE (ps.date_start = '0000-00-00' OR ps.date_start <= NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())");
+		$specials = (int)$one("SELECT COUNT(DISTINCT ps.product_id) FROM `" . $p . "product_special` ps JOIN `" . $p . "product_to_store` ps2s ON (ps2s.product_id = ps.product_id AND ps2s.store_id = '" . $store_id . "') WHERE (ps.date_start = '0000-00-00' OR ps.date_start <= NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())");
 
 		if ($specials) {
 			$lines[] = '- Products on offer now: ' . $specials;
 		}
 
 		// categories with how many active products each
-		$cats = $db->query("SELECT c.category_id, c.parent_id, cd.name, (SELECT COUNT(*) FROM `" . $p . "product_to_category` p2c JOIN `" . $p . "product` pp ON (pp.product_id = p2c.product_id AND pp.status = '1') WHERE p2c.category_id = c.category_id) AS n FROM `" . $p . "category` c JOIN `" . $p . "category_description` cd ON (cd.category_id = c.category_id AND cd.language_id = '" . $lang . "') WHERE c.status = '1' ORDER BY c.sort_order, cd.name")->rows;
+		$cats = $db->query("SELECT c.category_id, c.parent_id, cd.name, (SELECT COUNT(*) FROM `" . $p . "product_to_category` p2c JOIN `" . $p . "product` pp ON (pp.product_id = p2c.product_id AND pp.status = '1') WHERE p2c.category_id = c.category_id) AS n FROM `" . $p . "category` c JOIN `" . $p . "category_to_store` c2s ON (c2s.category_id = c.category_id AND c2s.store_id = '" . $store_id . "') JOIN `" . $p . "category_description` cd ON (cd.category_id = c.category_id AND cd.language_id = '" . $lang . "') WHERE c.status = '1' ORDER BY c.sort_order, cd.name")->rows;
 		$children = array();
 
 		foreach ($cats as $c) {
@@ -354,7 +409,7 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 		}
 
 		// what sells, what is looked at, the cheapest and the dearest
-		$best = $names("SELECT op.name, SUM(op.quantity) AS q FROM `" . $p . "order_product` op JOIN `" . $p . "order` o ON (o.order_id = op.order_id AND o.order_status_id > '0') GROUP BY op.product_id ORDER BY q DESC LIMIT 15");
+		$best = $names("SELECT op.name, SUM(op.quantity) AS q FROM `" . $p . "order_product` op JOIN `" . $p . "order` o ON (o.order_id = op.order_id AND o.order_status_id > '0' AND o.store_id = '" . $store_id . "') GROUP BY op.product_id ORDER BY q DESC LIMIT 15");
 
 		$lines[] = '';
 		$lines[] = '## Products';
@@ -394,7 +449,7 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 		$lines[] = '';
 		$lines[] = '## Service';
 
-		$pages = $names("SELECT id.title AS name FROM `" . $p . "information` i JOIN `" . $p . "information_description` id ON (id.information_id = i.information_id AND id.language_id = '" . $lang . "') WHERE i.status = '1' ORDER BY i.sort_order");
+		$pages = $names("SELECT id.title AS name FROM `" . $p . "information` i JOIN `" . $p . "information_to_store` i2s ON (i2s.information_id = i.information_id AND i2s.store_id = '" . $store_id . "') JOIN `" . $p . "information_description` id ON (id.information_id = i.information_id AND id.language_id = '" . $lang . "') WHERE i.status = '1' ORDER BY i.sort_order");
 
 		if ($pages) {
 			$lines[] = '- Information pages: ' . implode('; ', $pages);
