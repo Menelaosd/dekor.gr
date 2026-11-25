@@ -28,6 +28,15 @@
     </div>
     {% endif %}
 
+    {% if hoa_debug %}
+    <div class="panel panel-warning">
+      <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-bug"></i> Διαγνωστικό (hoa_debug)</h3></div>
+      <div class="panel-body">
+        <p><strong>Στο template:</strong> store_id = «{{ store_id }}» · hoa_is_main = «{{ hoa_is_main ? 'ναι' : 'όχι' }}» · hoa_store_name = «{{ hoa_store_name }}» · tabs: {% for s in stores %}{{ s.name }}={{ s.active ? 'active' : '-' }} {% endfor %}</p>
+        <pre style="max-height:420px;overflow:auto;font-size:12px">{{ hoa_debug }}</pre>
+      </div>
+    </div>
+    {% endif %}
     {% if stores|length > 1 %}
     <ul class="nav nav-tabs hoa-stores">
       {% for s in stores %}

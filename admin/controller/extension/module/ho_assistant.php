@@ -199,6 +199,35 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 			);
 		}
 
+		// diagnostics: &hoa_debug=1 shows (and logs) what the page received and decided, which code runs, and which
+		// admin events can change the page's data on the way to the template
+		$data['hoa_debug'] = '';
+
+		if (!empty($this->request->get['hoa_debug'])) {
+			$events = array();
+
+			foreach ($this->db->query("SELECT `code`, `trigger`, `action`, `status` FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'admin/view/%' OR `trigger` LIKE 'admin/controller/%' ORDER BY `code`")->rows as $e) {
+				$events[] = $e['code'] . ' · ' . $e['trigger'] . ' → ' . $e['action'] . ($e['status'] ? '' : ' (off)');
+			}
+
+			$opcache = function_exists('opcache_get_status') ? @opcache_get_status(false) : false;
+
+			$debug = array(
+				'GET'               => $this->request->get,
+				'stores (από βάση)' => array_map(function ($x) { return $x['store_id'] . ' = ' . $x['name']; }, array_values($stores)),
+				'επιλεγμένο store'  => $store_id,
+				'tabs active'       => array_map(function ($x) { return $x['name'] . ': ' . ($x['active'] ? 'ΝΑΙ' : 'όχι'); }, $data['stores']),
+				'controller αρχείο' => date('d/m/Y H:i:s', filemtime(__FILE__)) . ' · md5 ' . substr(md5_file(__FILE__), 0, 8),
+				'template αρχείο'   => date('d/m/Y H:i:s', filemtime(DIR_TEMPLATE . 'extension/module/ho_assistant.twig')) . ' · md5 ' . substr(md5_file(DIR_TEMPLATE . 'extension/module/ho_assistant.twig'), 0, 8),
+				'opcache'           => $opcache ? ('on · validate_timestamps=' . ini_get('opcache.validate_timestamps') . ' · revalidate_freq=' . ini_get('opcache.revalidate_freq')) : 'off',
+				'admin events'      => $events
+			);
+
+			$this->log->write('HO assistant admin debug: ' . json_encode($debug, JSON_UNESCAPED_UNICODE));
+
+			$data['hoa_debug'] = htmlspecialchars(json_encode($debug, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), ENT_QUOTES, 'UTF-8');
+		}
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
