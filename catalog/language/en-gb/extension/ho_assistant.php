@@ -101,3 +101,8 @@ $_['error_vat_service']    = 'The VAT number check is not available right now. P
 
 $_['text_continue_shopping'] = 'Continue shopping';
 $_['text_quantity'] = 'Quantity';
+$_['text_unit_price']       = 'Price per piece';
+$_['text_package_price']    = 'Price per package';
+$_['text_package_contains'] = 'The package contains %s pcs.';
+$_['text_package_short'] = 'Package';
+$_['text_pieces']        = 'pcs';

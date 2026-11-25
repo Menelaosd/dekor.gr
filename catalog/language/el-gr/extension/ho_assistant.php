@@ -101,3 +101,8 @@ $_['error_vat_service']    = 'Ο έλεγχος του Α.Φ.Μ. δεν έγιν
 
 $_['text_continue_shopping'] = 'Συνέχεια αγορών';
 $_['text_quantity'] = 'Ποσότητα';
+$_['text_unit_price']       = 'Τιμή Τεμαχίου';
+$_['text_package_price']    = 'Τιμή Συσκευασίας';
+$_['text_package_contains'] = 'Η συσκευασία περιέχει %s Τεμ.';
+$_['text_package_short'] = 'Συσκευασία';
+$_['text_pieces']        = 'Τεμ.';

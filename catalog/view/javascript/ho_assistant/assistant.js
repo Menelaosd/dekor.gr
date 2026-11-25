@@ -114,6 +114,7 @@
 	}
 
 	var ICON = {
+		box: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>',
 		spark: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>',
 		close: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
 		reset: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>',
@@ -280,10 +281,17 @@
 		items.forEach(function (p) {
 			// dekor: «+ ΦΠΑ» on a wholesale store, the piece price under a package's price
 			var vat = p.vat ? ' <small class="hoa-card__vat">' + esc(t('text_vat')) + '</small>' : '';
+			// the price as before (package price «+ ΦΠΑ»); a package adds two small lines under thin rules:
+			// «Τιμή τεμαχίου … 0,12€» and «Η συσκευασία περιέχει … 100 Τεμ.»
 			var price = (p.special
-				? '<span class="hoa-card__price is-sale">' + esc(p.special) + vat + ' <del>' + esc(p.price) + '</del></span>'
-				: '<span class="hoa-card__price">' + esc(p.price) + vat + '</span>') +
-				(p.package ? '<span class="hoa-card__unit">' + esc(t('text_per_piece').replace('%s', p.unit).replace('%s', p.package)) + '</span>' : '');
+					? '<span class="hoa-card__price is-sale">' + esc(p.special) + vat + ' <del>' + esc(p.price) + '</del></span>'
+					: '<span class="hoa-card__price">' + esc(p.price) + vat + '</span>') +
+				(p.package
+					? '<span class="hoa-pack">' +
+						'<span class="hoa-pack__row"><span>' + esc(t('text_unit_price')) + '</span><b>' + esc(p.unit) + '</b></span>' +
+						'<span class="hoa-pack__row"><span>' + esc(t('text_package_short')) + '</span><b>' + esc(p.package) + ' ' + esc(t('text_pieces')) + '</b></span>' +
+					'</span>'
+					: '');
 			var action = (!p.in_stock || p.can_add === false)
 				? '<a class="hoa-btn hoa-btn--ghost" href="' + esc(p.href) + '">' + esc(t('text_view')) + '</a>'
 				: (p.options
