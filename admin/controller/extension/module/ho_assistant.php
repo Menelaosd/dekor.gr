@@ -41,16 +41,16 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 				'module_ho_assistant_status'       => !empty($post['status']) ? 1 : 0,
 				// tests on a live store: only this logged-in customer sees the chat (empty = everyone)
 				'module_ho_assistant_only_customer' => isset($post['only_customer']) ? mb_substr(trim((string)$post['only_customer']), 0, 96) : '',
-				'module_ho_assistant_model'        => in_array($post['model'], array_merge(\Ho\Assistant::models(), array('mock'))) ? $post['model'] : 'gpt-4.1-mini',
+				'module_ho_assistant_model'        => in_array(isset($post['model']) ? $post['model'] : '', array_merge(\Ho\Assistant::models(), array('mock'))) ? $post['model'] : (isset($current['module_ho_assistant_model']) ? $current['module_ho_assistant_model'] : 'gpt-4.1-mini'),
 				'module_ho_assistant_name'         => isset($post['name']) ? (array)$post['name'] : array(),
 				'module_ho_assistant_greeting'     => isset($post['greeting']) ? (array)$post['greeting'] : array(),
 				'module_ho_assistant_suggestions'  => isset($post['suggestions']) ? (array)$post['suggestions'] : array(),
 				'module_ho_assistant_instructions' => isset($post['instructions']) ? mb_substr((string)$post['instructions'], 0, 3000) : '',
 				'module_ho_assistant_profile'      => isset($post['profile']) ? mb_substr(html_entity_decode((string)$post['profile'], ENT_QUOTES, 'UTF-8'), 0, 8000) : '',
-				'module_ho_assistant_budget'       => max(0, (float)$post['budget']),
-				'module_ho_assistant_rate'         => max(1, (int)$post['rate']),
+				'module_ho_assistant_budget'       => max(0, (float)(isset($post['budget']) ? $post['budget'] : 5)),
+				'module_ho_assistant_rate'         => max(1, (int)(isset($post['rate']) ? $post['rate'] : 30)),
 				'module_ho_assistant_payments'     => isset($post['payments']) ? array_values((array)$post['payments']) : array(),
-				'module_ho_assistant_retention'    => max(1, (int)$post['retention']),
+				'module_ho_assistant_retention'    => max(1, (int)(isset($post['retention']) ? $post['retention'] : 90)),
 				// a new key only when one is typed; the stored one is never sent back to the page
 				'module_ho_assistant_key'          => isset($post['key']) && trim($post['key']) !== '' ? \Ho\Assistant::encrypt(trim(html_entity_decode($post['key'], ENT_QUOTES, 'UTF-8'))) : (isset($current['module_ho_assistant_key']) ? $current['module_ho_assistant_key'] : ''),
 				'module_ho_assistant_anthropic_key' => isset($post['anthropic_key']) && trim($post['anthropic_key']) !== '' ? \Ho\Assistant::encrypt(trim(html_entity_decode($post['anthropic_key'], ENT_QUOTES, 'UTF-8'))) : (isset($current['module_ho_assistant_anthropic_key']) ? $current['module_ho_assistant_anthropic_key'] : '')
