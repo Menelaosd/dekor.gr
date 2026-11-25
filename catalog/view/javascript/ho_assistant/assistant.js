@@ -281,17 +281,11 @@
 		items.forEach(function (p) {
 			// dekor: «+ ΦΠΑ» on a wholesale store, the piece price under a package's price
 			var vat = p.vat ? ' <small class="hoa-card__vat">' + esc(t('text_vat')) + '</small>' : '';
-			// the price as before (package price «+ ΦΠΑ»); a package adds two small lines under thin rules:
-			// «Τιμή τεμαχίου … 0,12€» and «Η συσκευασία περιέχει … 100 Τεμ.»
+			// the price as before (package price «+ ΦΠΑ»); a package adds one small line between thin rules: «0,12€ / τεμ. · 100 τεμ.»
 			var price = (p.special
 					? '<span class="hoa-card__price is-sale">' + esc(p.special) + vat + ' <del>' + esc(p.price) + '</del></span>'
 					: '<span class="hoa-card__price">' + esc(p.price) + vat + '</span>') +
-				(p.package
-					? '<span class="hoa-pack">' +
-						'<span class="hoa-pack__row"><span>' + esc(t('text_unit_price')) + '</span><b>' + esc(p.unit) + '</b></span>' +
-						'<span class="hoa-pack__row"><span>' + esc(t('text_package_short')) + '</span><b>' + esc(p.package) + ' ' + esc(t('text_pieces')) + '</b></span>' +
-					'</span>'
-					: '');
+				(p.package ? '<span class="hoa-pack">' + esc(t('text_per_piece').replace('%s', p.unit).replace('%s', p.package)) + '</span>' : '');
 			var action = (!p.in_stock || p.can_add === false)
 				? '<a class="hoa-btn hoa-btn--ghost" href="' + esc(p.href) + '">' + esc(t('text_view')) + '</a>'
 				: (p.options
