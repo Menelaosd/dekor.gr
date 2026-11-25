@@ -22,7 +22,7 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 
 		// dekor: one switch / test customer / texts / profile / notes / chat payments per store; key, model, limits common (store 0)
 		$stores = $this->stores();
-		$store_id = isset($this->request->get['store_id']) && isset($stores[(int)$this->request->get['store_id']]) ? (int)$this->request->get['store_id'] : 0;
+		$store_id = isset($this->request->get['hoa_store']) && isset($stores[(int)$this->request->get['hoa_store']]) ? (int)$this->request->get['hoa_store'] : 0; // own parameter: other admin extensions use store_id
 		$store_keys = array('status', 'only_customer', 'name', 'greeting', 'suggestions', 'instructions', 'profile', 'payments');
 
 		$current = $this->model_setting_setting->getSetting('module_ho_assistant');
@@ -79,7 +79,7 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store_id, true));
+			$this->response->redirect($this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'] . '&hoa_store=' . $store_id, true));
 		}
 
 		$data = array();
@@ -98,13 +98,13 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 			array('text' => $this->language->get('heading_title'), 'href' => $this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'], true))
 		);
 
-		$data['action'] = $this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store_id, true);
+		$data['action'] = $this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'] . '&hoa_store=' . $store_id, true);
 
 		$data['store_id'] = $store_id;
 		$data['stores'] = array();
 
 		foreach ($stores as $s) {
-			$data['stores'][] = array('store_id' => $s['store_id'], 'name' => $s['name'], 'href' => $this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $s['store_id'], true));
+			$data['stores'][] = array('store_id' => $s['store_id'], 'name' => $s['name'], 'href' => $this->url->link('extension/module/ho_assistant', 'user_token=' . $this->session->data['user_token'] . '&hoa_store=' . $s['store_id'], true));
 		}
 
 		$data['status'] = isset($current['module_ho_assistant_status']) ? (int)$current['module_ho_assistant_status'] : ($store_id ? 0 : 1);
@@ -128,7 +128,7 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 		$data['suggestions'] = $get('suggestions', array());
 		$data['instructions'] = $get('instructions', '');
 		$data['profile'] = $get('profile', '');
-		$data['profile_url'] = html_entity_decode($this->url->link('extension/module/ho_assistant/profile', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store_id, true), ENT_QUOTES, 'UTF-8');
+		$data['profile_url'] = html_entity_decode($this->url->link('extension/module/ho_assistant/profile', 'user_token=' . $this->session->data['user_token'] . '&hoa_store=' . $store_id, true), ENT_QUOTES, 'UTF-8');
 		$data['budget'] = $get('budget', 5);
 		$data['rate'] = $get('rate', 30);
 		$data['payments'] = $get('payments', array('bank_transfer'));
@@ -222,7 +222,7 @@ class ControllerExtensionModuleHoAssistant extends Controller {
 
 			$current = $this->model_setting_setting->getSetting('module_ho_assistant');
 			$stores = $this->stores();
-			$store_id = isset($this->request->get['store_id']) && isset($stores[(int)$this->request->get['store_id']]) ? (int)$this->request->get['store_id'] : 0;
+			$store_id = isset($this->request->get['hoa_store']) && isset($stores[(int)$this->request->get['hoa_store']]) ? (int)$this->request->get['hoa_store'] : 0; // own parameter: other admin extensions use store_id
 			$model = isset($current['module_ho_assistant_model']) ? $current['module_ho_assistant_model'] : 'gpt-4.1-mini';
 			$anthropic = \Ho\Assistant::provider($model) == 'anthropic';
 			$file_key = trim((string)$this->config->get($anthropic ? 'ho_assistant_anthropic_key' : 'ho_assistant_openai_key'));
