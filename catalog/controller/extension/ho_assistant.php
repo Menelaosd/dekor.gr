@@ -237,7 +237,7 @@ class ControllerExtensionHoAssistant extends Controller {
 			'text'        => $texts
 		);
 
-		foreach (array('message', 'history', 'reset', 'checkout', 'quote', 'order') as $action) {
+		foreach (array('message', 'history', 'reset', 'checkout', 'quote', 'order', 'options') as $action) {
 			$config['urls'][$action] = html_entity_decode($this->url->link('extension/ho_assistant/' . $action, '', true), ENT_QUOTES, 'UTF-8');
 		}
 
@@ -1531,6 +1531,41 @@ class ControllerExtensionHoAssistant extends Controller {
 		return $out + $this->toolCart(false);
 	}
 
+	/**
+	 * dekor: a product's options for the card's «Επιλογές» panel (all of them, opened under the cards): the customer chooses
+	 * and adds with the store's own checkout/cart/add (same rules as the product page)
+	 */
+	public function options() {
+		$this->load->language('extension/ho_assistant');
+		$this->load->model('catalog/product');
+
+		$product_id = isset($this->request->get['product_id']) ? (int)$this->request->get['product_id'] : 0;
+		$p = $this->enabled() ? $this->model_catalog_product->getProduct($product_id) : null;
+
+		if (!$p) {
+			$this->json(array('error' => $this->language->get('text_error')));
+
+			return;
+		}
+
+		$options = array();
+
+		foreach ($this->model_catalog_product->getProductOptions($product_id) as $o) {
+			$values = array();
+
+			foreach ((array)$o['product_option_value'] as $v) {
+				$available = !$v['subtract'] || (int)$v['quantity'] > 0 || $this->config->get('config_stock_checkout');
+				$diff = (float)$v['price'] ? $v['price_prefix'] . $this->money($this->price($v['price'], $p['tax_class_id'])) : '';
+
+				$values[] = array('id' => (int)$v['product_option_value_id'], 'name' => html_entity_decode($v['name'], ENT_QUOTES, 'UTF-8'), 'price' => $diff, 'available' => (bool)$available);
+			}
+
+			$options[] = array('id' => (int)$o['product_option_id'], 'name' => html_entity_decode($o['name'], ENT_QUOTES, 'UTF-8'), 'type' => $o['type'], 'required' => (bool)$o['required'], 'values' => $values, 'value' => isset($o['value']) ? html_entity_decode((string)$o['value'], ENT_QUOTES, 'UTF-8') : '');
+		}
+
+		$this->json(array('product_id' => $product_id, 'name' => html_entity_decode($p['name'], ENT_QUOTES, 'UTF-8'), 'minimum' => max(1, (int)$p['minimum']), 'options' => $options, 'can_add' => $this->orderable($p), 'href' => html_entity_decode($this->url->link('product/product', 'product_id=' . $product_id), ENT_QUOTES, 'UTF-8')));
+	}
+
 	// ------------------------------------------------------------------------------------------- the order form
 
 	public function checkout() {
@@ -1622,14 +1657,19 @@ class ControllerExtensionHoAssistant extends Controller {
 
 		$methods = array();
 
+		// dekor: exactly what the store's onepage checkout offers (its «Delivery method» switches and labels)
+		$manage = $this->checkoutManage('delivery_method');
+
 		foreach ($this->model_setting_extension->getExtensions('shipping') as $result) {
-			if ($this->config->get('shipping_' . $result['code'] . '_status')) {
+			if ($this->config->get('shipping_' . $result['code'] . '_status') && ($manage === null || !empty($manage[$result['code']]['status']))) {
 				$this->load->model('extension/shipping/' . $result['code']);
 
 				$quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($address);
 
 				if ($quote) {
-					$methods[$result['code']] = array('title' => $quote['title'], 'quote' => $quote['quote'], 'sort_order' => $quote['sort_order'], 'error' => $quote['error']);
+					$label = $manage !== null && !empty($manage[$result['code']]['label'][(int)$this->config->get('config_language_id')]) ? $manage[$result['code']]['label'][(int)$this->config->get('config_language_id')] : $quote['title'];
+
+					$methods[$result['code']] = array('title' => $label, 'quote' => $quote['quote'], 'sort_order' => $quote['sort_order'], 'error' => $quote['error']);
 				}
 			}
 		}
@@ -1644,13 +1684,20 @@ class ControllerExtensionHoAssistant extends Controller {
 
 		$methods = array();
 
+		// dekor: exactly what the store's onepage checkout offers (its «Payment method» switches and labels)
+		$manage = $this->checkoutManage('payment_method');
+
 		foreach ($this->model_setting_extension->getExtensions('payment') as $result) {
-			if ($this->config->get('payment_' . $result['code'] . '_status')) {
+			if ($this->config->get('payment_' . $result['code'] . '_status') && ($manage === null || !empty($manage[$result['code']]['status']))) {
 				$this->load->model('extension/payment/' . $result['code']);
 
 				$method = $this->{'model_extension_payment_' . $result['code']}->getMethod($address, $total);
 
 				if ($method) {
+					if ($manage !== null && !empty($manage[$result['code']]['label'][(int)$this->config->get('config_language_id')])) {
+						$method['title'] = $manage[$result['code']]['label'][(int)$this->config->get('config_language_id')];
+					}
+
 					$methods[$result['code']] = $method;
 				}
 			}
@@ -1659,6 +1706,35 @@ class ControllerExtensionHoAssistant extends Controller {
 		uasort($methods, function ($a, $b) { return (int)$a['sort_order'] - (int)$b['sort_order']; });
 
 		return $methods;
+	}
+
+	// dekor: the onepage checkout's settings for a block (delivery_method / payment_method); null when it is not installed
+	private function checkoutManage($block) {
+		$manage = $this->config->get('onepagecheckout_manage');
+
+		if (!$this->config->get('onepagecheckout_status') || !is_array($manage) || empty($manage[$block]) || !is_array($manage[$block])) {
+			return null;
+		}
+
+		return $manage[$block];
+	}
+
+	// dekor: a shipping choice the way the onepage checkout prints it: «title - price», #NOWARRANTY as a bold «Ανασφάλιστο
+	// Δέμα», and the agency's note under xshippingpro (same words as catalog/view/theme/default/template/extension/
+	// onepagecheckout/shipping_method.twig)
+	private function shippingHtml($quote) {
+		$title = trim(strip_tags(html_entity_decode((string)$quote['title'], ENT_QUOTES, 'UTF-8')));
+		$uninsured = strpos($title, '#NOWARRANTY') !== false;
+		$title = trim(str_replace('#NOWARRANTY', '', $title));
+		$text = trim(strip_tags(html_entity_decode((string)$quote['text'], ENT_QUOTES, 'UTF-8')));
+
+		$html = htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . ($uninsured ? ' <span class="hoa-uninsured">Ανασφάλιστο Δέμα</span>' : '') . ($text !== '' ? ' - ' . htmlspecialchars($text, ENT_QUOTES, 'UTF-8') : '');
+
+		if (strpos((string)$quote['code'], 'xshippingpro') !== false) {
+			$html .= '<span class="hoa-quote-note">Η παράδοση επι πεζοδρομίου αφορά μεγάλα αστικά κέντρα, οποιαδήποτε άλλη <b>περιοχή (πχ χωριά,απομακρυσμένες περιοχές)</b> υπάρχει περίπτωση να θεωρηθούν δυσπρόσιτες <b>περιοχές</b>.</span>';
+		}
+
+		return $html;
 	}
 
 	// payments the chat may complete itself (no card page in between); others continue at the store checkout
@@ -1708,9 +1784,9 @@ class ControllerExtensionHoAssistant extends Controller {
 						continue;
 					}
 
-					list($title, $detail) = $this->plain($quote['title']);
+					list($title, $detail) = $this->plain(str_replace('#NOWARRANTY', '(Ανασφάλιστο Δέμα)', (string)$quote['title']));
 
-					$shipping[] = array('code' => $quote['code'], 'title' => $title, 'detail' => $detail, 'text' => strip_tags(html_entity_decode((string)$quote['text'], ENT_QUOTES, 'UTF-8')));
+					$shipping[] = array('code' => $quote['code'], 'title' => $title, 'detail' => $detail, 'text' => strip_tags(html_entity_decode((string)$quote['text'], ENT_QUOTES, 'UTF-8')), 'html' => $this->shippingHtml($quote));
 				}
 			}
 

@@ -98,3 +98,6 @@ $_['error_company']        = 'Enter the company name.';
 $_['error_custom_field']   = 'Please fill in: %s.';
 $_['error_vat']            = 'The VAT number is not valid or cannot be invoiced.';
 $_['error_vat_service']    = 'The VAT number check is not available right now. Please try again shortly.';
+
+$_['text_continue_shopping'] = 'Continue shopping';
+$_['text_quantity'] = 'Quantity';

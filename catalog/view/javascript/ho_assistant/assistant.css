@@ -272,3 +272,11 @@
 .hoa .hoa-min[hidden] { display: none; }
 .hoa .hoa-login { display: flex; flex-direction: column; gap: 10px; padding: 6px 0; }
 .hoa .hoa-login p { margin: 0 0 4px; }
+/* options panel under the cards */
+.hoa .hoa-opts { margin: -4px 0 14px; padding: 12px; border: 1px solid var(--hoa-line); border-radius: var(--hoa-r); background: var(--hoa-bg); animation: hoaIn .3s cubic-bezier(.2, .8, .2, 1) both; }
+.hoa .hoa-opts__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+.hoa .hoa-opts .hoa-btn--lg { margin-top: 10px; }
+.hoa .hoa-req { color: var(--hoa-sale); }
+/* shipping choices like the store checkout */
+.hoa .hoa-uninsured { color: #111; font-weight: 700; }
+.hoa .hoa-quote-note { display: block; margin-top: 6px; font-size: 12px; font-style: italic; color: var(--hoa-muted); }

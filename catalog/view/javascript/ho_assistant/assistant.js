@@ -287,7 +287,7 @@
 			var action = (!p.in_stock || p.can_add === false)
 				? '<a class="hoa-btn hoa-btn--ghost" href="' + esc(p.href) + '">' + esc(t('text_view')) + '</a>'
 				: (p.options
-					? '<button type="button" class="hoa-btn hoa-btn--ghost" data-hoa-options="' + esc(p.name) + '">' + esc(t('text_options')) + '</button>'
+					? '<button type="button" class="hoa-btn hoa-btn--ghost" data-hoa-options="' + esc(p.name) + '" data-hoa-pid="' + p.product_id + '">' + esc(t('text_options')) + '</button>'
 					: '<button type="button" class="hoa-btn" data-hoa-add="' + p.product_id + '">' + esc(t('text_add')) + '</button>');
 
 			wrap.appendChild(el(
@@ -490,6 +490,127 @@
 		sendBtn.disabled = !input.value.trim() || busy;
 	}
 
+	// ------------------------------------------------------------------------------------------- dekor: options under the cards
+
+	function openOptions(btn) {
+		var row = btn.closest('.hoa-carousel') || btn.closest('.hoa-card');
+		var old = row.parentNode.querySelector('.hoa-opts');
+
+		if (old) {
+			old.remove();
+		}
+
+		var box = el('<div class="hoa-opts"><div class="hoa-typing"><span class="hoa-dots"><i></i><i></i><i></i></span></div></div>');
+
+		row.insertAdjacentElement('afterend', box);
+		scrollDown();
+
+		fetch(C.urls.options + '&product_id=' + encodeURIComponent(btn.getAttribute('data-hoa-pid')), { credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (d) {
+			if (d.error || !d.options) {
+				box.innerHTML = '<p class="hoa-error">' + esc(d.error || t('text_error')) + '</p>';
+
+				return;
+			}
+
+			var fields = d.options.map(function (o) {
+				var label = '<label for="hoa-opt-' + o.id + '">' + esc(o.name) + (o.required ? ' <b class="hoa-req">*</b>' : '') + '</label>';
+				var input;
+
+				if (o.type === 'checkbox') {
+					input = o.values.map(function (v) {
+						return '<label class="hoa-choice"><input type="checkbox" name="option[' + o.id + '][]" value="' + v.id + '"' + (v.available ? '' : ' disabled') + '><span>' + esc(v.name) + (v.price ? ' <small class="hoa-muted">(' + esc(v.price) + ')</small>' : '') + '</span></label>';
+					}).join('');
+				} else if (o.values && o.values.length) {
+					input = '<select id="hoa-opt-' + o.id + '" name="option[' + o.id + ']"><option value="">' + esc(t('text_select')) + '</option>' + o.values.map(function (v) {
+						return '<option value="' + v.id + '"' + (v.available ? '' : ' disabled') + '>' + esc(v.name) + (v.price ? ' (' + esc(v.price) + ')' : '') + (v.available ? '' : ' — ' + esc(t('text_out_of_stock'))) + '</option>';
+					}).join('') + '</select>';
+				} else if (o.type === 'textarea') {
+					input = '<textarea id="hoa-opt-' + o.id + '" name="option[' + o.id + ']" rows="2">' + esc(o.value) + '</textarea>';
+				} else {
+					input = '<input id="hoa-opt-' + o.id + '" type="text" name="option[' + o.id + ']" value="' + esc(o.value) + '">';
+				}
+
+				return '<div class="hoa-field hoa-field--full" data-hoa-opt="' + o.id + '">' + label + input + '<span class="hoa-field__err"></span></div>';
+			}).join('');
+
+			box.innerHTML =
+				'<div class="hoa-opts__head"><strong>' + esc(d.name) + '</strong><button type="button" class="hoa-icon-btn" data-hoa-opt-close aria-label="' + esc(t('text_close')) + '">×</button></div>' +
+				'<form class="hoa-grid" onsubmit="return false">' + fields +
+					'<div class="hoa-field" data-hoa-opt="quantity"><label for="hoa-opt-qty">' + esc(t('text_quantity')) + '</label><input id="hoa-opt-qty" type="number" name="quantity" min="' + d.minimum + '" value="' + d.minimum + '"><span class="hoa-field__err"></span></div>' +
+					'<input type="hidden" name="product_id" value="' + d.product_id + '">' +
+				'</form>' +
+				'<p class="hoa-form-err" data-hoa-opt-err></p>' +
+				(d.can_add
+					? '<button type="button" class="hoa-btn hoa-btn--lg" data-hoa-opt-add>' + esc(t('text_add')) + '</button>'
+					: '<a class="hoa-btn hoa-btn--ghost hoa-btn--lg" href="' + esc(d.href) + '">' + esc(t('text_view')) + '</a>');
+			scrollDown();
+		}).catch(function () {
+			box.innerHTML = '<p class="hoa-error">' + esc(t('text_error')) + '</p>';
+		});
+	}
+
+	function addWithOptions(box) {
+		var form = box.querySelector('form');
+		var btn = box.querySelector('[data-hoa-opt-add]');
+		var data = {};
+		var counts = {};
+
+		box.querySelectorAll('.has-error').forEach(function (n) { n.classList.remove('has-error'); });
+		box.querySelectorAll('.hoa-field__err').forEach(function (n) { n.textContent = ''; });
+		box.querySelector('[data-hoa-opt-err]').textContent = '';
+
+		new FormData(form).forEach(function (v, k) {
+			if (k.slice(-2) === '[]') {
+				var base = k.slice(0, -2);
+
+				counts[base] = counts[base] || 0;
+				data[base + '[' + counts[base]++ + ']'] = v;
+			} else {
+				data[k] = v;
+			}
+		});
+
+		btn.disabled = true;
+
+		post('index.php?route=checkout/cart/add', data).then(function (d) {
+			btn.disabled = false;
+
+			// OpenCart answers a missing choice with errors AND a redirect to the product page: show the errors here
+			if (d.error) {
+				Object.keys(d.error.option || {}).forEach(function (id) {
+					var f = box.querySelector('[data-hoa-opt="' + id + '"]');
+
+					if (f) {
+						f.classList.add('has-error');
+						f.querySelector('.hoa-field__err').textContent = d.error.option[id];
+					}
+				});
+
+				if (d.error.recurring || d.error.warning) {
+					box.querySelector('[data-hoa-opt-err]').textContent = d.error.recurring || d.error.warning;
+				}
+
+				return;
+			}
+
+			// a shop-only product: the store sends it to its page
+			if (d.redirect && !d.success) {
+				location = d.redirect;
+
+				return;
+			}
+
+			if (d.success) {
+				badge(d.total);
+				box.outerHTML = '<div class="hoa-added"><span>' + ICON.check + esc(t('text_added_bar')) + '</span><button type="button" class="hoa-btn" data-hoa-checkout>' + esc(t('text_order_now')) + '</button></div>';
+				scrollDown();
+			}
+		}).catch(function () {
+			btn.disabled = false;
+			box.querySelector('[data-hoa-opt-err]').textContent = t('text_error');
+		});
+	}
+
 	// ------------------------------------------------------------------------------------------- the order form
 
 	var checkoutData = null;
@@ -576,6 +697,16 @@
 	function drawCheckout(d) {
 		var p = d.prefill || {};
 
+		// below the store's minimum order (before VAT): no form at all — the message and back to shopping
+		if (d.minimum) {
+			sheet.querySelector('.hoa-sheet__body').innerHTML =
+				'<div class="hoa-login"><p class="hoa-form-err">' + esc(d.minimum) + '</p>' +
+				'<button type="button" class="hoa-btn hoa-btn--lg" data-hoa-sheet-close>' + esc(t('text_continue_shopping')) + '</button>' +
+				'<a class="hoa-btn hoa-btn--ghost hoa-btn--lg" href="' + esc(C.cart) + '">' + esc(t('text_go_cart')) + '</a></div>';
+
+			return;
+		}
+
 		// a store without guest orders: log in / register first (the cart stays)
 		if (d.login) {
 			sheet.querySelector('.hoa-sheet__body').innerHTML =
@@ -606,7 +737,7 @@
 				'<div class="hoa-field" style="margin-top:12px"><label for="hoa-comment">' + esc(t('entry_comment')) + '</label><textarea id="hoa-comment" name="comment" rows="2"></textarea></div>' +
 				'<div class="hoa-totals" data-hoa-totals></div>' + agree +
 				'<p class="hoa-form-err" data-hoa-form-err></p>' +
-				'<button type="submit" class="hoa-btn hoa-btn--lg" data-hoa-confirm>' + esc(t('text_confirm')) + '</button>' +
+				'<button type="submit" class="hoa-btn hoa-btn--lg" data-hoa-confirm disabled>' + esc(t('text_confirm')) + '</button>' +
 			'</form>';
 
 		syncInvoice();
@@ -643,7 +774,8 @@
 				html += '<p class="hoa-legend">' + esc(t('entry_shipping')) + '</p><p class="hoa-muted" data-hoa-err="shipping_method">' + esc(t('text_need_postcode')) + '</p>';
 			} else if (d.shipping && d.shipping.length) {
 				html += '<p class="hoa-legend">' + esc(t('entry_shipping')) + '</p>' + d.shipping.map(function (s) {
-					return '<label class="hoa-choice"><input type="radio" name="shipping_method" value="' + esc(s.code) + '"' + (s.code === (v.shipping_method || d.shipping_code) ? ' checked' : '') + '><span>' + esc(s.title) + (s.detail ? '<small class="hoa-muted" style="display:block">' + esc(s.detail) + '</small>' : '') + '</span><b>' + esc(s.text) + '</b></label>';
+					// dekor: the same words as the store's checkout (built and escaped on the server: «title - price», notes)
+					return '<label class="hoa-choice"><input type="radio" name="shipping_method" value="' + esc(s.code) + '"' + (s.code === (v.shipping_method || d.shipping_code) ? ' checked' : '') + '><span>' + (s.html || (esc(s.title) + (s.text ? ' - ' + esc(s.text) : ''))) + '</span></label>';
 				}).join('') + '<span class="hoa-field__err" data-hoa-err="shipping_method"></span>';
 			}
 
@@ -809,6 +941,33 @@
 
 		if (ask) {
 			send(ask.getAttribute('data-hoa-ask'));
+
+			return;
+		}
+
+		// dekor: «Επιλογές» opens every option of the product under the cards; «Στο καλάθι» there uses the store's cart
+		var optBtn = e.target.closest('[data-hoa-options][data-hoa-pid]');
+
+		if (optBtn) {
+			openOptions(optBtn);
+
+			return;
+		}
+
+		var optAdd = e.target.closest('[data-hoa-opt-add]');
+
+		if (optAdd) {
+			addWithOptions(optAdd.closest('.hoa-opts'));
+
+			return;
+		}
+
+		if (e.target.closest('[data-hoa-opt-close]')) {
+			var optBox = e.target.closest('.hoa-opts');
+
+			if (optBox) {
+				optBox.remove();
+			}
 
 			return;
 		}
